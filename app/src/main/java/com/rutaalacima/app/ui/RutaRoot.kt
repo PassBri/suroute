@@ -1,5 +1,7 @@
 package com.rutaalacima.app.ui
 
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.FormatQuote
 import androidx.compose.foundation.verticalScroll
@@ -360,6 +362,18 @@ private fun AppPrincipal() {
                             }
                             IconButton(onClick = { nav.navigate(Rutas.MENSAJES) }) {
                                 Icon(com.rutaalacima.app.ui.components.IconosRuta.Radio, stringResource(R.string.mensajes))
+                            }
+                        }
+                        // El ojo para toda la app: esconde las cifras de dinero en todas partes (como el «Visible» de la banca)
+                        if (pestana.ruta == Rutas.RUTA || pestana.ruta == Rutas.HOY) {
+                            val oculto = com.rutaalacima.app.seguridad.Discreto.activo
+                            val avisoOculto = stringResource(R.string.disc_oculto); val avisoVisible = stringResource(R.string.disc_visible)
+                            IconButton(onClick = {
+                                com.rutaalacima.app.seguridad.Discreto.activo = !oculto
+                                com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(if (!oculto) avisoOculto else avisoVisible)
+                            }) {
+                                Icon(if (oculto) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                                    stringResource(if (oculto) R.string.cu_mostrar_montos else R.string.cu_ocultar_montos))
                             }
                         }
                         // Evaluación: el balance del mes, del año y de los propósitos, a un toque desde Mi ruta

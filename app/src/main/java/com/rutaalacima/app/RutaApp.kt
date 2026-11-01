@@ -11,6 +11,7 @@ class RutaApp : Application() {
         // Reporte de errores anónimo: captura los cierres inesperados y envía los pendientes
         com.rutaalacima.app.diagnostico.Errores.instalar(this)
         container = AppContainer(this)
+        com.rutaalacima.app.seguridad.Discreto.iniciar(this)
         com.rutaalacima.app.diagnostico.Errores.enviarPendientes(this, container.supabase)
         // Recordatorio diario del camino hacia los 120 años
         com.rutaalacima.app.notificaciones.Recordatorios.crearCanal(this)

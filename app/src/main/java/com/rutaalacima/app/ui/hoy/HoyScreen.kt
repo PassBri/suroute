@@ -193,6 +193,9 @@ fun HoyScreen(
             )
             Text(formatoDia(hoy()), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
+        // Lo que más haces (atajos que eliges) y los avisos del día en un carrusel, como en la banca móvil
+        item(key = "lqh") { LoQueMasHaces(onIrA = onIrA) }
+        item(key = "avisos") { AvisosCarrusel(metasMes, onIrA = onIrA) }
 
         // El día empieza con el cielo de este momento (sol, luna y planetas reales) y la cumbre encima
         item {
@@ -352,7 +355,7 @@ fun HoyScreen(
         // Antes de dormir: la pregunta de la noche y, cada mes, el alto en el camino (las mismas de la web)
         item(key = "tramites") { com.rutaalacima.app.ui.tramites.TramitesDia(hoy()) }
         item(key = "noche") { com.rutaalacima.app.ui.alto.PreguntaNocheCard() }
-        item(key = "alto") { com.rutaalacima.app.ui.alto.AltoInvitacion(onAbrir = { onIrA(com.rutaalacima.app.ui.Rutas.ALTO) }) }
+        // Alto en el camino: ahora vive en el carrusel de avisos de arriba (y en Mis frases)
         // Cascada: largo plazo · año · mes (líneas finas; se abre el planificador)
         item {
             val c = cascada

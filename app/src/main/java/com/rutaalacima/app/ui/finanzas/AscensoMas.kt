@@ -89,6 +89,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -451,6 +452,9 @@ private fun FilaDeuda(h: Deudas.Hoy, orden: Int, fin: Int?, plata: (Double) -> S
             Column(Modifier.weight(1f)) {
                 Text(x.nombre + if (x.tipo == "buena") " · " + stringResource(R.string.cu_buena) else "", style = MaterialTheme.typography.titleSmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(stringResource(R.string.cu_deuda_det, num(x.tasa), plata(x.minimo)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                // Cómo va este mes: pagada, al día, pago parcial, programada o sin pago
+                val libroD by vm.libro.collectAsStateWithLifecycle()
+                EstadoDeudaChip(estadoDeuda(h, libroD, hoy()), Modifier.padding(top = 4.dp))
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text(plata(h.actual), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)

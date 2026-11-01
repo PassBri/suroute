@@ -228,6 +228,14 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
         else guardar(f, guardados(f) + Mov("m" + System.currentTimeMillis(), t.codigo, monto, cat, nota.trim()))
     }
 
+    /** Anota un movimiento frecuente en el día [f] con su mismo monto (y la deuda o meta que paga). Devuelve su id para deshacer. */
+    fun anotarFrecuente(f: String, x: Frecuente): String {
+        val id = "m" + System.currentTimeMillis()
+        viewModelScope.launch { guardar(f, guardados(f) + Mov(id, x.t, x.m, x.c, x.n, d = x.d, meta = x.meta)) }
+        return id
+    }
+    fun quitarMov(f: String, id: String) = viewModelScope.launch { guardar(f, guardados(f).filter { it.id != id }) }
+
     /** El mismo día del mes siguiente (o su último día, si ese mes es más corto). */
     private fun mesSiguiente(f: String): String {
         val d = LocalDate.parse(f); val ym = YearMonth.from(d).plusMonths(1)
@@ -433,7 +441,10 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
     /** Hasta cuándo queda abierto el módulo tras la huella (5 minutos o hasta salir de la app). */
     var abiertoHasta by mutableStateOf(0L)
     val abierto get() = System.currentTimeMillis() < abiertoHasta
-    var oculto by mutableStateOf(false)
+    /** El ojo: es el mismo de toda la app (Discreto) y se recuerda en este teléfono. */
+    var oculto: Boolean
+        get() = com.rutaalacima.app.seguridad.Discreto.activo
+        set(v) { com.rutaalacima.app.seguridad.Discreto.activo = v }
 
     // ---------------------------------------------------------------- Recibos
     private val dirRecibos get() = java.io.File(c.contexto.filesDir, "recibos").apply { mkdirs() }
@@ -1092,6 +1103,21 @@ private fun LazyListScope.dia(f: LocalDate, libro: Libro, plata: (Double) -> Str
     val fs = f.toString(); val movs = libro.movs(fs); val s = Cuentas.sumar(movs); val ym = YearMonth.from(f); val mesS = libro.suma("$ym-")
     item(key = "nav") { NavPeriodo("${f.dayOfMonth} ${nombreMes(f.monthValue)} ${f.year}", { ir(NivelCuentas.Dia(f.minusDays(1))) }, { ir(NivelCuentas.Dia(f.plusDays(1))) }) }
     item(key = "nuevo") { NuevoMovimiento(plata, f.dayOfMonth) { t, m, c, n, rep -> vm.agregar(fs, t, m, c, n, rep) } }
+    // Frecuentes: lo que más anotas, a un toque (como los «Pagos rápidos» de la banca)
+    item(key = "frecuentes") {
+        val xs = androidx.compose.runtime.remember(libro) { frecuentesDe(libro, hoy()) }
+        val alcance = androidx.compose.runtime.rememberCoroutineScope()
+        val deshacer = stringResource(R.string.cu_deshacer)
+        val ctx = LocalContext.current
+        FrecuentesFila(xs, plata) { x, nombre ->
+            val id = vm.anotarFrecuente(fs, x)
+            alcance.launch {
+                avisos.currentSnackbarData?.dismiss()
+                val r = avisos.showSnackbar(ctx.getString(R.string.fr_anotado, nombre, plata(x.m)), deshacer, withDismissAction = true, duration = androidx.compose.material3.SnackbarDuration.Short)
+                if (r == androidx.compose.material3.SnackbarResult.ActionPerformed) vm.quitarMov(fs, id)
+            }
+        }
+    }
     item(key = "movs-tit") { SectionTitle(stringResource(R.string.cu_movimientos, movs.size)) }
     if (movs.isEmpty()) item(key = "movs-vacio") {
         Text(stringResource(R.string.cu_sin_movs_dia), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -1303,7 +1329,7 @@ fun ResumenCuentasDia(fecha: LocalDate) {
     val libro by vm.libro.collectAsStateWithLifecycle()
     val abrir = irACuentas()
     val movs = libro.movs(fecha.toString()); val s = Cuentas.sumar(movs, libro.propias)
-    val plata: (Double) -> String = { if (libro.ocultarFuera) "•••••" else Cuentas.formato(it, libro.moneda) }
+    val plata: (Double) -> String = { if (libro.ocultarFuera || com.rutaalacima.app.seguridad.Discreto.activo) "•••••" else Cuentas.formato(it, libro.moneda) }
     RutaCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.control_financiero), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
@@ -1333,7 +1359,7 @@ fun ResumenCuentasMes(ym: YearMonth, modifier: Modifier = Modifier) {
     val libro by vm.libro.collectAsStateWithLifecycle()
     val abrir = irACuentas()
     val t = libro.suma("$ym-")
-    val plata: (Double) -> String = { if (libro.ocultarFuera) "•••••" else Cuentas.formato(it, libro.moneda) }
+    val plata: (Double) -> String = { if (libro.ocultarFuera || com.rutaalacima.app.seguridad.Discreto.activo) "•••••" else Cuentas.formato(it, libro.moneda) }
     RutaCard(modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.fin_mes), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
