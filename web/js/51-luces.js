@@ -3,11 +3,11 @@
    y se animen con CSS (la animación se apaga con «reducir movimiento»). */
 (function () {
   const LUCES = [
-    { id: "vela", nombre: "Te acompaño" },
-    { id: "farol", nombre: "Me iluminó" },
-    { id: "estrella", nombre: "Te admiro" },
-    { id: "luna", nombre: "Te entiendo" },
-    { id: "sol", nombre: "¡Celebremos!" },
+    { id: "vela", nombre: "Te acompaño", cosa: "una vela" },
+    { id: "farol", nombre: "Me iluminó", cosa: "un farol" },
+    { id: "estrella", nombre: "Te admiro", cosa: "una estrella" },
+    { id: "luna", nombre: "Te entiendo", cosa: "una luna" },
+    { id: "sol", nombre: "¡Celebremos!", cosa: "un sol" },
   ];
   let n = 0;
 
@@ -133,54 +133,62 @@
 })();
 
 /* ======================================================================
- * La reacción «Luces» en Comunidad, junto al impulso y los climas.
- * · Un toque da tu luz de siempre (la última que elegiste; al principio, el sol «¡Celebremos!»).
- *   Si ya diste una, un toque la quita.
- * · Mantén el dedo y se abre la fila de las cinco: desliza hasta una y suelta, o tócala.
- * · En la nube vive en la tabla post_luces (supabase/2026-11-01-luces.sql). Sin cuenta, en este navegador.
+ * Luces: la reacción de la comunidad. Reemplaza al impulso y a los climas de las publicaciones
+ * (los climas siguen en Bienestar del día, como clima interior).
+ * · Cada luz es un impulso con su matiz: vive en la tabla votes, columna luz (supabase/2026-11-01-luces.sql).
+ *   Por eso los milímetros de la expedición, los avisos y «Para ti» siguen contando igual.
+ * · Un toque (o doble toque sobre la cima) da tu luz de siempre: la última que elegiste; al principio, el sol.
+ *   Si ya diste una, un toque la quita. Mantén el dedo y se abre la fila de las cinco: desliza y suelta.
+ * · Pocos números: todos ven qué luces recibió una publicación; el total solo lo ve quien publicó.
  * ====================================================================== */
 (function () {
   const L = window.LUCES, ids = L.map(l => l.id);
-  const nombreLuz = k => (L.find(l => l.id === k) || L[4]).nombre;
+  const luzDe = k => L.find(l => l.id === k) || L[4];
+  const nombreLuz = k => luzDe(k).nombre;
+  window.fraseLuz = k => ids.includes(k) ? `te dio ${luzDe(k).cosa}: «${nombreLuz(k)}»` : "";
   const ultima = () => { try { const k = localStorage.getItem("suroute-luz-ultima"); return ids.includes(k) ? k : "sol"; } catch { return "sol"; } };
   const locales = () => { try { return JSON.parse(localStorage.getItem("suroute-luces") || "{}"); } catch { return {}; } };
+  /** Conteos de ejemplo estables por publicación (los mismos que la app). */
   function demo(id) {
     let h = 7; for (const ch of String(id)) h = (h * 37 + ch.charCodeAt(0)) >>> 0;
     const r = {}; ids.forEach((k, i) => { r[k] = (h >>> (i * 4)) % (k === "sol" ? 11 : k === "estrella" ? 7 : 4); }); return r;
   }
   const total = p => ids.reduce((s, k) => s + (p.luces?.[k] || 0), 0);
   const top = p => ids.filter(k => p.luces?.[k]).sort((a, b) => p.luces[b] - p.luces[a] || ids.indexOf(b) - ids.indexOf(a)).slice(0, 3);
+  const enNube = p => Store.nube && !p.demo && /^[0-9a-f-]{36}$/i.test(String(p.id));
+  /** El impulso de siempre sigue al día con la luz (milímetros, «Para ti», contadores). */
+  const sincronizar = p => { p.impulsos = total(p); p.yoImpulse = !!p.miLuz; };
 
   /** Agrega luces y miLuz a las publicaciones (la nube o el ejemplo). */
   async function cargarLuces(ps) {
     if (!ps?.length) return;
     const loc = locales();
     ps.forEach(p => {
-      const local = !Store.nube || p.demo;
-      p.luces = local ? demo(p.id) : {}; p.miLuz = local ? loc[p.id] || null : null;
-      if (local && p.miLuz) p.luces[p.miLuz]++;
+      if (enNube(p)) { p.luces = {}; p.miLuz = null; return; }
+      p.luces = demo(p.id); p.miLuz = loc[p.id] || null;
+      if (p.miLuz) p.luces[p.miLuz]++;
+      sincronizar(p);
     });
-    if (!Store.nube) return;
-    const nube = ps.filter(p => !p.demo && /^[0-9a-f-]{36}$/i.test(String(p.id))).map(p => p.id);
-    if (!nube.length) return;
-    try {
-      const { data, error } = await Store.nube.sb.from("post_luces").select("post_id,user_id,luz").in("post_id", nube);
-      if (error) throw error;
-      const yo = Store.nube.dueno, por = new Map(ps.map(p => [String(p.id), p]));
-      (data || []).forEach(f => { const p = por.get(String(f.post_id)); if (!p) return; p.luces[f.luz] = (p.luces[f.luz] || 0) + 1; if (f.user_id === yo) p.miLuz = f.luz; });
-    } catch (e) { console.warn("Luces: falta correr supabase/2026-11-01-luces.sql", e); }
+    const nube = ps.filter(enNube); if (!nube.length) return;
+    const sb = Store.nube.sb, yo = Store.nube.dueno, por = new Map(nube.map(p => [String(p.id), p]));
+    let r = await sb.from("votes").select("post_id,user_id,luz").in("post_id", nube.map(p => p.id));
+    if (r.error) { console.warn("Luces: falta correr supabase/2026-11-01-luces.sql", r.error); r = await sb.from("votes").select("post_id,user_id").in("post_id", nube.map(p => p.id)); }
+    (r.data || []).forEach(f => { const p = por.get(String(f.post_id)); if (!p) return; const k = ids.includes(f.luz) ? f.luz : "sol"; p.luces[k] = (p.luces[k] || 0) + 1; if (f.user_id === yo) p.miLuz = k; });
+    nube.forEach(sincronizar);
   }
-  // Las luces se cargan junto con los climas, en el mismo momento del muro
-  const climasAntes = window.cargarClimas;
-  if (climasAntes) window.cargarClimas = async ps => { await climasAntes(ps); await cargarLuces(ps); };
+  window.cargarLuces = cargarLuces;
+  // El muro carga las luces donde antes cargaba los climas (los climas ya no van en las publicaciones)
+  window.cargarClimas = cargarLuces;
 
-  /** El botón: en Cimas, un círculo con la luz y el total; en el muro, la pila de luces y una píldora con el nombre. */
+  /** El botón: en Cimas, un círculo con la luz; en el muro, la pila de luces recibidas y una píldora con el nombre. */
   function botonLuz(p, lista = false) {
+    if (!p.luces) cargarLuces([p]).then(() => pintar(p));
     const t = total(p), mia = p.miLuz, muestra = mia || (lista ? ultima() : top(p)[0] || ultima());
+    const cifra = p.propio && t ? t : "";
     const etiqueta = mia ? `Diste «${nombreLuz(mia)}». Toca para quitarla; mantén para elegir otra` : `Dar «${nombreLuz(ultima())}». Mantén para elegir otra luz`;
-    const boton = inner => `<button type="button" class="luz-btn ${lista ? "en-lista" : "en-cima"}${mia ? " mia" : ""}" data-post="${esc(String(p.id))}" aria-haspopup="menu" aria-pressed="${!!mia}" aria-label="${esc(etiqueta)}, ${t} luces">${inner}</button>`;
-    if (lista) return `<span class="luz-wrap en-lista">${t ? `<span class="luz-pila" aria-hidden="true">${top(p).map(k => luzSVG(k, "quieta")).join("")}<b>${t}</b></span>` : ""}${boton(`${luzSVG(muestra, mia ? "" : "quieta")}<span>${esc(nombreLuz(muestra))}</span>`)}</span>`;
-    return `<span class="luz-wrap en-cima">${boton(`<span class="lb-circ${!mia && !t ? " apagada" : ""}">${luzSVG(muestra, mia ? "" : "quieta")}</span><b>${t || ""}</b>`)}</span>`;
+    const boton = inner => `<button type="button" class="luz-btn ${lista ? "en-lista" : "en-cima"}${mia ? " mia" : ""}" data-post="${esc(String(p.id))}" aria-haspopup="menu" aria-pressed="${!!mia}" aria-label="${esc(etiqueta)}${cifra ? `, ${cifra} luces` : ""}">${inner}</button>`;
+    if (lista) return `<span class="luz-wrap en-lista">${t ? `<span class="luz-pila" aria-hidden="true">${top(p).map(k => luzSVG(k, "quieta")).join("")}${cifra ? `<b>${cifra}</b>` : ""}</span>` : ""}${boton(`${luzSVG(muestra, mia ? "" : "quieta")}<span>${esc(nombreLuz(muestra))}</span>`)}</span>`;
+    return `<span class="luz-wrap en-cima">${boton(`<span class="lb-circ${!mia && !t ? " apagada" : ""}">${luzSVG(muestra, mia ? "" : "quieta")}</span><b>${cifra}</b>`)}</span>`;
   }
   globalThis.botonLuz = botonLuz;
 
@@ -202,7 +210,7 @@
     const p = postDe(b.dataset.post); if (!p) return;
     const s = document.createElement("div");
     s.className = "luz-selector"; s.setAttribute("role", "menu"); s.setAttribute("aria-label", "Elige tu luz");
-    s.innerHTML = L.map((l, i) => `<button type="button" role="menuitemradio" class="lz-op${p.miLuz === l.id ? " si" : ""}" style="--i:${i}" data-luz="${l.id}" aria-checked="${p.miLuz === l.id}" aria-label="${esc(l.nombre)}, ${p.luces?.[l.id] || 0}">${luzSVG(l.id)}<small>${esc(l.nombre)}</small></button>`).join("");
+    s.innerHTML = L.map((l, i) => `<button type="button" role="menuitemradio" class="lz-op${p.miLuz === l.id ? " si" : ""}" style="--i:${i}" data-luz="${l.id}" aria-checked="${p.miLuz === l.id}" aria-label="${esc(l.nombre)}">${luzSVG(l.id)}<small>${esc(l.nombre)}</small></button>`).join("");
     s.addEventListener("click", e => { const o = e.target.closest(".lz-op"); if (o) { e.stopPropagation(); elegir(p, o.dataset.luz); } });
     b.after(s);
     navigator.vibrate?.(8);
@@ -223,29 +231,41 @@
     });
   }
   async function elegir(p, k) {
+    if (!p.luces) await cargarLuces([p]);
     const antes = p.miLuz, nuevo = antes === k ? null : k;
-    p.luces ||= {};
     if (antes) p.luces[antes] = Math.max(0, (p.luces[antes] || 0) - 1);
     if (nuevo) { p.luces[nuevo] = (p.luces[nuevo] || 0) + 1; try { localStorage.setItem("suroute-luz-ultima", nuevo); } catch {} }
-    p.miLuz = nuevo;
+    p.miLuz = nuevo; sincronizar(p);
     cerrar(); pintar(p);
     if (nuevo) {
       document.querySelectorAll(`.luz-btn[data-post="${CSS.escape(String(p.id))}"]`).forEach(b => { b.classList.add("recien"); setTimeout(() => b.classList.remove("recien"), 700); });
       navigator.vibrate?.(12);
     }
-    if (!Store.nube || p.demo) {
+    if (!enNube(p)) {
       const l = locales(); if (nuevo) l[p.id] = nuevo; else delete l[p.id];
       try { localStorage.setItem("suroute-luces", JSON.stringify(l)); } catch {}
       return;
     }
     try {
       const sb = Store.nube.sb, yo = Store.nube.dueno;
-      const { error } = nuevo ? await sb.from("post_luces").upsert({ post_id: p.id, user_id: yo, luz: nuevo })
-        : await sb.from("post_luces").delete().eq("post_id", p.id).eq("user_id", yo);
-      if (error) throw error;
+      let r;
+      if (!nuevo) r = await sb.from("votes").delete().eq("post_id", p.id).eq("user_id", yo);
+      else if (antes) r = await sb.from("votes").update({ luz: nuevo }).eq("post_id", p.id).eq("user_id", yo);
+      else {
+        r = await sb.from("votes").insert({ post_id: p.id, user_id: yo, luz: nuevo });
+        if (r.error?.code === "23505") r = await sb.from("votes").update({ luz: nuevo }).eq("post_id", p.id).eq("user_id", yo);
+        else if (r.error && /luz/.test(r.error.message || "")) r = await sb.from("votes").insert({ post_id: p.id, user_id: yo });   // sin la columna luz todavía: queda como impulso
+      }
+      if (r.error) throw r.error;
     } catch (e) { console.error(e); toast("No se pudo guardar tu luz." + detalleError(e)); }
   }
   function tocar(b) { const p = postDe(b.dataset.post); if (p) elegir(p, p.miLuz || ultima()); }
+
+  // El impulso de siempre (doble toque en la cima, «me lo llevo», atajos) ahora da tu luz
+  Object.assign(ACC, {
+    impulsar() { const p = estado.post; if (p) elegir(p, p.miLuz || ultima()); },
+    impulsarId(el, id) { const p = postDe(id); if (p) elegir(p, p.miLuz || ultima()); },
+  });
 
   /* ---------- Toque, mantener y deslizar ---------- */
   let g = null;
@@ -264,22 +284,18 @@
   });
   document.addEventListener("pointerup", e => {
     if (!g) return; const x = g; g = null; clearTimeout(x.t);
-    if (!x.largo) { if (e.target.closest?.(".luz-btn") === x.b) { x.b.dataset.tocado = "1"; tocar(x.b); } return; }
+    if (!x.largo) { if (e.target.closest?.(".luz-btn") === x.b) tocar(x.b); return; }
     const o = sobre(e.clientX, e.clientY);
     if (o) { const p = postDe(x.b.dataset.post); if (p) elegir(p, o.dataset.luz); }
   });
   document.addEventListener("pointercancel", () => { if (g) { clearTimeout(g.t); g = null; } });
   // Teclado: Intro da o quita; flecha arriba, menú contextual o Mayús+F10 abre la fila
-  document.addEventListener("click", e => {
-    const b = e.target.closest?.(".luz-btn"); if (!b) return;
-    if (b.dataset.tocado) { delete b.dataset.tocado; return; }
-    if (e.detail === 0) tocar(b);
-  });
+  document.addEventListener("click", e => { const b = e.target.closest?.(".luz-btn"); if (b && e.detail === 0) tocar(b); });
   document.addEventListener("keydown", e => {
     const b = e.target.closest?.(".luz-btn"); if (!b) return;
     if (e.key === "ArrowUp" || e.key === "ContextMenu" || (e.key === "F10" && e.shiftKey)) { e.preventDefault(); e.stopPropagation(); abrir(b, false); }
   }, true);
-  // Dos toques seguidos sobre la luz no son el doble toque de la cima (que impulsa)
+  // Dos toques seguidos sobre la luz no son el doble toque de la cima
   document.addEventListener("dblclick", e => { if (!e.target.isConnected || e.target.closest?.(".luz-wrap, .luz-selector")) e.stopPropagation(); }, true);
   document.addEventListener("contextmenu", e => { if (e.target.closest?.(".luz-btn, .luz-selector")) e.preventDefault(); });
 })();

@@ -140,7 +140,9 @@ private suspend fun avisarComunidad(c: Context) {
         "SEGUIDOR" -> R.string.red_a_seguidor; "LIKE_COMENTARIO" -> R.string.red_a_like_com; else -> R.string.red_a_mencion
     })
     val titulo = if (nuevos.size > 1) c.getString(R.string.red_n_nuevos, nuevos.size) else a.actorNombre
-    val texto = if (nuevos.size > 1) "${a.actorNombre}: $accion" else if (a.texto.isNotBlank()) "$accion: ${a.texto}" else accion
+    val luz = a.texto.takeIf { a.tipo == "IMPULSO" && it in com.rutaalacima.app.ui.components.Luces.IDS }
+    val frase = if (luz != null) com.rutaalacima.app.ui.comunidad.fraseLuz(c, luz) else accion
+    val texto = if (nuevos.size > 1) "${a.actorNombre}: $frase" else if (luz == null && a.texto.isNotBlank()) "$accion: ${a.texto}" else frase
     val abrir = PendingIntent.getActivity(
         c, "avisos".hashCode(),
         Intent(c, MainActivity::class.java).putExtra(AvisosMensajes.EXTRA_IR_A, "avisos").addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP),

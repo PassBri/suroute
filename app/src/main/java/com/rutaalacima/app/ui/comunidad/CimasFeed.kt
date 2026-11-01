@@ -177,7 +177,7 @@ private fun CimaPagina(
             .pointerInput(post.id) {
                 detectTapGestures(
                     onDoubleTap = {
-                        if (!post.yoImpulse) onImpulsar()
+                        if (post.miLuz == null && !post.yoImpulse) onLuz(com.rutaalacima.app.ui.components.Luces.ultima(context))
                         sello = true
                         haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress)
                     },
@@ -252,11 +252,8 @@ private fun CimaPagina(
                 }
                 Spacer(Modifier.height(22.dp))
             }
-            // Pocos números: el contador de impulsos solo lo ve el autor
-            Accion(if (post.yoImpulse) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder, if (post.propio) contar(post.impulsos) else "", stringResource(R.string.impulsar), Color.White,
-                fondo = if (post.yoImpulse) MaterialTheme.colorScheme.primary else null, onClick = onImpulsar)
-            com.rutaalacima.app.ui.components.BotonClima(post.climas, post.miClima, onClima, tamano = 48.dp, fondo = VeloTinta)
-            com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz, enCima = true)
+            // Luces: la reacción de la comunidad (reemplaza al impulso y a los climas). El total solo lo ve el autor
+            com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz, enCima = true, verTotal = post.propio)
             Accion(Icons.AutoMirrored.Outlined.Comment, contar(post.comentarios), stringResource(R.string.comentar), Color.White, onClick = onAbrir)
             Accion(if (guardado) com.rutaalacima.app.ui.components.IconosRuta.Morral else com.rutaalacima.app.ui.components.IconosRuta.MorralContorno, "", stringResource(R.string.guardar),
                 if (guardado) com.rutaalacima.app.ui.components.AzulAltura else Color.White,

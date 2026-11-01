@@ -1041,7 +1041,7 @@
     <string name="diario_de">%1$s की डायरी</string>
     <string name="diario_ajeno_vacio">%1$s ने अभी अपनी डायरी का कोई साल साझा नहीं किया।</string>
     <string name="diario_ver_autor">उनकी जीवन डायरी देखें</string>
-    <string name="cumbre_comunidad_valor">आज एक पोस्ट %1$s मिमी और एक बढ़ावा %2$s मिमी के बराबर है</string>
+    <string name="cumbre_comunidad_valor">आज एक पोस्ट %1$s मिमी और एक रोशनी %2$s मिमी की है</string>
     <string name="mandala_tablero">बोर्ड</string>
     <string name="mandala_titulo">आपका 9×9</string>
     <string name="mandala_intro">आपके शिविर केंद्र हैं: बीच में शिखर और चारों ओर दिशासूचक की तरह 8 तय पड़ाव (आपके 6 अक्ष, संगम और बेस कैंप)। हर पड़ाव में 8 कदम हैं। कदम कमाने पर उसकी सबूत वाली तस्वीर विज़न की जगह ले लेती है: आपका 9×9 सपने से जीवन बन जाता है।</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">खुला</string>
     <string name="tarjeta_camino">प्रगति पर</string>
     <string name="tarjeta_lograda">पूरा हुआ</string>
-    <string name="perfil_impulsos">प्रोत्साहन</string>
+    <string name="perfil_impulsos">रोशनियाँ</string>
     <string name="perfil_editar">प्रोफ़ाइल संपादित करें</string>
     <string name="perfil_invitar">दोस्तों को आमंत्रित करें</string>
     <string name="perfil_privadas">निजी</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">क्या पाना है</string>
     <string name="red_dos">%1$s और %2$s</string>
     <string name="red_varios">%1$s और %2$d अन्य</string>
-    <string name="red_a_impulso">आपकी पोस्ट को बढ़ावा दिया</string>
-    <string name="red_a_impulso_pl">आपकी पोस्ट को बढ़ावा दिया</string>
+    <string name="red_a_impulso">आपकी पोस्ट को रोशनी दी</string>
+    <string name="red_a_impulso_pl">आपकी पोस्ट को रोशनी दी</string>
     <string name="red_a_comentario">आपकी पोस्ट पर टिप्पणी की</string>
     <string name="red_a_respuesta">आपकी टिप्पणी का जवाब दिया</string>
     <string name="red_a_seguidor">आपको फ़ॉलो करना शुरू किया</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">आपकी टिप्पणी को बढ़ावा दिया</string>
     <string name="red_a_like_com_pl">आपकी टिप्पणी को बढ़ावा दिया</string>
     <string name="red_a_mencion">आपका ज़िक्र किया</string>
-    <string name="red_p_impulso">आपकी पोस्ट पर बढ़ावा</string>
+    <string name="red_p_impulso">आपकी पोस्ट पर रोशनियाँ</string>
     <string name="red_p_comentario">टिप्पणियाँ</string>
     <string name="red_p_respuesta">आपकी टिप्पणियों के जवाब</string>
     <string name="red_p_seguidor">नए फ़ॉलोअर</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">आपके लिए सबसे पहले वह दिखाता है जो चढ़ने में आपकी मदद करे: आपके सबसे कमज़ोर कैंप से जुड़ी पोस्ट और उन लोगों की पोस्ट जिनके पीछे असली रास्ता है। विज़न में सिर्फ़ ड्रीम बोर्ड। फ़ॉलोइंग में वे लोग जिन्हें आप फ़ॉलो करते हैं।</string>
     <string name="cv_g2_t">अगली चोटी के लिए स्वाइप करें</string>
     <string name="cv_g2_d">हर पोस्ट पूरी स्क्रीन पर दिखती है। फ़ीड का अंत है: जब आप सब कुछ नया देख लेते हैं, तो यह आपको अपना कदम बढ़ाने के लिए आमंत्रित करता है।</string>
-    <string name="cv_g3_t">प्रोत्साहित करें</string>
-    <string name="cv_g3_d">दिल पर टैप करें या पोस्ट पर डबल टैप करें। प्रोत्साहन की संख्या सिर्फ़ पोस्ट करने वाला देखता है: यहाँ आँकड़ों की होड़ नहीं है।</string>
+    <string name="cv_g3_t">रोशनी दें</string>
+    <string name="cv_g3_d">पोस्ट पर एक टैप या डबल टैप आपकी हमेशा वाली रोशनी देता है। चुनने के लिए दबाए रखें: मोमबत्ती (मैं तुम्हारे साथ हूँ), लालटेन (तुमने राह रोशन की), तारा (मैं तुम्हारा सम्मान करता हूँ), चाँद (मैं समझता हूँ) या सूरज (चलो जश्न मनाएँ!)। सब देखते हैं कि कौन-सी रोशनियाँ मिलीं; संख्या सिर्फ़ पोस्ट करने वाला देखता है।</string>
     <string name="cv_g4_t">यह आपके लिए कैसा मौसम छोड़ गई?</string>
     <string name="cv_g4_d">बताएँ कि आपको कैसा लगा: धूप, तूफ़ान, कोहरा, घाटी या शिखर। रंगीन घेरा दिखाता है कि समुदाय ने कैसा मौसम छोड़ा।</string>
     <string name="cv_g5_t">रस्सी फेंकें</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">रोप टीमें</string>
     <string name="cv_g10_d">6 लोगों तक के साथ 7 से 90 दिनों की चुनौतियाँ। अगर कोई 3 दिनों से निशान नहीं लगाता, तो उसके साथी उसकी ओर रस्सी फेंकते हैं।</string>
     <string name="cv_g11_t">समुदाय का अभियान</string>
-    <string name="cv_g11_d">8,848,000 मिमी का पहाड़ जिसे हम सब मिलकर चढ़ते हैं: पोस्ट, प्रोत्साहन और रोप टीमों व चुनौतियों में निशान लगाया गया हर दिन जुड़ता है।</string>
+    <string name="cv_g11_d">8,848,000 मिमी का पहाड़ जिसे हम सब मिलकर चढ़ते हैं: पोस्ट, रोशनियाँ और रस्सी-टीमों व चुनौतियों में चिह्नित हर दिन जुड़ते हैं।</string>
     <string name="cv_g12_t">और विकल्प</string>
     <string name="cv_g12_d">लिंक कॉपी करें, म्यूट करें, रिपोर्ट करें या ब्लॉक करें। आपकी सुरक्षा हमेशा बस एक टैप दूर है।</string>
     <string name="cv_me_lo_llevo">मैं इसे ले चलूँ</string>
     <string name="cv_detras">शिखर के पीछे</string>
-    <string name="cv_llevado">ले लिया: यह आपके बैग में है और आपने इसे प्रोत्साहन दिया।</string>
+    <string name="cv_llevado">आपने इसे ले लिया: यह आपके बैग में है और आपने अपनी रोशनी दी।</string>
     <string name="cv_todos">सभी</string>
     <string name="cv_sendero">%1$s पगडंडी</string>
     <string name="cv_detras_ayuda">पोस्ट करते समय इसके पीछे का रास्ता:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">बाएँ स्वाइप करें: शिखर के पीछे</string>
     <string name="cv_g13_d">उस व्यक्ति का रास्ता देखें: निरंतरता, कंपास के कदम, प्रतिबद्धता और उनके दूसरे शिखर।</string>
     <string name="cv_g14_t">दाएँ स्वाइप करें: मैं इसे ले चलूँ</string>
-    <string name="cv_g14_d">पोस्ट आपके बैग में जाती है और आपका प्रोत्साहन पाती है। यहाँ किसी को कभी ठुकराया नहीं जाता।</string>
+    <string name="cv_g14_d">पोस्ट आपके बैग में जाती है और आप अपनी रोशनी देते हैं। यहाँ किसी को कभी ठुकराया नहीं जाता।</string>
     <string name="cv_g15_t">पगडंडियाँ</string>
     <string name="cv_g15_d">ऊपर एक पगडंडी चुनें (इच्छाशक्ति, महारत, आवाज़, मूल्य, विकास, उत्कर्ष) या बदलने के लिए हेडर पर बगल में स्वाइप करें।</string>
     <string name="fb_fijos">मेरे निश्चित खर्च</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">आपने «%1$s» दिया। हटाने के लिए टैप करें; दूसरी चुनने के लिए दबाए रखें</string>
     <string name="lz_total">%1$d रोशनियाँ</string>
     <string name="lz_elegir">अपनी रोशनी चुनें</string>
+    <string name="red_a_luz">आपको %1$s दी: «%2$s»</string>
+    <string name="lz_cosa_vela">एक मोमबत्ती</string>
+    <string name="lz_cosa_farol">एक लालटेन</string>
+    <string name="lz_cosa_estrella">एक तारा</string>
+    <string name="lz_cosa_luna">एक चाँद</string>
+    <string name="lz_cosa_sol">एक सूरज</string>
 </resources>

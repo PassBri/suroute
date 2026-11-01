@@ -1041,7 +1041,7 @@
     <string name="diario_de">يوميات %1$s</string>
     <string name="diario_ajeno_vacio">لم يشارك %1$s أي سنة من يومياته بعد.</string>
     <string name="diario_ver_autor">اعرض يومياته</string>
-    <string name="cumbre_comunidad_valor">اليوم يساوي المنشور %1$s مم والدفعة %2$s مم</string>
+    <string name="cumbre_comunidad_valor">اليوم المنشور يساوي %1$s مم والضوء %2$s مم</string>
     <string name="mandala_tablero">اللوحة</string>
     <string name="mandala_titulo">شبكتك 9×9</string>
     <string name="mandala_intro">معسكراتك هي المركز: قمتك في الوسط و8 معسكرات ثابتة حولها مثل وردة الرياح (محاورك الستة، والتقاء، ومعسكر القاعدة). كل معسكر فيه 8 خطوات. عندما تكسب خطوة تحل صورة الدليل محل الرؤية: تتحول شبكتك 9×9 من حلم إلى حياة.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">مفتوحة</string>
     <string name="tarjeta_camino">قيد التقدم</string>
     <string name="tarjeta_lograda">محققة</string>
-    <string name="perfil_impulsos">التشجيعات</string>
+    <string name="perfil_impulsos">أضواء</string>
     <string name="perfil_editar">تعديل الملف الشخصي</string>
     <string name="perfil_invitar">دعوة الأصدقاء</string>
     <string name="perfil_privadas">خاصة</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">ما الذي تريد استلامه</string>
     <string name="red_dos">%1$s و%2$s</string>
     <string name="red_varios">%1$s و%2$d آخرون</string>
-    <string name="red_a_impulso">دعم منشورك</string>
-    <string name="red_a_impulso_pl">دعموا منشورك</string>
+    <string name="red_a_impulso">أرسل ضوءًا إلى منشورك</string>
+    <string name="red_a_impulso_pl">أرسلوا ضوءًا إلى منشورك</string>
     <string name="red_a_comentario">علّق على منشورك</string>
     <string name="red_a_respuesta">ردّ على تعليقك</string>
     <string name="red_a_seguidor">بدأ بمتابعتك</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">دعم تعليقك</string>
     <string name="red_a_like_com_pl">دعموا تعليقك</string>
     <string name="red_a_mencion">أشار إليك</string>
-    <string name="red_p_impulso">الدعم على منشوراتك</string>
+    <string name="red_p_impulso">الأضواء على منشوراتك</string>
     <string name="red_p_comentario">التعليقات</string>
     <string name="red_p_respuesta">الردود على تعليقاتك</string>
     <string name="red_p_seguidor">متابعون جدد</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">يعرض «لك» أولًا ما يساعدك على الصعود: منشورات عن أضعف مخيماتك ومن أشخاص لديهم طريق حقيقي خلفهم. «الرؤية» تعرض لوحات الأحلام فقط. «المتابَعون» تعرض الأشخاص الذين تتابعهم.</string>
     <string name="cv_g2_t">اسحب إلى القمة التالية</string>
     <string name="cv_g2_d">كل منشور يملأ الشاشة. للموجز نهاية: عندما ترى كل جديد، يدعوك إلى أن تخطو خطوتك الخاصة.</string>
-    <string name="cv_g3_t">تحفيز</string>
-    <string name="cv_g3_d">اضغط على القلب أو انقر مرتين على المنشور. لا يرى عدد مرات التحفيز إلا صاحب المنشور: لا تنافس على الأرقام هنا.</string>
+    <string name="cv_g3_t">أرسل ضوءًا</string>
+    <string name="cv_g3_d">نقرة أو نقرتان على المنشور ترسل ضوءك المعتاد. اضغط مطولًا للاختيار: شمعة (أنا معك)، فانوس (أضأت طريقي)، نجمة (أنا معجب بك)، قمر (أفهمك) أو شمس (لنحتفل!). الجميع يرى الأضواء التي تلقاها المنشور؛ والعدد لا يراه إلا صاحبه.</string>
     <string name="cv_g4_t">أي طقس تركه فيك؟</string>
     <string name="cv_g4_d">شارك ما شعرت به: شمس، عاصفة، ضباب، وادٍ أو قمة. تُظهر الحلقة الملونة الطقس الذي تركه المجتمع.</string>
     <string name="cv_g5_t">ألقِ حبلًا</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">فرق الحبل</string>
     <string name="cv_g10_d">تحديات من 7 إلى 90 يومًا تضم حتى 6 أشخاص. إذا لم يسجّل أحدهم منذ 3 أيام، يلقي إليه رفاقه حبلًا.</string>
     <string name="cv_g11_t">رحلة المجتمع الاستكشافية</string>
-    <string name="cv_g11_d">جبل ارتفاعه 8,848,000 مم نصعده معًا: تُحتسب المنشورات والتحفيزات وكل يوم مسجّل في فرق الحبل والتحديات.</string>
+    <string name="cv_g11_d">جبل ارتفاعه 8,848,000 مم نصعده معًا: تُحتسب المنشورات والأضواء وكل يوم مُعلَّم في فرق الحبال والتحديات.</string>
     <string name="cv_g12_t">خيارات إضافية</string>
     <string name="cv_g12_d">نسخ الرابط أو كتم الصوت أو الإبلاغ أو الحظر. أمانك دائمًا على بُعد نقرة.</string>
     <string name="cv_me_lo_llevo">سآخذه معي</string>
     <string name="cv_detras">خلف القمة</string>
-    <string name="cv_llevado">أخذته معك: صار في حقيبتك وقدّمت له تحفيزًا.</string>
+    <string name="cv_llevado">أخذته معك: صار في حقيبتك وأرسلت إليه ضوءك.</string>
     <string name="cv_todos">الكل</string>
     <string name="cv_sendero">مسار %1$s</string>
     <string name="cv_detras_ayuda">الطريق الذي كان خلفه عند النشر:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">اسحب لليسار: خلف القمة</string>
     <string name="cv_g13_d">شاهد طريق هذا الشخص: مثابرته وخطواته في البوصلة والتزامه وقممه الأخرى.</string>
     <string name="cv_g14_t">اسحب لليمين: سآخذه معي</string>
-    <string name="cv_g14_d">تذهب المشاركة إلى حقيبتك وتنال تحفيزك. لا يُرفض أحد هنا أبدًا.</string>
+    <string name="cv_g14_d">يذهب المنشور إلى حقيبتك وترسل إليه ضوءك. هنا لا يُرفض أحد أبدًا.</string>
     <string name="cv_g15_t">المسارات</string>
     <string name="cv_g15_d">في الأعلى اختر مسارًا (الإرادة، الإتقان، الصوت، القيمة، التطور، السمو) أو اسحب جانبيًا على الشريط العلوي لتغييره.</string>
     <string name="fb_fijos">فواتيري الثابتة</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">أرسلت «%1$s». انقر لإزالته؛ اضغط مطولًا لاختيار غيره</string>
     <string name="lz_total">%1$d أضواء</string>
     <string name="lz_elegir">اختر ضوءك</string>
+    <string name="red_a_luz">أرسل إليك %1$s: «%2$s»</string>
+    <string name="lz_cosa_vela">شمعة</string>
+    <string name="lz_cosa_farol">فانوسًا</string>
+    <string name="lz_cosa_estrella">نجمة</string>
+    <string name="lz_cosa_luna">قمرًا</string>
+    <string name="lz_cosa_sol">شمسًا</string>
 </resources>

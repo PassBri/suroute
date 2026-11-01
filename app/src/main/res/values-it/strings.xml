@@ -1041,7 +1041,7 @@
     <string name="diario_de">Diario di %1$s</string>
     <string name="diario_ajeno_vacio">%1$s non condivide ancora anni del suo diario.</string>
     <string name="diario_ver_autor">Vedi il suo diario di vita</string>
-    <string name="cumbre_comunidad_valor">Oggi un post vale %1$s mm e uno slancio %2$s mm</string>
+    <string name="cumbre_comunidad_valor">Oggi un post vale %1$s mm e una luce %2$s mm</string>
     <string name="mandala_tablero">Bacheca</string>
     <string name="mandala_titulo">Il tuo 9×9</string>
     <string name="mandala_intro">I tuoi campi sono il centro: la tua vetta in mezzo e 8 campi fissi intorno, come una rosa dei venti (i tuoi 6 assi, Confluenza e Campo base). Ogni campo ha 8 passi. Quando conquisti un passo, la sua foto di prova sostituisce la visione: il tuo 9×9 passa da sognato a vissuto.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">Aperta</string>
     <string name="tarjeta_camino">In cammino</string>
     <string name="tarjeta_lograda">Raggiunta</string>
-    <string name="perfil_impulsos">Incoraggiamenti</string>
+    <string name="perfil_impulsos">Luci</string>
     <string name="perfil_editar">Modifica profilo</string>
     <string name="perfil_invitar">Invita amici</string>
     <string name="perfil_privadas">Private</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">Cosa ricevere</string>
     <string name="red_dos">%1$s e %2$s</string>
     <string name="red_varios">%1$s e altri %2$d</string>
-    <string name="red_a_impulso">Ha dato slancio al tuo post</string>
-    <string name="red_a_impulso_pl">Hanno dato slancio al tuo post</string>
+    <string name="red_a_impulso">Ha dato luce al tuo post</string>
+    <string name="red_a_impulso_pl">Hanno dato luce al tuo post</string>
     <string name="red_a_comentario">Ha commentato il tuo post</string>
     <string name="red_a_respuesta">Ha risposto al tuo commento</string>
     <string name="red_a_seguidor">Ha iniziato a seguirti</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">Ha dato slancio al tuo commento</string>
     <string name="red_a_like_com_pl">Hanno dato slancio al tuo commento</string>
     <string name="red_a_mencion">Ti ha menzionato</string>
-    <string name="red_p_impulso">Slanci ai tuoi post</string>
+    <string name="red_p_impulso">Luci ai tuoi post</string>
     <string name="red_p_comentario">Commenti</string>
     <string name="red_p_respuesta">Risposte ai tuoi commenti</string>
     <string name="red_p_seguidor">Nuovi follower</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">Per te mostra prima ciò che ti aiuta a salire: post sul tuo campo più debole e di chi ha un vero cammino alle spalle. Visione, solo vision board. Seguiti, le persone che segui.</string>
     <string name="cv_g2_t">Scorri per la prossima vetta</string>
     <string name="cv_g2_d">Ogni post occupa lo schermo. Il feed ha una fine: quando hai visto tutte le novità, ti invita a fare il tuo passo.</string>
-    <string name="cv_g3_t">Dai slancio</string>
-    <string name="cv_g3_d">Tocca il cuore o tocca due volte il post. Il numero di slanci lo vede solo chi ha pubblicato: qui non si gareggia per i numeri.</string>
+    <string name="cv_g3_t">Dare luce</string>
+    <string name="cv_g3_d">Un tocco o un doppio tocco sul post dà la tua luce di sempre. Tieni premuto per scegliere: candela (sono con te), lanterna (mi hai illuminato), stella (ti ammiro), luna (ti capisco) o sole (festeggiamo!). Tutti vedono quali luci ha ricevuto; il numero lo vede solo chi ha pubblicato.</string>
     <string name="cv_g4_t">Che tempo ti lascia?</string>
     <string name="cv_g4_d">Lascia come ti ha fatto sentire: sole, tempesta, nebbia, valle o vetta. L\'anello colorato mostra il tempo lasciato dalla community.</string>
     <string name="cv_g5_t">Lancia una corda</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">Cordate</string>
     <string name="cv_g10_d">Sfide da 7 a 90 giorni con fino a 6 persone. Se qualcuno non segna da 3 giorni, i compagni gli lanciano una corda.</string>
     <string name="cv_g11_t">La spedizione della community</string>
-    <string name="cv_g11_d">Una montagna di 8.848.000 mm che scaliamo insieme: contano i post, gli slanci e ogni giorno segnato in cordate e sfide.</string>
+    <string name="cv_g11_d">Una montagna di 8.848.000 mm che scaliamo insieme: contano i post, le luci e ogni giorno segnato in cordate e sfide.</string>
     <string name="cv_g12_t">Altre opzioni</string>
     <string name="cv_g12_d">Copia il link, silenzia, segnala o blocca. La tua sicurezza è sempre a un tocco.</string>
     <string name="cv_me_lo_llevo">Lo porto con me</string>
     <string name="cv_detras">Dietro la cima</string>
-    <string name="cv_llevado">L\'hai preso: è nel tuo zaino e gli hai dato slancio.</string>
+    <string name="cv_llevado">Te lo porti: è nel tuo zaino e gli hai dato la tua luce.</string>
     <string name="cv_todos">Tutti</string>
     <string name="cv_sendero">Sentiero %1$s</string>
     <string name="cv_detras_ayuda">Il cammino che c\'era dietro quando ha pubblicato:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">Scorri a sinistra: dietro la cima</string>
     <string name="cv_g13_d">Vedi il cammino di quella persona: la sua costanza, i passi della Bussola, il suo impegno e le altre cime.</string>
     <string name="cv_g14_t">Scorri a destra: lo porto con me</string>
-    <string name="cv_g14_d">La pubblicazione va nel tuo zaino e riceve il tuo slancio. Qui nessuno viene mai rifiutato.</string>
+    <string name="cv_g14_d">Il post va nel tuo zaino e gli dai la tua luce. Qui nessuno viene mai rifiutato.</string>
     <string name="cv_g15_t">Sentieri</string>
     <string name="cv_g15_d">In alto scegli un sentiero (Volontà, Maestria, Voce, Valore, Evoluzione, Trascendenza) o scorri di lato sull\'intestazione per cambiarlo.</string>
     <string name="fb_fijos">Le mie spese fisse</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">Hai dato «%1$s». Tocca per toglierla; tieni premuto per sceglierne un’altra</string>
     <string name="lz_total">%1$d luci</string>
     <string name="lz_elegir">Scegli la tua luce</string>
+    <string name="red_a_luz">Ti ha dato %1$s: «%2$s»</string>
+    <string name="lz_cosa_vela">una candela</string>
+    <string name="lz_cosa_farol">una lanterna</string>
+    <string name="lz_cosa_estrella">una stella</string>
+    <string name="lz_cosa_luna">una luna</string>
+    <string name="lz_cosa_sol">un sole</string>
 </resources>

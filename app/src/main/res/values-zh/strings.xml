@@ -1041,7 +1041,7 @@
     <string name="diario_de">%1$s 的日记</string>
     <string name="diario_ajeno_vacio">%1$s 还没有分享日记中的年份。</string>
     <string name="diario_ver_autor">查看TA的生活日记</string>
-    <string name="cumbre_comunidad_valor">今天一条帖子值 %1$s 毫米，一次助力 %2$s 毫米</string>
+    <string name="cumbre_comunidad_valor">今天一条帖子值 %1$s 毫米，一盏光值 %2$s 毫米</string>
     <string name="mandala_tablero">看板</string>
     <string name="mandala_titulo">你的 9×9</string>
     <string name="mandala_intro">你的营地就是中心：顶峰居中，周围是像罗盘一样固定的 8 个营地（6 个轴、汇流与大本营）。每个营地有 8 步。赢得一步后，它的证据照片会取代愿景：你的 9×9 从梦想变成真实生活。</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">未开始</string>
     <string name="tarjeta_camino">进行中</string>
     <string name="tarjeta_lograda">已达成</string>
-    <string name="perfil_impulsos">鼓励</string>
+    <string name="perfil_impulsos">光</string>
     <string name="perfil_editar">编辑个人资料</string>
     <string name="perfil_invitar">邀请朋友</string>
     <string name="perfil_privadas">私密</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">接收哪些通知</string>
     <string name="red_dos">%1$s 和 %2$s</string>
     <string name="red_varios">%1$s 和其他 %2$d 人</string>
-    <string name="red_a_impulso">为你的帖子助力</string>
-    <string name="red_a_impulso_pl">为你的帖子助力</string>
+    <string name="red_a_impulso">为你的帖子送上了光</string>
+    <string name="red_a_impulso_pl">为你的帖子送上了光</string>
     <string name="red_a_comentario">评论了你的帖子</string>
     <string name="red_a_respuesta">回复了你的评论</string>
     <string name="red_a_seguidor">开始关注你</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">为你的评论助力</string>
     <string name="red_a_like_com_pl">为你的评论助力</string>
     <string name="red_a_mencion">提到了你</string>
-    <string name="red_p_impulso">帖子获得助力</string>
+    <string name="red_p_impulso">你帖子收到的光</string>
     <string name="red_p_comentario">评论</string>
     <string name="red_p_respuesta">评论的回复</string>
     <string name="red_p_seguidor">新关注者</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">为你推荐会优先显示能帮你向上攀登的内容：与你最薄弱的营地相关的动态，以及背后有真实积累的人的动态。愿景只显示梦想板。关注显示你关注的人。</string>
     <string name="cv_g2_t">滑动前往下一座山峰</string>
     <string name="cv_g2_d">每条动态占满整个屏幕。信息流有尽头：当你看完所有新内容，它会邀请你迈出自己的一步。</string>
-    <string name="cv_g3_t">助力</string>
-    <string name="cv_g3_d">点击爱心或双击动态。助力数只有发布者能看到：这里不比拼数字。</string>
+    <string name="cv_g3_t">送出光</string>
+    <string name="cv_g3_d">轻点或双击帖子即可送出你常用的光。长按可选择：蜡烛（我陪着你）、油灯（你照亮了我）、星星（我欣赏你）、月亮（我懂你）或太阳（一起庆祝！）。大家都能看到收到了哪些光；数字只有发帖人能看到。</string>
     <string name="cv_g4_t">它给你留下了什么天气？</string>
     <string name="cv_g4_d">留下你的感受：晴天、风暴、迷雾、山谷或山顶。彩色圆环显示社区留下的天气。</string>
     <string name="cv_g5_t">抛一根绳子</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">结组</string>
     <string name="cv_g10_d">7 到 90 天的挑战，最多 6 人。如果有人 3 天没有打卡，队友就会向 TA 抛一根绳子。</string>
     <string name="cv_g11_t">社区远征</string>
-    <string name="cv_g11_d">一座 8,848,000 毫米的大山，由大家一起攀登：动态、助力，以及在结组和挑战中打卡的每一天都会累加。</string>
+    <string name="cv_g11_d">一座 8,848,000 毫米的山，我们一起攀登：帖子、光，以及在绳队和挑战中打卡的每一天都会累计。</string>
     <string name="cv_g12_t">更多选项</string>
     <string name="cv_g12_d">复制链接、静音、举报或屏蔽。你的安全始终只需轻点一下。</string>
     <string name="cv_me_lo_llevo">我收下了</string>
     <string name="cv_detras">山顶背后</string>
-    <string name="cv_llevado">已收下：放进了你的背包，并为它助力。</string>
+    <string name="cv_llevado">已带走：放进你的背包，并送出了你的光。</string>
     <string name="cv_todos">全部</string>
     <string name="cv_sendero">%1$s 小径</string>
     <string name="cv_detras_ayuda">发布时背后的路程：</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">向左滑：山顶背后</string>
     <string name="cv_g13_d">查看这个人的路程：坚持的天数、指南针上的步数、承诺和其他山顶。</string>
     <string name="cv_g14_t">向右滑：我收下了</string>
-    <string name="cv_g14_d">动态会放进你的背包并获得你的助力。这里从不拒绝任何人。</string>
+    <string name="cv_g14_d">帖子放进你的背包，你也送出了你的光。这里从不拒绝任何人。</string>
     <string name="cv_g15_t">小径</string>
     <string name="cv_g15_d">在顶部选择一条小径（意志、精通、声音、价值、进化、超越），或在顶部栏左右滑动切换。</string>
     <string name="fb_fijos">我的固定账单</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">你送出了「%1$s」。轻点取消；长按选择其他</string>
     <string name="lz_total">%1$d 盏光</string>
     <string name="lz_elegir">选择你的光</string>
+    <string name="red_a_luz">送你%1$s：「%2$s」</string>
+    <string name="lz_cosa_vela">一支蜡烛</string>
+    <string name="lz_cosa_farol">一盏油灯</string>
+    <string name="lz_cosa_estrella">一颗星星</string>
+    <string name="lz_cosa_luna">一轮月亮</string>
+    <string name="lz_cosa_sol">一个太阳</string>
 </resources>

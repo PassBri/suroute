@@ -1041,7 +1041,7 @@
     <string name="diario_de">Дневник: %1$s</string>
     <string name="diario_ajeno_vacio">%1$s пока не открыл(а) ни одного года дневника.</string>
     <string name="diario_ver_autor">Открыть дневник жизни</string>
-    <string name="cumbre_comunidad_valor">Сегодня публикация стоит %1$s мм, импульс — %2$s мм</string>
+    <string name="cumbre_comunidad_valor">Сегодня публикация стоит %1$s мм, а огонь — %2$s мм</string>
     <string name="mandala_tablero">Доска</string>
     <string name="mandala_titulo">Твоя 9×9</string>
     <string name="mandala_intro">Твои лагеря — центр: вершина посередине и 8 постоянных лагерей вокруг, как роза ветров (6 осей, Слияние и Базовый лагерь). В каждом лагере 8 шагов. Когда ты зарабатываешь шаг, фото-доказательство заменяет мечту: твоя 9×9 превращается из задуманной в прожитую.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">Открыта</string>
     <string name="tarjeta_camino">В процессе</string>
     <string name="tarjeta_lograda">Достигнута</string>
-    <string name="perfil_impulsos">Поддержки</string>
+    <string name="perfil_impulsos">Огни</string>
     <string name="perfil_editar">Изменить профиль</string>
     <string name="perfil_invitar">Пригласить друзей</string>
     <string name="perfil_privadas">Личные</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">Что получать</string>
     <string name="red_dos">%1$s и %2$s</string>
     <string name="red_varios">%1$s и ещё %2$d</string>
-    <string name="red_a_impulso">Поддержал(а) вашу публикацию</string>
-    <string name="red_a_impulso_pl">Поддержали вашу публикацию</string>
+    <string name="red_a_impulso">Дал свет вашей публикации</string>
+    <string name="red_a_impulso_pl">Дали свет вашей публикации</string>
     <string name="red_a_comentario">Прокомментировал(а) вашу публикацию</string>
     <string name="red_a_respuesta">Ответил(а) на ваш комментарий</string>
     <string name="red_a_seguidor">Подписался(-ась) на вас</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">Поддержал(а) ваш комментарий</string>
     <string name="red_a_like_com_pl">Поддержали ваш комментарий</string>
     <string name="red_a_mencion">Упомянул(а) вас</string>
-    <string name="red_p_impulso">Поддержка ваших публикаций</string>
+    <string name="red_p_impulso">Огни ваших публикаций</string>
     <string name="red_p_comentario">Комментарии</string>
     <string name="red_p_respuesta">Ответы на ваши комментарии</string>
     <string name="red_p_seguidor">Новые подписчики</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">«Для тебя» сначала показывает то, что помогает подниматься: публикации о твоём самом слабом лагере и от людей с настоящим путём за плечами. «Видение» — только доски мечты. «Подписки» — люди из твоих подписок.</string>
     <string name="cv_g2_t">Листай к следующей вершине</string>
     <string name="cv_g2_d">Каждая публикация занимает весь экран. У ленты есть конец: когда ты увидишь всё новое, она предложит тебе сделать свой шаг.</string>
-    <string name="cv_g3_t">Поддержать</string>
-    <string name="cv_g3_d">Нажми на сердечко или дважды коснись публикации. Число поддержек видит только автор: здесь никто не соревнуется в цифрах.</string>
+    <string name="cv_g3_t">Дать свет</string>
+    <string name="cv_g3_d">Одно касание или двойное касание публикации дарит ваш привычный свет. Удерживайте, чтобы выбрать: свеча (я с тобой), фонарь (ты осветил мне путь), звезда (восхищаюсь тобой), луна (понимаю тебя) или солнце (празднуем!). Все видят, какие огни получила публикация; число видит только автор.</string>
     <string name="cv_g4_t">Какую погоду она тебе оставила?</string>
     <string name="cv_g4_d">Поделись своим ощущением: солнце, гроза, туман, долина или вершина. Цветное кольцо показывает погоду, которую оставило сообщество.</string>
     <string name="cv_g5_t">Бросить верёвку</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">Связки</string>
     <string name="cv_g10_d">Испытания от 7 до 90 дней, до 6 человек. Если кто-то не отмечается 3 дня, товарищи бросают ему верёвку.</string>
     <string name="cv_g11_t">Экспедиция сообщества</string>
-    <string name="cv_g11_d">Гора высотой 8 848 000 мм, на которую мы поднимаемся вместе: в счёт идут публикации, поддержки и каждый отмеченный день в связках и испытаниях.</string>
+    <string name="cv_g11_d">Гора в 8 848 000 мм, на которую мы поднимаемся вместе: считаются публикации, огни и каждый отмеченный день в связках и челленджах.</string>
     <string name="cv_g12_t">Другие действия</string>
     <string name="cv_g12_d">Скопировать ссылку, скрыть, пожаловаться или заблокировать. Твоя безопасность всегда в одном касании.</string>
     <string name="cv_me_lo_llevo">Беру с собой</string>
     <string name="cv_detras">За вершиной</string>
-    <string name="cv_llevado">Взято: в вашем рюкзаке, и вы поддержали публикацию.</string>
+    <string name="cv_llevado">Забрали с собой: в рюкзаке, и вы дали свой свет.</string>
     <string name="cv_todos">Все</string>
     <string name="cv_sendero">Тропа: %1$s</string>
     <string name="cv_detras_ayuda">Путь за публикацией в момент её создания:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">Влево: за вершиной</string>
     <string name="cv_g13_d">Путь этого человека: постоянство, шаги Компаса, обязательство и другие вершины.</string>
     <string name="cv_g14_t">Вправо: беру с собой</string>
-    <string name="cv_g14_d">Публикация попадает в ваш рюкзак и получает вашу поддержку. Здесь никого не отвергают.</string>
+    <string name="cv_g14_d">Публикация попадает в рюкзак, и вы дарите свой свет. Здесь никому не отказывают.</string>
     <string name="cv_g15_t">Тропы</string>
     <string name="cv_g15_d">Вверху выберите тропу (Воля, Мастерство, Голос, Ценность, Развитие, Трансцендентность) или проведите вбок по заголовку, чтобы сменить её.</string>
     <string name="fb_fijos">Мои постоянные платежи</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">Вы дали «%1$s». Нажмите, чтобы убрать; удерживайте, чтобы выбрать другой</string>
     <string name="lz_total">Огней: %1$d</string>
     <string name="lz_elegir">Выберите свой свет</string>
+    <string name="red_a_luz">Подарил(а) вам %1$s: «%2$s»</string>
+    <string name="lz_cosa_vela">свечу</string>
+    <string name="lz_cosa_farol">фонарь</string>
+    <string name="lz_cosa_estrella">звезду</string>
+    <string name="lz_cosa_luna">луну</string>
+    <string name="lz_cosa_sol">солнце</string>
 </resources>

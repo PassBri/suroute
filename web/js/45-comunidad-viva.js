@@ -168,15 +168,14 @@ try {
 const GUIA_COMUNIDAD = [
   ["comunidad", "Para ti, Visión y Siguiendo", "Para ti muestra primero lo que te ayuda a subir: lo de tu campamento más flojo y lo de quien tiene camino detrás. Visión, solo tableros de sueños. Siguiendo, las personas que sigues."],
   ["arriba", "Desliza para la siguiente cima", "Cada publicación ocupa la pantalla. El muro tiene final: cuando ves todo lo nuevo, te invita a dar tu propio paso."],
-  ["impulso", "Impulsar", "Toca el corazón o da doble toque sobre la publicación. El número de impulsos solo lo ve quien publicó: aquí no se compite por cifras."],
-  ["sol", "¿Qué clima te deja?", "Deja cómo te hizo sentir: sol, tormenta, niebla, valle o cumbre. El anillo de colores muestra el clima que dejó la comunidad."],
+  ["impulso", "Dar luz", "Un toque o doble toque sobre la publicación da tu luz de siempre. Mantén el dedo para elegir: vela (te acompaño), farol (me iluminó), estrella (te admiro), luna (te entiendo) o sol (¡celebremos!). Todos ven qué luces recibió; el número solo lo ve quien publicó."],
   ["cordada", "Lanzar una cuerda", "Al comentar, elige Pregunta, Consejo o Yo también lo intento. Una cuerda ayuda más que un aplauso."],
   ["morral", "Mochila", "Guarda la publicación para volver a ella. También sirve para guardar una carta sellada y leerla el día que se abra."],
   ["ruta", "Prueba de camino", "Cada publicación muestra el camino que hay detrás: los días seguidos de constancia y los pasos ganados de la Brújula."],
   ["bandera", "Compromiso con fecha", "Al publicar puedes comprometerte hasta una fecha. Cuando vence, dices si lo lograste o lo replanteas, y tu comunidad ve el desenlace."],
   ["candado", "Carta al yo futuro", "Sella una publicación hasta una fecha: los demás verán el sobre con su lacre y la leerán cuando se abra."],
   ["personas", "Cordadas", "Retos de 7 a 90 días con hasta 6 personas. Si alguien lleva 3 días sin marcar, sus compañeros le lanzan una cuerda."],
-  ["cima", "La expedición de la comunidad", "Una montaña de 8.848.000 mm que subimos entre todos: suman las publicaciones, los impulsos y cada día marcado en cordadas y retos."],
+  ["cima", "La expedición de la comunidad", "Una montaña de 8.848.000 mm que subimos entre todos: suman las publicaciones, las luces y cada día marcado en cordadas y retos."],
   ["masH", "Más opciones", "Junto al nombre: copiar el enlace, silenciar, reportar o bloquear. Tu seguridad siempre está a un toque."],
 ];
 ACC.guiaComunidad = () => abrirHoja(`<div class="com-cab"><span></span><h3 class="hoja-titulo">Cómo funciona la comunidad</h3><button data-cerrar-hoja aria-label="Cerrar">${ic("cerrar")}</button></div>

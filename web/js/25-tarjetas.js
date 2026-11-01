@@ -297,7 +297,7 @@ DET["perfil.publicaciones"] = () => {
       <div class="tk-cifras">
         <span><b>${cifra(c.siguiendo)}</b><small>Siguiendo</small></span>
         <span><b>${cifra(c.seguidores)}</b><small>Seguidores</small></span>
-        <span><b>${cifra(c.impulsos)}</b><small>Impulsos</small></span></div>
+        <span><b>${cifra(c.impulsos)}</b><small>Luces</small></span></div>
       <div class="tk-botones"><button class="btn" data-sel="perfil">${ic("editar")} Editar perfil</button>
         <button class="btn" data-acc="invitarAmigos" aria-label="Invitar amigos" title="Invitar amigos">${ic("personaMas")}</button></div>
       ${p.cumbreFrase ? `<p class="tk-bio">${esc(p.cumbreFrase)}</p>` : ""}

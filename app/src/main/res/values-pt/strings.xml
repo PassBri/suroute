@@ -1041,7 +1041,7 @@
     <string name="diario_de">Diário de %1$s</string>
     <string name="diario_ajeno_vacio">%1$s ainda não compartilha anos do diário.</string>
     <string name="diario_ver_autor">Ver o diário de vida</string>
-    <string name="cumbre_comunidad_valor">Hoje uma publicação vale %1$s mm e um impulso %2$s mm</string>
+    <string name="cumbre_comunidad_valor">Hoje uma publicação vale %1$s mm e uma luz %2$s mm</string>
     <string name="mandala_tablero">Quadro</string>
     <string name="mandala_titulo">Seu 9×9</string>
     <string name="mandala_intro">Seus acampamentos são o centro: seu cume no meio e 8 acampamentos fixos ao redor, como uma rosa dos ventos (seus 6 eixos, Confluência e Acampamento Base). Cada acampamento tem 8 passos. Ao conquistar um passo, a foto de evidência substitui a visão: seu 9×9 passa de sonhado a vivido.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">Aberta</string>
     <string name="tarjeta_camino">Em andamento</string>
     <string name="tarjeta_lograda">Conquistada</string>
-    <string name="perfil_impulsos">Impulsos</string>
+    <string name="perfil_impulsos">Luzes</string>
     <string name="perfil_editar">Editar perfil</string>
     <string name="perfil_invitar">Convidar amigos</string>
     <string name="perfil_privadas">Privadas</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">O que receber</string>
     <string name="red_dos">%1$s e %2$s</string>
     <string name="red_varios">%1$s e mais %2$d</string>
-    <string name="red_a_impulso">Impulsionou sua publicação</string>
-    <string name="red_a_impulso_pl">Impulsionaram sua publicação</string>
+    <string name="red_a_impulso">Deu luz à sua publicação</string>
+    <string name="red_a_impulso_pl">Deram luz à sua publicação</string>
     <string name="red_a_comentario">Comentou sua publicação</string>
     <string name="red_a_respuesta">Respondeu seu comentário</string>
     <string name="red_a_seguidor">Começou a seguir você</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">Impulsionou seu comentário</string>
     <string name="red_a_like_com_pl">Impulsionaram seu comentário</string>
     <string name="red_a_mencion">Mencionou você</string>
-    <string name="red_p_impulso">Impulsos nas suas publicações</string>
+    <string name="red_p_impulso">Luzes nas suas publicações</string>
     <string name="red_p_comentario">Comentários</string>
     <string name="red_p_respuesta">Respostas aos seus comentários</string>
     <string name="red_p_seguidor">Novos seguidores</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">Para você mostra primeiro o que te ajuda a subir: posts sobre o seu acampamento mais fraco e de quem tem caminho por trás. Visão, só quadros de sonhos. Seguindo, as pessoas que você segue.</string>
     <string name="cv_g2_t">Deslize para o próximo cume</string>
     <string name="cv_g2_d">Cada publicação ocupa a tela. O feed tem fim: quando você vê tudo o que é novo, ele te convida a dar o seu próprio passo.</string>
-    <string name="cv_g3_t">Impulsionar</string>
-    <string name="cv_g3_d">Toque no coração ou dê dois toques na publicação. Só quem publicou vê o número de impulsos: aqui ninguém compete por números.</string>
+    <string name="cv_g3_t">Dar luz</string>
+    <string name="cv_g3_d">Um toque ou toque duplo na publicação dá sua luz de sempre. Segure para escolher: vela (estou com você), lampião (você me iluminou), estrela (eu te admiro), lua (eu te entendo) ou sol (vamos celebrar!). Todos veem quais luzes ela recebeu; o número só quem publicou vê.</string>
     <string name="cv_g4_t">Que clima isso te deixa?</string>
     <string name="cv_g4_d">Diga como isso te fez sentir: sol, tempestade, neblina, vale ou cume. O anel colorido mostra o clima que a comunidade deixou.</string>
     <string name="cv_g5_t">Jogar uma corda</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">Cordadas</string>
     <string name="cv_g10_d">Desafios de 7 a 90 dias com até 6 pessoas. Se alguém está há 3 dias sem marcar, os companheiros jogam uma corda.</string>
     <string name="cv_g11_t">A expedição da comunidade</string>
-    <string name="cv_g11_d">Uma montanha de 8.848.000 mm que subimos juntos: somam as publicações, os impulsos e cada dia marcado em cordadas e desafios.</string>
+    <string name="cv_g11_d">Uma montanha de 8.848.000 mm que subimos juntos: somam as publicações, as luzes e cada dia marcado em cordadas e desafios.</string>
     <string name="cv_g12_t">Mais opções</string>
     <string name="cv_g12_d">Copiar o link, silenciar, denunciar ou bloquear. Sua segurança está sempre a um toque.</string>
     <string name="cv_me_lo_llevo">Vou levar</string>
     <string name="cv_detras">Por trás do cume</string>
-    <string name="cv_llevado">Você levou: ficou na sua mochila e recebeu seu impulso.</string>
+    <string name="cv_llevado">É seu: ficou na sua mochila e você deu sua luz.</string>
     <string name="cv_todos">Todos</string>
     <string name="cv_sendero">Trilha %1$s</string>
     <string name="cv_detras_ayuda">O caminho que havia por trás quando publicou:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">Deslize para a esquerda: por trás do cume</string>
     <string name="cv_g13_d">Veja o caminho dessa pessoa: sua constância, seus passos da Bússola, seu compromisso e seus outros cumes.</string>
     <string name="cv_g14_t">Deslize para a direita: vou levar</string>
-    <string name="cv_g14_d">A publicação vai para sua mochila e recebe seu impulso. Aqui ninguém é rejeitado.</string>
+    <string name="cv_g14_d">A publicação fica na sua mochila e você dá sua luz. Aqui ninguém é rejeitado.</string>
     <string name="cv_g15_t">Trilhas</string>
     <string name="cv_g15_d">No alto, escolha uma trilha (Vontade, Maestria, Voz, Valor, Evolução, Transcendência) ou deslize de lado no cabeçalho para mudar.</string>
     <string name="fb_fijos">Minhas contas fixas</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">Você deu «%1$s». Toque para tirar; segure para escolher outra</string>
     <string name="lz_total">%1$d luzes</string>
     <string name="lz_elegir">Escolha sua luz</string>
+    <string name="red_a_luz">Te deu %1$s: «%2$s»</string>
+    <string name="lz_cosa_vela">uma vela</string>
+    <string name="lz_cosa_farol">um lampião</string>
+    <string name="lz_cosa_estrella">uma estrela</string>
+    <string name="lz_cosa_luna">uma lua</string>
+    <string name="lz_cosa_sol">um sol</string>
 </resources>

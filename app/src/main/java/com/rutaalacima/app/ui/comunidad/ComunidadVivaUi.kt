@@ -178,7 +178,7 @@ fun BotonGuiaComunidad(tinte: Color = MaterialTheme.colorScheme.onSurface) {
             Icons.Filled.Terrain to (R.string.cv_g1_t to R.string.cv_g1_d), Icons.Filled.KeyboardArrowUp to (R.string.cv_g2_t to R.string.cv_g2_d),
 Icons.AutoMirrored.Filled.ArrowBack to (R.string.cv_g13_t to R.string.cv_g13_d), Icons.Filled.Bookmark to (R.string.cv_g14_t to R.string.cv_g14_d),
             Icons.Filled.Terrain to (R.string.cv_g15_t to R.string.cv_g15_d),
-            Icons.Filled.Favorite to (R.string.cv_g3_t to R.string.cv_g3_d), Icons.Filled.WbSunny to (R.string.cv_g4_t to R.string.cv_g4_d),
+            Icons.Filled.WbSunny to (R.string.cv_g3_t to R.string.cv_g3_d),
             Icons.Filled.Link to (R.string.cv_g5_t to R.string.cv_g5_d), Icons.Filled.Bookmark to (R.string.cv_g6_t to R.string.cv_g6_d),
             Icons.Filled.Hiking to (R.string.cv_g7_t to R.string.cv_g7_d), Icons.Filled.Flag to (R.string.cv_g8_t to R.string.cv_g8_d),
             Icons.Filled.Lock to (R.string.cv_g9_t to R.string.cv_g9_d), Icons.Filled.Diversity3 to (R.string.cv_g10_t to R.string.cv_g10_d),

@@ -259,9 +259,10 @@ private val FILA_ALTO = 64.dp
 /**
  * El botón de las luces. [enCima]: círculo translúcido de 48 dp con la luz y el total (columna de Cimas).
  * Si no, la línea del muro: la pila de las luces más dadas y una píldora con el nombre.
+ * Pocos números: todos ven qué luces recibió; el total solo se muestra con [verTotal] (quien publicó).
  */
 @Composable
-fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> Unit, modifier: Modifier = Modifier, enCima: Boolean = true) {
+fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> Unit, modifier: Modifier = Modifier, enCima: Boolean = true, verTotal: Boolean = false) {
     val ctx = LocalContext.current
     val haptico = LocalHapticFeedback.current
     val dens = LocalDensity.current
@@ -317,7 +318,7 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
         }
     }
     val sem = Modifier.semantics {
-        contentDescription = etiqueta + ", " + ctx.getString(R.string.lz_total, total)
+        contentDescription = etiqueta + if (verTotal) ", " + ctx.getString(R.string.lz_total, total) else ""
         role = Role.Button
         onClick { tocar(); true }
         customActions = Luces.IDS.map { k -> CustomAccessibilityAction(Luces.nombre(ctx, k)) { elegir(k); true } }
@@ -334,13 +335,13 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
                 ) {
                     Luz(muestra, Modifier.size(34.dp).graphicsLayer { alpha = if (miLuz == null && total == 0) 0.72f else 1f }, animada = miLuz != null)
                 }
-                Text(if (total > 0) total.toString() else "", color = Color.White, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium)
+                Text(if (verTotal && total > 0) total.toString() else "", color = Color.White, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium)
             }
         } else {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (total > 0) Row(verticalAlignment = Alignment.CenterVertically) {
                     mas.forEachIndexed { i, k -> Luz(k, Modifier.size(22.dp).offset(x = (-6 * i).dp)) }
-                    Text(total.toString(), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.offset(x = (8 - 6 * mas.size).dp))
+                    if (verTotal) Text(total.toString(), style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.offset(x = (8 - 6 * mas.size).dp))
                 }
                 Box(
                     Modifier.heightIn(min = 40.dp).clip(RoundedCornerShape(50))

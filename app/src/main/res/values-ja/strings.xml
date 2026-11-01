@@ -1041,7 +1041,7 @@
     <string name="diario_de">%1$sの日記</string>
     <string name="diario_ajeno_vacio">%1$sはまだ日記の年を共有していません。</string>
     <string name="diario_ver_autor">人生日記を見る</string>
-    <string name="cumbre_comunidad_valor">今日は投稿1つで%1$s mm、応援1回で%2$s mm</string>
+    <string name="cumbre_comunidad_valor">今日は投稿1件が %1$s mm、光1つが %2$s mm</string>
     <string name="mandala_tablero">ボード</string>
     <string name="mandala_titulo">あなたの9×9</string>
     <string name="mandala_intro">キャンプが中心です。真ん中に頂、周りに方位磁針のような8つの固定キャンプ（6つの軸、合流、ベースキャンプ）。各キャンプには8つのステップがあります。ステップを獲得すると証拠写真がビジョンに置き換わり、9×9は夢から現実へ。</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">未開始</string>
     <string name="tarjeta_camino">進行中</string>
     <string name="tarjeta_lograda">達成</string>
-    <string name="perfil_impulsos">応援</string>
+    <string name="perfil_impulsos">光</string>
     <string name="perfil_editar">プロフィールを編集</string>
     <string name="perfil_invitar">友達を招待</string>
     <string name="perfil_privadas">非公開</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">受け取るお知らせ</string>
     <string name="red_dos">%1$sと%2$s</string>
     <string name="red_varios">%1$sほか%2$d人</string>
-    <string name="red_a_impulso">あなたの投稿を応援しました</string>
-    <string name="red_a_impulso_pl">あなたの投稿を応援しました</string>
+    <string name="red_a_impulso">あなたの投稿に光を贈りました</string>
+    <string name="red_a_impulso_pl">あなたの投稿に光を贈りました</string>
     <string name="red_a_comentario">あなたの投稿にコメントしました</string>
     <string name="red_a_respuesta">あなたのコメントに返信しました</string>
     <string name="red_a_seguidor">あなたをフォローしました</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">あなたのコメントを応援しました</string>
     <string name="red_a_like_com_pl">あなたのコメントを応援しました</string>
     <string name="red_a_mencion">あなたをメンションしました</string>
-    <string name="red_p_impulso">投稿への応援</string>
+    <string name="red_p_impulso">投稿に届いた光</string>
     <string name="red_p_comentario">コメント</string>
     <string name="red_p_respuesta">コメントへの返信</string>
     <string name="red_p_seguidor">新しいフォロワー</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">おすすめでは、登る助けになる投稿を優先して表示します。あなたのいちばん弱いキャンプに関する投稿や、確かな道のりを持つ人の投稿です。ビジョンはドリームボードのみ。フォロー中は、あなたがフォローしている人の投稿です。</string>
     <string name="cv_g2_t">スワイプで次の頂へ</string>
     <string name="cv_g2_d">投稿は 1 件ずつ画面いっぱいに表示されます。フィードには終わりがあり、新着をすべて見終えると、あなた自身の一歩を促します。</string>
-    <string name="cv_g3_t">応援する</string>
-    <string name="cv_g3_d">ハートをタップするか、投稿をダブルタップします。応援の数は投稿者にしか見えません。ここでは数を競いません。</string>
+    <string name="cv_g3_t">光を贈る</string>
+    <string name="cv_g3_d">投稿をタップまたはダブルタップすると、いつもの光を贈れます。長押しで選択：ろうそく（そばにいるよ）、ランプ（照らしてくれた）、星（尊敬します）、月（わかるよ）、太陽（お祝いしよう！）。どの光が届いたかは誰でも見られます。数は投稿者だけが見られます。</string>
     <string name="cv_g4_t">どんな天気が残りましたか？</string>
     <string name="cv_g4_d">どう感じたかを残しましょう：晴れ、嵐、霧、谷、山頂。カラーリングには、コミュニティが残した天気が表示されます。</string>
     <string name="cv_g5_t">ロープを投げる</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">ザイルパーティー</string>
     <string name="cv_g10_d">6 人までで挑む 7〜90 日のチャレンジ。誰かが 3 日間チェックしていなければ、仲間がロープを投げます。</string>
     <string name="cv_g11_t">コミュニティの遠征</string>
-    <string name="cv_g11_d">みんなで登る 8,848,000 mm の山。投稿、応援、そしてザイルパーティーやチャレンジでチェックした毎日が積み重なります。</string>
+    <string name="cv_g11_d">みんなで登る 8,848,000 mm の山：投稿、光、ザイルパーティーやチャレンジでチェックした毎日が積み重なります。</string>
     <string name="cv_g12_t">その他のオプション</string>
     <string name="cv_g12_d">リンクのコピー、ミュート、報告、ブロック。安全はいつもワンタップで守れます。</string>
     <string name="cv_me_lo_llevo">持っていく</string>
     <string name="cv_detras">山頂の向こう側</string>
-    <string name="cv_llevado">持っていきました：リュックに入り、応援しました。</string>
+    <string name="cv_llevado">持ち帰りました：リュックに入れて光を贈りました。</string>
     <string name="cv_todos">すべて</string>
     <string name="cv_sendero">%1$sの道</string>
     <string name="cv_detras_ayuda">投稿したときの歩み：</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">左にスワイプ：山頂の向こう側</string>
     <string name="cv_g13_d">その人の歩みが見られます：継続の日数、コンパスの歩数、約束、ほかの山頂。</string>
     <string name="cv_g14_t">右にスワイプ：持っていく</string>
-    <string name="cv_g14_d">投稿がリュックに入り、あなたの応援が届きます。ここでは誰も拒まれません。</string>
+    <string name="cv_g14_d">投稿はリュックに入り、あなたの光も贈られます。ここでは誰も拒まれません。</string>
     <string name="cv_g15_t">道</string>
     <string name="cv_g15_d">上部で道（意志・熟達・声・価値・進化・超越）を選ぶか、ヘッダーを左右にスワイプして切り替えます。</string>
     <string name="fb_fijos">固定費</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">「%1$s」を贈りました。タップで取り消し、長押しでほかを選ぶ</string>
     <string name="lz_total">%1$d の光</string>
     <string name="lz_elegir">光を選ぶ</string>
+    <string name="red_a_luz">%1$sを贈りました：「%2$s」</string>
+    <string name="lz_cosa_vela">ろうそく</string>
+    <string name="lz_cosa_farol">ランプ</string>
+    <string name="lz_cosa_estrella">星</string>
+    <string name="lz_cosa_luna">月</string>
+    <string name="lz_cosa_sol">太陽</string>
 </resources>

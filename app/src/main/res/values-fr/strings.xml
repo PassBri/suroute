@@ -1041,7 +1041,7 @@
     <string name="diario_de">Journal de %1$s</string>
     <string name="diario_ajeno_vacio">%1$s ne partage encore aucune année de son journal.</string>
     <string name="diario_ver_autor">Voir son journal de vie</string>
-    <string name="cumbre_comunidad_valor">Aujourd\'hui une publication vaut %1$s mm et un élan %2$s mm</string>
+    <string name="cumbre_comunidad_valor">Aujourd’hui une publication vaut %1$s mm et une lumière %2$s mm</string>
     <string name="mandala_tablero">Tableau</string>
     <string name="mandala_titulo">Ton 9×9</string>
     <string name="mandala_intro">Tes camps sont le centre : ton sommet au milieu et 8 camps fixes autour, comme une rose des vents (tes 6 axes, Confluence et Camp de base). Chaque camp compte 8 pas. Quand tu gagnes un pas, sa photo de preuve remplace la vision : ton 9×9 passe du rêvé au vécu.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">Ouverte</string>
     <string name="tarjeta_camino">En cours</string>
     <string name="tarjeta_lograda">Atteinte</string>
-    <string name="perfil_impulsos">Encouragements</string>
+    <string name="perfil_impulsos">Lumières</string>
     <string name="perfil_editar">Modifier le profil</string>
     <string name="perfil_invitar">Inviter des amis</string>
     <string name="perfil_privadas">Privées</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">Que recevoir</string>
     <string name="red_dos">%1$s et %2$s</string>
     <string name="red_varios">%1$s et %2$d autres</string>
-    <string name="red_a_impulso">A encouragé votre publication</string>
-    <string name="red_a_impulso_pl">Ont encouragé votre publication</string>
+    <string name="red_a_impulso">A donné de la lumière à ta publication</string>
+    <string name="red_a_impulso_pl">Ont donné de la lumière à ta publication</string>
     <string name="red_a_comentario">A commenté votre publication</string>
     <string name="red_a_respuesta">A répondu à votre commentaire</string>
     <string name="red_a_seguidor">A commencé à vous suivre</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">A encouragé votre commentaire</string>
     <string name="red_a_like_com_pl">Ont encouragé votre commentaire</string>
     <string name="red_a_mencion">Vous a mentionné</string>
-    <string name="red_p_impulso">Encouragements sur vos publications</string>
+    <string name="red_p_impulso">Lumières sur tes publications</string>
     <string name="red_p_comentario">Commentaires</string>
     <string name="red_p_respuesta">Réponses à vos commentaires</string>
     <string name="red_p_seguidor">Nouveaux abonnés</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">Pour toi affiche d\'abord ce qui t\'aide à grimper : ce qui concerne ton camp le plus faible et les personnes qui ont un vrai chemin derrière elles. Vision, uniquement des tableaux de rêves. Abonnements, les personnes que tu suis.</string>
     <string name="cv_g2_t">Fais glisser vers le prochain sommet</string>
     <string name="cv_g2_d">Chaque publication occupe tout l\'écran. Le fil a une fin : quand tu as vu toutes les nouveautés, il t\'invite à faire ton propre pas.</string>
-    <string name="cv_g3_t">Donner de l\'élan</string>
-    <string name="cv_g3_d">Touche le cœur ou appuie deux fois sur la publication. Seul l\'auteur voit le nombre d\'élans : ici, personne ne court après les chiffres.</string>
+    <string name="cv_g3_t">Donner de la lumière</string>
+    <string name="cv_g3_d">Un toucher ou un double toucher sur la publication donne ta lumière habituelle. Maintiens pour choisir : bougie (je suis avec toi), lanterne (tu m’as éclairé), étoile (je t’admire), lune (je te comprends) ou soleil (célébrons !). Tout le monde voit les lumières reçues ; seul l’auteur voit le nombre.</string>
     <string name="cv_g4_t">Quelle météo te laisse-t-elle ?</string>
     <string name="cv_g4_d">Partage ce que tu as ressenti : soleil, orage, brouillard, vallée ou sommet. L\'anneau de couleurs montre la météo laissée par la communauté.</string>
     <string name="cv_g5_t">Lancer une corde</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">Cordées</string>
     <string name="cv_g10_d">Des défis de 7 à 90 jours, jusqu\'à 6 personnes. Si quelqu\'un n\'a rien coché depuis 3 jours, ses coéquipiers lui lancent une corde.</string>
     <string name="cv_g11_t">L\'expédition de la communauté</string>
-    <string name="cv_g11_d">Une montagne de 8 848 000 mm que nous gravissons ensemble : les publications, les élans et chaque jour coché dans les cordées et les défis s\'additionnent.</string>
+    <string name="cv_g11_d">Une montagne de 8 848 000 mm que nous gravissons ensemble : publications, lumières et chaque jour coché en cordées et défis s’additionnent.</string>
     <string name="cv_g12_t">Plus d\'options</string>
     <string name="cv_g12_d">Copier le lien, mettre en sourdine, signaler ou bloquer. Ta sécurité est toujours à portée de doigt.</string>
     <string name="cv_me_lo_llevo">Je le garde</string>
     <string name="cv_detras">Derrière le sommet</string>
-    <string name="cv_llevado">Tu l\'as gardé : il est dans ton sac et tu lui as donné de l\'élan.</string>
+    <string name="cv_llevado">C’est à toi : dans ton sac et tu lui as donné ta lumière.</string>
     <string name="cv_todos">Tous</string>
     <string name="cv_sendero">Sentier %1$s</string>
     <string name="cv_detras_ayuda">Le chemin qu\'il y avait derrière au moment de publier :</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">Glisse à gauche : derrière le sommet</string>
     <string name="cv_g13_d">Découvre le chemin de cette personne : sa constance, ses pas de la Boussole, son engagement et ses autres sommets.</string>
     <string name="cv_g14_t">Glisse à droite : je le garde</string>
-    <string name="cv_g14_d">La publication va dans ton sac et reçoit ton élan. Ici, personne n\'est jamais rejeté.</string>
+    <string name="cv_g14_d">La publication va dans ton sac et tu lui donnes ta lumière. Ici, personne n’est jamais rejeté.</string>
     <string name="cv_g15_t">Sentiers</string>
     <string name="cv_g15_d">En haut, choisis un sentier (Volonté, Maîtrise, Voix, Valeur, Évolution, Transcendance) ou glisse sur l\'en-tête pour en changer.</string>
     <string name="fb_fijos">Mes charges fixes</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">Tu as donné « %1$s ». Touche pour la retirer ; maintiens pour en choisir une autre</string>
     <string name="lz_total">%1$d lumières</string>
     <string name="lz_elegir">Choisis ta lumière</string>
+    <string name="red_a_luz">T’a donné %1$s : « %2$s »</string>
+    <string name="lz_cosa_vela">une bougie</string>
+    <string name="lz_cosa_farol">une lanterne</string>
+    <string name="lz_cosa_estrella">une étoile</string>
+    <string name="lz_cosa_luna">une lune</string>
+    <string name="lz_cosa_sol">un soleil</string>
 </resources>

@@ -58,6 +58,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -206,7 +207,12 @@ private fun FilaAviso(g: GrupoAvisos, loSigo: Boolean, onClick: () -> Unit, onSe
         headlineContent = { Text(nombres, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         supportingContent = {
             Column {
-                Text(if (a.texto.isNotBlank() && g.tipo in setOf("COMENTARIO", "RESPUESTA", "MENCION")) "$accion: “${a.texto}”" else accion, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                val luz = a.texto.takeIf { g.tipo == "IMPULSO" && !muchos && it in com.rutaalacima.app.ui.components.Luces.IDS }
+                Text(when {
+                    luz != null -> fraseLuz(LocalContext.current, luz)
+                    a.texto.isNotBlank() && g.tipo in setOf("COMENTARIO", "RESPUESTA", "MENCION") -> "$accion: “${a.texto}”"
+                    else -> accion
+                }, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(haceCuanto(a.creadoEn), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
@@ -696,3 +702,8 @@ fun PrivacidadScreen(onBack: () -> Unit) {
         }
     }
 }
+
+/** «Te dio una estrella: «Te admiro»»: qué luz te dieron (el aviso trae la luz en su texto). */
+fun fraseLuz(ctx: android.content.Context, k: String): String = ctx.getString(R.string.red_a_luz,
+    ctx.getString(when (k) { "vela" -> R.string.lz_cosa_vela; "farol" -> R.string.lz_cosa_farol; "estrella" -> R.string.lz_cosa_estrella; "luna" -> R.string.lz_cosa_luna; else -> R.string.lz_cosa_sol }),
+    com.rutaalacima.app.ui.components.Luces.nombre(ctx, k))

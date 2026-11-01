@@ -1041,7 +1041,7 @@
     <string name="diario_de">%1$s’s journal</string>
     <string name="diario_ajeno_vacio">%1$s hasn’t shared any years of their journal yet.</string>
     <string name="diario_ver_autor">See their life journal</string>
-    <string name="cumbre_comunidad_valor">Today a post is worth %1$s mm and a boost %2$s mm</string>
+    <string name="cumbre_comunidad_valor">Today a post is worth %1$s mm and a light %2$s mm</string>
     <string name="mandala_tablero">Board</string>
     <string name="mandala_titulo">Your 9×9</string>
     <string name="mandala_intro">Your camps are the center: your summit in the middle and 8 fixed camps around it, like a compass rose (your 6 axes, Confluence and Base Camp). Each camp has 8 steps. When you earn a step, its evidence photo replaces the vision: your 9×9 goes from dreamed to lived.</string>
@@ -1767,7 +1767,7 @@
     <string name="tarjeta_abierta">Open</string>
     <string name="tarjeta_camino">In progress</string>
     <string name="tarjeta_lograda">Achieved</string>
-    <string name="perfil_impulsos">Boosts</string>
+    <string name="perfil_impulsos">Lights</string>
     <string name="perfil_editar">Edit profile</string>
     <string name="perfil_invitar">Invite friends</string>
     <string name="perfil_privadas">Private</string>
@@ -1848,8 +1848,8 @@
     <string name="red_que_recibir">What to receive</string>
     <string name="red_dos">%1$s and %2$s</string>
     <string name="red_varios">%1$s and %2$d more</string>
-    <string name="red_a_impulso">Boosted your post</string>
-    <string name="red_a_impulso_pl">Boosted your post</string>
+    <string name="red_a_impulso">Gave light to your post</string>
+    <string name="red_a_impulso_pl">Gave light to your post</string>
     <string name="red_a_comentario">Commented on your post</string>
     <string name="red_a_respuesta">Replied to your comment</string>
     <string name="red_a_seguidor">Started following you</string>
@@ -1857,7 +1857,7 @@
     <string name="red_a_like_com">Boosted your comment</string>
     <string name="red_a_like_com_pl">Boosted your comment</string>
     <string name="red_a_mencion">Mentioned you</string>
-    <string name="red_p_impulso">Boosts on your posts</string>
+    <string name="red_p_impulso">Lights on your posts</string>
     <string name="red_p_comentario">Comments</string>
     <string name="red_p_respuesta">Replies to your comments</string>
     <string name="red_p_seguidor">New followers</string>
@@ -2711,8 +2711,8 @@
     <string name="cv_g1_d">For you shows first what helps you climb: posts about your weakest camp and from people with a real path behind them. Vision, only dream boards. Following, the people you follow.</string>
     <string name="cv_g2_t">Swipe for the next summit</string>
     <string name="cv_g2_d">Each post fills the screen. The feed has an end: once you\'ve seen everything new, it invites you to take your own step.</string>
-    <string name="cv_g3_t">Boost</string>
-    <string name="cv_g3_d">Tap the heart or double-tap the post. Only the author sees the number of boosts: nobody competes for numbers here.</string>
+    <string name="cv_g3_t">Give light</string>
+    <string name="cv_g3_d">One tap or a double tap on the post gives your usual light. Hold to choose: candle (I\'m with you), lantern (you lit my way), star (I admire you), moon (I get you) or sun (let\'s celebrate!). Everyone sees which lights a post received; only the author sees the number.</string>
     <string name="cv_g4_t">What weather does it leave you?</string>
     <string name="cv_g4_d">Share how it made you feel: sun, storm, fog, valley or summit. The colored ring shows the weather the community left.</string>
     <string name="cv_g5_t">Throw a rope</string>
@@ -2728,12 +2728,12 @@
     <string name="cv_g10_t">Rope teams</string>
     <string name="cv_g10_d">Challenges of 7 to 90 days with up to 6 people. If someone hasn\'t checked in for 3 days, their teammates throw them a rope.</string>
     <string name="cv_g11_t">The community expedition</string>
-    <string name="cv_g11_d">An 8,848,000 mm mountain we climb together: posts, boosts and every day checked in rope teams and challenges all add up.</string>
+    <string name="cv_g11_d">An 8,848,000 mm mountain we all climb together: posts, lights and every day checked in rope teams and challenges add up.</string>
     <string name="cv_g12_t">More options</string>
     <string name="cv_g12_d">Copy the link, mute, report or block. Your safety is always one tap away.</string>
     <string name="cv_me_lo_llevo">I\'ll take it</string>
     <string name="cv_detras">Behind the summit</string>
-    <string name="cv_llevado">You took it: it\'s in your backpack and you boosted it.</string>
+    <string name="cv_llevado">It\'s yours: saved in your backpack and you gave it your light.</string>
     <string name="cv_todos">All</string>
     <string name="cv_sendero">%1$s trail</string>
     <string name="cv_detras_ayuda">The path behind it when they posted:</string>
@@ -2744,7 +2744,7 @@
     <string name="cv_g13_t">Swipe left: behind the summit</string>
     <string name="cv_g13_d">See that person\'s path: their consistency, their Compass steps, their commitment and their other summits.</string>
     <string name="cv_g14_t">Swipe right: I\'ll take it</string>
-    <string name="cv_g14_d">The post goes into your backpack and gets your boost. Nobody is ever rejected here.</string>
+    <string name="cv_g14_d">The post goes into your backpack and you give it your light. Here no one is ever turned away.</string>
     <string name="cv_g15_t">Trails</string>
     <string name="cv_g15_d">At the top, pick a trail (Willpower, Mastery, Voice, Value, Evolution, Transcendence) or swipe sideways on the header to change it.</string>
     <string name="fb_fijos">My fixed bills</string>
@@ -2930,4 +2930,10 @@
     <string name="lz_quitar">You gave «%1$s». Tap to remove; hold to choose another</string>
     <string name="lz_total">%1$d lights</string>
     <string name="lz_elegir">Choose your light</string>
+    <string name="red_a_luz">Gave you %1$s: «%2$s»</string>
+    <string name="lz_cosa_vela">a candle</string>
+    <string name="lz_cosa_farol">a lantern</string>
+    <string name="lz_cosa_estrella">a star</string>
+    <string name="lz_cosa_luna">a moon</string>
+    <string name="lz_cosa_sol">a sun</string>
 </resources>

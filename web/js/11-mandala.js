@@ -1089,7 +1089,7 @@ function modeloHtml() {
     <h4>En el tiempo</h4>
     <p>Hay una Brújula General para toda tu vida y una para cada año, desde el año después de tu nacimiento hasta tu meta de vida. Elige el año en el riel y verás la cumbre de ese año.</p>
     <h4>No subes solo</h4>
-    <p>Comparte tu Brújula en la comunidad, sube en cordada y deja que otros te impulsen con su clima. Y si eliges con quién compartir el camino, el Campamento Base trae el espacio <button class="mo-enlace" data-acc="abrirCompanero">Compañero de Ascenso</button>.</p>
+    <p>Comparte tu Brújula en la comunidad, sube en cordada y deja que otros te den su luz. Y si eliges con quién compartir el camino, el Campamento Base trae el espacio <button class="mo-enlace" data-acc="abrirCompanero">Compañero de Ascenso</button>.</p>
     <h4>Origen</h4>
     <p>La Brújula 1·9·81 se inspira en la Mandala Chart que Yasuo Matsumura creó en Japón en 1979 (Matsumura, 2007). Llevó la estructura de 3×3 del mandala budista a la planeación de la vida y del trabajo: una meta en el centro y ocho áreas alrededor (salud, trabajo, economía, familia, sociedad, carácter, aprendizaje y ocio), para vivir con equilibrio (Mandala Chart Kyōkai, s. f.). Hiroaki Imaizumi la convirtió en el Mandal-Art para generar ideas (Imaizumi, 1988) y Takashi Harada en la hoja Open Window 64 para alcanzar metas, la que usó Shohei Ohtani (Harada y Shibayama, 2017).</p>
     <p>El Método Ruta a la Cima la vuelve una brújula de montaña: una cumbre, 8 campamentos y 64 pasos que se ganan con jornadas, medidos con el Método Cima 9×52 y con una foto de evidencia por paso.</p>

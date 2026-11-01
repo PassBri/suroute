@@ -138,7 +138,7 @@ fun PostCard(
     onGuardar: (() -> Unit)? = null,
     onAutor: (() -> Unit)? = null,
     onCompromiso: (String) -> Unit = {},
-    /** Luces: da, cambia o quita (null) la luz. Si es null, la tarjeta no muestra la línea de luces. */
+    /** Luces: da, cambia o quita (null) la luz. Si es null, un toque da o quita el impulso (sol). */
     onLuz: ((String?) -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -220,16 +220,10 @@ fun PostCard(
 
         if (post.camino != null || post.compromiso != null || (post.propio && post.sello != null)) androidx.compose.foundation.layout.Box(Modifier.padding(start = 12.dp, end = 12.dp, top = 10.dp)) { ChipsCamino(post, sobreFoto = false, onCerrarCompromiso = onCompromiso) }
         // Luces: la pila de las más dadas y la píldora para dar la tuya (mantener elige otra)
-        if (onLuz != null) com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz,
-            Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp), enCima = false)
+        com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz ?: { _ -> onImpulsar() },
+            Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp), enCima = false, verTotal = post.propio)
         // Acciones en píldoras
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            com.rutaalacima.app.ui.components.BotonImpulso(
-                activo = post.yoImpulse, cantidad = post.impulsos,
-                icono = if (post.yoImpulse) com.rutaalacima.app.ui.components.IconosRuta.Banderin else com.rutaalacima.app.ui.components.IconosRuta.BanderinContorno,
-                descripcion = stringResource(R.string.impulsar), onClick = onImpulsar,
-                mostrarCantidad = post.propio,   // pocos números: el contador solo lo ve el autor
-            )
             Pildora(Icons.AutoMirrored.Outlined.Comment, "${post.comentarios}", stringResource(R.string.comentar), false, onComentar)
             Spacer(Modifier.weight(1f))
             if (onGuardar != null) IconButton(onClick = onGuardar) {

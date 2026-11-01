@@ -13,7 +13,7 @@ const avRed = (p, clase = "avatar") => p?.avatar ? `<img class="${clase}" src="$
 
 /* ---------- 1. Avisos ---------- */
 const TIPOS_AVISO = {
-  IMPULSO: ["impulso", "le dio impulso a tu publicación", "les dieron impulso a tu publicación"],
+  IMPULSO: ["impulso", "le dio luz a tu publicación", "le dieron luz a tu publicación"],
   COMENTARIO: ["comentario", "comentó tu publicación", "comentaron tu publicación"],
   RESPUESTA: ["comentario", "respondió tu comentario", "respondieron tu comentario"],
   SEGUIDOR: ["personaMas", "empezó a seguirte", "empezaron a seguirte"],
@@ -23,7 +23,7 @@ const TIPOS_AVISO = {
   COACH: ["coach", "te escribió como coach", "te escribieron como coach"],
   SISTEMA: ["cima", "", ""],
 };
-const NOMBRE_AVISO = { IMPULSO: "Impulsos a tus publicaciones", COMENTARIO: "Comentarios", RESPUESTA: "Respuestas a tus comentarios", SEGUIDOR: "Nuevos seguidores",
+const NOMBRE_AVISO = { IMPULSO: "Luces a tus publicaciones", COMENTARIO: "Comentarios", RESPUESTA: "Respuestas a tus comentarios", SEGUIDOR: "Nuevos seguidores",
   LIKE_COMENTARIO: "Impulsos a tus comentarios", MENCION: "Menciones", RETO: "Retos" };
 const AVISOS_DEMO = () => [
   { id: 1, tipo: "IMPULSO", actor: { nombre: "Diana", usuario: "diana" }, postId: "d1", texto: "", leida: false, creadoEn: Date.now() - 6e5 },
@@ -70,6 +70,7 @@ function fraseAviso(g) {
   const [, uno, varios] = TIPOS_AVISO[g.tipo] || TIPOS_AVISO.SISTEMA, a = g.actores.filter(Boolean);
   const nombre = x => `<b>${esc(x?.nombre || "Alguien")}</b>`;
   if (g.tipo === "SISTEMA" || !a.length) return esc(g.texto);
+  if (a.length <= 1 && g.tipo === "IMPULSO" && window.fraseLuz?.(g.texto)) return `${nombre(a[0])} ${fraseLuz(g.texto)}`;
   if (a.length <= 1) return `${nombre(a[0])} ${uno}`;
   if (a.length === 2) return `${nombre(a[0])} y ${nombre(a[1])} ${varios}`;
   return `${nombre(a[0])} y ${a.length - 1} personas más ${varios}`;
@@ -96,7 +97,7 @@ DET["comunidad.avisos"] = () => {
     (estado.prefsAvisos ? prefsAvisosHtml() : "") +
     (permiso ? `<div class="aviso-permiso">${ic("campana")}<span>Recibe los avisos en este navegador aunque estés en otra pestaña.</span><button class="btn mini lleno" data-acc="permisoAvisos">Activar</button></div>` : "") +
     (!RED.avisos ? `<p class="suave cargando-marca">Cargando…</p>` : grupos.length ? `<div class="avisos">${h}</div>`
-      : `<div class="vacio-avisos">${ic("campana")}<h3>Aún no tienes avisos</h3><p class="suave">Cuando alguien impulse, comente o empiece a seguir tu ascenso, lo verás aquí.</p>
+      : `<div class="vacio-avisos">${ic("campana")}<h3>Aún no tienes avisos</h3><p class="suave">Cuando alguien te dé luz, comente o empiece a seguir tu ascenso, lo verás aquí.</p>
           <button class="btn lleno" data-ir="comunidad" data-arg="publicar">${ic("publicar")} Publicar un paso</button></div>`), "max-width:640px");
 };
 async function marcarAvisosLeidos() {

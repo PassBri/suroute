@@ -130,7 +130,7 @@ class ComunidadViewModel(private val c: AppContainer) : ViewModel() {
     /** Me lo llevo: a la mochila y con impulso (nunca se rechaza a nadie). */
     fun llevar(p: Post) {
         if (p.id !in guardados) alternarGuardado(p)
-        if (!p.yoImpulse) impulsar(p)
+        if (p.miLuz == null) luz(p, com.rutaalacima.app.ui.components.Luces.ultima(c.contexto).also { com.rutaalacima.app.ui.components.Luces.recordar(c.contexto, it) })
     }
 
     fun alternarGuardado(p: Post) {
@@ -268,17 +268,14 @@ class ComunidadViewModel(private val c: AppContainer) : ViewModel() {
         val m = p.luces.toMutableMap()
         p.miLuz?.let { m[it] = ((m[it] ?: 0) - 1).coerceAtLeast(0) }
         k?.let { m[it] = (m[it] ?: 0) + 1 }
-        posts = posts.map { if (it.id == p.id) it.copy(luces = m, miLuz = k) else it }
+        posts = posts.map { if (it.id == p.id) it.copy(luces = m, miLuz = k, impulsos = m.values.sum(), yoImpulse = k != null) else it }
         c.social.recordar(posts)
         viewModelScope.launch { runCatching { c.social.reaccionarLuz(p, k) } }
     }
 
     /** Impulso optimista: se ve al instante y luego se confirma con el servidor. */
-    fun impulsar(p: Post) {
-        posts = posts.map { if (it.id == p.id) it.copy(yoImpulse = !p.yoImpulse, impulsos = p.impulsos + if (p.yoImpulse) -1 else 1) else it }
-        c.social.recordar(posts)
-        viewModelScope.launch { runCatching { c.social.impulsar(p) } }
-    }
+    /** El impulso de siempre ahora es la luz: da la de siempre o quita la que diste. */
+    fun impulsar(p: Post) = luz(p, if (p.miLuz != null || p.yoImpulse) null else com.rutaalacima.app.ui.components.Luces.ultima(c.contexto))
 }
 
 /** Comunidad: el muro donde la gente comparte logros, evidencias, metas y su vision board. */

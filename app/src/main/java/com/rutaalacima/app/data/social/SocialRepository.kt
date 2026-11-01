@@ -419,7 +419,7 @@ class SocialRepository(
                 FiltroFeed.PARA_TI -> todo
                 FiltroFeed.GUARDADOS -> todo.filter { it.id in guardados }
             }
-            return@withContext conLuces(conClimas(r.filter { (eje == null || it.eje == eje) && it.id !in ocultosLocales() && it.autorId !in bloqueadosLocales() && it.autorId !in silenciadosLocales() }, null), null).also(::recordar)
+            return@withContext conLuces(r.filter { (eje == null || it.eje == eje) && it.id !in ocultosLocales() && it.autorId !in bloqueadosLocales() && it.autorId !in silenciadosLocales() }, null).also(::recordar)
         }
         val uid = supa.sesion.value!!.userId
         val base = "select=*,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)&order=created_at.desc&limit=$paginaFeed&offset=$desde" +
@@ -445,7 +445,7 @@ class SocialRepository(
         val mios = if (ids.isEmpty()) emptySet() else supa.select("votes", "select=post_id&user_id=eq.$uid&post_id=in.(${ids.joinToString(",")})")
             .jsonArray.mapNotNull { it.jsonObject["post_id"]?.jsonPrimitive?.contentOrNull }.toSet()
         val silenciados = silenciadosLocales()
-        conLuces(conClimas(filas.map { f -> filaAPost(f.jsonObject, uid, mios) }.filter { it.autorId !in silenciados }, uid), uid).also(::recordar)
+        conLuces(filas.map { f -> filaAPost(f.jsonObject, uid, mios) }.filter { it.autorId !in silenciados }, uid).also(::recordar)
     }
 
     /** Publicaciones públicas con un filtro extra de PostgREST (etiqueta o eje), para sus páginas. */
@@ -561,33 +561,42 @@ class SocialRepository(
             .associate { (i, k) -> k to ((h shr (i * 4)) % (if (k == "sol") 11 else if (k == "estrella") 7 else 4)).toInt() }.toMutableMap()
     }
 
-    /** Agrega las luces de la comunidad (tabla post_luces) y la mía a cada publicación. */
+    /** Agrega las luces de la comunidad (tabla votes, columna luz: cada luz es un impulso con su matiz) y la mía.
+     *  El impulso de siempre queda al día: impulsos = total de luces, yoImpulse = di una luz. */
     private suspend fun conLuces(posts: List<Post>, uid: String?): List<Post> {
         val locales = lucesLocales()
         val base = posts.map { p ->
             if (uid != null && !p.demo) p.copy(luces = emptyMap(), miLuz = null)
-            else { val m = lucesDemo(p.id); val mia = locales[p.id]; if (mia != null) m[mia] = (m[mia] ?: 0) + 1; p.copy(luces = m, miLuz = mia) }
+            else { val m = lucesDemo(p.id); val mia = locales[p.id]; if (mia != null) m[mia] = (m[mia] ?: 0) + 1; p.copy(luces = m, miLuz = mia, impulsos = m.values.sum(), yoImpulse = mia != null) }
         }
         val ids = base.filter { !it.demo && it.id.matches(Regex("[0-9a-fA-F-]{36}")) }.map { it.id }
         if (uid == null || ids.isEmpty()) return base
-        val filas = runCatching { supa.select("post_luces", "select=post_id,user_id,luz&post_id=in.(${ids.joinToString(",")})").jsonArray }.getOrNull() ?: return base
+        val en = ids.joinToString(",")
+        // Si todavía no se corrió supabase/2026-11-01-luces.sql (sin columna luz), cada impulso cuenta como sol
+        val filas = runCatching { supa.select("votes", "select=post_id,user_id,luz&post_id=in.($en)").jsonArray }.getOrNull()
+            ?: runCatching { supa.select("votes", "select=post_id,user_id&post_id=in.($en)").jsonArray }.getOrNull() ?: return base
         val cuenta = HashMap<String, MutableMap<String, Int>>(); val mias = HashMap<String, String>()
         filas.forEach { f ->
             val o = f.jsonObject
             val pid = o["post_id"]?.jsonPrimitive?.contentOrNull ?: return@forEach
-            val l = o["luz"]?.jsonPrimitive?.contentOrNull ?: return@forEach
+            val l = o["luz"]?.jsonPrimitive?.contentOrNull?.takeIf { it in com.rutaalacima.app.ui.components.Luces.IDS } ?: "sol"
             cuenta.getOrPut(pid) { HashMap() }.merge(l, 1) { a, b -> a + b }
             if (o["user_id"]?.jsonPrimitive?.contentOrNull == uid) mias[pid] = l
         }
-        return base.map { p -> if (p.demo) p else p.copy(luces = cuenta[p.id].orEmpty(), miLuz = mias[p.id]) }
+        return base.map { p ->
+            if (p.demo || p.id !in ids) p
+            else { val m = cuenta[p.id].orEmpty(); p.copy(luces = m, miLuz = mias[p.id], impulsos = m.values.sum(), yoImpulse = mias[p.id] != null) }
+        }
     }
 
-    /** Da, cambia o quita (null) mi luz en una publicación. */
+    /** Da, cambia o quita (null) mi luz en una publicación (es mi impulso, con su matiz). */
     suspend fun reaccionarLuz(post: Post, luz: String?) = withContext(Dispatchers.IO) {
         if (enLinea && !post.demo) {
             val uid = supa.sesion.value!!.userId
-            if (luz == null) supa.delete("post_luces", "post_id=eq.${post.id}&user_id=eq.$uid")
-            else supa.upsert("post_luces", buildJsonObject { put("post_id", post.id); put("user_id", uid); put("luz", luz) })
+            if (luz == null) supa.delete("votes", "post_id=eq.${post.id}&user_id=eq.$uid")
+            else runCatching { supa.upsert("votes", buildJsonObject { put("post_id", post.id); put("user_id", uid); put("luz", luz) }) }
+                // Sin la columna luz todavía: queda como impulso (sol)
+                .onFailure { if (post.miLuz == null) supa.insert("votes", buildJsonObject { put("post_id", post.id); put("user_id", uid) }, devolver = false) }
         } else {
             val m = lucesLocales().toMutableMap()
             if (luz == null) m.remove(post.id) else m[post.id] = luz
