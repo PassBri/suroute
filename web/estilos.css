@@ -5073,7 +5073,7 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .lqh-cab .enlace { font-weight: 600; color: var(--burdeos); min-height: 36px; }
 .lqh-fila { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-top: 8px; }
 .lqh-b { display: grid; justify-items: center; gap: 6px; padding: 6px 2px; border: 0; background: none; color: var(--tinta); font: inherit; cursor: pointer; border-radius: 14px; touch-action: manipulation; }
-.lqh-ic { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--hoja); box-shadow: 0 1px 2px rgb(var(--sombra) / .08), 0 4px 10px -6px rgb(var(--sombra) / .25); color: var(--burdeos); transition: transform .12s cubic-bezier(.2,0,0,1); }
+.lqh-ic { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--hoja); border: 1px solid var(--linea); box-shadow: 0 1px 2px rgb(var(--sombra) / .08), 0 4px 10px -6px rgb(var(--sombra) / .25); color: var(--burdeos); transition: transform .12s cubic-bezier(.2,0,0,1); }
 .lqh-ic svg { width: 24px; height: 24px; fill: currentColor; }
 .lqh-n { font-size: 12.5px; line-height: 1.25; text-align: center; color: var(--tinta-suave); overflow-wrap: anywhere; }
 .lqh-b:active .lqh-ic { transform: scale(.94); }
