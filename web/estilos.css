@@ -5157,13 +5157,18 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .luz-btn.en-lista:active { transform: scale(.97); }
 .luz-btn:focus-visible { outline: 3px solid var(--oro); outline-offset: 2px; border-radius: 999px; }
 /* La fila de las cinco luces */
-.luz-selector { position: absolute; z-index: 6; display: flex; gap: 2px; padding: 6px 8px; border-radius: 36px; touch-action: none;
+.luz-selector { position: absolute; z-index: 6; display: flex; gap: 0; padding: 6px; border-radius: 28px; touch-action: none;
   background: var(--hoja); border: 1px solid var(--linea); box-shadow: 0 8px 24px rgb(var(--sombra) / .16); }
 .luz-wrap.en-lista .luz-selector { left: 0; bottom: calc(100% + 10px); }
 .luz-wrap.en-cima .luz-selector { right: calc(100% + 8px); top: 50%; translate: 0 -50%; background: rgb(10 14 24 / .9); border-color: rgb(255 255 255 / .16); box-shadow: 0 8px 24px rgb(0 0 0 / .4); }
-.luz-selector .lz-op { position: relative; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border-radius: 26px;
+.luz-selector .lz-op { position: relative; display: grid; justify-items: center; align-content: start; gap: 2px; width: 58px; padding: 4px 0 6px; border-radius: 22px;
   animation: luzSube .32s cubic-bezier(.2,0,0,1) both; animation-delay: calc(var(--i) * 40ms); -webkit-user-select: none; user-select: none; }
 .luz-selector .lz-op svg.luz { width: 44px; height: 44px; transition: transform .2s cubic-bezier(.2,0,0,1); }
+/* El nombre de cada luz, siempre visible bajo su dibujo */
+.luz-selector .lz-n { font-size: 10.5px; line-height: 1.15; text-align: center; color: var(--tinta-suave); padding: 0 2px; }
+.luz-wrap.en-cima .lz-n { color: rgb(255 255 255 / .86); }
+.luz-selector .lz-op.si .lz-n, .luz-selector .lz-op.lz-sobre .lz-n { color: var(--tinta); font-weight: 600; }
+.luz-wrap.en-cima .lz-op.si .lz-n, .luz-wrap.en-cima .lz-op.lz-sobre .lz-n { color: #fff; }
 .luz-selector .lz-op small { position: absolute; bottom: calc(100% + 14px); left: 50%; translate: -50% 0; white-space: nowrap; padding: 3px 10px; border-radius: 12px;
   background: var(--tinta); color: var(--hoja); font-size: 12.5px; font-weight: 600; opacity: 0; scale: .9; pointer-events: none; transition: opacity .12s, scale .12s; }
 .luz-wrap.en-cima .lz-op small { background: #F4F1EA; color: #1D2427; }

@@ -251,10 +251,10 @@ private fun DrawScope.sol(pulso: Pulso) {
 
 // ====================================================================== El botón y la fila de las cinco
 
-private val ANCHO_OP = 52.dp
-private val PASO_OP = 54.dp          // ancho + separación
-private val FILA_ANCHO = 12.dp + ANCHO_OP * 5 + 2.dp * 4
-private val FILA_ALTO = 64.dp
+private val ANCHO_OP = 58.dp
+private val PASO_OP = 58.dp          // sin separación: cada opción ya trae su aire
+private val FILA_ANCHO = 12.dp + ANCHO_OP * 5
+private val FILA_ALTO = 96.dp        // dibujo de 52 dp y el nombre en dos líneas
 
 /**
  * El botón de las luces. [enCima]: círculo translúcido de 48 dp con la luz y el total (columna de Cimas).
@@ -289,7 +289,7 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
         val centros = Luces.IDS.indices.map { i ->
             if (enCima) -(8.dp + 6.dp + PASO_OP * (4 - i) + ANCHO_OP / 2).toPx() else (6.dp + PASO_OP * i + ANCHO_OP / 2).toPx()
         }
-        val cerca = if (enCima) abs(y - 24.dp.toPx()) < 70.dp.toPx() else y < 10.dp.toPx() && y > -(FILA_ALTO + 90.dp).toPx()
+        val cerca = if (enCima) abs(y - 24.dp.toPx()) < 80.dp.toPx() else y < 10.dp.toPx() && y > -(FILA_ALTO + 90.dp).toPx()
         if (!cerca) return -1
         val i = centros.indices.minByOrNull { abs(centros[it] - x) } ?: return -1
         if (abs(centros[i] - x) <= (PASO_OP / 2).toPx()) i else -1
@@ -376,28 +376,34 @@ private fun FilaLuces(miLuz: String?, sobre: Int, oscura: Boolean, onElegir: (St
     val fondo = if (oscura) Color(0xE60A0E18) else MaterialTheme.colorScheme.surfaceContainerLowest
     val borde = if (oscura) Color.White.copy(alpha = 0.16f) else MaterialTheme.colorScheme.outlineVariant
     Row(
-        Modifier.clip(RoundedCornerShape(36.dp)).background(fondo).border(1.dp, borde, RoundedCornerShape(36.dp)).padding(6.dp),
-        horizontalArrangement = Arrangement.spacedBy(2.dp),
+        Modifier.clip(RoundedCornerShape(28.dp)).background(fondo).border(1.dp, borde, RoundedCornerShape(28.dp)).padding(6.dp),
     ) {
         Luces.IDS.forEachIndexed { i, k ->
             val arriba by animateFloatAsState(if (i == sobre) 1f else 0f, tween(200, easing = FastOutSlowInEasing), label = "sobre")
             val nombre = Luces.nombre(ctx, k)
-            Box(
-                Modifier.size(ANCHO_OP).clip(CircleShape)
+            val marcada = k == miLuz || i == sobre
+            Column(
+                Modifier.width(ANCHO_OP).clip(RoundedCornerShape(22.dp))
                     .background(if (k == miLuz) (if (oscura) Color.White.copy(alpha = 0.14f) else MaterialTheme.colorScheme.secondaryContainer) else Color.Transparent)
-                    .clickable { onElegir(k) }.semantics { contentDescription = nombre },
-                contentAlignment = Alignment.Center,
+                    .clickable { onElegir(k) }.semantics { contentDescription = nombre }.padding(top = 4.dp, bottom = 6.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Luz(k, Modifier.size(44.dp).graphicsLayer {
-                    translationY = -10.dp.toPx() * arriba; val s = 1f + 0.35f * arriba; scaleX = s; scaleY = s
-                }, animada = true)
+                Box(Modifier.size(52.dp), contentAlignment = Alignment.Center) {
+                    Luz(k, Modifier.size(44.dp).graphicsLayer {
+                        translationY = -10.dp.toPx() * arriba; val s = 1f + 0.35f * arriba; scaleX = s; scaleY = s
+                    }, animada = true)
+                }
+                // El nombre de cada luz, siempre visible bajo su dibujo
+                Text(nombre, fontSize = 10.5.sp, lineHeight = 12.sp, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    fontWeight = if (marcada) FontWeight.SemiBold else FontWeight.Normal,
+                    color = if (oscura) Color.White.copy(alpha = if (marcada) 1f else 0.86f) else if (marcada) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     }
     // El nombre de la luz bajo el dedo, encima de la fila
     if (sobre >= 0) {
         val dens = LocalDensity.current
-        Popup(alignment = Alignment.TopStart, offset = with(dens) { IntOffset((6.dp + PASO_OP * sobre - 20.dp).roundToPx(), (-34).dp.roundToPx()) }) {
+        Popup(alignment = Alignment.TopStart, offset = with(dens) { IntOffset((6.dp + PASO_OP * sobre - 16.dp).roundToPx(), (-30).dp.roundToPx()) }) {
             Text(
                 Luces.nombre(ctx, Luces.IDS[sobre]),
                 color = if (oscura) Color(0xFF1D2427) else MaterialTheme.colorScheme.inverseOnSurface,

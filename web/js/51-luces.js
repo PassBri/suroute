@@ -210,7 +210,7 @@
     const p = postDe(b.dataset.post); if (!p) return;
     const s = document.createElement("div");
     s.className = "luz-selector"; s.setAttribute("role", "menu"); s.setAttribute("aria-label", "Elige tu luz");
-    s.innerHTML = L.map((l, i) => `<button type="button" role="menuitemradio" class="lz-op${p.miLuz === l.id ? " si" : ""}" style="--i:${i}" data-luz="${l.id}" aria-checked="${p.miLuz === l.id}" aria-label="${esc(l.nombre)}">${luzSVG(l.id)}<small>${esc(l.nombre)}</small></button>`).join("");
+    s.innerHTML = L.map((l, i) => `<button type="button" role="menuitemradio" class="lz-op${p.miLuz === l.id ? " si" : ""}" style="--i:${i}" data-luz="${l.id}" aria-checked="${p.miLuz === l.id}" aria-label="${esc(l.nombre)}">${luzSVG(l.id)}<span class="lz-n">${esc(l.nombre)}</span><small aria-hidden="true">${esc(l.nombre)}</small></button>`).join("");
     s.addEventListener("click", e => { const o = e.target.closest(".lz-op"); if (o) { e.stopPropagation(); elegir(p, o.dataset.luz); } });
     b.after(s);
     navigator.vibrate?.(8);
