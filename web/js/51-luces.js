@@ -7,7 +7,7 @@
     { id: "farol", nombre: "Me iluminó" },
     { id: "estrella", nombre: "Te admiro" },
     { id: "luna", nombre: "Te entiendo" },
-    { id: "sol", nombre: "¡Cumbre!" },
+    { id: "sol", nombre: "¡Celebremos!" },
   ];
   let n = 0;
 
