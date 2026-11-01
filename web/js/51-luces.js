@@ -289,6 +289,24 @@
     if (o) { const p = postDe(x.b.dataset.post); if (p) elegir(p, o.dataset.luz); }
   });
   document.addEventListener("pointercancel", () => { if (g) { clearTimeout(g.t); g = null; } });
+  // Con mouse (computador): al dejar el cursor sobre la luz se abre la fila; al salir, se cierra
+  let tSobre = null, tSalir = null;
+  const zona = el => el?.closest?.(".luz-btn, .luz-selector");
+  document.addEventListener("pointerover", e => {
+    if (e.pointerType !== "mouse") return;
+    const z = zona(e.target); if (!z) return;
+    clearTimeout(tSalir);
+    const b = e.target.closest(".luz-btn"), abierta = document.querySelector(".luz-selector");
+    if (b && !(abierta && abierta.parentElement === b.parentElement)) { clearTimeout(tSobre); tSobre = setTimeout(() => { if (b.matches(":hover")) abrir(b, true); }, 450); }
+  });
+  document.addEventListener("pointerout", e => {
+    if (e.pointerType !== "mouse") return;
+    const de = zona(e.target); if (!de) return;
+    const a = zona(e.relatedTarget);
+    if (a && a.closest(".luz-wrap") === de.closest(".luz-wrap")) return;
+    clearTimeout(tSobre);
+    tSalir = setTimeout(() => { if (!document.querySelector(".luz-selector:hover, .luz-btn:hover")) cerrar(); }, 350);
+  });
   // Teclado: Intro da o quita; flecha arriba, menú contextual o Mayús+F10 abre la fila
   document.addEventListener("click", e => { const b = e.target.closest?.(".luz-btn"); if (b && e.detail === 0) tocar(b); });
   document.addEventListener("keydown", e => {
