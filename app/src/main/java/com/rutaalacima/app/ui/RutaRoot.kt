@@ -203,8 +203,11 @@ object Rutas {
     fun acompanado(id: String, nombre: String) = "acompanado/$id/${android.net.Uri.encode(nombre.ifBlank { "-" })}"
 }
 
-/** Pestaña de la barra: ícono relleno cuando está activa y de contorno cuando no (Material 3). */
-private data class Pestana(val ruta: String, val titulo: Int, val icono: ImageVector, val iconoInactivo: ImageVector = icono)
+/** Pestaña: ícono relleno cuando está activa y de contorno cuando no (Material 3).
+ *  [destino] es a dónde se navega (si la ruta lleva argumentos); [enBarra] = false: es pestaña (barra de arriba
+ *  y de abajo) pero no tiene ícono en la barra de abajo (Aprende y Perfil se abren desde arriba en Hoy). */
+private data class Pestana(val ruta: String, val titulo: Int, val icono: ImageVector, val iconoInactivo: ImageVector = icono,
+    val destino: String = ruta, val enBarra: Boolean = true)
 
 private val PESTANAS = listOf(
     Pestana(Rutas.HOY, R.string.tab_hoy, com.rutaalacima.app.ui.components.IconosRuta.Huellas, com.rutaalacima.app.ui.components.IconosRuta.HuellasContorno),
@@ -212,9 +215,14 @@ private val PESTANAS = listOf(
     // La Brújula 1·9·81 es una función principal: va justo después de Mi ruta
     Pestana(Rutas.VISION, R.string.ruta_brujula, Icons.Filled.Explore, Icons.Outlined.Explore),
     Pestana(Rutas.COMUNIDAD, R.string.tab_comunidad, com.rutaalacima.app.ui.components.IconosRuta.Fogata, com.rutaalacima.app.ui.components.IconosRuta.FogataContorno),
-    Pestana(Rutas.APRENDE, R.string.tab_aprende, com.rutaalacima.app.ui.components.IconosRuta.MapaRuta, com.rutaalacima.app.ui.components.IconosRuta.MapaRutaContorno),
-    Pestana(Rutas.PERFIL, R.string.tab_perfil, com.rutaalacima.app.ui.components.IconosRuta.Perfil, com.rutaalacima.app.ui.components.IconosRuta.PerfilContorno),
+    Pestana(Rutas.MENSAJES, R.string.mensajes, com.rutaalacima.app.ui.components.IconosRuta.Radio),
+    Pestana(Rutas.FINANZAS, R.string.cu_titulo, com.rutaalacima.app.ui.components.IconosRuta.Finanzas, destino = Rutas.finanzas()),
+    // Aprende y Perfil se abren desde arriba en Hoy (siguen siendo pestañas, sin ícono abajo)
+    Pestana(Rutas.APRENDE, R.string.tab_aprende, com.rutaalacima.app.ui.components.IconosRuta.MapaRuta, com.rutaalacima.app.ui.components.IconosRuta.MapaRutaContorno, enBarra = false),
+    Pestana(Rutas.PERFIL, R.string.tab_perfil, com.rutaalacima.app.ui.components.IconosRuta.Perfil, com.rutaalacima.app.ui.components.IconosRuta.PerfilContorno, enBarra = false),
 )
+/** Barra de abajo: Hoy, Mi ruta, Brújula, (Publicar), Comunidad, Mensajes y Ascenso financiero. */
+private val EN_BARRA by lazy { PESTANAS.filter { it.enBarra } }
 
 /** Todas las secciones, en el mismo orden y con los mismos íconos de la barra izquierda de la web.
  *  null en la posición de Publicar (la brújula de publicar va entre Evaluación y Comunidad, igual que la web). */
@@ -342,7 +350,7 @@ private fun AppPrincipal() {
         snackbarHost = { androidx.compose.material3.SnackbarHost(com.rutaalacima.app.ui.theme.AvisoGlobal.host) },
         topBar = {
             // La Brújula trae su propia barra (año, Modelo), así que no se duplica
-            if (pestana != null && pestana.ruta != Rutas.VISION && !inmersivo) {
+            if (pestana != null && pestana.ruta !in setOf(Rutas.VISION, Rutas.MENSAJES, Rutas.FINANZAS) && !inmersivo) {
                 TopAppBar(
                     scrollBehavior = desplazamiento,
                     // En el teléfono: todas las secciones de la web (las que no caben en la barra de abajo), en el mismo orden
@@ -382,14 +390,21 @@ private fun AppPrincipal() {
                                 Icon(Icons.Filled.Insights, stringResource(R.string.ev_titulo))
                             }
                         }
-                        // Ascenso financiero: el libro de cuentas, a un toque desde Mi ruta y Hoy
-                        if (pestana.ruta == Rutas.RUTA || pestana.ruta == Rutas.HOY) {
+                        // Hoy, arriba: Mis frases, Aprende, Equipo y Perfil (junto al ojo)
+                        if (pestana.ruta == Rutas.HOY) {
+                            IconButton(onClick = { nav.navigate(Rutas.FRASES) }) { Icon(Icons.Filled.FormatQuote, stringResource(R.string.mis_frases)) }
+                            IconButton(onClick = { nav.irAPestana(Rutas.APRENDE) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.MapaRuta, stringResource(R.string.tab_aprende)) }
+                            IconButton(onClick = { nav.navigate(Rutas.MOCHILA) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.Mosqueton, stringResource(R.string.mochila_titulo)) }
+                            IconButton(onClick = { nav.irAPestana(Rutas.PERFIL) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.Perfil, stringResource(R.string.tab_perfil)) }
+                        }
+                        // Ascenso financiero: el libro de cuentas, a un toque desde Mi ruta
+                        if (pestana.ruta == Rutas.RUTA) {
                             IconButton(onClick = { nav.navigate(Rutas.finanzas(if (pestana.ruta == Rutas.HOY) "d:" + java.time.LocalDate.now() else null)) }) {
                                 Icon(com.rutaalacima.app.ui.components.IconosRuta.Finanzas, stringResource(R.string.cu_titulo))
                             }
                         }
                         // Tu mochila: las herramientas del método, a un toque mientras construyes tus metas
-                        if (pestana.ruta == Rutas.RUTA || pestana.ruta == Rutas.HOY) {
+                        if (pestana.ruta == Rutas.RUTA) {
                             IconButton(onClick = { nav.navigate(Rutas.MOCHILA) }) {
                                 Icon(com.rutaalacima.app.ui.components.IconosRuta.Mosqueton, stringResource(R.string.mochila_titulo))
                             }
@@ -397,7 +412,7 @@ private fun AppPrincipal() {
                         if (pestana.ruta == Rutas.PERFIL) {
                             IconButton(onClick = { nav.navigate(Rutas.AJUSTES) }) { Icon(Icons.Filled.Settings, stringResource(R.string.ajustes)) }
                         }
-                        IconButton(onClick = { nav.navigate(Rutas.COACH) }) {
+                        if (pestana.ruta != Rutas.HOY) IconButton(onClick = { nav.navigate(Rutas.COACH) }) {
                             Icon(com.rutaalacima.app.ui.components.IconosRuta.Coach, stringResource(R.string.coach), tint = MaterialTheme.colorScheme.secondary)
                         }
                     },
@@ -826,8 +841,8 @@ private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar:
     val ir by androidx.compose.runtime.rememberUpdatedState(onIr)
     val publicar by androidx.compose.runtime.rememberUpdatedState(onPublicar)
     val haptico = androidx.compose.ui.platform.LocalHapticFeedback.current
-    val n = PESTANAS.size + 1
-    fun pestanaEn(k: Int): Pestana? = if (k == CENTRO) null else PESTANAS[if (k < CENTRO) k else k - 1]
+    val n = EN_BARRA.size + 1
+    fun pestanaEn(k: Int): Pestana? = if (k == CENTRO) null else EN_BARRA[if (k < CENTRO) k else k - 1]
     val nombrePublicar = stringResource(R.string.publicar)
     Column(Modifier.fillMaxWidth().background(colores.surface)) {
         androidx.compose.material3.HorizontalDivider(thickness = 0.5.dp, color = colores.outlineVariant.copy(alpha = 0.7f))
@@ -857,7 +872,7 @@ private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar:
                                 c.consume()
                             }
                         } finally { sobre = null }
-                        if (soltado) pestanaEn(i)?.let { ir(it.ruta) } ?: publicar()
+                        if (soltado) pestanaEn(i)?.let { ir(it.destino) } ?: publicar()
                     }
                 }
                 .semantics { isTraversalGroup = true },
@@ -872,7 +887,7 @@ private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar:
                     elegida = p != null && actual == p.ruta,
                     esPublicar = p == null,
                     tocando = sobre == k,
-                    onClick = { if (p != null) onIr(p.ruta) else onPublicar() },
+                    onClick = { if (p != null) onIr(p.destino) else onPublicar() },
                 )
             }
         }

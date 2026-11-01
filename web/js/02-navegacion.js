@@ -4,7 +4,8 @@
  * ====================================================================== */
 /* Ordenadas por cuánto las usa la gente: lo de todos los días primero (Hoy, Mi ruta), luego lo social y el
  * acompañamiento, después lo que se consulta de vez en cuando y al final el perfil. En el teléfono la barra
- * muestra Hoy · Mi ruta · Publicar · Comunidad · Aprende · Perfil. */
+ * muestra Hoy · Mi ruta · Brújula · Publicar · Comunidad · Mensajes · Ascenso financiero (igual que la app);
+ * Aprende, Equipo, Mis frases y Perfil se abren desde arriba. */
 const SECCIONES = [
   ["hoy", "Hoy"], ["ruta", "Mi ruta"], ["brujula", "Brújula"], ["evaluacion", "Evaluación"], ["metas", "Metas"], ["comunidad", "Comunidad"],
   ["coach", "Coach"], ["mensajes", "Mensajes"], ["aprende", "Aprende"], ["mochila", "Equipo"], ["frases", "Mis frases"], ["finanzas", "Ascenso financiero"], ["bienestar", "Bienestar"], ["perfil", "Perfil"],
@@ -15,7 +16,7 @@ const SECCIONES = [
 /** Bienestar vive en cada día (Mi ruta › día, mes y año); su pantalla de herramientas se abre desde allí. */
 /* Metas vive dentro de Mi ruta (propósitos, metas por año, foco del mes y acciones del día) */
 const OCULTAS_RIEL = new Set(["bienestar", "metas"]);
-const SOLO_PC = new Set(["evaluacion", "metas", "mochila", "coach", "mensajes", "frases", "finanzas", "bienestar"]);
+const SOLO_PC = new Set(["evaluacion", "metas", "mochila", "coach", "aprende", "frases", "perfil", "bienestar"]);
 const estado = { sec: "ruta", sel: null, filtro: "todo", busqueda: "", wbSec: 0, feed: null, feedFiltro: "PARA_TI", post: null, wb: {}, vistaCom: "cimas" };
 
 /** La Brújula vive en Mi ruta › Brújula, pero en la barra es una sección propia. */
@@ -87,7 +88,9 @@ document.addEventListener("focusout", () => setTimeout(pintarSiPendiente, 0));
 
 /* ---------- Lista ---------- */
 function cabLista(titulo, { chips = [], buscar = true, nuevo = null } = {}) {
-  const atajos = `<span class="solo-movil atajos">${estado.sec !== "frases" ? `<button class="rb" data-sec="frases" aria-label="Mis frases">${ic("frases")}</button>` : ""}${estado.sec !== "finanzas" ? `<button class="rb" data-sec="finanzas" aria-label="Ascenso financiero">${ic("finanzas")}</button>` : ""}${estado.sec !== "mochila" ? `<button class="rb" data-sec="mochila" aria-label="Equipo">${ic("mochila")}</button>` : ""}${estado.sec === "comunidad" ? `<button class="rb" data-sec="mensajes" aria-label="Mensajes">${ic("mensajes")}</button>` : ""}<button class="rb" data-sec="coach" aria-label="Coach" style="color:var(--oro)">${ic("coach")}</button></span>`;
+  // Teléfono, arriba: Mis frases, Aprende, Equipo y Perfil (en Hoy, junto al ojo); en las demás secciones, también el Coach
+  const at = (k, n, extra = "") => estado.sec !== k ? `<button class="rb" data-sec="${k}" aria-label="${n}" title="${n}"${extra}>${ic(k)}</button>` : "";
+  const atajos = `<span class="solo-movil atajos">${at("frases", "Mis frases")}${at("aprende", "Aprende")}${at("mochila", "Equipo")}${at("perfil", "Perfil")}${estado.sec !== "hoy" ? at("coach", "Coach", ' style="color:var(--oro)"') : ""}</span>`;
   return `<div class="lista-cab"><div class="cab-lista-btn"><h1>${titulo}</h1><span style="display:flex;gap:4px;align-items:center">${atajos}${nuevo ? `<button class="nuevo" data-sel="${nuevo[0]}" aria-label="${nuevo[1]}" title="${nuevo[1]}">${ic("mas")}</button>` : ""}</span></div>
     ${buscar ? `<label class="buscar">${ic("buscar")}<input id="busq" type="search" placeholder="Buscar" value="${esc(estado.busqueda)}" aria-label="Buscar"></label>` : ""}
     ${chips.length ? `<div class="chips">${chips.map(([k, n]) => `<button class="chip" data-filtro="${k}" aria-pressed="${estado.filtro === k}">${n}</button>`).join("")}</div>` : ""}</div>`;
