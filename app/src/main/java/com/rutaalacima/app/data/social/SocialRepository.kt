@@ -61,6 +61,9 @@ data class Post(
     /** Reacción "¿Qué clima te deja?": cuántas personas dejaron cada clima y el mío. */
     val climas: Map<String, Int> = emptyMap(),
     val miClima: String? = null,
+    /** Reacción "Luces": cuántas personas dejaron cada luz (vela, farol, estrella, luna, sol) y la mía. */
+    val luces: Map<String, Int> = emptyMap(),
+    val miLuz: String? = null,
     /** Comunidad viva: el camino detrás, el compromiso con fecha y la fecha en que se abre si es una carta sellada. */
     val camino: Camino? = null,
     val compromiso: Compromiso? = null,
@@ -416,7 +419,7 @@ class SocialRepository(
                 FiltroFeed.PARA_TI -> todo
                 FiltroFeed.GUARDADOS -> todo.filter { it.id in guardados }
             }
-            return@withContext conClimas(r.filter { (eje == null || it.eje == eje) && it.id !in ocultosLocales() && it.autorId !in bloqueadosLocales() && it.autorId !in silenciadosLocales() }, null).also(::recordar)
+            return@withContext conLuces(conClimas(r.filter { (eje == null || it.eje == eje) && it.id !in ocultosLocales() && it.autorId !in bloqueadosLocales() && it.autorId !in silenciadosLocales() }, null), null).also(::recordar)
         }
         val uid = supa.sesion.value!!.userId
         val base = "select=*,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)&order=created_at.desc&limit=$paginaFeed&offset=$desde" +
@@ -442,7 +445,7 @@ class SocialRepository(
         val mios = if (ids.isEmpty()) emptySet() else supa.select("votes", "select=post_id&user_id=eq.$uid&post_id=in.(${ids.joinToString(",")})")
             .jsonArray.mapNotNull { it.jsonObject["post_id"]?.jsonPrimitive?.contentOrNull }.toSet()
         val silenciados = silenciadosLocales()
-        conClimas(filas.map { f -> filaAPost(f.jsonObject, uid, mios) }.filter { it.autorId !in silenciados }, uid).also(::recordar)
+        conLuces(conClimas(filas.map { f -> filaAPost(f.jsonObject, uid, mios) }.filter { it.autorId !in silenciados }, uid), uid).also(::recordar)
     }
 
     /** Publicaciones públicas con un filtro extra de PostgREST (etiqueta o eje), para sus páginas. */
@@ -544,6 +547,51 @@ class SocialRepository(
             val m = climasLocales().toMutableMap()
             if (clima == null) m.remove(post.id) else m[post.id] = clima
             prefs.edit().putString("climas", m.entries.joinToString(";") { "${it.key}=${it.value}" }).apply()
+        }
+    }
+
+    /** Luces guardadas en este teléfono (sin cuenta o en publicaciones de ejemplo): id → luz. */
+    private fun lucesLocales(): Map<String, String> = prefs.getString("luces", "").orEmpty().split(";")
+        .mapNotNull { it.split("=").takeIf { p -> p.size == 2 }?.let { p -> p[0] to p[1] } }.toMap()
+
+    /** Conteos de ejemplo estables por publicación (los mismos que la web). */
+    private fun lucesDemo(id: String): MutableMap<String, Int> {
+        var h = 7L; id.forEach { h = (h * 37 + it.code) and 0xFFFFFFFFL }
+        return com.rutaalacima.app.ui.components.Luces.IDS.withIndex()
+            .associate { (i, k) -> k to ((h shr (i * 4)) % (if (k == "sol") 11 else if (k == "estrella") 7 else 4)).toInt() }.toMutableMap()
+    }
+
+    /** Agrega las luces de la comunidad (tabla post_luces) y la mía a cada publicación. */
+    private suspend fun conLuces(posts: List<Post>, uid: String?): List<Post> {
+        val locales = lucesLocales()
+        val base = posts.map { p ->
+            if (uid != null && !p.demo) p.copy(luces = emptyMap(), miLuz = null)
+            else { val m = lucesDemo(p.id); val mia = locales[p.id]; if (mia != null) m[mia] = (m[mia] ?: 0) + 1; p.copy(luces = m, miLuz = mia) }
+        }
+        val ids = base.filter { !it.demo && it.id.matches(Regex("[0-9a-fA-F-]{36}")) }.map { it.id }
+        if (uid == null || ids.isEmpty()) return base
+        val filas = runCatching { supa.select("post_luces", "select=post_id,user_id,luz&post_id=in.(${ids.joinToString(",")})").jsonArray }.getOrNull() ?: return base
+        val cuenta = HashMap<String, MutableMap<String, Int>>(); val mias = HashMap<String, String>()
+        filas.forEach { f ->
+            val o = f.jsonObject
+            val pid = o["post_id"]?.jsonPrimitive?.contentOrNull ?: return@forEach
+            val l = o["luz"]?.jsonPrimitive?.contentOrNull ?: return@forEach
+            cuenta.getOrPut(pid) { HashMap() }.merge(l, 1) { a, b -> a + b }
+            if (o["user_id"]?.jsonPrimitive?.contentOrNull == uid) mias[pid] = l
+        }
+        return base.map { p -> if (p.demo) p else p.copy(luces = cuenta[p.id].orEmpty(), miLuz = mias[p.id]) }
+    }
+
+    /** Da, cambia o quita (null) mi luz en una publicación. */
+    suspend fun reaccionarLuz(post: Post, luz: String?) = withContext(Dispatchers.IO) {
+        if (enLinea && !post.demo) {
+            val uid = supa.sesion.value!!.userId
+            if (luz == null) supa.delete("post_luces", "post_id=eq.${post.id}&user_id=eq.$uid")
+            else supa.upsert("post_luces", buildJsonObject { put("post_id", post.id); put("user_id", uid); put("luz", luz) })
+        } else {
+            val m = lucesLocales().toMutableMap()
+            if (luz == null) m.remove(post.id) else m[post.id] = luz
+            prefs.edit().putString("luces", m.entries.joinToString(";") { "${it.key}=${it.value}" }).apply()
         }
     }
 

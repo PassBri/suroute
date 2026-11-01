@@ -808,6 +808,7 @@ Object.assign(DET, {
             <button class="cima-autor" data-acc="escribirA" data-arg="${esc(p.autorId)}|${esc(p.autorNombre)}" aria-label="Escribir a ${esc(p.autorNombre)}">${autor(p)}</button>
             <button class="cima-impulso${estado.recienImpulso === p.id ? " recien" : ""}" data-acc="impulsarId" data-arg="${esc(p.id)}" aria-pressed="${p.yoImpulse}" aria-label="${p.propio ? `Impulsar, ${p.impulsos}` : "Impulsar"}">${IMPULSO_SVG}<b>${p.propio ? num(p.impulsos) : ""}</b></button>
             ${globalThis.botonClima ? botonClima(p) : ""}
+            ${globalThis.botonLuz ? botonLuz(p) : ""}
             <button data-acc="comentariosCima" data-arg="${esc(p.id)}" aria-label="Comentarios, ${p.comentarios}">${ic("comentario")}<b>${num(p.comentarios)}</b></button>
             ${globalThis.botonMochila ? botonMochila(p) : ""}
             <button data-acc="compartirPost" data-arg="${esc(p.id)}" aria-label="Compartir">${ic("compartir")}</button></div>
@@ -830,7 +831,7 @@ Object.assign(DET, {
         ${p.brujula && window.leerBrujula?.(p.brujula) ? brujulaMuro(p)
           : `<button data-acc="verCima" data-arg="${esc(p.id)}" aria-label="Ver en Cimas, a pantalla completa" style="display:block;width:100%;text-align:left">${postal(p)}</button>${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}
         ${p.foto && p.texto && !window.estaSellada?.(p) ? `<p style="margin:0">${esc(p.texto)}</p>` : ""}`}${window.chipsCamino?.(p) || ""}
-        <div class="acciones"><button class="btn ${p.yoImpulse ? "lleno" : "oro"}" data-acc="impulsarId" data-arg="${esc(p.id)}" aria-pressed="${p.yoImpulse}">${ic("impulso")} ${p.propio ? p.impulsos : p.yoImpulse ? "Impulsado" : "Impulsar"}</button>${globalThis.botonClima ? botonClima(p, true) : ""}
+        <div class="acciones"><button class="btn ${p.yoImpulse ? "lleno" : "oro"}" data-acc="impulsarId" data-arg="${esc(p.id)}" aria-pressed="${p.yoImpulse}">${ic("impulso")} ${p.propio ? p.impulsos : p.yoImpulse ? "Impulsado" : "Impulsar"}</button>${globalThis.botonClima ? botonClima(p, true) : ""}${globalThis.botonLuz ? botonLuz(p, true) : ""}
           <button class="btn" data-ir="comunidad" data-arg="post:${esc(p.id)}">${ic("comentario")} ${p.comentarios} comentarios</button>${globalThis.botonMochila ? botonMochila(p).replace("<button ", '<button class="btn mochila-btn" ') : ""}</div></article>`).join("") : vacioFeed),
       "max-width:600px");
   },

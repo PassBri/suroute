@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">本月未付款</string>
     <string name="disc_oculto">全应用已隐藏金额</string>
     <string name="disc_visible">金额可见</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">我陪着你</string>
+    <string name="lz_farol">你照亮了我</string>
+    <string name="lz_estrella">我欣赏你</string>
+    <string name="lz_luna">我懂你</string>
+    <string name="lz_sol">一起庆祝！</string>
+    <string name="lz_dar">送出「%1$s」。长按选择其他光</string>
+    <string name="lz_quitar">你送出了「%1$s」。轻点取消；长按选择其他</string>
+    <string name="lz_total">%1$d 盏光</string>
+    <string name="lz_elegir">选择你的光</string>
 </resources>

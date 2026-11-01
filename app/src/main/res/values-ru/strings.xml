@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">В этом месяце без платежа</string>
     <string name="disc_oculto">Суммы скрыты во всём приложении</string>
     <string name="disc_visible">Суммы видны</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">Я с тобой</string>
+    <string name="lz_farol">Ты осветил мне путь</string>
+    <string name="lz_estrella">Восхищаюсь тобой</string>
+    <string name="lz_luna">Понимаю тебя</string>
+    <string name="lz_sol">Празднуем!</string>
+    <string name="lz_dar">Дать «%1$s». Удерживайте, чтобы выбрать другой свет</string>
+    <string name="lz_quitar">Вы дали «%1$s». Нажмите, чтобы убрать; удерживайте, чтобы выбрать другой</string>
+    <string name="lz_total">Огней: %1$d</string>
+    <string name="lz_elegir">Выберите свой свет</string>
 </resources>

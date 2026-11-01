@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">今月は未払い</string>
     <string name="disc_oculto">アプリ全体で金額を非表示</string>
     <string name="disc_visible">金額を表示中</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">そばにいるよ</string>
+    <string name="lz_farol">照らしてくれた</string>
+    <string name="lz_estrella">尊敬します</string>
+    <string name="lz_luna">わかるよ</string>
+    <string name="lz_sol">お祝いしよう！</string>
+    <string name="lz_dar">「%1$s」を贈る。長押しでほかの光を選ぶ</string>
+    <string name="lz_quitar">「%1$s」を贈りました。タップで取り消し、長押しでほかを選ぶ</string>
+    <string name="lz_total">%1$d の光</string>
+    <string name="lz_elegir">光を選ぶ</string>
 </resources>

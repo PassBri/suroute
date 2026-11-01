@@ -263,6 +263,16 @@ class ComunidadViewModel(private val c: AppContainer) : ViewModel() {
         viewModelScope.launch { runCatching { c.social.reaccionarClima(p, k) } }
     }
 
+    /** Luz optimista: la luz y el total cambian al instante y luego se guarda. */
+    fun luz(p: Post, k: String?) {
+        val m = p.luces.toMutableMap()
+        p.miLuz?.let { m[it] = ((m[it] ?: 0) - 1).coerceAtLeast(0) }
+        k?.let { m[it] = (m[it] ?: 0) + 1 }
+        posts = posts.map { if (it.id == p.id) it.copy(luces = m, miLuz = k) else it }
+        c.social.recordar(posts)
+        viewModelScope.launch { runCatching { c.social.reaccionarLuz(p, k) } }
+    }
+
     /** Impulso optimista: se ve al instante y luego se confirma con el servidor. */
     fun impulsar(p: Post) {
         posts = posts.map { if (it.id == p.id) it.copy(yoImpulse = !p.yoImpulse, impulsos = p.impulsos + if (p.yoImpulse) -1 else 1) else it }
@@ -331,6 +341,7 @@ fun ComunidadScreen(
                             onImpulsar = { vm.impulsar(it) },
                             onAbrir = { comentandoEn = it; vm.cargarComentarios(it) },
                             onClima = { p, k -> vm.clima(p, k) },
+                            onLuz = { p, k -> vm.luz(p, k) },
                             onCompromiso = { p, e -> vm.cerrarCompromiso(p, e) },
                             onLlevar = { vm.llevar(it); com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(llevado) },
                             onDetras = { detrasDe = it },
@@ -471,7 +482,7 @@ fun ComunidadScreen(
             itemsIndexed(vm.posts, key = { _, p -> p.id }) { i, p ->
                 PostCard(p, onImpulsar = { vm.impulsar(p) }, onComentar = { onAbrirPost(p.id) }, onAbrir = { pagina = i; enMuro = false },
                     guardado = p.id in vm.guardados, onGuardar = { vm.alternarGuardado(p) }, onAutor = { onAutor(p.autorId, p.autorNombre) },
-                    onCompromiso = { e -> vm.cerrarCompromiso(p, e) })
+                    onCompromiso = { e -> vm.cerrarCompromiso(p, e) }, onLuz = { k -> vm.luz(p, k) })
             }
         }
     }

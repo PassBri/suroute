@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">Diesen Monat keine Zahlung</string>
     <string name="disc_oculto">Beträge in der ganzen App verborgen</string>
     <string name="disc_visible">Beträge sichtbar</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">Ich bin bei dir</string>
+    <string name="lz_farol">Du hast mich erleuchtet</string>
+    <string name="lz_estrella">Ich bewundere dich</string>
+    <string name="lz_luna">Ich verstehe dich</string>
+    <string name="lz_sol">Lass uns feiern!</string>
+    <string name="lz_dar">„%1$s“ geben. Halten, um ein anderes Licht zu wählen</string>
+    <string name="lz_quitar">Du hast „%1$s“ gegeben. Tippen zum Entfernen; halten für ein anderes</string>
+    <string name="lz_total">%1$d Lichter</string>
+    <string name="lz_elegir">Wähle dein Licht</string>
 </resources>

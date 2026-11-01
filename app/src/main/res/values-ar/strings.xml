@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">لا دفعة هذا الشهر</string>
     <string name="disc_oculto">المبالغ مخفية في التطبيق كله</string>
     <string name="disc_visible">المبالغ ظاهرة</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">أنا معك</string>
+    <string name="lz_farol">أضأت طريقي</string>
+    <string name="lz_estrella">أنا معجب بك</string>
+    <string name="lz_luna">أفهمك</string>
+    <string name="lz_sol">لنحتفل!</string>
+    <string name="lz_dar">أرسل «%1$s». اضغط مطولًا لاختيار ضوء آخر</string>
+    <string name="lz_quitar">أرسلت «%1$s». انقر لإزالته؛ اضغط مطولًا لاختيار غيره</string>
+    <string name="lz_total">%1$d أضواء</string>
+    <string name="lz_elegir">اختر ضوءك</string>
 </resources>

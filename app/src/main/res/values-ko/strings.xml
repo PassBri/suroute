@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">이번 달 미납</string>
     <string name="disc_oculto">앱 전체에서 금액 숨김</string>
     <string name="disc_visible">금액 표시</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">함께할게요</string>
+    <string name="lz_farol">저를 비춰 주었어요</string>
+    <string name="lz_estrella">존경해요</string>
+    <string name="lz_luna">이해해요</string>
+    <string name="lz_sol">축하해요!</string>
+    <string name="lz_dar">「%1$s」 보내기. 길게 눌러 다른 빛 선택</string>
+    <string name="lz_quitar">「%1$s」을(를) 보냈어요. 탭하면 취소, 길게 누르면 다른 빛 선택</string>
+    <string name="lz_total">빛 %1$d개</string>
+    <string name="lz_elegir">빛을 고르세요</string>
 </resources>

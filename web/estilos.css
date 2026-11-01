@@ -5119,3 +5119,64 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .ed-pagada, .ed-aldia { background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok); }
 .ed-parcial, .ed-prog { background: color-mix(in srgb, var(--oro) 18%, transparent); color: var(--tinta); }
 .ed-sin { background: color-mix(in srgb, var(--c-gas) 12%, transparent); color: var(--c-gas); }
+
+/* ---------- Luces de Comunidad (51-luces.js): vela, farol, estrella, luna y sol pintados como objetos reales ---------- */
+.luz { display: block; overflow: visible; }
+.luz-llama { transform-box: view-box; transform-origin: 32px 26px; animation: luzLlama 1.7s ease-in-out infinite alternate; }
+.luz-llama-farol { transform-origin: 32px 37.5px; }
+@keyframes luzLlama { 0% { transform: scale(1, 1) skewX(0); } 35% { transform: scale(.95, 1.06) skewX(2.5deg); } 70% { transform: scale(1.04, .96) skewX(-2deg); } 100% { transform: scale(.98, 1.03) skewX(1deg); } }
+.luz-halo { transform-box: view-box; transform-origin: center; animation: luzHalo 3.2s ease-in-out infinite alternate; }
+.luz-vela .luz-halo, .luz-farol .luz-halo { animation-duration: 1.3s; }
+@keyframes luzHalo { from { opacity: .75; transform: scale(.94); } to { opacity: 1; transform: scale(1.04); } }
+.luz-destello { transform-box: view-box; transform-origin: 50px 14.5px; animation: luzDestello 2.6s ease-in-out infinite; }
+@keyframes luzDestello { 0%, 100% { transform: scale(.5) rotate(0); opacity: .4; } 50% { transform: scale(1.15) rotate(45deg); opacity: 1; } }
+.luz-rayos { transform-box: view-box; transform-origin: 32px 32px; animation: luzRayos 40s linear infinite; }
+@keyframes luzRayos { to { transform: rotate(360deg); } }
+.luz.quieta * { animation: none !important; }
+
+.luz-wrap { position: relative; display: inline-flex; align-items: center; gap: 8px; }
+.luz-btn { -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: none; }
+/* En Cimas: un círculo de papel translúcido como las demás acciones, con la luz y el total debajo */
+.cima-acciones .luz-wrap { display: grid; justify-items: center; width: 56px; }
+.cima-acciones .luz-btn.en-cima { display: grid; grid-template-rows: 48px 15px; justify-items: center; align-items: center; gap: 4px; width: 56px; padding: 0; color: #fff; }
+.luz-btn.en-cima .lb-circ { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: rgb(251 248 243 / .16);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgb(0 0 0 / .22); transition: transform .16s cubic-bezier(.2,0,0,1); }
+.luz-btn.en-cima.mia .lb-circ { background: rgb(246 234 211 / .3); box-shadow: 0 0 0 1.5px rgb(233 203 126 / .8), 0 2px 8px rgb(0 0 0 / .22); }
+.cima-acciones .luz-btn svg.luz, .cima-acciones .luz-selector svg.luz { width: 34px; height: 34px; padding: 0 !important; background: none; border: 0; border-radius: 0; filter: none; box-sizing: border-box; }
+.luz-btn.en-cima .lb-circ.apagada svg { opacity: .72; }
+.luz-btn.en-cima:active .lb-circ { transform: scale(.92); }
+.luz-btn.recien svg.luz { animation: luzPop .6s cubic-bezier(.2,0,0,1); }
+@keyframes luzPop { 0% { transform: scale(.6); } 45% { transform: scale(1.18); } 100% { transform: none; } }
+/* En el muro: la pila de las luces más dadas y una píldora con el nombre */
+.luz-pila { display: inline-flex; align-items: center; color: var(--tinta); font-weight: 600; font-variant-numeric: tabular-nums; }
+.luz-pila svg { width: 22px; height: 22px; margin-right: -6px; }
+.luz-pila b { margin-left: 12px; font-size: 14px; }
+.luz-btn.en-lista { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px 0 8px; border-radius: 999px; border: 1px solid var(--linea); color: var(--tinta); font-weight: 500; transition: background .16s; }
+.luz-btn.en-lista svg { width: 24px; height: 24px; }
+.luz-btn.en-lista.mia { background: var(--oro-suave); border-color: transparent; font-weight: 600; }
+.luz-btn.en-lista:active { transform: scale(.97); }
+.luz-btn:focus-visible { outline: 3px solid var(--oro); outline-offset: 2px; border-radius: 999px; }
+/* La fila de las cinco luces */
+.luz-selector { position: absolute; z-index: 6; display: flex; gap: 2px; padding: 6px 8px; border-radius: 36px; touch-action: none;
+  background: var(--hoja); border: 1px solid var(--linea); box-shadow: 0 8px 24px rgb(var(--sombra) / .16); }
+.luz-wrap.en-lista .luz-selector { left: 0; bottom: calc(100% + 10px); }
+.luz-wrap.en-cima .luz-selector { right: calc(100% + 8px); top: 50%; translate: 0 -50%; background: rgb(10 14 24 / .9); border-color: rgb(255 255 255 / .16); box-shadow: 0 8px 24px rgb(0 0 0 / .4); }
+.luz-selector .lz-op { position: relative; display: grid; place-items: center; width: 52px; height: 52px; padding: 0; border-radius: 26px;
+  animation: luzSube .32s cubic-bezier(.2,0,0,1) both; animation-delay: calc(var(--i) * 40ms); -webkit-user-select: none; user-select: none; }
+.luz-selector .lz-op svg.luz { width: 44px; height: 44px; transition: transform .2s cubic-bezier(.2,0,0,1); }
+.luz-selector .lz-op small { position: absolute; bottom: calc(100% + 14px); left: 50%; translate: -50% 0; white-space: nowrap; padding: 3px 10px; border-radius: 12px;
+  background: var(--tinta); color: var(--hoja); font-size: 12.5px; font-weight: 600; opacity: 0; scale: .9; pointer-events: none; transition: opacity .12s, scale .12s; }
+.luz-wrap.en-cima .lz-op small { background: #F4F1EA; color: #1D2427; }
+.luz-selector .lz-op.si { background: color-mix(in srgb, var(--oro) 18%, transparent); }
+.luz-wrap.en-cima .lz-op.si { background: rgb(255 255 255 / .14); }
+.luz-selector .lz-op.lz-sobre svg.luz, .luz-selector .lz-op:focus-visible svg.luz { transform: translateY(-10px) scale(1.35); }
+.luz-selector .lz-op.lz-sobre small, .luz-selector .lz-op:focus-visible small { opacity: 1; scale: 1; }
+.luz-selector .lz-op:focus-visible { outline: none; }
+@media (hover: hover) and (pointer: fine) {
+  .luz-selector .lz-op:hover svg.luz { transform: translateY(-10px) scale(1.35); }
+  .luz-selector .lz-op:hover small { opacity: 1; scale: 1; }
+  .luz-btn.en-lista:hover { background: color-mix(in srgb, var(--tinta) 5%, transparent); }
+  .luz-btn.en-lista.mia:hover { background: var(--oro-suave); }
+}
+@keyframes luzSube { from { opacity: 0; transform: translateY(10px) scale(.6); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .luz *, .luz-selector .lz-op, .luz-btn.recien svg.luz { animation: none !important; } .luz-selector .lz-op svg.luz { transition: none; } }

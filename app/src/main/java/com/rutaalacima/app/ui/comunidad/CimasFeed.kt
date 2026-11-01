@@ -103,6 +103,8 @@ fun CimasFeed(
     onFin: (() -> Unit)? = null,
     /** "¿Qué clima te deja?": deja, cambia o quita (null) el clima. */
     onClima: (Post, String?) -> Unit = { _, _ -> },
+    /** Luces: da, cambia o quita (null) la luz. */
+    onLuz: (Post, String?) -> Unit = { _, _ -> },
     /** Cerrar mi compromiso vencido: LOGRADO o REPLANTEO. */
     onCompromiso: (Post, String) -> Unit = { _, _ -> },
     /** Moverse de lado: a la derecha «me lo llevo» (mochila e impulso); a la izquierda «detrás de la cima». */
@@ -128,6 +130,7 @@ fun CimasFeed(
             onAutor = { onAutor(posts[i]) },
             onMas = { onMas(posts[i]) },
             onClima = { k -> onClima(posts[i], k) },
+            onLuz = { k -> onLuz(posts[i], k) },
             onCompromiso = { e -> onCompromiso(posts[i], e) },
             onLlevar = { onLlevar(posts[i]) }, onDetras = { onDetras(posts[i]) },
         )
@@ -153,6 +156,7 @@ private fun CimaPagina(
     post: Post, primera: Boolean, guardado: Boolean, activo: Boolean = true,
     onImpulsar: () -> Unit, onAbrir: () -> Unit, onGuardar: () -> Unit, onAutor: () -> Unit, onMas: () -> Unit,
     onClima: (String?) -> Unit = {},
+    onLuz: (String?) -> Unit = {},
     onCompromiso: (String) -> Unit = {},
     onLlevar: () -> Unit = {}, onDetras: () -> Unit = {},
 ) {
@@ -252,6 +256,7 @@ private fun CimaPagina(
             Accion(if (post.yoImpulse) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder, if (post.propio) contar(post.impulsos) else "", stringResource(R.string.impulsar), Color.White,
                 fondo = if (post.yoImpulse) MaterialTheme.colorScheme.primary else null, onClick = onImpulsar)
             com.rutaalacima.app.ui.components.BotonClima(post.climas, post.miClima, onClima, tamano = 48.dp, fondo = VeloTinta)
+            com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz, enCima = true)
             Accion(Icons.AutoMirrored.Outlined.Comment, contar(post.comentarios), stringResource(R.string.comentar), Color.White, onClick = onAbrir)
             Accion(if (guardado) com.rutaalacima.app.ui.components.IconosRuta.Morral else com.rutaalacima.app.ui.components.IconosRuta.MorralContorno, "", stringResource(R.string.guardar),
                 if (guardado) com.rutaalacima.app.ui.components.AzulAltura else Color.White,

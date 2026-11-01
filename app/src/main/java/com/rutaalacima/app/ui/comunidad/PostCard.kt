@@ -138,6 +138,8 @@ fun PostCard(
     onGuardar: (() -> Unit)? = null,
     onAutor: (() -> Unit)? = null,
     onCompromiso: (String) -> Unit = {},
+    /** Luces: da, cambia o quita (null) la luz. Si es null, la tarjeta no muestra la línea de luces. */
+    onLuz: ((String?) -> Unit)? = null,
 ) {
     val context = LocalContext.current
     val eje = Eje.fromCodigo(post.eje)
@@ -217,6 +219,9 @@ fun PostCard(
         }
 
         if (post.camino != null || post.compromiso != null || (post.propio && post.sello != null)) androidx.compose.foundation.layout.Box(Modifier.padding(start = 12.dp, end = 12.dp, top = 10.dp)) { ChipsCamino(post, sobreFoto = false, onCerrarCompromiso = onCompromiso) }
+        // Luces: la pila de las más dadas y la píldora para dar la tuya (mantener elige otra)
+        if (onLuz != null) com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz,
+            Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp), enCima = false)
         // Acciones en píldoras
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             com.rutaalacima.app.ui.components.BotonImpulso(

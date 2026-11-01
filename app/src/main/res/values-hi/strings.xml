@@ -2920,4 +2920,14 @@
     <string name="ed_sin_pago">इस महीने कोई भुगतान नहीं</string>
     <string name="disc_oculto">पूरे ऐप में रकम छिपी है</string>
     <string name="disc_visible">रकम दिख रही है</string>
+    <!-- Luces de Comunidad -->
+    <string name="lz_vela">मैं तुम्हारे साथ हूँ</string>
+    <string name="lz_farol">तुमने राह रोशन की</string>
+    <string name="lz_estrella">मैं तुम्हारा सम्मान करता हूँ</string>
+    <string name="lz_luna">मैं समझता हूँ</string>
+    <string name="lz_sol">चलो जश्न मनाएँ!</string>
+    <string name="lz_dar">«%1$s» दें। दूसरी रोशनी चुनने के लिए दबाए रखें</string>
+    <string name="lz_quitar">आपने «%1$s» दिया। हटाने के लिए टैप करें; दूसरी चुनने के लिए दबाए रखें</string>
+    <string name="lz_total">%1$d रोशनियाँ</string>
+    <string name="lz_elegir">अपनी रोशनी चुनें</string>
 </resources>
