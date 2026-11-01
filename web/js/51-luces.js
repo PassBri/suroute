@@ -1,9 +1,10 @@
-/* Luces de Comunidad: cinco reacciones pintadas como objetos reales (vela, farol de queroseno,
+/* Luces de Comunidad: cinco reacciones pintadas como objetos reales (vela, fogata, farol de queroseno,
    estrella, luna y sol). Se dibujan en SVG con degradados para que pesen poco, se vean nítidas
    y se animen con CSS (la animación se apaga con «reducir movimiento»). */
 (function () {
   const LUCES = [
     { id: "vela", nombre: "Te acompaño", cosa: "una vela" },
+    { id: "fogata", nombre: "Me motivó", cosa: "una fogata" },
     { id: "farol", nombre: "Me iluminó", cosa: "un farol" },
     { id: "estrella", nombre: "Te admiro", cosa: "una estrella" },
     { id: "luna", nombre: "Te entiendo", cosa: "una luna" },
@@ -53,6 +54,30 @@
         <ellipse cx="32" cy="24.6" rx="2" ry="1.3" fill="#5E8DF0" opacity=".55"/>
       </g>
       <rect x="25" y="32" width="2.2" height="26" rx="1.1" fill="url(#vb${u})" opacity=".55"/>
+    </svg>`;
+
+    if (id === "fogata") return `<svg ${c}><defs>
+      <radialGradient id="gh${u}" cx="32" cy="34" r="29" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFB25C" stop-opacity=".6"/><stop offset="1" stop-color="#FFB25C" stop-opacity="0"/></radialGradient>
+      <linearGradient id="gl${u}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#9A6638"/><stop offset=".5" stop-color="#6B4423"/><stop offset="1" stop-color="#4A2E16"/></linearGradient>
+      <radialGradient id="gf${u}" cx="50%" cy="78%" r="70%"><stop offset="0" stop-color="#FFF6D0"/><stop offset=".3" stop-color="#FFD25E"/><stop offset=".65" stop-color="#FF8A26"/><stop offset="1" stop-color="#D9481A"/></radialGradient>
+      <radialGradient id="gb${u}" cx="32" cy="50" r="12" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFCF6A"/><stop offset=".6" stop-color="#E8641E"/><stop offset="1" stop-color="#8A2E10" stop-opacity="0"/></radialGradient>
+    </defs>
+      <circle class="luz-halo" cx="32" cy="34" r="29" fill="url(#gh${u})"/>
+      <ellipse cx="32" cy="60.5" rx="21" ry="2" fill="#000" opacity=".16"/>
+      <ellipse cx="32" cy="50" rx="13" ry="5" fill="url(#gb${u})"/>
+      <g class="luz-llama luz-llama-fogata">
+        <path d="M32 7c6.5 8.2 12.6 15.4 11.6 26.4-.6 7.4-5.4 13.1-11.6 13.1S20.9 41 20.3 34c-.7-7.6 3.4-12.6 6.4-17.4 1 4.4 2.6 7 4.6 8.2-.8-6.3-.4-12.4.7-17.8z" fill="url(#gf${u})"/>
+        <path d="M22.4 27.5c-4.2 5.4-4.6 12.6 1.2 17.6-1.2-4.8-.7-10.6 1.8-14.8z" fill="#FF9A2E" opacity=".9"/>
+        <path d="M41.2 25c3.9 5.6 4 12.4-1 17.8.8-4.6.2-9.6-1.9-13.6z" fill="#FF9A2E" opacity=".85"/>
+        <path d="M32 23.5c4 5.4 5.6 10.6 4.6 15.2-.6 3.2-2.6 5.4-4.6 5.4s-4-2.2-4.6-5.4c-1-4.6.6-9.8 4.6-15.2z" fill="#FFD866"/>
+        <path d="M32 32c2 2.8 2.6 5.4 2 7.6-.4 1.6-1.2 2.6-2 2.6s-1.6-1-2-2.6c-.6-2.2 0-4.8 2-7.6z" fill="#FFFBEA"/>
+      </g>
+      <path d="M12.5 55.5 51 46.5" stroke="url(#gl${u})" stroke-width="6.4" stroke-linecap="round"/>
+      <path d="M13 46.5 51.5 55.5" stroke="url(#gl${u})" stroke-width="6.4" stroke-linecap="round"/>
+      <path d="M15 44.8 49.5 52.8" stroke="#B0804A" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+      <ellipse cx="12.4" cy="55.4" rx="2.6" ry="3.1" fill="#D2A66C" stroke="#7A4E26" stroke-width=".7"/>
+      <ellipse cx="51.6" cy="55.4" rx="2.6" ry="3.1" fill="#D2A66C" stroke="#7A4E26" stroke-width=".7"/>
+      <g class="luz-chispas" fill="#FFD27A"><circle cx="40" cy="12" r="1.1"/><circle cx="24" cy="10" r=".9"/><circle cx="45" cy="20" r=".8"/></g>
     </svg>`;
 
     if (id === "farol") return `<svg ${c}><defs>

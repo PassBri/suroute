@@ -2,17 +2,14 @@
 -- Reemplaza al impulso y a los climas de las publicaciones. Cada luz ES un impulso con su matiz:
 -- vive en la misma tabla votes, en la columna luz, para que los milímetros de la expedición,
 -- los avisos y «Para ti» sigan contando igual.
---   vela = te acompaño · farol = me iluminó · estrella = te admiro · luna = te entiendo · sol = ¡celebremos!
+--   vela = te acompaño · fogata = me motivó · farol = me iluminó · estrella = te admiro · luna = te entiendo · sol = ¡celebremos!
 -- Los impulsos que ya existían quedan como «sol». Los climas que la gente dejó en las publicaciones
 -- pasan a la luz más parecida (la tabla post_climas se conserva, ya no se usa).
 -- Se puede correr más de una vez.
 
 alter table public.votes add column if not exists luz text not null default 'sol';
-do $$ begin
-  if not exists (select 1 from pg_constraint where conname = 'votes_luz_valida') then
-    alter table public.votes add constraint votes_luz_valida check (luz in ('vela', 'farol', 'estrella', 'luna', 'sol'));
-  end if;
-end $$;
+alter table public.votes drop constraint if exists votes_luz_valida;
+alter table public.votes add constraint votes_luz_valida check (luz in ('vela', 'fogata', 'farol', 'estrella', 'luna', 'sol'));
 
 -- Cambiar de luz (de vela a estrella, por ejemplo) es actualizar el propio voto
 drop policy if exists "cambiar impulso" on public.votes;
@@ -34,7 +31,7 @@ do $$ begin
     alter table public.votes disable trigger aviso_impulso;
     insert into public.votes (post_id, user_id, luz, created_at)
     select c.post_id, c.user_id,
-           case c.clima when 'sol' then 'sol' when 'cumbre' then 'sol' when 'tormenta' then 'estrella'
+           case c.clima when 'sol' then 'sol' when 'cumbre' then 'sol' when 'tormenta' then 'fogata'
                         when 'niebla' then 'luna' when 'valle' then 'vela' else 'sol' end,
            c.created_at
       from public.post_climas c

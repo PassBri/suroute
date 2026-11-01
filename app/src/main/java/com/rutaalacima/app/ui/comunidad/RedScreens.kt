@@ -705,5 +705,5 @@ fun PrivacidadScreen(onBack: () -> Unit) {
 
 /** «Te dio una estrella: «Te admiro»»: qué luz te dieron (el aviso trae la luz en su texto). */
 fun fraseLuz(ctx: android.content.Context, k: String): String = ctx.getString(R.string.red_a_luz,
-    ctx.getString(when (k) { "vela" -> R.string.lz_cosa_vela; "farol" -> R.string.lz_cosa_farol; "estrella" -> R.string.lz_cosa_estrella; "luna" -> R.string.lz_cosa_luna; else -> R.string.lz_cosa_sol }),
+    ctx.getString(when (k) { "vela" -> R.string.lz_cosa_vela; "fogata" -> R.string.lz_cosa_fogata; "farol" -> R.string.lz_cosa_farol; "estrella" -> R.string.lz_cosa_estrella; "luna" -> R.string.lz_cosa_luna; else -> R.string.lz_cosa_sol }),
     com.rutaalacima.app.ui.components.Luces.nombre(ctx, k))

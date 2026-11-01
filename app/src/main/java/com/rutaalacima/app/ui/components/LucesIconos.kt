@@ -80,15 +80,15 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Luces de Comunidad: cinco reacciones pintadas como objetos reales (vela, farol de queroseno,
+ * Luces de Comunidad: seis reacciones pintadas como objetos reales (vela, fogata, farol de queroseno,
  * estrella, luna y sol), con el mismo dibujo que la web (web/js/51-luces.js), en un lienzo de 64 × 64.
  * Conviven con el impulso y los climas. Un toque da tu luz de siempre; mantener abre las cinco
  * y deslizar el dedo elige una al soltar.
  */
 object Luces {
-    val IDS = listOf("vela", "farol", "estrella", "luna", "sol")
+    val IDS = listOf("vela", "fogata", "farol", "estrella", "luna", "sol")
     fun nombre(ctx: android.content.Context, k: String): String = ctx.getString(
-        when (k) { "vela" -> R.string.lz_vela; "farol" -> R.string.lz_farol; "estrella" -> R.string.lz_estrella; "luna" -> R.string.lz_luna; else -> R.string.lz_sol },
+        when (k) { "vela" -> R.string.lz_vela; "fogata" -> R.string.lz_fogata; "farol" -> R.string.lz_farol; "estrella" -> R.string.lz_estrella; "luna" -> R.string.lz_luna; else -> R.string.lz_sol },
     )
     /** La última luz que eligió esta persona (al principio, el sol). */
     fun ultima(ctx: android.content.Context): String = ctx.getSharedPreferences("luces", 0).getString("ultima", "sol")?.takeIf { it in IDS } ?: "sol"
@@ -106,6 +106,11 @@ private object Formas {
     val mecha = p("M32 30.4c.5-1.8.2-3.4-.5-4.8")
     val llama = p("M32 4.5C37.6 12.4 38.6 19.6 32 26.3 25.4 19.6 26.4 12.4 32 4.5z")
     val llamaIn = p("M32 12.5c2.6 3.8 3 7.4 0 11.4-3-4-2.6-7.6 0-11.4z")
+    val fogata = p("M32 7c6.5 8.2 12.6 15.4 11.6 26.4-.6 7.4-5.4 13.1-11.6 13.1S20.9 41 20.3 34c-.7-7.6 3.4-12.6 6.4-17.4 1 4.4 2.6 7 4.6 8.2-.8-6.3-.4-12.4.7-17.8z")
+    val fogIzq = p("M22.4 27.5c-4.2 5.4-4.6 12.6 1.2 17.6-1.2-4.8-.7-10.6 1.8-14.8z")
+    val fogDer = p("M41.2 25c3.9 5.6 4 12.4-1 17.8.8-4.6.2-9.6-1.9-13.6z")
+    val fogCentro = p("M32 23.5c4 5.4 5.6 10.6 4.6 15.2-.6 3.2-2.6 5.4-4.6 5.4s-4-2.2-4.6-5.4c-1-4.6.6-9.8 4.6-15.2z")
+    val fogNucleo = p("M32 32c2 2.8 2.6 5.4 2 7.6-.4 1.6-1.2 2.6-2 2.6s-1.6-1-2-2.6c-.6-2.2 0-4.8 2-7.6z")
     val asa = p("M21.5 13.5C21 1.5 43 1.5 42.5 13.5")
     val tapa = p("M21 17.5h22l-4-7.5H25z")
     val vidrio = p("M23.6 17.5C13.6 24 13.6 40.5 23.6 47h16.8c10-6.5 10-23 0-29.5z")
@@ -148,7 +153,7 @@ fun Luz(k: String, modifier: Modifier = Modifier, animada: Boolean = false) {
     val pulso = if (animada && !sinAnimar) {
         val t = rememberInfiniteTransition(label = "luz")
         val llama by t.animateFloat(0f, 1f, infiniteRepeatable(tween(1700, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "llama")
-        val halo by t.animateFloat(0f, 1f, infiniteRepeatable(tween(if (k == "vela" || k == "farol") 1300 else 3200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "halo")
+        val halo by t.animateFloat(0f, 1f, infiniteRepeatable(tween(if (k == "vela" || k == "farol" || k == "fogata") 1300 else 3200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "halo")
         val destello by t.animateFloat(0f, 1f, infiniteRepeatable(tween(2600, easing = LinearEasing)), label = "destello")
         val giro by t.animateFloat(0f, 360f, infiniteRepeatable(tween(40000, easing = LinearEasing)), label = "giro")
         Pulso(llama, halo, destello, giro)
@@ -157,7 +162,7 @@ fun Luz(k: String, modifier: Modifier = Modifier, animada: Boolean = false) {
         val e = size.minDimension / 64f
         withTransform({ translate((size.width - 64f * e) / 2, (size.height - 64f * e) / 2); scale(e, e, Offset.Zero) }) {
             when (k) {
-                "vela" -> vela(pulso); "farol" -> farol(pulso); "estrella" -> estrella(pulso); "luna" -> luna(pulso); else -> sol(pulso)
+                "vela" -> vela(pulso); "fogata" -> fogata(pulso); "farol" -> farol(pulso); "estrella" -> estrella(pulso); "luna" -> luna(pulso); else -> sol(pulso)
             }
         }
     }
@@ -188,6 +193,28 @@ private fun DrawScope.vela(pulso: Pulso) {
         drawOval(c(0xFF5E8DF0, 0.55f), Offset(30f, 23.3f), Size(4f, 2.6f))
     }
     drawRoundRect(Brush.verticalGradient(0f to c(0xFFFFF4D6, 0.5f), 1f to c(0xFFFFF4D6, 0f), startY = 32f, endY = 58f), Offset(25f, 32f), Size(2.2f, 26f), CornerRadius(1.1f))
+}
+
+private fun DrawScope.fogata(pulso: Pulso) {
+    halo(Offset(32f, 34f), 29f, c(0xFFFFB25C), 0.6f, pulso)
+    drawOval(Color.Black.copy(alpha = 0.16f), Offset(11f, 58.5f), Size(42f, 4f))
+    drawOval(Brush.radialGradient(0f to c(0xFFFFCF6A), 0.6f to c(0xFFE8641E), 1f to c(0xFF8A2E10, 0f), center = Offset(32f, 50f), radius = 12f), Offset(19f, 45f), Size(26f, 10f))
+    llama(Offset(32f, 46f), pulso) {
+        drawPath(Formas.fogata, Brush.radialGradient(0f to c(0xFFFFF6D0), 0.3f to c(0xFFFFD25E), 0.65f to c(0xFFFF8A26), 1f to c(0xFFD9481A), center = Offset(32f, 37f), radius = 28f))
+        drawPath(Formas.fogIzq, c(0xFFFF9A2E, 0.9f)); drawPath(Formas.fogDer, c(0xFFFF9A2E, 0.85f))
+        drawPath(Formas.fogCentro, c(0xFFFFD866)); drawPath(Formas.fogNucleo, c(0xFFFFFBEA))
+    }
+    val lena = Brush.verticalGradient(0f to c(0xFF9A6638), 0.5f to c(0xFF6B4423), 1f to c(0xFF4A2E16), startY = 43f, endY = 59f)
+    drawLine(lena, Offset(12.5f, 55.5f), Offset(51f, 46.5f), 6.4f, cap = StrokeCap.Round)
+    drawLine(lena, Offset(13f, 46.5f), Offset(51.5f, 55.5f), 6.4f, cap = StrokeCap.Round)
+    drawLine(c(0xFFB0804A, 0.7f), Offset(15f, 44.8f), Offset(49.5f, 52.8f), 1f, cap = StrokeCap.Round)
+    listOf(12.4f, 51.6f).forEach { x ->
+        drawOval(c(0xFFD2A66C), Offset(x - 2.6f, 52.3f), Size(5.2f, 6.2f))
+        drawOval(c(0xFF7A4E26), Offset(x - 2.6f, 52.3f), Size(5.2f, 6.2f), style = Stroke(0.7f))
+    }
+    // Chispas que suben
+    val f = pulso.destello; val al = sin(f * PI).toFloat()
+    listOf(Triple(40f, 12f, 1.1f), Triple(24f, 10f, 0.9f), Triple(45f, 20f, 0.8f)).forEach { (x, y, r) -> drawCircle(c(0xFFFFD27A, al), r, Offset(x, y + 6f - 12f * f)) }
 }
 
 private fun DrawScope.farol(pulso: Pulso) {
@@ -251,9 +278,9 @@ private fun DrawScope.sol(pulso: Pulso) {
 
 // ====================================================================== El botón y la fila de las cinco
 
-private val ANCHO_OP = 58.dp
-private val PASO_OP = 58.dp          // sin separación: cada opción ya trae su aire
-private val FILA_ANCHO = 12.dp + ANCHO_OP * 5
+private val ANCHO_OP = 54.dp
+private val PASO_OP = 54.dp          // sin separación: cada opción ya trae su aire
+private val FILA_ANCHO = 12.dp + ANCHO_OP * 6
 private val FILA_ALTO = 96.dp        // dibujo de 52 dp y el nombre en dos líneas
 
 /**
@@ -287,9 +314,9 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
     // Centro de cada opción respecto al borde izquierdo del botón (la fila va a la izquierda en Cimas y arriba en el muro)
     fun indice(x: Float, y: Float): Int = with(dens) {
         val centros = Luces.IDS.indices.map { i ->
-            if (enCima) -(8.dp + 6.dp + PASO_OP * (4 - i) + ANCHO_OP / 2).toPx() else (6.dp + PASO_OP * i + ANCHO_OP / 2).toPx()
+            (if (enCima) 56.dp - FILA_ANCHO else 0.dp).toPx() + (6.dp + PASO_OP * i + ANCHO_OP / 2).toPx()
         }
-        val cerca = if (enCima) abs(y - 24.dp.toPx()) < 80.dp.toPx() else y < 10.dp.toPx() && y > -(FILA_ALTO + 90.dp).toPx()
+        val cerca = y < (if (enCima) 30.dp else 10.dp).toPx() && y > -(FILA_ALTO + 90.dp).toPx()
         if (!cerca) return -1
         val i = centros.indices.minByOrNull { abs(centros[it] - x) } ?: return -1
         if (abs(centros[i] - x) <= (PASO_OP / 2).toPx()) i else -1
@@ -324,6 +351,17 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
         customActions = Luces.IDS.map { k -> CustomAccessibilityAction(Luces.nombre(ctx, k)) { elegir(k); true } }
     }
 
+    val fila: @Composable () -> Unit = {
+        if (abierto) {
+            val desplazamiento = with(dens) {
+                if (enCima) IntOffset((56.dp - FILA_ANCHO).roundToPx(), -(FILA_ALTO + 8.dp).roundToPx())
+                else IntOffset(0, -(FILA_ALTO + 10.dp).roundToPx())
+            }
+            Popup(alignment = Alignment.TopStart, offset = desplazamiento, onDismissRequest = { abierto = false; sobre = -1 }, properties = PopupProperties(focusable = true)) {
+                FilaLuces(miLuz, sobre, oscura = enCima, onElegir = elegir)
+            }
+        }
+    }
     Box(modifier) {
         if (enCima) {
             Column(Modifier.width(56.dp).then(gesto).then(sem), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -336,6 +374,7 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
                     Luz(muestra, Modifier.size(34.dp).graphicsLayer { alpha = if (miLuz == null && total == 0) 0.72f else 1f }, animada = miLuz != null)
                 }
                 Text(if (verTotal && total > 0) total.toString() else "", color = Color.White, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Medium)
+                fila()
             }
         } else {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -355,16 +394,8 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
                         Text(Luces.nombre(ctx, muestra), style = MaterialTheme.typography.labelLarge,
                             fontWeight = if (miLuz != null) FontWeight.SemiBold else FontWeight.Medium)
                     }
+                    fila()
                 }
-            }
-        }
-        if (abierto) {
-            val desplazamiento = with(dens) {
-                if (enCima) IntOffset(-(FILA_ANCHO + 8.dp).roundToPx(), (24.dp - FILA_ALTO / 2).roundToPx())
-                else IntOffset(0, -(FILA_ALTO + 10.dp).roundToPx())
-            }
-            Popup(alignment = Alignment.TopStart, offset = desplazamiento, onDismissRequest = { abierto = false; sobre = -1 }, properties = PopupProperties(focusable = true)) {
-                FilaLuces(miLuz, sobre, oscura = enCima, onElegir = elegir)
             }
         }
     }
@@ -373,7 +404,7 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
 @Composable
 private fun FilaLuces(miLuz: String?, sobre: Int, oscura: Boolean, onElegir: (String) -> Unit) {
     val ctx = LocalContext.current
-    val fondo = if (oscura) Color(0xE60A0E18) else MaterialTheme.colorScheme.surfaceContainerLowest
+    val fondo = if (oscura) Color(0xF50A0E18) else MaterialTheme.colorScheme.surfaceContainerLowest
     val borde = if (oscura) Color.White.copy(alpha = 0.16f) else MaterialTheme.colorScheme.outlineVariant
     Row(
         Modifier.clip(RoundedCornerShape(28.dp)).background(fondo).border(1.dp, borde, RoundedCornerShape(28.dp)).padding(6.dp),
