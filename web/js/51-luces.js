@@ -139,7 +139,7 @@
  *   Por eso los milímetros de la expedición, los avisos y «Para ti» siguen contando igual.
  * · Un toque (o doble toque sobre la cima) da tu luz de siempre: la última que elegiste; al principio, el sol.
  *   Si ya diste una, un toque la quita. Mantén el dedo y se abre la fila de las cinco: desliza y suelta.
- * · Pocos números: todos ven qué luces recibió una publicación; el total solo lo ve quien publicó.
+ * · Todos ven qué luces recibió una publicación y cuántas.
  * ====================================================================== */
 (function () {
   const L = window.LUCES, ids = L.map(l => l.id);
@@ -184,7 +184,7 @@
   function botonLuz(p, lista = false) {
     if (!p.luces) cargarLuces([p]).then(() => pintar(p));
     const t = total(p), mia = p.miLuz, muestra = mia || (lista ? ultima() : top(p)[0] || ultima());
-    const cifra = p.propio && t ? t : "";
+    const cifra = t || "";
     const etiqueta = mia ? `Diste «${nombreLuz(mia)}». Toca para quitarla; mantén para elegir otra` : `Dar «${nombreLuz(ultima())}». Mantén para elegir otra luz`;
     const boton = inner => `<button type="button" class="luz-btn ${lista ? "en-lista" : "en-cima"}${mia ? " mia" : ""}" data-post="${esc(String(p.id))}" aria-haspopup="menu" aria-pressed="${!!mia}" aria-label="${esc(etiqueta)}${cifra ? `, ${cifra} luces` : ""}">${inner}</button>`;
     if (lista) return `<span class="luz-wrap en-lista">${t ? `<span class="luz-pila" aria-hidden="true">${top(p).map(k => luzSVG(k, "quieta")).join("")}${cifra ? `<b>${cifra}</b>` : ""}</span>` : ""}${boton(`${luzSVG(muestra, mia ? "" : "quieta")}<span>${esc(nombreLuz(muestra))}</span>`)}</span>`;

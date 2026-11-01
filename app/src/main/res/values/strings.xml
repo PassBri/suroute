@@ -2721,7 +2721,7 @@
     <string name="cv_g2_t">Desliza para la siguiente cima</string>
     <string name="cv_g2_d">Cada publicación ocupa la pantalla. El muro tiene final: cuando ves todo lo nuevo, te invita a dar tu propio paso.</string>
     <string name="cv_g3_t">Dar luz</string>
-    <string name="cv_g3_d">Un toque o doble toque sobre la publicación da tu luz de siempre. Mantén el dedo para elegir: vela (te acompaño), farol (me iluminó), estrella (te admiro), luna (te entiendo) o sol (¡celebremos!). Todos ven qué luces recibió; el número solo lo ve quien publicó.</string>
+    <string name="cv_g3_d">Un toque o doble toque sobre la publicación da tu luz de siempre. Mantén el dedo para elegir: vela (te acompaño), farol (me iluminó), estrella (te admiro), luna (te entiendo) o sol (¡celebremos!). Todos ven qué luces recibió y cuántas.</string>
     <string name="cv_g4_t">¿Qué clima te deja?</string>
     <string name="cv_g4_d">Deja cómo te hizo sentir: sol, tormenta, niebla, valle o cumbre. El anillo de colores muestra el clima que dejó la comunidad.</string>
     <string name="cv_g5_t">Lanzar una cuerda</string>

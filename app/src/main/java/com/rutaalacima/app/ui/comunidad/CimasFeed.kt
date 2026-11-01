@@ -252,8 +252,8 @@ private fun CimaPagina(
                 }
                 Spacer(Modifier.height(22.dp))
             }
-            // Luces: la reacción de la comunidad (reemplaza al impulso y a los climas). El total solo lo ve el autor
-            com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz, enCima = true, verTotal = post.propio)
+            // Luces: la reacción de la comunidad (reemplaza al impulso y a los climas)
+            com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz, enCima = true)
             Accion(Icons.AutoMirrored.Outlined.Comment, contar(post.comentarios), stringResource(R.string.comentar), Color.White, onClick = onAbrir)
             Accion(if (guardado) com.rutaalacima.app.ui.components.IconosRuta.Morral else com.rutaalacima.app.ui.components.IconosRuta.MorralContorno, "", stringResource(R.string.guardar),
                 if (guardado) com.rutaalacima.app.ui.components.AzulAltura else Color.White,

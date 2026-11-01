@@ -259,10 +259,10 @@ private val FILA_ALTO = 64.dp
 /**
  * El botón de las luces. [enCima]: círculo translúcido de 48 dp con la luz y el total (columna de Cimas).
  * Si no, la línea del muro: la pila de las luces más dadas y una píldora con el nombre.
- * Pocos números: todos ven qué luces recibió; el total solo se muestra con [verTotal] (quien publicó).
+ * Todos ven qué luces recibió y cuántas ([verTotal]).
  */
 @Composable
-fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> Unit, modifier: Modifier = Modifier, enCima: Boolean = true, verTotal: Boolean = false) {
+fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> Unit, modifier: Modifier = Modifier, enCima: Boolean = true, verTotal: Boolean = true) {
     val ctx = LocalContext.current
     val haptico = LocalHapticFeedback.current
     val dens = LocalDensity.current

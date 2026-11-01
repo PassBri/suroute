@@ -2712,7 +2712,7 @@
     <string name="cv_g2_t">Deslize para o próximo cume</string>
     <string name="cv_g2_d">Cada publicação ocupa a tela. O feed tem fim: quando você vê tudo o que é novo, ele te convida a dar o seu próprio passo.</string>
     <string name="cv_g3_t">Dar luz</string>
-    <string name="cv_g3_d">Um toque ou toque duplo na publicação dá sua luz de sempre. Segure para escolher: vela (estou com você), lampião (você me iluminou), estrela (eu te admiro), lua (eu te entendo) ou sol (vamos celebrar!). Todos veem quais luzes ela recebeu; o número só quem publicou vê.</string>
+    <string name="cv_g3_d">Um toque ou toque duplo na publicação dá sua luz de sempre. Segure para escolher: vela (estou com você), lampião (você me iluminou), estrela (eu te admiro), lua (eu te entendo) ou sol (vamos celebrar!). Todos veem quais luzes recebeu e quantas.</string>
     <string name="cv_g4_t">Que clima isso te deixa?</string>
     <string name="cv_g4_d">Diga como isso te fez sentir: sol, tempestade, neblina, vale ou cume. O anel colorido mostra o clima que a comunidade deixou.</string>
     <string name="cv_g5_t">Jogar uma corda</string>

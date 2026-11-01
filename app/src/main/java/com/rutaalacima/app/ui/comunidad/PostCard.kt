@@ -221,7 +221,7 @@ fun PostCard(
         if (post.camino != null || post.compromiso != null || (post.propio && post.sello != null)) androidx.compose.foundation.layout.Box(Modifier.padding(start = 12.dp, end = 12.dp, top = 10.dp)) { ChipsCamino(post, sobreFoto = false, onCerrarCompromiso = onCompromiso) }
         // Luces: la pila de las más dadas y la píldora para dar la tuya (mantener elige otra)
         com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz ?: { _ -> onImpulsar() },
-            Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp), enCima = false, verTotal = post.propio)
+            Modifier.padding(start = 12.dp, end = 12.dp, top = 12.dp), enCima = false)
         // Acciones en píldoras
         Row(Modifier.padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             Pildora(Icons.AutoMirrored.Outlined.Comment, "${post.comentarios}", stringResource(R.string.comentar), false, onComentar)
