@@ -107,15 +107,15 @@
     if (id === "estrella") {
       const e = estrellaFacetas(u);
       return `<svg ${c}><defs>
-      <radialGradient id="eg${u}" cx="32" cy="33" r="30" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#F3D27A" stop-opacity=".55"/><stop offset="1" stop-color="#F3D27A" stop-opacity="0"/></radialGradient>
-      <linearGradient id="es-c${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#FFF1BF"/><stop offset="1" stop-color="#E9C463"/></linearGradient>
-      <linearGradient id="es-m${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#E2B54E"/><stop offset="1" stop-color="#C39033"/></linearGradient>
-      <linearGradient id="es-o${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#A97A27"/><stop offset="1" stop-color="#7C5719"/></linearGradient>
+      <radialGradient id="eg${u}" cx="32" cy="33" r="30" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9CCBFF" stop-opacity=".6"/><stop offset="1" stop-color="#9CCBFF" stop-opacity="0"/></radialGradient>
+      <linearGradient id="es-c${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#EEF6FF"/><stop offset="1" stop-color="#9CC8F4"/></linearGradient>
+      <linearGradient id="es-m${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#6BA4E6"/><stop offset="1" stop-color="#3D76C4"/></linearGradient>
+      <linearGradient id="es-o${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2D5BA3"/><stop offset="1" stop-color="#1B3A70"/></linearGradient>
     </defs>
       <circle class="luz-halo" cx="32" cy="33" r="30" fill="url(#eg${u})"/>
       ${e.caras}
-      <path d="${e.contorno}" fill="none" stroke="#6E4D16" stroke-width=".7" stroke-linejoin="round" opacity=".6"/>
-      <g class="luz-destello"><path d="M50 9l1.1 4.4L55.5 14.5l-4.4 1.1L50 20l-1.1-4.4L44.5 14.5l4.4-1.1z" fill="#FFF8DF" stroke="#C99A3A" stroke-width=".6"/></g>
+      <path d="${e.contorno}" fill="none" stroke="#173163" stroke-width=".7" stroke-linejoin="round" opacity=".6"/>
+      <g class="luz-destello"><path d="M50 9l1.1 4.4L55.5 14.5l-4.4 1.1L50 20l-1.1-4.4L44.5 14.5l4.4-1.1z" fill="#F4F9FF" stroke="#6FA4E8" stroke-width=".6"/></g>
     </svg>`;
     }
 
@@ -137,19 +137,23 @@
       </g>
     </svg>`;
 
-    // sol
-    let rayos = "";
-    for (let i = 0; i < 12; i++) rayos += `<path d="M32 3.5l2.2 12h-4.4z" transform="rotate(${i * 30} 32 32)"/>`;
+    // sol: un sol de verdad, sin rayos de dibujo: corona que se difumina, serpentinas de luz, oscurecimiento
+    // hacia el borde (limbo), granulación y dos manchas solares tenues
+    let corona = "";
+    for (let i = 0; i < 14; i++) corona += `<ellipse cx="32" cy="32" rx="${i % 3 ? 0.9 : 1.4}" ry="${[30, 24, 27, 22, 29, 25, 21][i % 7]}" transform="rotate(${i * 25.7 + 6} 32 32)"/>`;
     return `<svg ${c}><defs>
-      <radialGradient id="sg${u}" cx="32" cy="32" r="31" gradientUnits="userSpaceOnUse"><stop offset=".35" stop-color="#FFD978" stop-opacity=".75"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sd${u}" cx="42%" cy="40%" r="62%"><stop offset="0" stop-color="#FFFBE6"/><stop offset=".35" stop-color="#FFE07A"/><stop offset=".78" stop-color="#FFA126"/><stop offset="1" stop-color="#DD6417"/></radialGradient>
-      <filter id="st${u}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".55" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 .55  0 0 0 0 .25  0 0 0 0 0  0 0 0 .55 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+      <radialGradient id="sg${u}" cx="32" cy="32" r="31.5" gradientUnits="userSpaceOnUse"><stop offset=".42" stop-color="#FFF6D0" stop-opacity=".95"/><stop offset=".56" stop-color="#FFD27A" stop-opacity=".55"/><stop offset=".78" stop-color="#FFB04A" stop-opacity=".18"/><stop offset="1" stop-color="#FF9A3A" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sc${u}" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse"><stop offset=".5" stop-color="#FFEFC2" stop-opacity=".5"/><stop offset=".75" stop-color="#FFD58A" stop-opacity=".18"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sb${u}" cx="32" cy="32" r="22" gradientUnits="userSpaceOnUse"><stop offset=".7" stop-color="#FFFBEA" stop-opacity=".85"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sd${u}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFA"/><stop offset=".5" stop-color="#FFF4BE"/><stop offset=".78" stop-color="#FFCF5A"/><stop offset=".92" stop-color="#F7A033"/><stop offset="1" stop-color="#E2701F"/></radialGradient>
+      <filter id="st${u}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .78  0 0 0 0 .38  0 0 0 0 .05  0 0 0 .9 -.22"/><feComposite in2="SourceGraphic" operator="in"/></filter>
     </defs>
-      <circle class="luz-halo" cx="32" cy="32" r="31" fill="url(#sg${u})"/>
-      <g class="luz-rayos" fill="#FFC24A" opacity=".55">${rayos}</g>
-      <circle cx="32" cy="32" r="15.5" fill="url(#sd${u})"/>
-      <circle cx="32" cy="32" r="15.5" fill="#fff" filter="url(#st${u})" opacity=".35"/>
-      <ellipse cx="27" cy="26" rx="4.5" ry="3" fill="#fff" opacity=".35"/>
+      <circle class="luz-halo" cx="32" cy="32" r="31.5" fill="url(#sg${u})"/>
+      <g class="luz-rayos" fill="url(#sc${u})">${corona}</g>
+      <circle cx="32" cy="32" r="22" fill="url(#sb${u})"/>
+      <circle cx="32" cy="32" r="16.5" fill="url(#sd${u})"/>
+      <circle cx="32" cy="32" r="16.5" fill="#fff" filter="url(#st${u})" opacity=".45"/>
+      <circle cx="37.5" cy="28" r="1" fill="#B8571A" opacity=".45"/><circle cx="26.5" cy="36.5" r=".7" fill="#B8571A" opacity=".35"/>
     </svg>`;
   }
 
