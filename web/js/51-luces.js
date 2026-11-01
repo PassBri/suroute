@@ -1,10 +1,10 @@
-/* Luces de Comunidad: cinco reacciones pintadas como objetos reales (vela, linterna frontal,
+/* Luces de Comunidad: cinco reacciones pintadas como objetos reales (vela, farol de queroseno,
    estrella, luna y sol). Se dibujan en SVG con degradados para que pesen poco, se vean nítidas
    y se animen con CSS (la animación se apaga con «reducir movimiento»). */
 (function () {
   const LUCES = [
     { id: "vela", nombre: "Te acompaño" },
-    { id: "frontal", nombre: "Me iluminó" },
+    { id: "farol", nombre: "Me iluminó" },
     { id: "estrella", nombre: "Te admiro" },
     { id: "luna", nombre: "Te entiendo" },
     { id: "sol", nombre: "¡Cumbre!" },
@@ -55,23 +55,28 @@
       <rect x="25" y="32" width="2.2" height="26" rx="1.1" fill="url(#vb${u})" opacity=".55"/>
     </svg>`;
 
-    if (id === "frontal") return `<svg ${c}><defs>
-      <linearGradient id="fh${u}" x1="0" x2="1" y1="1" y2="0"><stop offset="0" stop-color="#FFD866" stop-opacity=".95"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></linearGradient>
-      <linearGradient id="fk${u}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#6E777D"/><stop offset=".5" stop-color="#3B4247"/><stop offset="1" stop-color="#23282C"/></linearGradient>
-      <linearGradient id="fm${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#F2F4F5"/><stop offset=".5" stop-color="#9AA3A9"/><stop offset="1" stop-color="#5E676D"/></linearGradient>
-      <radialGradient id="fl${u}" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#FFF3C2"/><stop offset="1" stop-color="#EDBE45"/></radialGradient>
-      <radialGradient id="fg${u}" cx="32" cy="34" r="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFEFB0" stop-opacity=".8"/><stop offset="1" stop-color="#FFEFB0" stop-opacity="0"/></radialGradient>
+    if (id === "farol") return `<svg ${c}><defs>
+      <radialGradient id="fh${u}" cx="32" cy="32" r="28" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFC66B" stop-opacity=".6"/><stop offset="1" stop-color="#FFC66B" stop-opacity="0"/></radialGradient>
+      <linearGradient id="fb${u}" x1="0" x2="1"><stop offset="0" stop-color="#7A5A1E"/><stop offset=".3" stop-color="#E9CB7E"/><stop offset=".55" stop-color="#B88E3A"/><stop offset="1" stop-color="#5E4314"/></linearGradient>
+      <radialGradient id="fv${u}" cx="50%" cy="58%" r="58%"><stop offset="0" stop-color="#FFF6D2" stop-opacity=".95"/><stop offset=".5" stop-color="#FFD782" stop-opacity=".6"/><stop offset="1" stop-color="#F3E3C0" stop-opacity=".22"/></radialGradient>
+      <radialGradient id="ff${u}" cx="50%" cy="72%" r="60%"><stop offset="0" stop-color="#FFFBE8"/><stop offset=".4" stop-color="#FFDA74"/><stop offset=".8" stop-color="#FF9A2E"/><stop offset="1" stop-color="#F06A12"/></radialGradient>
     </defs>
-      <path class="luz-haz" d="M38 26 60 2 64 12 42 31z" fill="url(#fh${u})"/>
-      <path d="M9 30c3-8 13-12 23-12s20 4 23 12" stroke="#3A2620" stroke-width="2.4" fill="none" opacity=".6"/>
-      <path d="M3 33.5c2.5 6 8 9 15 10M61 33.5c-2.5 6-8 9-15 10" stroke="#7A2A1B" stroke-width="6" fill="none" stroke-linecap="round"/>
-      <path d="M4.6 36c2.4 4.6 7 7 12.6 8M59.4 36c-2.4 4.6-7 7-12.6 8" stroke="#C9846F" stroke-width=".8" stroke-dasharray="1.6 1.6" fill="none"/>
-      <rect x="16" y="21" width="32" height="27" rx="9" fill="url(#fk${u})"/>
-      <rect x="19" y="22.4" width="26" height="3.2" rx="1.6" fill="#fff" opacity=".22"/>
-      <circle class="luz-halo" cx="32" cy="34.5" r="22" fill="url(#fg${u})"/>
-      <circle cx="32" cy="34.5" r="10" fill="url(#fm${u})"/>
-      <circle cx="32" cy="34.5" r="7.6" fill="url(#fl${u})"/>
-      <ellipse cx="29.4" cy="31.6" rx="2.4" ry="1.4" fill="#fff" opacity=".9" transform="rotate(-30 29.4 31.6)"/>
+      <circle class="luz-halo" cx="32" cy="32" r="28" fill="url(#fh${u})"/>
+      <ellipse cx="32" cy="61.5" rx="15" ry="1.8" fill="#000" opacity=".16"/>
+      <path d="M21.5 13.5C21 1.5 43 1.5 42.5 13.5" stroke="#4A3B2E" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <rect x="28.6" y="6.6" width="6.8" height="3.6" rx="1" fill="url(#fb${u})"/>
+      <path d="M21 17.5h22l-4-7.5H25z" fill="url(#fb${u})"/>
+      <path d="M23.6 17.5C13.6 24 13.6 40.5 23.6 47h16.8c10-6.5 10-23 0-29.5z" fill="url(#fv${u})" stroke="#8A6A2E" stroke-opacity=".45" stroke-width=".8"/>
+      <g class="luz-llama luz-llama-farol">
+        <path d="M32 23.5c3.6 5 4.2 9.6 0 14-4.2-4.4-3.6-9 0-14z" fill="url(#ff${u})"/>
+        <path d="M32 29c1.6 2.4 1.8 4.6 0 7-1.8-2.4-1.6-4.6 0-7z" fill="#FFFDF3"/>
+      </g>
+      <rect x="27.5" y="37.6" width="9" height="3.6" rx="1" fill="url(#fb${u})"/>
+      <path d="M20 21.5c-2.6 6-2.6 15.5 0 21.5" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".55"/>
+      <path d="M20.6 17.5v29.5M43.4 17.5v29.5" stroke="url(#fb${u})" stroke-width="1.3"/>
+      <path d="M19.5 47h25c3 0 5 2 5 5v3.6c0 2.4-1.8 4.4-4.2 4.4H18.7c-2.4 0-4.2-2-4.2-4.4V52c0-3 2-5 5-5z" fill="url(#fb${u})"/>
+      <path d="M17 51.6h30" stroke="#FFF1C8" stroke-width=".9" opacity=".6"/>
+      <circle cx="50.6" cy="51.5" r="2" fill="url(#fb${u})" stroke="#5E4314" stroke-width=".5"/>
     </svg>`;
 
     if (id === "estrella") {
