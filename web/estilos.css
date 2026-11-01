@@ -5042,3 +5042,26 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 @media (prefers-reduced-motion: reduce) { .tr-fila.alarma .tr-ic { animation: none; } }
 .tr-permiso { display: flex; align-items: center; gap: 10px; padding: 10px 12px; margin-bottom: 8px; border-radius: 14px; background: var(--oro-suave); font-size: 13px; }
 .tr-permiso > svg { width: 20px; height: 20px; flex: none; fill: var(--burdeos); } .tr-permiso span { flex: 1; }
+
+/* ---------- Acceder con Face ID (49-acceso.js) ---------- */
+html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
+.acc-velo { position: fixed; inset: 0; z-index: 9000; display: grid; place-items: center; padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  background: var(--fondo); color: var(--tinta); animation: aparece .3s cubic-bezier(.2,0,0,1); transition: opacity .25s cubic-bezier(.2,0,0,1); }
+.acc-velo.sale { opacity: 0; }
+.acc-caja { width: min(400px, 100%); display: grid; gap: 14px; padding: 28px 24px 18px; border-radius: 24px; background: var(--hoja);
+  box-shadow: 0 1px 2px var(--sombra), 0 12px 32px -12px var(--sombra); }
+.acc-marca { width: 44px; height: 44px; color: var(--burdeos); }
+.acc-marca svg { width: 100%; height: 100%; }
+.acc-saludo { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.acc-saludo h1 { margin: 0; font-family: var(--font-titulo); font-size: clamp(30px, 8vw, 38px); line-height: 1.08; font-weight: 700; }
+.acc-ini { flex: none; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--hoja-2); color: var(--burdeos); font-size: 22px; font-weight: 600; }
+.acc-caja > .suave { margin: 0; }
+.acc-btn { justify-content: center; min-height: 54px; font-size: 16.5px; border-radius: 14px; margin-top: 6px; }
+.acc-btn svg { width: 24px; height: 24px; }
+.acc-msg { margin: 0; min-height: 1.2em; color: var(--error, #B3261E); font-size: 14px; text-align: center; }
+.acc-otra { justify-self: center; min-height: 44px; padding: 0 14px; border: 0; background: none; color: var(--burdeos); font: inherit; font-weight: 600; cursor: pointer; border-radius: 10px; }
+.acc-otra:focus-visible, .acc-btn:focus-visible { outline: 2px solid var(--oro); outline-offset: 3px; }
+.acc-bots { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+@media (prefers-reduced-motion: reduce) { .acc-velo { animation: none; transition: none; } }
+.capa:has(.acc-bots) { grid-template-columns: 24px 1fr; }
+.capa .acc-bots { grid-column: 2; justify-content: flex-start; }

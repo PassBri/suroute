@@ -254,6 +254,21 @@ fun RutaRoot() {
         val abiertaHoy = com.rutaalacima.app.domain.model.FrasesDelDia.indice(java.time.LocalDate.now()) in c.frases.desbloqueadas.value
         androidx.compose.runtime.mutableStateOf(abiertaHoy && com.rutaalacima.app.seguridad.Bloqueo.modo(ctx) == com.rutaalacima.app.seguridad.ModoBloqueo.TOQUE)
     }
+    // Con rostro, huella o clave: al volver tras 5 minutos fuera se pide otra vez (como la web y los bancos)
+    val ciclo = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    androidx.compose.runtime.DisposableEffect(ciclo) {
+        var fuera = 0L
+        val obs = androidx.lifecycle.LifecycleEventObserver { _, ev ->
+            when (ev) {
+                androidx.lifecycle.Lifecycle.Event.ON_STOP -> fuera = System.currentTimeMillis()
+                androidx.lifecycle.Lifecycle.Event.ON_START -> if (fuera > 0 && System.currentTimeMillis() - fuera >= 5 * 60_000L &&
+                    com.rutaalacima.app.seguridad.Bloqueo.modo(ctx) != com.rutaalacima.app.seguridad.ModoBloqueo.TOQUE) inicioVisto = false
+                else -> {}
+            }
+        }
+        ciclo.lifecycle.addObserver(obs)
+        onDispose { ciclo.lifecycle.removeObserver(obs) }
+    }
     // La primera vez: la carta de bienvenida sellada (después se relee desde el perfil)
     var cartaLeida by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(com.rutaalacima.app.ui.inicio.CartaBienvenida.leida(ctx)) }
     if (!cartaLeida) {
