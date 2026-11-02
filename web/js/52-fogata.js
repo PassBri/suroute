@@ -100,7 +100,8 @@
 
   /* Encender: vista previa de la cámara, el tema y el eje */
   ACC.fogataEncender = async () => {
-    if (Store.nube && FOG.puede === null) { try { const { data } = await Store.nube.sb.rpc("puede_encender"); FOG.puede = data === true; } catch { FOG.puede = false; } }
+    // Se pregunta cada vez que se abre: si te acaban de dar permiso (moderador o coach verificado), ya cuenta
+    if (Store.nube) { try { const { data, error } = await Store.nube.sb.rpc("puede_encender"); if (error) throw error; FOG.puede = data === true; } catch (e) { console.warn("puede_encender", e); FOG.puede = false; } }
     const puede = !Store.nube || FOG.puede;
     const c = capa(); FOG.vista = "encender";
     const ejes = [["", "Sin eje"], ...EJES.map(([k, n]) => [k, n])];
