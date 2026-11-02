@@ -5,7 +5,6 @@
   const LUCES = [
     { id: "vela", nombre: "Te acompaño", cosa: "una vela" },
     { id: "fogata", nombre: "Me motivó", cosa: "una fogata" },
-    { id: "farol", nombre: "Me iluminó", cosa: "un farol" },
     { id: "estrella", nombre: "Te admiro", cosa: "una estrella" },
     { id: "fugaz", nombre: "Me ilusionó", cosa: "una estrella fugaz" },
     { id: "luna", nombre: "Te entiendo", cosa: "una luna" },
@@ -214,7 +213,7 @@
     const sb = Store.nube.sb, yo = Store.nube.dueno, por = new Map(nube.map(p => [String(p.id), p]));
     let r = await sb.from("votes").select("post_id,user_id,luz").in("post_id", nube.map(p => p.id));
     if (r.error) { console.warn("Luces: falta correr supabase/2026-11-01-luces.sql", r.error); r = await sb.from("votes").select("post_id,user_id").in("post_id", nube.map(p => p.id)); }
-    (r.data || []).forEach(f => { const p = por.get(String(f.post_id)); if (!p) return; const k = ids.includes(f.luz) ? f.luz : "sol"; p.luces[k] = (p.luces[k] || 0) + 1; if (f.user_id === yo) p.miLuz = k; });
+    (r.data || []).forEach(f => { const p = por.get(String(f.post_id)); if (!p) return; const k = f.luz === "farol" ? "fogata" : ids.includes(f.luz) ? f.luz : "sol"; p.luces[k] = (p.luces[k] || 0) + 1; if (f.user_id === yo) p.miLuz = k; });
     nube.forEach(sincronizar);
   }
   window.cargarLuces = cargarLuces;

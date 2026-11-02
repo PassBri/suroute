@@ -168,7 +168,7 @@ try {
 const GUIA_COMUNIDAD = [
   ["comunidad", "Para ti, Visión y Siguiendo", "Para ti muestra primero lo que te ayuda a subir: lo de tu campamento más flojo y lo de quien tiene camino detrás. Visión, solo tableros de sueños. Siguiendo, las personas que sigues."],
   ["arriba", "Desliza para la siguiente cima", "Cada publicación ocupa la pantalla. El muro tiene final: cuando ves todo lo nuevo, te invita a dar tu propio paso."],
-  ["impulso", "Dar luz", "Un toque o doble toque sobre la publicación da tu luz de siempre. Mantén el dedo para elegir: vela (te acompaño), fogata (me motivó), farol (me iluminó), estrella (te admiro), estrella fugaz (me ilusionó), luna (te entiendo) o sol (¡celebremos!). Todos ven qué luces recibió y cuántas."],
+  ["impulso", "Dar luz", "Un toque o doble toque sobre la publicación da tu luz de siempre. Mantén el dedo para elegir: vela (te acompaño), fogata (me motivó), estrella (te admiro), estrella fugaz (me ilusionó), luna (te entiendo) o sol (¡celebremos!). Todos ven qué luces recibió y cuántas."],
   ["cordada", "Lanzar una cuerda", "Al comentar, elige Pregunta, Consejo o Yo también lo intento. Una cuerda ayuda más que un aplauso."],
   ["morral", "Mochila", "Guarda la publicación para volver a ella. También sirve para guardar una carta sellada y leerla el día que se abra."],
   ["ruta", "Prueba de camino", "Cada publicación muestra el camino que hay detrás: los días seguidos de constancia y los pasos ganados de la Brújula."],

@@ -2712,7 +2712,7 @@
     <string name="cv_g2_t">Wische zum nächsten Gipfel</string>
     <string name="cv_g2_d">Jeder Beitrag füllt den Bildschirm. Der Feed hat ein Ende: Wenn du alles Neue gesehen hast, lädt er dich ein, deinen eigenen Schritt zu gehen.</string>
     <string name="cv_g3_t">Licht geben</string>
-    <string name="cv_g3_d">Ein Tippen oder Doppeltippen auf den Beitrag gibt dein übliches Licht. Halten zum Auswählen: Kerze (ich bin bei dir), Lagerfeuer (du hast mich motiviert), Laterne (du hast mich erleuchtet), Stern (ich bewundere dich), Sternschnuppe (du hast mich träumen lassen), Mond (ich verstehe dich) oder Sonne (lass uns feiern!). Alle sehen, welche Lichter er bekam und wie viele.</string>
+    <string name="cv_g3_d">Ein Tippen oder Doppeltippen auf den Beitrag gibt dein übliches Licht. Halten zum Auswählen: Kerze (ich bin bei dir), Lagerfeuer (du hast mich motiviert), Stern (ich bewundere dich), Sternschnuppe (du hast mich träumen lassen), Mond (ich verstehe dich) oder Sonne (lass uns feiern!). Alle sehen, welche Lichter er bekam und wie viele.</string>
     <string name="cv_g4_t">Welches Wetter hinterlässt es bei dir?</string>
     <string name="cv_g4_d">Zeig, wie es sich angefühlt hat: Sonne, Sturm, Nebel, Tal oder Gipfel. Der Farbring zeigt das Wetter, das die Community hinterlassen hat.</string>
     <string name="cv_g5_t">Ein Seil zuwerfen</string>

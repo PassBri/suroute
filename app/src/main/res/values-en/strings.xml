@@ -2712,7 +2712,7 @@
     <string name="cv_g2_t">Swipe for the next summit</string>
     <string name="cv_g2_d">Each post fills the screen. The feed has an end: once you\'ve seen everything new, it invites you to take your own step.</string>
     <string name="cv_g3_t">Give light</string>
-    <string name="cv_g3_d">One tap or a double tap on the post gives your usual light. Hold to choose: candle (I\'m with you), campfire (you fired me up), lantern (you lit my way), star (I admire you), shooting star (you gave me hope), moon (I get you) or sun (let\'s celebrate!). Everyone sees which lights it received and how many.</string>
+    <string name="cv_g3_d">One tap or a double tap on the post gives your usual light. Hold to choose: candle (I\'m with you), campfire (you fired me up), star (I admire you), shooting star (you gave me hope), moon (I get you) or sun (let\'s celebrate!). Everyone sees which lights it received and how many.</string>
     <string name="cv_g4_t">What weather does it leave you?</string>
     <string name="cv_g4_d">Share how it made you feel: sun, storm, fog, valley or summit. The colored ring shows the weather the community left.</string>
     <string name="cv_g5_t">Throw a rope</string>

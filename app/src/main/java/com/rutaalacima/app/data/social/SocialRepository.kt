@@ -579,7 +579,7 @@ class SocialRepository(
         filas.forEach { f ->
             val o = f.jsonObject
             val pid = o["post_id"]?.jsonPrimitive?.contentOrNull ?: return@forEach
-            val l = o["luz"]?.jsonPrimitive?.contentOrNull?.takeIf { it in com.rutaalacima.app.ui.components.Luces.IDS } ?: "sol"
+            val l = o["luz"]?.jsonPrimitive?.contentOrNull?.let { if (it == "farol") "fogata" else it }?.takeIf { it in com.rutaalacima.app.ui.components.Luces.IDS } ?: "sol"
             cuenta.getOrPut(pid) { HashMap() }.merge(l, 1) { a, b -> a + b }
             if (o["user_id"]?.jsonPrimitive?.contentOrNull == uid) mias[pid] = l
         }

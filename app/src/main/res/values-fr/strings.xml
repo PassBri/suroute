@@ -2712,7 +2712,7 @@
     <string name="cv_g2_t">Fais glisser vers le prochain sommet</string>
     <string name="cv_g2_d">Chaque publication occupe tout l\'écran. Le fil a une fin : quand tu as vu toutes les nouveautés, il t\'invite à faire ton propre pas.</string>
     <string name="cv_g3_t">Donner de la lumière</string>
-    <string name="cv_g3_d">Un toucher ou un double toucher sur la publication donne ta lumière habituelle. Maintiens pour choisir : bougie (je suis avec toi), feu de camp (tu m’as motivé), lanterne (tu m’as éclairé), étoile (je t’admire), étoile filante (tu m’as fait rêver), lune (je te comprends) ou soleil (célébrons !). Tout le monde voit quelles lumières elle a reçues et combien.</string>
+    <string name="cv_g3_d">Un toucher ou un double toucher sur la publication donne ta lumière habituelle. Maintiens pour choisir : bougie (je suis avec toi), feu de camp (tu m’as motivé), étoile (je t’admire), étoile filante (tu m’as fait rêver), lune (je te comprends) ou soleil (célébrons !). Tout le monde voit quelles lumières elle a reçues et combien.</string>
     <string name="cv_g4_t">Quelle météo te laisse-t-elle ?</string>
     <string name="cv_g4_d">Partage ce que tu as ressenti : soleil, orage, brouillard, vallée ou sommet. L\'anneau de couleurs montre la météo laissée par la communauté.</string>
     <string name="cv_g5_t">Lancer une corde</string>

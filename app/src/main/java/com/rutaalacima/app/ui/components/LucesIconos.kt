@@ -86,7 +86,7 @@ import kotlin.math.sin
  * y deslizar el dedo elige una al soltar.
  */
 object Luces {
-    val IDS = listOf("vela", "fogata", "farol", "estrella", "fugaz", "luna", "sol")
+    val IDS = listOf("vela", "fogata", "estrella", "fugaz", "luna", "sol")
     fun nombre(ctx: android.content.Context, k: String): String = ctx.getString(
         when (k) { "vela" -> R.string.lz_vela; "fogata" -> R.string.lz_fogata; "farol" -> R.string.lz_farol; "estrella" -> R.string.lz_estrella; "fugaz" -> R.string.lz_fugaz; "luna" -> R.string.lz_luna; else -> R.string.lz_sol },
     )
@@ -319,9 +319,9 @@ private fun DrawScope.astro(pulso: Pulso, k: Paleta, estrella: Boolean) {
 
 // ====================================================================== El botón y la fila de las cinco
 
-private val ANCHO_OP = 48.dp
-private val PASO_OP = 48.dp          // sin separación: cada opción ya trae su aire
-private val FILA_ANCHO = 12.dp + ANCHO_OP * 7
+private val ANCHO_OP = 52.dp
+private val PASO_OP = 52.dp          // sin separación: cada opción ya trae su aire
+private val FILA_ANCHO = 12.dp + ANCHO_OP * 6
 private val FILA_ALTO = 96.dp        // dibujo de 52 dp y el nombre en dos líneas
 
 /**
