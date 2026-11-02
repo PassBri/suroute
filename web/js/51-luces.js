@@ -7,6 +7,7 @@
     { id: "fogata", nombre: "Me motivó", cosa: "una fogata" },
     { id: "farol", nombre: "Me iluminó", cosa: "un farol" },
     { id: "estrella", nombre: "Te admiro", cosa: "una estrella" },
+    { id: "fugaz", nombre: "Me ilusionó", cosa: "una estrella fugaz" },
     { id: "luna", nombre: "Te entiendo", cosa: "una luna" },
     { id: "sol", nombre: "¡Celebremos!", cosa: "un sol" },
   ];
@@ -78,6 +79,20 @@
       <ellipse cx="12.4" cy="55.4" rx="2.6" ry="3.1" fill="#D2A66C" stroke="#7A4E26" stroke-width=".7"/>
       <ellipse cx="51.6" cy="55.4" rx="2.6" ry="3.1" fill="#D2A66C" stroke="#7A4E26" stroke-width=".7"/>
       <g class="luz-chispas" fill="#FFD27A"><circle cx="40" cy="12" r="1.1"/><circle cx="24" cy="10" r=".9"/><circle cx="45" cy="20" r=".8"/></g>
+    </svg>`;
+
+    if (id === "fugaz") return `<svg ${c}><defs>
+      <linearGradient id="zc${u}" x1="47" y1="17" x2="6" y2="56" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFF3C4"/><stop offset=".25" stop-color="#FFC75A" stop-opacity=".85"/><stop offset=".6" stop-color="#F08A4B" stop-opacity=".45"/><stop offset="1" stop-color="#7FA8F0" stop-opacity="0"/></linearGradient>
+      <radialGradient id="zh${u}" cx="46" cy="18" r="13" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".22" stop-color="#FFF0B8" stop-opacity=".95"/><stop offset=".55" stop-color="#FFC75A" stop-opacity=".35"/><stop offset="1" stop-color="#FFC75A" stop-opacity="0"/></radialGradient>
+    </defs>
+      <g class="luz-fugaz">
+        <path d="M49.6 14.2 6 56 43 22.6z" fill="url(#zc${u})"/>
+        <path d="M47.6 16.4 16 47 45.4 19.6z" fill="#FFFBEA" opacity=".75"/>
+        <circle cx="46" cy="18" r="13" fill="url(#zh${u})"/>
+        <path d="M46 9.5l1.3 7.2 7.2 1.3-7.2 1.3L46 26.5l-1.3-7.2-7.2-1.3 7.2-1.3z" fill="#FFFFFF" opacity=".95"/>
+        <circle cx="46" cy="18" r="3.4" fill="#FFFFFF"/>
+        <circle cx="29" cy="38" r="1" fill="#FFD98A"/><circle cx="20" cy="43" r=".8" fill="#AFCBFF"/><circle cx="36" cy="28" r=".8" fill="#FFE7A6"/>
+      </g>
     </svg>`;
 
     if (id === "farol") return `<svg ${c}><defs>

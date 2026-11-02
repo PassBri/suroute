@@ -5230,3 +5230,11 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .luz-btn .luz-halo { opacity: .55; }
 .luz-selector .lz-op.si, .luz-wrap.en-cima .lz-op.si { background: transparent; box-shadow: inset 0 0 0 2px #E9CB7E; }
 .luz-wrap.en-lista .lz-op.si { box-shadow: inset 0 0 0 2px var(--oro); }
+
+/* Estrella fugaz («Me ilusionó»): aparece, cruza y desaparece */
+.luz-fugaz { transform-box: view-box; animation: luzFugaz 2.6s cubic-bezier(.3,0,.6,1) infinite; }
+@keyframes luzFugaz { 0% { transform: translate(-16px, 14px); opacity: 0; } 15% { opacity: 1; } 60% { transform: translate(4px, -4px); opacity: 1; } 78% { transform: translate(9px, -8px); opacity: 0; } 100% { transform: translate(9px, -8px); opacity: 0; } }
+/* Siete luces: opciones más angostas para que la fila quepa en el teléfono */
+.luz-selector .lz-op { width: 48px; }
+.luz-selector .lz-op svg.luz { width: 40px; height: 40px; }
+.luz-selector .lz-n { font-size: 9.5px; }

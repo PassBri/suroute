@@ -2,14 +2,14 @@
 -- Reemplaza al impulso y a los climas de las publicaciones. Cada luz ES un impulso con su matiz:
 -- vive en la misma tabla votes, en la columna luz, para que los milímetros de la expedición,
 -- los avisos y «Para ti» sigan contando igual.
---   vela = te acompaño · fogata = me motivó · farol = me iluminó · estrella = te admiro · luna = te entiendo · sol = ¡celebremos!
+--   vela = te acompaño · fogata = me motivó · farol = me iluminó · estrella = te admiro · fugaz = me ilusionó · luna = te entiendo · sol = ¡celebremos!
 -- Los impulsos que ya existían quedan como «sol». Los climas que la gente dejó en las publicaciones
 -- pasan a la luz más parecida (la tabla post_climas se conserva, ya no se usa).
 -- Se puede correr más de una vez.
 
 alter table public.votes add column if not exists luz text not null default 'sol';
 alter table public.votes drop constraint if exists votes_luz_valida;
-alter table public.votes add constraint votes_luz_valida check (luz in ('vela', 'fogata', 'farol', 'estrella', 'luna', 'sol'));
+alter table public.votes add constraint votes_luz_valida check (luz in ('vela', 'fogata', 'farol', 'estrella', 'fugaz', 'luna', 'sol'));
 
 -- Cambiar de luz (de vela a estrella, por ejemplo) es actualizar el propio voto
 drop policy if exists "cambiar impulso" on public.votes;

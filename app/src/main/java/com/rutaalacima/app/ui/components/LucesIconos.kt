@@ -86,9 +86,9 @@ import kotlin.math.sin
  * y deslizar el dedo elige una al soltar.
  */
 object Luces {
-    val IDS = listOf("vela", "fogata", "farol", "estrella", "luna", "sol")
+    val IDS = listOf("vela", "fogata", "farol", "estrella", "fugaz", "luna", "sol")
     fun nombre(ctx: android.content.Context, k: String): String = ctx.getString(
-        when (k) { "vela" -> R.string.lz_vela; "fogata" -> R.string.lz_fogata; "farol" -> R.string.lz_farol; "estrella" -> R.string.lz_estrella; "luna" -> R.string.lz_luna; else -> R.string.lz_sol },
+        when (k) { "vela" -> R.string.lz_vela; "fogata" -> R.string.lz_fogata; "farol" -> R.string.lz_farol; "estrella" -> R.string.lz_estrella; "fugaz" -> R.string.lz_fugaz; "luna" -> R.string.lz_luna; else -> R.string.lz_sol },
     )
     /** La última luz que eligió esta persona (al principio, el sol). */
     fun ultima(ctx: android.content.Context): String = ctx.getSharedPreferences("luces", 0).getString("ultima", "sol")?.takeIf { it in IDS } ?: "sol"
@@ -111,6 +111,9 @@ private object Formas {
     val fogDer = p("M41.2 25c3.9 5.6 4 12.4-1 17.8.8-4.6.2-9.6-1.9-13.6z")
     val fogCentro = p("M32 23.5c4 5.4 5.6 10.6 4.6 15.2-.6 3.2-2.6 5.4-4.6 5.4s-4-2.2-4.6-5.4c-1-4.6.6-9.8 4.6-15.2z")
     val fogNucleo = p("M32 32c2 2.8 2.6 5.4 2 7.6-.4 1.6-1.2 2.6-2 2.6s-1.6-1-2-2.6c-.6-2.2 0-4.8 2-7.6z")
+    val colaFugaz = p("M49.6 14.2 6 56 43 22.6z")
+    val colaFugazIn = p("M47.6 16.4 16 47 45.4 19.6z")
+    val destelloFugaz = p("M46 9.5l1.3 7.2 7.2 1.3-7.2 1.3L46 26.5l-1.3-7.2-7.2-1.3 7.2-1.3z")
     val asa = p("M21.5 13.5C21 1.5 43 1.5 42.5 13.5")
     val tapa = p("M21 17.5h22l-4-7.5H25z")
     val vidrio = p("M23.6 17.5C13.6 24 13.6 40.5 23.6 47h16.8c10-6.5 10-23 0-29.5z")
@@ -162,7 +165,7 @@ fun Luz(k: String, modifier: Modifier = Modifier, animada: Boolean = false) {
         val e = size.minDimension / 64f
         withTransform({ translate((size.width - 64f * e) / 2, (size.height - 64f * e) / 2); scale(e, e, Offset.Zero) }) {
             when (k) {
-                "vela" -> vela(pulso); "fogata" -> fogata(pulso); "farol" -> farol(pulso); "estrella" -> estrella(pulso); "luna" -> luna(pulso); else -> sol(pulso)
+                "vela" -> vela(pulso); "fogata" -> fogata(pulso); "farol" -> farol(pulso); "estrella" -> estrella(pulso); "fugaz" -> fugaz(pulso); "luna" -> luna(pulso); else -> sol(pulso)
             }
         }
     }
@@ -215,6 +218,25 @@ private fun DrawScope.fogata(pulso: Pulso) {
     // Chispas que suben
     val f = pulso.destello; val al = sin(f * PI).toFloat()
     listOf(Triple(40f, 12f, 1.1f), Triple(24f, 10f, 0.9f), Triple(45f, 20f, 0.8f)).forEach { (x, y, r) -> drawCircle(c(0xFFFFD27A, al), r, Offset(x, y + 6f - 12f * f)) }
+}
+
+/** Estrella fugaz («Me ilusionó»): aparece, cruza el cielo y desaparece. Quieta, se ve a media carrera. */
+private fun DrawScope.fugaz(pulso: Pulso) {
+    val f = pulso.destello
+    val al = when { f < 0.15f -> f / 0.15f; f < 0.6f -> 1f; f < 0.78f -> 1f - (f - 0.6f) / 0.18f; else -> 0f }
+    val avance = (f / 0.78f).coerceAtMost(1f)
+    val dx = -16f + 25f * avance; val dy = 14f - 22f * avance
+    // Quieta (sin animación) queda en su sitio
+    val (tx, ty) = if (f == 0.5f && pulso.giro == 0f) 0f to 0f else dx to dy
+    withTransform({ translate(tx, ty) }) {
+        val cola = Brush.linearGradient(0f to c(0xFFFFF3C4, al), 0.25f to c(0xFFFFC75A, 0.85f * al), 0.6f to c(0xFFF08A4B, 0.45f * al), 1f to c(0xFF7FA8F0, 0f), start = Offset(47f, 17f), end = Offset(6f, 56f))
+        drawPath(Formas.colaFugaz, cola)
+        drawPath(Formas.colaFugazIn, c(0xFFFFFBEA, 0.75f * al))
+        drawCircle(Brush.radialGradient(0f to Color.White.copy(alpha = al), 0.22f to c(0xFFFFF0B8, 0.95f * al), 0.55f to c(0xFFFFC75A, 0.35f * al), 1f to c(0xFFFFC75A, 0f), center = Offset(46f, 18f), radius = 13f), 13f, Offset(46f, 18f))
+        drawPath(Formas.destelloFugaz, Color.White.copy(alpha = 0.95f * al))
+        drawCircle(Color.White.copy(alpha = al), 3.4f, Offset(46f, 18f))
+        drawCircle(c(0xFFFFD98A, al), 1f, Offset(29f, 38f)); drawCircle(c(0xFFAFCBFF, al), 0.8f, Offset(20f, 43f)); drawCircle(c(0xFFFFE7A6, al), 0.8f, Offset(36f, 28f))
+    }
 }
 
 private fun DrawScope.farol(pulso: Pulso) {
@@ -297,9 +319,9 @@ private fun DrawScope.astro(pulso: Pulso, k: Paleta, estrella: Boolean) {
 
 // ====================================================================== El botón y la fila de las cinco
 
-private val ANCHO_OP = 54.dp
-private val PASO_OP = 54.dp          // sin separación: cada opción ya trae su aire
-private val FILA_ANCHO = 12.dp + ANCHO_OP * 6
+private val ANCHO_OP = 48.dp
+private val PASO_OP = 48.dp          // sin separación: cada opción ya trae su aire
+private val FILA_ANCHO = 12.dp + ANCHO_OP * 7
 private val FILA_ALTO = 96.dp        // dibujo de 52 dp y el nombre en dos líneas
 
 /**
@@ -438,13 +460,13 @@ private fun FilaLuces(miLuz: String?, sobre: Int, oscura: Boolean, onElegir: (St
                     .clickable { onElegir(k) }.semantics { contentDescription = nombre }.padding(top = 4.dp, bottom = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Box(Modifier.size(52.dp), contentAlignment = Alignment.Center) {
-                    Luz(k, Modifier.size(44.dp).graphicsLayer {
+                Box(Modifier.size(46.dp), contentAlignment = Alignment.Center) {
+                    Luz(k, Modifier.size(40.dp).graphicsLayer {
                         translationY = -10.dp.toPx() * arriba; val s = 1f + 0.35f * arriba; scaleX = s; scaleY = s
                     }, animada = true)
                 }
                 // El nombre de cada luz, siempre visible bajo su dibujo
-                Text(nombre, fontSize = 10.5.sp, lineHeight = 12.sp, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                Text(nombre, fontSize = 9.5.sp, lineHeight = 11.sp, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                     fontWeight = if (marcada) FontWeight.SemiBold else FontWeight.Normal,
                     color = if (oscura) Color.White.copy(alpha = if (marcada) 1f else 0.86f) else if (marcada) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant)
             }

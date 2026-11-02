@@ -2712,7 +2712,7 @@
     <string name="cv_g2_t">スワイプで次の頂へ</string>
     <string name="cv_g2_d">投稿は 1 件ずつ画面いっぱいに表示されます。フィードには終わりがあり、新着をすべて見終えると、あなた自身の一歩を促します。</string>
     <string name="cv_g3_t">光を贈る</string>
-    <string name="cv_g3_d">投稿をタップまたはダブルタップすると、いつもの光を贈れます。長押しで選択：ろうそく（そばにいるよ）、焚き火（やる気をもらった）、ランプ（照らしてくれた）、星（尊敬します）、月（わかるよ）、太陽（お祝いしよう！）。どの光がいくつ届いたかは誰でも見られます。</string>
+    <string name="cv_g3_d">投稿をタップまたはダブルタップすると、いつもの光を贈れます。長押しで選択：ろうそく（そばにいるよ）、焚き火（やる気をもらった）、ランプ（照らしてくれた）、星（尊敬します）、流れ星（希望をもらった）、月（わかるよ）、太陽（お祝いしよう！）。どの光がいくつ届いたかは誰でも見られます。</string>
     <string name="cv_g4_t">どんな天気が残りましたか？</string>
     <string name="cv_g4_d">どう感じたかを残しましょう：晴れ、嵐、霧、谷、山頂。カラーリングには、コミュニティが残した天気が表示されます。</string>
     <string name="cv_g5_t">ロープを投げる</string>
@@ -2938,4 +2938,6 @@
     <string name="lz_cosa_sol">太陽</string>
     <string name="lz_fogata">やる気をもらった</string>
     <string name="lz_cosa_fogata">焚き火</string>
+    <string name="lz_fugaz">希望をもらった</string>
+    <string name="lz_cosa_fugaz">流れ星</string>
 </resources>
