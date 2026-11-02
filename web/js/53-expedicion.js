@@ -5,7 +5,7 @@
  *  1B. «Me lo llevo» visible: guardar en la mochila o convertir la cima en un paso de tu Brújula.
  *  2.  Tarjeta de paso: al ganar un paso se ofrece compartirlo con la mini-Brújula 9×9 y su casilla
  *      encendida; al completar un campamento (8 pasos) o la cumbre (64) aparece la tarjeta de hito.
- *  3A. Cada cima es una hoja de papel con el cielo alrededor; las acciones van en una fila debajo.
+ *  (El diseño de Cimas queda como estaba: Brian probó la hoja de papel y la fila al pie y prefirió el original.)
  * La mini-Brújula viaja en posts.camino (jsonb): { racha, ganados, mapa: "0101…" (64), paso: {i, cod, p, n, hito} }.
  * Igual que la app (ui/comunidad/Expedicion.kt).
  * ===================================================================================== */
@@ -167,7 +167,7 @@
     ir("ruta", "vida");
   };
   { const base = DET["comunidad.feed"]; DET["comunidad.feed"] = (...a) => {
-      const h = base(...a); if (!h.includes('class="cimas hoja-exp"')) return h;
+      const h = base(...a); if (!h.includes('class="cimas"')) return h;
       let n = 0, pausa = null;
       return h.replace(/<article class="cima" data-cima=/g, m => { n++; if (n > 1 && (n - 1) % PAUSA_CADA === 0) return (pausa ||= pausaHtml()) + m; return m; });
     }; }

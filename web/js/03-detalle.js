@@ -804,7 +804,7 @@ Object.assign(DET, {
           <nav class="cimas-pestanas" aria-label="Qué ver">${pestanas.map(([k, n]) => `<button data-feed="${k}" aria-pressed="${estado.feedFiltro === k}">${n}</button>`).join("")}</nav>
 <span class="cimas-ancla" hidden></span></div>
         ${p0Demo(ps)}
-        <div class="cimas hoja-exp" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
+        <div class="cimas" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
           <div class="cima-fondo">${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${window.selladaCima?.(p) || (window.mediaCima?.(p) || "") + (window.mediaCima?.(p) ? "" : p.foto ? `<img src="${esc(p.foto)}" alt="${altFoto(p)}" loading="lazy">`
             : `<div class="cielo cima-cielo" data-cielo-post="${p.creadoEn}" aria-hidden="true"></div><p class="cima-cita">“${enlazarTexto(p.texto)}”</p>`)}</div>
           <div class="cima-acciones">
