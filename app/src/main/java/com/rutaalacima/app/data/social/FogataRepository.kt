@@ -95,6 +95,15 @@ class FogataRepository(private val supa: SupabaseClient) {
         }
     }.getOrDefault(emptyList())
 
+    /** Lo que me llevé de las fogatas en un mes (para la cápsula del mes): tema de la fogata y lo escrito. */
+    suspend fun misLlevos(ym: java.time.YearMonth): List<Pair<String, String>> = if (!disponible) emptyList() else runCatching {
+        val desde = ym.atDay(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toString()
+        val hasta = ym.plusMonths(1).atDay(1).atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toString()
+        supa.select("fogata_llevo", "select=texto,fogata:fogatas(titulo)&user_id=eq.$yo&created_at=gte.${SupabaseClient.enc(desde)}&created_at=lt.${SupabaseClient.enc(hasta)}").jsonArray.map {
+            val o = it.jsonObject; ((o["fogata"] as? JsonObject)?.s("titulo").orEmpty()) to o.s("texto")
+        }
+    }.getOrDefault(emptyList())
+
     suspend fun reportar(f: Fogata, texto: String) {
         supa.insert("reportes", buildJsonObject {
             put("quien", yo); put("a_quien", f.autorId); put("motivo", "Fogata en vivo «${f.titulo}» (${f.id}): $texto".take(1000))

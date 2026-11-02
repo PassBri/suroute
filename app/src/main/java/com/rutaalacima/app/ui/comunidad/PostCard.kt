@@ -179,6 +179,9 @@ fun PostCard(
         } else if (post.brujula.isNotBlank() && com.rutaalacima.app.ui.vision.brujulaValida(post.brujula)) {
             // Brújula de la Cima: la cumbre en papel; al tocarla se explora con el zoom 1 · 9 · 81
             com.rutaalacima.app.ui.vision.BrujulaEnMuro(post.brujula, post.autorNombre, Modifier.padding(horizontal = 12.dp))
+        } else if (post.camino?.libro != null && post.foto.isBlank()) {
+            // Una página del Libro de cumbres (firma, cápsula del mes o libro del año)
+            com.rutaalacima.app.ui.ruta.TarjetaLibro(post.camino!!.libro!!, post.texto, Modifier.padding(horizontal = 12.dp).fillMaxWidth(), compacta = true)
         } else if (post.foto.isNotBlank()) {
             // Postal 4:3 con margen, la meta y el eje sobre un degradado
             Box(Modifier.padding(horizontal = 12.dp).clip(RoundedCornerShape(18.dp))) {

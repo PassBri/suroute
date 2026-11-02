@@ -90,6 +90,8 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
         private set
     /** El paso ganado que se comparte con esta publicación (viene de «Compartir este paso»). */
     var paso by mutableStateOf(com.rutaalacima.app.data.social.ExpedicionEventos.pendiente.also { com.rutaalacima.app.data.social.ExpedicionEventos.pendiente = null })
+    /** La página del Libro de cumbres que se comparte con esta publicación. */
+    var libro by mutableStateOf(com.rutaalacima.app.data.social.ExpedicionEventos.libroPendiente.also { com.rutaalacima.app.data.social.ExpedicionEventos.libroPendiente = null })
     var compromisoDias by mutableStateOf(0)
     var selloMeses by mutableStateOf(0)
 
@@ -112,7 +114,7 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
         viewModelScope.launch {
             val h = hoy()
             val extras = com.rutaalacima.app.data.social.ExtrasPost(
-                camino = camino.copy(paso = paso).takeUnless { it.vacio },
+                camino = camino.copy(paso = paso, libro = libro).takeUnless { it.vacio },
                 compromiso = compromisoDias.takeIf { it > 0 }?.let { com.rutaalacima.app.data.social.Compromiso(h.plusDays(it.toLong()).toString()) },
                 sello = selloMeses.takeIf { it > 0 }?.let { h.plusMonths(it.toLong()).toString() },
             )
@@ -183,6 +185,7 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
             // En vivo: encender una fogata (no aplica a un recuerdo de otro año)
             if (vm.anio == null || vm.anio == hoy().year) item { EntradaFogata(onClick = { encendiendoFogata = true }) }
             vm.paso?.let { pa -> item { PreviaPaso(pa, vm.camino.mapa, onQuitar = { vm.paso = null }) } }
+            vm.libro?.let { lb -> item { com.rutaalacima.app.ui.ruta.PreviaLibro(lb, onQuitar = { vm.libro = null }) } }
             item {
                 ChipSelector(null, TipoPost.entries, vm.tipo, { it.texto() }, { vm.tipo = it })
                 Text(

@@ -214,6 +214,12 @@ private fun CimaPagina(
         // Fondo: la foto de borde a borde, o el cielo real del momento en que se publicó con la frase en letra de carta
         if (com.rutaalacima.app.data.social.ComunidadViva.estaSellada(post)) {
             CartaSellada(post.sello!!, Modifier.fillMaxSize())
+        } else if (post.camino?.libro != null && post.foto.isBlank() && !post.media.esCarrusel()) {
+            com.rutaalacima.app.ui.components.CieloVivo(Modifier.fillMaxSize(), horizonte = 0.72f, lectura = false, instante = post.creadoEn) {
+                Box(Modifier.fillMaxSize().padding(start = 24.dp, end = 76.dp, top = 110.dp, bottom = 200.dp), contentAlignment = Alignment.Center) {
+                    com.rutaalacima.app.ui.ruta.TarjetaLibro(post.camino!!.libro!!, post.texto)
+                }
+            }
         } else if (post.camino?.paso != null && post.foto.isBlank() && !post.media.esCarrusel()) {
             TarjetaPaso(post, Modifier.fillMaxSize())
         } else if (post.media.esCarrusel()) {

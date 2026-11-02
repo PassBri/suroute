@@ -276,6 +276,9 @@ fun RutaScreen(
     onNuevaMetaCampamento: (eje: String?, anio: Int) -> Unit = { _, _ -> },
     /** Nueva meta anual ya unida a una cumbre personal (propósito). */
     onNuevaMetaCumbre: (eje: String?, anio: Int, propositoId: Long) -> Unit = { e, a, _ -> onNuevaMetaCampamento(e, a) },
+    /** Libro de cumbres y la cápsula de un mes ("2026-10"). */
+    onLibro: () -> Unit = {},
+    onCapsula: (String) -> Unit = {},
 ) {
     val vm = rutaViewModel { RutaViewModel(it) }
     val perfil by vm.perfil.collectAsStateWithLifecycle()
@@ -328,7 +331,7 @@ fun RutaScreen(
             ) {
                 when (n) {
                     // La raíz de Mi ruta es el mapa de la vida (el tiempo); la visión tiene su propia opción
-                    Nivel.Vida -> nivelMapa(perfil, posts, propositos, ir, onAjustes, onProposito) { vm.cambiarMeta(it) }
+                    Nivel.Vida -> { item(key = "libro") { EntradaLibro(onLibro) }; nivelMapa(perfil, posts, propositos, ir, onAjustes, onProposito) { vm.cambiarMeta(it) } }
                     Nivel.Brujula -> item(key = "vision-vida") {
                         VisionVida(casillas, anuales, vm.armando, onArmar = { vm.armarVision() }, onVision = onVision, onCompartir = onCompartirVision,
                             onAnio = { ir(Nivel.Anio(it)) }, onNuevaMeta = onNuevaMetaCampamento)
@@ -361,6 +364,7 @@ fun RutaScreen(
                         item(key = "evaluar-${n.anio}") { com.rutaalacima.app.ui.evaluacion.EvaluarCard(stringResource(R.string.ev_evaluar_x, "${n.anio}"), stringResource(R.string.ev_evaluar_anio_sub), "a:${n.anio}") }
                     }
                     is Nivel.Mes -> {
+                        if (n.ym <= java.time.YearMonth.now()) item(key = "capsula-${n.ym}") { BotonCapsula(n.ym) { onCapsula(n.ym.toString()) } }
                         nivelMes(n.ym, mensuales, anuales, propositos, checks, posts, vm, ir, onNuevaMeta, onPlanificador)
                         item(key = "evaluar-${n.ym}") { com.rutaalacima.app.ui.evaluacion.EvaluarCard(stringResource(R.string.ev_evaluar_x, com.rutaalacima.app.ui.planner.nombreMes(n.ym.monthValue)), stringResource(R.string.ev_evaluar_mes_sub), "m:${n.ym}") }
                     }

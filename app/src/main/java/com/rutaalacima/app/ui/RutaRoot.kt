@@ -167,6 +167,12 @@ object Rutas {
     const val REVISION = "revision/{tipo}/{dia}"
     const val CONSTANCIA = "constancia"
     const val CORDADAS = "cordadas"
+    /** Libro de cumbres: cápsulas del mes, páginas de cumbre y el libro del año. */
+    const val LIBRO = "libro"
+    const val CAPSULA = "capsula/{ym}"
+    const val LIBRO_ANIO = "libro_anio/{anio}"
+    fun capsula(ym: String) = "capsula/$ym"
+    fun libroAnio(anio: Int) = "libro_anio/$anio"
     const val CORDADA = "cordada/{id}"
     const val RESUMEN = "resumen/{anio}"
     /** Diario de vida: mis álbumes por año, el álbum de un año y el diario de otra persona. */
@@ -456,6 +462,8 @@ private fun AppPrincipal() {
                     onCompartirVision = { nav.navigate("vision?compartir=1") },
                     onNuevaMetaCampamento = { eje, anio -> nav.navigate(Rutas.nuevaMeta(com.rutaalacima.app.ui.metas.NivelMeta.ANIO, eje, anio)) },
                     onNuevaMetaCumbre = { eje, anio, id -> nav.navigate(Rutas.nuevaMeta(com.rutaalacima.app.ui.metas.NivelMeta.ANIO, eje, anio, id)) },
+                    onLibro = { nav.navigate(Rutas.LIBRO) },
+                    onCapsula = { nav.navigate(Rutas.capsula(it)) },
                 )
             }
             composable(Rutas.HOY) {
@@ -701,6 +709,19 @@ private fun AppPrincipal() {
                 com.rutaalacima.app.ui.bienestar.BienestarScreen(onBack = { nav.popBackStack() }, tabInicial = e.arguments?.getInt("tab") ?: 0)
             }
             composable(Rutas.FRASES) { com.rutaalacima.app.ui.frases.FrasesScreen(onBack = { nav.popBackStack() }, onAlto = { nav.navigate(Rutas.ALTO) }) }
+            composable(Rutas.LIBRO) {
+                com.rutaalacima.app.ui.ruta.LibroCumbresScreen(onBack = { nav.popBackStack() }, onCapsula = { nav.navigate(Rutas.capsula(it)) },
+                    onAnio = { nav.navigate(Rutas.libroAnio(it)) }, onPost = { nav.navigate(Rutas.post(it)) },
+                    onPublicar = { nav.navigate(Rutas.publicar("LOGRO", texto = it)) })
+            }
+            composable(Rutas.CAPSULA, arguments = listOf(navArgument("ym") { type = NavType.StringType })) { e ->
+                com.rutaalacima.app.ui.ruta.CapsulaScreen(e.arguments?.getString("ym").orEmpty(), onBack = { nav.popBackStack() },
+                    onPublicar = { nav.navigate(Rutas.publicar("REFLEXION", texto = it)) })
+            }
+            composable(Rutas.LIBRO_ANIO, arguments = listOf(navArgument("anio") { type = NavType.IntType })) { e ->
+                com.rutaalacima.app.ui.ruta.LibroAnioScreen(e.arguments?.getInt("anio") ?: java.time.LocalDate.now().year, onBack = { nav.popBackStack() },
+                    onPublicar = { nav.navigate(Rutas.publicar("REFLEXION", texto = it)) })
+            }
             composable(Rutas.ALTO) { com.rutaalacima.app.ui.alto.AltoScreen(onBack = { nav.popBackStack() }) }
         }
         }
@@ -759,6 +780,7 @@ private fun HojaSecciones(actual: String?, nombre: String, foto: String, onIr: (
     // Lo que no está en la barra de abajo, en dos grupos (nada se repite)
     val grupos = listOf(
         R.string.hs_crecer to listOf(
+            Seccion(Rutas.LIBRO, R.string.lb_titulo, Icons.Filled.Terrain),
             Seccion(Rutas.APRENDE, R.string.tab_aprende, com.rutaalacima.app.ui.components.IconosRuta.MapaRuta),
             Seccion(Rutas.COACH, R.string.coach, com.rutaalacima.app.ui.components.IconosRuta.Coach),
             Seccion(Rutas.evaluacion(), R.string.ev_titulo, Icons.Filled.Insights),

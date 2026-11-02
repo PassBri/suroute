@@ -179,6 +179,8 @@ fun HoyScreen(
     ) {
         // Bienvenida de regreso, el paso del comienzo y la revisión que toca (cada una solo si aplica)
         item { RegresoCard(onIrA = onIrA, onSeccion = onAbrirSeccion) }
+        // Libro de cumbres: la cápsula del mes lista para abrir y «Hace un año hoy»
+        item { com.rutaalacima.app.ui.ruta.TarjetasLibroHoy(onCapsula = { onIrA(Rutas.capsula(it)) }, onPost = { onIrA(Rutas.post(it)) }) }
         item { PrimerPasoCard(onIrA = onIrA) }
         item { RevisionCard(onIrA = onIrA) }
         // Diciembre y principios de enero: el resumen del año ya está listo

@@ -23,7 +23,9 @@ data class Camino(
     val mapa: String = "",
     /** El paso (o el hito) que se comparte con esta publicación. */
     val paso: PasoCompartido? = null,
-) { val vacio get() = racha == 0 && ganados == 0 && paso == null }
+    /** Una página del Libro de cumbres que viaja con la publicación (firma, cápsula del mes o libro del año), igual que la web. */
+    val libro: JsonObject? = null,
+) { val vacio get() = racha == 0 && ganados == 0 && paso == null && libro == null }
 
 /** Un paso ganado que se comparte: campamento [i] (código [cod]), paso [p], cuántos lleva ese campamento [n] y el hito
  *  ("CAMPAMENTO" con los 8, "CUMBRE" con los 64, o null). Igual que la web (posts.camino.paso). */
@@ -44,6 +46,8 @@ object ExpedicionEventos {
     }
     /** El paso que viaja a la siguiente publicación (lo pone «Compartir este paso» y lo toma Publicar). */
     @Volatile var pendiente: PasoCompartido? = null
+    /** La página del Libro de cumbres que viaja a la siguiente publicación. */
+    @Volatile var libroPendiente: JsonObject? = null
 }
 
 /** Un compromiso con fecha: abierto hasta [hasta]; al vencer, el autor dice si lo logró o lo replantea. */
@@ -108,7 +112,7 @@ object ComunidadViva {
                 x["n"]?.jsonPrimitive?.intOrNull ?: 0, x["hito"]?.jsonPrimitive?.contentOrNull)
         }
         Camino(o["racha"]?.jsonPrimitive?.intOrNull ?: 0, o["ganados"]?.jsonPrimitive?.intOrNull ?: 0,
-            o["mapa"]?.jsonPrimitive?.contentOrNull?.takeIf { it.length == 64 }.orEmpty(), pa).takeUnless { it.vacio }
+            o["mapa"]?.jsonPrimitive?.contentOrNull?.takeIf { it.length == 64 }.orEmpty(), pa, o["libro"] as? JsonObject).takeUnless { it.vacio }
     }
     fun compromisoDe(e: JsonElement?): Compromiso? = obj(e)?.let { o ->
         val h = o["hasta"]?.jsonPrimitive?.contentOrNull ?: return@let null
@@ -118,6 +122,7 @@ object ComunidadViva {
     fun json(c: Camino) = buildJsonObject {
         put("racha", c.racha); put("ganados", c.ganados)
         if (c.mapa.length == 64 && '1' in c.mapa) put("mapa", c.mapa)
+        c.libro?.let { put("libro", it) }
         c.paso?.let { pa -> put("paso", buildJsonObject { put("i", pa.i); put("cod", pa.cod); put("p", pa.p); put("n", pa.n); pa.hito?.let { put("hito", it) } }) }
     }
     fun json(k: Compromiso) = buildJsonObject { put("hasta", k.hasta); put("estado", k.estado) }
