@@ -202,8 +202,8 @@ Object.assign(ACC, {
         <div class="hc-txt"><b>${esc(p.nombre || "Tu perfil")}</b>${usuario ? `<small>${esc(usuario)}</small>` : ""}
           <button class="enlace" data-acc="hcIr" data-arg="perfil">Ver mi perfil</button></div>
         <button class="rb" data-acc="hcIr" data-arg="perfil|cuenta" aria-label="Ajustes" title="Ajustes">${ic("ajustes")}</button></div>
-      ${HOJA_CUENTA.map(([t, xs]) => `<h3 class="hc-t">${t}</h3><div class="hc-fila">${xs.map(([k, n]) =>
-        `<button class="hc-b" data-acc="hcIr" data-arg="${k}"><span class="hc-ic">${ic(k)}</span><span>${n}</span></button>`).join("")}</div>`).join("")}</div>`);
+      ${HOJA_CUENTA.map(([t, xs]) => `<h3 class="hc-t">${t}</h3><div class="hc-fila">${xs.map(([k, n, i]) =>
+        `<button class="hc-b" data-acc="hcIr" data-arg="${k}"><span class="hc-ic">${ic(i || k)}</span><span>${n}</span></button>`).join("")}</div>`).join("")}</div>`);
   },
   hcIr(el, arg) { cerrarHoja(); const [sec, sel] = String(arg).split("|"); ir(sec, sel || null); },
 });

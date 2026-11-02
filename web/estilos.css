@@ -5435,3 +5435,116 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .fg-recibio span { display: inline-flex; align-items: center; gap: 4px; }
 .fg-recibio .obj-svg { width: 26px; height: 26px; }
 @media (prefers-reduced-motion: reduce) { .obj-svg .ob-llama, .obj-svg .ob-vapor path, .obj-svg .ob-halo, .fg-brasa { animation: none; } .fg-hoguera { transition: none; } }
+
+/* =====================================================================
+   Libro de cumbres: páginas firmadas, cápsulas del mes y el libro del año
+   ===================================================================== */
+.lc-pagina { position: relative; display: grid; gap: 8px; padding: 18px 18px 16px; margin: 0 0 14px; border-radius: 18px; background: var(--hoja);
+  border: 1px solid var(--linea); box-shadow: 0 6px 20px -14px var(--sombra); }
+.lc-pagina.firmada { background: var(--hoja) radial-gradient(120% 90% at 50% 30%, transparent 62%, rgb(150 110 60 / .07)); }
+.lc-pagina header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lc-tipo { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 600; color: var(--tinta);
+  background: color-mix(in srgb, var(--c) 14%, var(--hoja)); }
+.lc-tipo::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
+.lc-lacre { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(0 2px 3px rgb(0 0 0 / .25)); }
+.lc-pagina h3 { margin: 0; font-family: var(--font-titulo); font-size: 21px; line-height: 1.25; }
+.lc-sub { margin: 0; font-size: 13.5px; color: var(--tinta-suave); }
+.lc-foto { width: 100%; max-height: 320px; object-fit: cover; border-radius: 12px; border: 6px solid #fff; box-shadow: 0 6px 16px -8px rgb(0 0 0 / .35); transform: rotate(-.6deg); }
+.lc-pagina blockquote, .lc-frase-l { margin: 4px 0 0; padding: 0; font: italic 400 17px/1.5 var(--font-titulo); color: var(--tinta); }
+.lc-pagina blockquote::before, .lc-frase-l::before { content: "“"; } .lc-pagina blockquote::after, .lc-frase-l::after { content: "”"; }
+.lc-pagina .botones { margin-top: 4px; }
+.lc-fotos { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: thin; }
+.lc-fotos button { flex: none; width: 72px; height: 72px; border-radius: 12px; overflow: hidden; border: 2px solid transparent; padding: 0; background: var(--hoja-2); }
+.lc-fotos button img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lc-fotos button[aria-checked="true"] { border-color: var(--oro); box-shadow: 0 0 0 2px var(--oro-suave); }
+.lc-fotos .lc-sin { font-size: 12.5px; color: var(--tinta-suave); }
+.lc-titulo { display: flex; align-items: center; gap: 10px; margin: 8px 0 12px; font-family: var(--font-titulo); font-size: 22px; }
+/* Las 12 cápsulas */
+.lc-anios { display: flex; gap: 6px; overflow-x: auto; margin: 4px 0 12px; }
+.lc-anios button { flex: none; min-height: 36px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--linea); color: var(--tinta); font-variant-numeric: tabular-nums; }
+.lc-anios button[aria-selected="true"] { background: var(--oro-suave); border-color: var(--oro); font-weight: 600; }
+.lc-meses { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+@media (min-width: 560px) { .lc-meses { grid-template-columns: repeat(6, 1fr); } }
+.lc-mes { position: relative; aspect-ratio: 3 / 4; display: grid; align-content: end; justify-items: center; gap: 2px; padding: 8px 4px; border-radius: 14px; overflow: hidden;
+  background: var(--hoja-2); border: 1px solid var(--linea); color: var(--tinta); touch-action: manipulation; }
+.lc-mes img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lc-mes.abierta::after { content: ""; position: absolute; inset: 0; background: linear-gradient(transparent 40%, rgb(0 0 0 / .6)); }
+.lc-mes b, .lc-mes small { position: relative; z-index: 1; }
+.lc-mes b { font-family: var(--font-titulo); font-size: 16px; } .lc-mes small { font-size: 10.5px; color: var(--tinta-suave); }
+.lc-mes.abierta b, .lc-mes.abierta small { color: #fff; }
+.lc-mes.sellada { background: #F4ECDD; } :root[data-theme="dark"] .lc-mes.sellada { background: #2A231C; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lc-mes.sellada { background: #2A231C; } }
+.lc-mes .lc-sello { position: absolute; top: 18%; left: 50%; transform: translateX(-50%); width: 46%; }
+.lc-mes.futuro { opacity: .45; } .lc-mes.actual { border-style: dashed; border-color: var(--oro); }
+.lc-sello { display: block; width: 72px; aspect-ratio: 1; } .lc-sello img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 4px rgb(0 0 0 / .3)); }
+/* El ritual de abrir la cápsula */
+.lc-ritual { display: grid; place-items: center; min-height: 52vh; }
+.lc-carta, .lc-sobre { display: grid; justify-items: center; gap: 12px; text-align: center; padding: 34px 26px 26px; border-radius: 18px; width: min(100%, 440px);
+  background: #FBF6EC radial-gradient(120% 90% at 50% 40%, transparent 60%, rgb(140 100 60 / .1)); color: #2B1D17; box-shadow: 0 24px 50px -24px rgb(0 0 0 / .5); }
+.lc-sobre { width: 100%; background: transparent; box-shadow: none; color: inherit; padding: 8px 0 0; }
+.lc-carta h2, .lc-sobre h2 { margin: 0; font-family: var(--font-titulo); font-size: 26px; }
+.lc-carta p { margin: 0; color: #6E625A; }
+.lc-carta .lc-sello { width: 96px; }
+.lc-carta.rompiendo .lc-sello { animation: lc-rompe .65s cubic-bezier(.2,0,0,1) forwards; }
+@keyframes lc-rompe { 40% { transform: scale(1.12) rotate(-6deg); } 100% { transform: scale(.6) rotate(18deg) translateY(40px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .lc-carta.rompiendo .lc-sello { animation: none; opacity: 0; } }
+.lc-cifras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 100%; margin: 6px 0 14px; }
+@media (max-width: 420px) { .lc-cifras { grid-template-columns: repeat(2, 1fr); } }
+.lc-cifras span { display: grid; gap: 2px; padding: 10px 6px; border-radius: 12px; background: var(--hoja-2); text-align: center; }
+.lc-cifras b { font-size: 22px; font-variant-numeric: tabular-nums; font-family: var(--font-titulo); } .lc-cifras small { font-size: 11.5px; color: var(--tinta-suave); line-height: 1.25; }
+.lc-sec { margin: 0 0 18px; } .lc-sec h3, .lc-sec h2 { margin: 0 0 10px; font-family: var(--font-titulo); font-size: 19px; }
+.lc-mosaico { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.lc-mosaico img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; }
+.lc-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.lc-lista li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: var(--hoja-2); }
+.lc-lista i { flex: none; width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: var(--c); }
+.lc-lista span { display: grid; gap: 2px; } .lc-lista small { font-size: 12px; color: var(--tinta-suave); }
+.lc-alto { padding: 10px 12px; margin: 0 0 8px; border-radius: 12px; background: var(--hoja-2); display: grid; gap: 3px; }
+.lc-alto small { font-size: 12px; color: var(--tinta-suave); } .lc-alto b { font-size: 14px; } .lc-alto p { margin: 0; font-family: var(--font-titulo); }
+.lc-frase { width: 100%; font: 400 17px/1.5 var(--font-titulo); padding: 12px 14px; border-radius: 12px; border: 1px solid var(--linea); background: var(--hoja); color: var(--tinta); resize: vertical; }
+/* Hace un año hoy, la cápsula lista y el mes */
+.lc-hace, .lc-aviso, .lc-mes-boton { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 14px 10px 10px; margin: 0 0 12px; border-radius: 16px; text-align: left;
+  background: var(--hoja); border: 1px solid var(--linea); color: var(--tinta); box-shadow: 0 4px 14px -10px var(--sombra); touch-action: manipulation; }
+.lc-hace img, .lc-hace-ic { flex: none; width: 56px; height: 56px; border-radius: 12px; object-fit: cover; display: grid; place-items: center; background: var(--hoja-2); }
+.lc-hace-ic svg { width: 26px; height: 26px; fill: var(--burdeos); }
+.lc-hace > span, .lc-aviso > span, .lc-mes-boton > span { flex: 1; display: grid; gap: 2px; min-width: 0; }
+.lc-hace small, .lc-aviso small, .lc-mes-boton small { font-size: 12.5px; color: var(--tinta-suave); }
+.lc-hace b { font-family: var(--font-titulo); font-weight: 500; font-size: 15.5px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.lc-aviso .lc-sello, .lc-mes-boton .lc-sello { width: 44px; flex: none; }
+.lc-aviso > svg, .lc-mes-boton > svg { width: 20px; height: 20px; fill: var(--tinta-suave); flex: none; }
+@media (hover: hover) and (pointer: fine) { .lc-hace:hover, .lc-aviso:hover, .lc-mes-boton:hover { border-color: var(--oro); } }
+/* El libro del año */
+.lc-portada { display: grid; justify-items: center; gap: 8px; text-align: center; padding: 26px 18px 18px; margin: 0 0 18px; border-radius: 20px;
+  background: #FBF6EC radial-gradient(120% 90% at 50% 40%, transparent 60%, rgb(140 100 60 / .1)); color: #2B1D17; }
+.lc-portada h1 { margin: 0; font-family: var(--font-titulo); font-size: 44px; font-variant-numeric: tabular-nums; }
+.lc-portada p { margin: 0; color: #6E625A; }
+.lc-portada .lc-cifras span { background: rgb(255 255 255 / .7); } .lc-portada .lc-cifras small { color: #6E625A; }
+.lc-mes-libro { padding-top: 14px; border-top: 1px solid var(--linea); }
+.lc-previa { display: grid !important; gap: 10px; }
+/* La página del libro en Cimas y en el muro */
+.libro-tarjeta { position: absolute; inset: 0; display: grid; place-items: center; padding: 110px 76px 200px 24px; }
+.libro-tarjeta.mini { position: relative; inset: auto; padding: 0; }
+.lt-hoja { width: min(100%, 360px); display: grid; gap: 8px; padding: 16px 16px 18px; border-radius: 16px; color: #2B1D17; text-align: left;
+  background: #FBF6EC radial-gradient(120% 90% at 50% 40%, transparent 60%, rgb(140 100 60 / .12)); box-shadow: 0 20px 44px -20px rgb(0 0 0 / .7); }
+.libro-tarjeta.mini .lt-hoja { width: 100%; box-shadow: none; border: 1px solid #E8DCC6; }
+.lt-hoja header { display: flex; align-items: center; justify-content: space-between; font-size: 12px; letter-spacing: .04em; color: #6E625A; }
+.lt-hoja header img { width: 34px; height: 34px; object-fit: contain; }
+.lt-tipo { justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 99px; font-size: 12px; font-weight: 600; background: color-mix(in srgb, var(--c) 16%, #FBF6EC); }
+.lt-tipo::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+.lt-hoja h3 { margin: 0; font: 600 21px/1.2 var(--font-titulo); color: #2B1D17; }
+.lt-sub { margin: 0; font-size: 12.5px; color: #6E625A; }
+.lt-foto { width: 100%; max-height: 34dvh; object-fit: cover; border-radius: 8px; border: 5px solid #fff; transform: rotate(-.8deg); box-shadow: 0 6px 14px -8px rgb(0 0 0 / .4); }
+.libro-tarjeta.mini .lt-foto { max-height: 220px; }
+.lt-hoja blockquote { margin: 0; font: italic 400 16px/1.45 var(--font-titulo); display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.lt-mosaico { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.lt-mosaico.n1 { grid-template-columns: 1fr; } .lt-mosaico img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
+.lt-mosaico.n3 img:first-child { grid-row: span 2; aspect-ratio: auto; height: 100%; }
+@media (min-width: 901px) { .libro-tarjeta { padding: 56px 24px 16px; } }
+/* Descargar el libro del año en PDF: solo se imprime el libro */
+@media print {
+  html.imprime-libro body * { visibility: hidden !important; }
+  html.imprime-libro .lc-libro, html.imprime-libro .lc-libro * { visibility: visible !important; }
+  html.imprime-libro .lc-libro { position: absolute; left: 0; top: 0; width: 100%; color: #000; }
+  html.imprime-libro .lc-libro textarea { border: 0; resize: none; }
+  html.imprime-libro .lc-mes-libro { break-inside: avoid; }
+}
