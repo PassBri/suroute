@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">查看带 #%1$s 的帖子</string>
     <string name="bs_palabra">关于「%1$s」的帖子</string>
     <string name="bs_hint">主题、#标签或用户</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">直播</string>
+    <string name="fg_entrada_t">点燃一堆直播篝火</string>
+    <string name="fg_entrada_d">和你的社区聊聊你攀登中的一步。最后，每个人都会为明天的一步带走一点东西。</string>
+    <string name="fg_esperando">正在点燃火苗…</string>
+    <string name="fg_error">无法连接到篝火。</string>
+    <string name="fg_salir">离开篝火</string>
+    <string name="fg_encender_t">点燃篝火</string>
+    <string name="fg_encender_d">说说你要聊什么。你的社区会用光来回应，最后每个人都会写下为明天的一步带走了什么。</string>
+    <string name="fg_tema">你要聊什么？</string>
+    <string name="fg_tema_ej">例如：跌倒之后我如何回到路上</string>
+    <string name="fg_sin_eje">不选维度</string>
+    <string name="fg_no_puede">目前由已认证的教练点燃篝火。很快你也能点燃自己的篝火。</string>
+    <string name="fg_encendiendo">正在点燃…</string>
+    <string name="fg_encender">点燃篝火</string>
+    <string name="fg_permiso">点燃篝火需要使用相机和麦克风。</string>
+    <string name="fg_personas">正在观看的人</string>
+    <string name="fg_apagar">熄灭篝火</string>
+    <string name="fg_mic">麦克风</string>
+    <string name="fg_cam">相机</string>
+    <string name="fg_girar">切换相机</string>
+    <string name="fg_reportar">举报这堆篝火</string>
+    <string name="fg_cortar">中断</string>
+    <string name="fg_apagar_t">熄灭篝火？</string>
+    <string name="fg_apagar_d">所有人都会离开，每个人会写下为明天的一步带走了什么。</string>
+    <string name="fg_apagar_si">熄灭</string>
+    <string name="fg_seguir">继续直播</string>
+    <string name="fg_cortar_d">直播将对所有人结束，并记录为被审核中断。</string>
+    <string name="fg_reportar_ph">告诉我们你看到或听到了什么</string>
+    <string name="fg_reporte_ok">谢谢。审核团队会查看。</string>
+    <string name="fg_apagada">篝火熄灭了</string>
+    <string name="fg_llevo_t">离开之前</string>
+    <string name="fg_llevo_d">从 %1$s 的篝火中，你为明天的一步带走了什么？</string>
+    <string name="fg_llevo_ph">例如：前一晚把衣服准备好</string>
+    <string name="fg_llevo_nota">%1$s 会看到你带走了什么，这样就知道自己给大家留下了什么。</string>
+    <string name="fg_llevo_ok">你带走了。明天是你的一步。</string>
+    <string name="fg_llevo_btn">带走它</string>
+    <string name="fg_ahora_no">以后再说</string>
+    <string name="fg_resumen_t">你的篝火熄灭了</string>
+    <string name="fg_resumen_d">点燃 %1$d 分钟 · 收到 %2$d 束光</string>
+    <string name="fg_llevaron">大家带走了什么</string>
+    <string name="fg_llevaron_vacio">大家正在写。几分钟后你会在这堆篝火的总结里看到。</string>
 </resources>

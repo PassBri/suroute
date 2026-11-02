@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">Beiträge mit #%1$s ansehen</string>
     <string name="bs_palabra">Beiträge über „%1$s“</string>
     <string name="bs_hint">Ein Thema, #Tag oder eine Person</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">Live</string>
+    <string name="fg_entrada_t">Ein Live-Lagerfeuer entzünden</string>
+    <string name="fg_entrada_d">Sprich mit deiner Gemeinschaft über einen Schritt deines Aufstiegs. Am Ende nimmt jede Person etwas für ihren Schritt von morgen mit.</string>
+    <string name="fg_esperando">Die Flamme wird entfacht…</string>
+    <string name="fg_error">Verbindung zum Lagerfeuer fehlgeschlagen.</string>
+    <string name="fg_salir">Lagerfeuer verlassen</string>
+    <string name="fg_encender_t">Lagerfeuer entzünden</string>
+    <string name="fg_encender_d">Sag, worüber du sprechen wirst. Deine Gemeinschaft reagiert mit Lichtern, und am Ende schreibt jede Person, was sie für ihren Schritt von morgen mitnimmt.</string>
+    <string name="fg_tema">Worüber sprichst du?</string>
+    <string name="fg_tema_ej">Z. B.: Wie ich nach einem Sturz auf den Weg zurückfinde</string>
+    <string name="fg_sin_eje">Ohne Achse</string>
+    <string name="fg_no_puede">Vorerst entzünden verifizierte Coaches Lagerfeuer. Bald kannst du deins entzünden.</string>
+    <string name="fg_encendiendo">Wird entzündet…</string>
+    <string name="fg_encender">Lagerfeuer entzünden</string>
+    <string name="fg_permiso">Für ein Lagerfeuer braucht die App Kamera und Mikrofon.</string>
+    <string name="fg_personas">Zuschauende</string>
+    <string name="fg_apagar">Lagerfeuer löschen</string>
+    <string name="fg_mic">Mikrofon</string>
+    <string name="fg_cam">Kamera</string>
+    <string name="fg_girar">Kamera wechseln</string>
+    <string name="fg_reportar">Dieses Lagerfeuer melden</string>
+    <string name="fg_cortar">Beenden</string>
+    <string name="fg_apagar_t">Lagerfeuer löschen?</string>
+    <string name="fg_apagar_d">Alle verlassen es, und jede Person schreibt, was sie für ihren Schritt von morgen mitnimmt.</string>
+    <string name="fg_apagar_si">Löschen</string>
+    <string name="fg_seguir">Weiter live</string>
+    <string name="fg_cortar_d">Die Übertragung endet für alle und wird als durch die Moderation beendet erfasst.</string>
+    <string name="fg_reportar_ph">Erzähl uns, was du gesehen oder gehört hast</string>
+    <string name="fg_reporte_ok">Danke. Die Moderation prüft es.</string>
+    <string name="fg_apagada">Das Lagerfeuer ist erloschen</string>
+    <string name="fg_llevo_t">Bevor du gehst</string>
+    <string name="fg_llevo_d">Was nimmst du aus dem Lagerfeuer von %1$s für deinen Schritt von morgen mit?</string>
+    <string name="fg_llevo_ph">Z. B.: abends die Kleidung bereitlegen</string>
+    <string name="fg_llevo_nota">%1$s sieht, was du mitnimmst. So weiß die Person, was sie bei ihren Leuten hinterlassen hat.</string>
+    <string name="fg_llevo_ok">Du nimmst es mit. Morgen ist dein Schritt.</string>
+    <string name="fg_llevo_btn">Mitnehmen</string>
+    <string name="fg_ahora_no">Jetzt nicht</string>
+    <string name="fg_resumen_t">Dein Lagerfeuer ist erloschen</string>
+    <string name="fg_resumen_d">%1$d Min. entzündet · %2$d Lichter erhalten</string>
+    <string name="fg_llevaron">Was sie mitgenommen haben</string>
+    <string name="fg_llevaron_vacio">Die Leute schreiben es gerade. Du siehst es in wenigen Minuten in der Zusammenfassung dieses Lagerfeuers.</string>
 </resources>

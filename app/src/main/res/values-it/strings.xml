@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">Vedi i post con #%1$s</string>
     <string name="bs_palabra">Post su «%1$s»</string>
     <string name="bs_hint">Un tema, #tag o persona</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">Dal vivo</string>
+    <string name="fg_entrada_t">Accendi un falò dal vivo</string>
+    <string name="fg_entrada_d">Parla con la tua comunità di un passo della tua salita. Alla fine, ognuno porta via qualcosa per il passo di domani.</string>
+    <string name="fg_esperando">Ravviviamo la fiamma…</string>
+    <string name="fg_error">Impossibile collegarsi al falò.</string>
+    <string name="fg_salir">Esci dal falò</string>
+    <string name="fg_encender_t">Accendi un falò</string>
+    <string name="fg_encender_d">Di\' di cosa parlerai. La tua comunità reagirà con le luci e, alla fine, ognuno scriverà cosa porta via per il passo di domani.</string>
+    <string name="fg_tema">Di cosa parlerai?</string>
+    <string name="fg_tema_ej">Es.: Come torno sul sentiero dopo una caduta</string>
+    <string name="fg_sin_eje">Senza asse</string>
+    <string name="fg_no_puede">Per ora accendono i falò i coach verificati. Molto presto potrai accendere il tuo.</string>
+    <string name="fg_encendiendo">Accensione…</string>
+    <string name="fg_encender">Accendi il falò</string>
+    <string name="fg_permiso">Per accendere un falò, l\'app ha bisogno di fotocamera e microfono.</string>
+    <string name="fg_personas">Persone che guardano</string>
+    <string name="fg_apagar">Spegni il falò</string>
+    <string name="fg_mic">Microfono</string>
+    <string name="fg_cam">Fotocamera</string>
+    <string name="fg_girar">Cambia fotocamera</string>
+    <string name="fg_reportar">Segnala questo falò</string>
+    <string name="fg_cortar">Interrompi</string>
+    <string name="fg_apagar_t">Spegnere il falò?</string>
+    <string name="fg_apagar_d">Tutti usciranno e ognuno scriverà cosa porta via per il passo di domani.</string>
+    <string name="fg_apagar_si">Spegni</string>
+    <string name="fg_seguir">Resta dal vivo</string>
+    <string name="fg_cortar_d">La trasmissione termina per tutti e viene registrata come interrotta dalla moderazione.</string>
+    <string name="fg_reportar_ph">Raccontaci cosa hai visto o sentito</string>
+    <string name="fg_reporte_ok">Grazie. La moderazione lo esaminerà.</string>
+    <string name="fg_apagada">Il falò si è spento</string>
+    <string name="fg_llevo_t">Prima di andare</string>
+    <string name="fg_llevo_d">Da ciò che hai ascoltato al falò di %1$s, cosa porti via per il tuo passo di domani?</string>
+    <string name="fg_llevo_ph">Es.: preparare i vestiti la sera prima</string>
+    <string name="fg_llevo_nota">%1$s vedrà cosa porti via. Così sa cosa ha lasciato alla sua gente.</string>
+    <string name="fg_llevo_ok">È tuo. Domani è il tuo passo.</string>
+    <string name="fg_llevo_btn">Lo porto con me</string>
+    <string name="fg_ahora_no">Non ora</string>
+    <string name="fg_resumen_t">Il tuo falò si è spento</string>
+    <string name="fg_resumen_d">%1$d min acceso · %2$d luci ricevute</string>
+    <string name="fg_llevaron">Cosa hanno portato via</string>
+    <string name="fg_llevaron_vacio">Le persone lo stanno scrivendo ora. Lo vedrai nel riepilogo di questo falò tra pochi minuti.</string>
 </resources>

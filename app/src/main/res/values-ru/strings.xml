@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">Публикации с #%1$s</string>
     <string name="bs_palabra">Публикации о «%1$s»</string>
     <string name="bs_hint">Тема, #тег или человек</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">В эфире</string>
+    <string name="fg_entrada_t">Разжечь костёр в эфире</string>
+    <string name="fg_entrada_d">Поговорите с сообществом о шаге вашего восхождения. В конце каждый унесёт что-то для своего завтрашнего шага.</string>
+    <string name="fg_esperando">Раздуваем пламя…</string>
+    <string name="fg_error">Не удалось подключиться к костру.</string>
+    <string name="fg_salir">Покинуть костёр</string>
+    <string name="fg_encender_t">Разжечь костёр</string>
+    <string name="fg_encender_d">Скажите, о чём будете говорить. Сообщество ответит огоньками, а в конце каждый напишет, что уносит для завтрашнего шага.</string>
+    <string name="fg_tema">О чём вы будете говорить?</string>
+    <string name="fg_tema_ej">Напр.: как я возвращаюсь на путь после падения</string>
+    <string name="fg_sin_eje">Без оси</string>
+    <string name="fg_no_puede">Пока костры разжигают проверенные коучи. Совсем скоро вы сможете разжечь свой.</string>
+    <string name="fg_encendiendo">Разжигаем…</string>
+    <string name="fg_encender">Разжечь костёр</string>
+    <string name="fg_permiso">Чтобы разжечь костёр, приложению нужны камера и микрофон.</string>
+    <string name="fg_personas">Смотрят</string>
+    <string name="fg_apagar">Потушить костёр</string>
+    <string name="fg_mic">Микрофон</string>
+    <string name="fg_cam">Камера</string>
+    <string name="fg_girar">Сменить камеру</string>
+    <string name="fg_reportar">Пожаловаться на этот костёр</string>
+    <string name="fg_cortar">Прервать</string>
+    <string name="fg_apagar_t">Потушить костёр?</string>
+    <string name="fg_apagar_d">Все выйдут, и каждый напишет, что уносит для завтрашнего шага.</string>
+    <string name="fg_apagar_si">Потушить</string>
+    <string name="fg_seguir">Остаться в эфире</string>
+    <string name="fg_cortar_d">Трансляция завершится для всех и будет отмечена как прерванная модерацией.</string>
+    <string name="fg_reportar_ph">Расскажите, что вы видели или слышали</string>
+    <string name="fg_reporte_ok">Спасибо. Модерация проверит.</string>
+    <string name="fg_apagada">Костёр погас</string>
+    <string name="fg_llevo_t">Прежде чем уйти</string>
+    <string name="fg_llevo_d">Что из услышанного у костра %1$s вы уносите для своего завтрашнего шага?</string>
+    <string name="fg_llevo_ph">Напр.: готовить одежду с вечера</string>
+    <string name="fg_llevo_nota">%1$s увидит, что вы уносите. Так он поймёт, что оставил своим людям.</string>
+    <string name="fg_llevo_ok">Это ваше. Завтра — ваш шаг.</string>
+    <string name="fg_llevo_btn">Унести с собой</string>
+    <string name="fg_ahora_no">Не сейчас</string>
+    <string name="fg_resumen_t">Ваш костёр погас</string>
+    <string name="fg_resumen_d">Горел %1$d мин · получено огоньков: %2$d</string>
+    <string name="fg_llevaron">Что унесли</string>
+    <string name="fg_llevaron_vacio">Люди сейчас пишут. Через несколько минут вы увидите это в итогах костра.</string>
 </resources>

@@ -2958,4 +2958,47 @@
     <string name="bs_etiqueta">Ver publicaciones con #%1$s</string>
     <string name="bs_palabra">Publicaciones sobre «%1$s»</string>
     <string name="bs_hint">Un tema, #etiqueta o persona</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">En vivo</string>
+    <string name="fg_entrada_t">Encender una fogata en vivo</string>
+    <string name="fg_entrada_d">Habla con tu comunidad sobre un paso de tu ascenso. Al final, cada quien se lleva algo para su paso de mañana.</string>
+    <string name="fg_esperando">Avivando la llama…</string>
+    <string name="fg_error">No se pudo conectar con la fogata.</string>
+    <string name="fg_salir">Salir de la fogata</string>
+    <string name="fg_encender_t">Encender una fogata</string>
+    <string name="fg_encender_d">Di de qué hablarás. Tu comunidad reaccionará con luces y, al final, cada persona escribirá qué se lleva para su paso de mañana.</string>
+    <string name="fg_tema">¿De qué hablarás?</string>
+    <string name="fg_tema_ej">Ej.: Cómo vuelvo a la ruta después de una caída</string>
+    <string name="fg_sin_eje">Sin eje</string>
+    <string name="fg_no_puede">Por ahora encienden fogatas los coaches verificados. Muy pronto podrás encender la tuya.</string>
+    <string name="fg_encendiendo">Encendiendo…</string>
+    <string name="fg_encender">Encender la fogata</string>
+    <string name="fg_permiso">Para encender una fogata, la app necesita la cámara y el micrófono.</string>
+    <string name="fg_personas">Personas mirando</string>
+    <string name="fg_apagar">Apagar la fogata</string>
+    <string name="fg_mic">Micrófono</string>
+    <string name="fg_cam">Cámara</string>
+    <string name="fg_girar">Cambiar de cámara</string>
+    <string name="fg_reportar">Reportar esta fogata</string>
+    <string name="fg_cortar">Cortar</string>
+    <string name="fg_apagar_t">¿Apagar la fogata?</string>
+    <string name="fg_apagar_d">Todas las personas saldrán y cada una escribirá qué se lleva para su paso de mañana.</string>
+    <string name="fg_apagar_si">Apagar</string>
+    <string name="fg_seguir">Seguir en vivo</string>
+    <string name="fg_cortar_d">La transmisión termina para todos y queda registrada como cortada por moderación.</string>
+    <string name="fg_reportar_ph">Cuéntanos qué viste o escuchaste</string>
+    <string name="fg_reporte_ok">Gracias. Moderación lo revisará.</string>
+    <string name="fg_apagada">La fogata se apagó</string>
+    <string name="fg_llevo_t">Antes de irte</string>
+    <string name="fg_llevo_d">De lo que escuchaste en la fogata de %1$s, ¿qué te llevas para tu paso de mañana?</string>
+    <string name="fg_llevo_ph">Ej.: dejar la ropa lista la noche anterior</string>
+    <string name="fg_llevo_nota">%1$s verá lo que te llevas. Así sabe qué dejó en su gente.</string>
+    <string name="fg_llevo_ok">Te lo llevas. Mañana es tu paso.</string>
+    <string name="fg_llevo_btn">Llevármelo</string>
+    <string name="fg_ahora_no">Ahora no</string>
+    <string name="fg_resumen_t">Tu fogata se apagó</string>
+    <string name="fg_resumen_d">%1$d min encendida · %2$d luces recibidas</string>
+    <string name="fg_llevaron">Lo que se llevaron</string>
+    <string name="fg_llevaron_vacio">Las personas lo están escribiendo ahora. Lo verás en el resumen de esta fogata en unos minutos.</string>
 </resources>

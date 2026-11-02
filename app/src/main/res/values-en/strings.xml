@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">See posts with #%1$s</string>
     <string name="bs_palabra">Posts about «%1$s»</string>
     <string name="bs_hint">A topic, #tag or person</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">Live</string>
+    <string name="fg_entrada_t">Light a live campfire</string>
+    <string name="fg_entrada_d">Talk with your community about a step in your climb. At the end, everyone takes something away for tomorrow\'s step.</string>
+    <string name="fg_esperando">Stoking the flame…</string>
+    <string name="fg_error">Couldn\'t connect to the campfire.</string>
+    <string name="fg_salir">Leave the campfire</string>
+    <string name="fg_encender_t">Light a campfire</string>
+    <string name="fg_encender_d">Say what you\'ll talk about. Your community will react with lights and, at the end, each person will write what they take away for tomorrow\'s step.</string>
+    <string name="fg_tema">What will you talk about?</string>
+    <string name="fg_tema_ej">E.g.: How I get back on the path after a fall</string>
+    <string name="fg_sin_eje">No axis</string>
+    <string name="fg_no_puede">For now, verified coaches light campfires. Very soon you\'ll be able to light yours.</string>
+    <string name="fg_encendiendo">Lighting…</string>
+    <string name="fg_encender">Light the campfire</string>
+    <string name="fg_permiso">To light a campfire, the app needs the camera and microphone.</string>
+    <string name="fg_personas">People watching</string>
+    <string name="fg_apagar">Put out the campfire</string>
+    <string name="fg_mic">Microphone</string>
+    <string name="fg_cam">Camera</string>
+    <string name="fg_girar">Switch camera</string>
+    <string name="fg_reportar">Report this campfire</string>
+    <string name="fg_cortar">End it</string>
+    <string name="fg_apagar_t">Put out the campfire?</string>
+    <string name="fg_apagar_d">Everyone will leave and each person will write what they take away for tomorrow\'s step.</string>
+    <string name="fg_apagar_si">Put out</string>
+    <string name="fg_seguir">Stay live</string>
+    <string name="fg_cortar_d">The stream ends for everyone and is recorded as ended by moderation.</string>
+    <string name="fg_reportar_ph">Tell us what you saw or heard</string>
+    <string name="fg_reporte_ok">Thank you. Moderation will review it.</string>
+    <string name="fg_apagada">The campfire went out</string>
+    <string name="fg_llevo_t">Before you go</string>
+    <string name="fg_llevo_d">From what you heard at %1$s\'s campfire, what do you take away for tomorrow\'s step?</string>
+    <string name="fg_llevo_ph">E.g.: lay out my clothes the night before</string>
+    <string name="fg_llevo_nota">%1$s will see what you take away. That way they know what they left in their people.</string>
+    <string name="fg_llevo_ok">It\'s yours. Tomorrow is your step.</string>
+    <string name="fg_llevo_btn">Take it with me</string>
+    <string name="fg_ahora_no">Not now</string>
+    <string name="fg_resumen_t">Your campfire went out</string>
+    <string name="fg_resumen_d">%1$d min lit · %2$d lights received</string>
+    <string name="fg_llevaron">What they took away</string>
+    <string name="fg_llevaron_vacio">People are writing it now. You\'ll see it in this campfire\'s summary in a few minutes.</string>
 </resources>

@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">#%1$s वाली पोस्ट देखें</string>
     <string name="bs_palabra">«%1$s» के बारे में पोस्ट</string>
     <string name="bs_hint">कोई विषय, #टैग या व्यक्ति</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">लाइव</string>
+    <string name="fg_entrada_t">लाइव अलाव जलाएँ</string>
+    <string name="fg_entrada_d">अपनी चढ़ाई के किसी कदम के बारे में अपने समुदाय से बात करें। अंत में हर कोई कल के कदम के लिए कुछ साथ ले जाता है।</string>
+    <string name="fg_esperando">लौ जगा रहे हैं…</string>
+    <string name="fg_error">अलाव से जुड़ नहीं सके।</string>
+    <string name="fg_salir">अलाव छोड़ें</string>
+    <string name="fg_encender_t">अलाव जलाएँ</string>
+    <string name="fg_encender_d">बताइए आप किस बारे में बात करेंगे। आपका समुदाय रोशनी से प्रतिक्रिया देगा और अंत में हर व्यक्ति लिखेगा कि वह कल के कदम के लिए क्या ले जा रहा है।</string>
+    <string name="fg_tema">आप किस बारे में बात करेंगे?</string>
+    <string name="fg_tema_ej">जैसे: गिरने के बाद मैं राह पर कैसे लौटता हूँ</string>
+    <string name="fg_sin_eje">कोई धुरी नहीं</string>
+    <string name="fg_no_puede">अभी सत्यापित कोच ही अलाव जलाते हैं। बहुत जल्द आप भी अपना जला सकेंगे।</string>
+    <string name="fg_encendiendo">जला रहे हैं…</string>
+    <string name="fg_encender">अलाव जलाएँ</string>
+    <string name="fg_permiso">अलाव जलाने के लिए ऐप को कैमरा और माइक्रोफ़ोन चाहिए।</string>
+    <string name="fg_personas">देख रहे लोग</string>
+    <string name="fg_apagar">अलाव बुझाएँ</string>
+    <string name="fg_mic">माइक्रोफ़ोन</string>
+    <string name="fg_cam">कैमरा</string>
+    <string name="fg_girar">कैमरा बदलें</string>
+    <string name="fg_reportar">इस अलाव की रिपोर्ट करें</string>
+    <string name="fg_cortar">रोकें</string>
+    <string name="fg_apagar_t">अलाव बुझाएँ?</string>
+    <string name="fg_apagar_d">सभी लोग बाहर हो जाएँगे और हर व्यक्ति लिखेगा कि वह कल के कदम के लिए क्या ले जा रहा है।</string>
+    <string name="fg_apagar_si">बुझाएँ</string>
+    <string name="fg_seguir">लाइव रहें</string>
+    <string name="fg_cortar_d">प्रसारण सभी के लिए खत्म होगा और मॉडरेशन द्वारा रोका गया दर्ज होगा।</string>
+    <string name="fg_reportar_ph">बताइए आपने क्या देखा या सुना</string>
+    <string name="fg_reporte_ok">धन्यवाद। मॉडरेशन इसकी समीक्षा करेगा।</string>
+    <string name="fg_apagada">अलाव बुझ गया</string>
+    <string name="fg_llevo_t">जाने से पहले</string>
+    <string name="fg_llevo_d">%1$s के अलाव में जो सुना, उसमें से कल के कदम के लिए आप क्या ले जा रहे हैं?</string>
+    <string name="fg_llevo_ph">जैसे: रात में ही कपड़े तैयार रखना</string>
+    <string name="fg_llevo_nota">%1$s देखेंगे कि आप क्या ले जा रहे हैं। इससे उन्हें पता चलता है कि उन्होंने अपने लोगों में क्या छोड़ा।</string>
+    <string name="fg_llevo_ok">यह आपका है। कल आपका कदम है।</string>
+    <string name="fg_llevo_btn">साथ ले जाएँ</string>
+    <string name="fg_ahora_no">अभी नहीं</string>
+    <string name="fg_resumen_t">आपका अलाव बुझ गया</string>
+    <string name="fg_resumen_d">%1$d मिनट जला · %2$d रोशनियाँ मिलीं</string>
+    <string name="fg_llevaron">लोग क्या ले गए</string>
+    <string name="fg_llevaron_vacio">लोग अभी लिख रहे हैं। कुछ मिनटों में इस अलाव के सारांश में दिखेगा।</string>
 </resources>

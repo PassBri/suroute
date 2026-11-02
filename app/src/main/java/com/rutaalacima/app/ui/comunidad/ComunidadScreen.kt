@@ -326,6 +326,14 @@ fun ComunidadScreen(
     var opcionesDe by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
     var detrasDe by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
     val llevado = stringResource(R.string.cv_llevado)
+    // Fogatas en vivo: la franja aparece solo si alguien está transmitiendo (se revisa cada minuto)
+    val ctxFog = androidx.compose.ui.platform.LocalContext.current
+    val repoFog = androidx.compose.runtime.remember { (ctxFog.applicationContext as com.rutaalacima.app.RutaApp).container.fogatas }
+    var vivas by androidx.compose.runtime.remember { mutableStateOf<List<com.rutaalacima.app.data.social.Fogata>>(emptyList()) }
+    var fogataVer by androidx.compose.runtime.remember { mutableStateOf<com.rutaalacima.app.data.social.Fogata?>(null) }
+    var revisarFog by androidx.compose.runtime.remember { androidx.compose.runtime.mutableIntStateOf(0) }
+    LaunchedEffect(revisarFog) { while (true) { vivas = runCatching { repoFog.vivas() }.getOrDefault(emptyList()); kotlinx.coroutines.delay(60_000) } }
+    fogataVer?.let { f -> FogataSesion(f) { fogataVer = null; revisarFog++ } }
     if (!enMuro) {
         com.rutaalacima.app.ui.theme.TemaNoche {
             Box(Modifier.fillMaxSize().background(Color(0xFF060A12)).padding(bottom = contentPadding.calculateBottomPadding())) {
@@ -357,7 +365,8 @@ fun ComunidadScreen(
                         modifier = Modifier.align(Alignment.Center).padding(24.dp),
                     )
                 }
-                PestanasCimas(vm, onMuro = { volverA = pagina; enMuro = true }, onCordadas = onCordadas, onMensajes = onMensajes, onCuenta = onCuenta, noLeidos = noLeidos, onAvisos = onAvisos, onBuscar = onBuscar)
+                PestanasCimas(vm, onMuro = { volverA = pagina; enMuro = true }, onCordadas = onCordadas, onMensajes = onMensajes, onCuenta = onCuenta, noLeidos = noLeidos, onAvisos = onAvisos, onBuscar = onBuscar,
+                    fogatas = { FranjaFogatas(vivas, onAbrir = { fogataVer = it }, modifier = Modifier.padding(top = 4.dp)) })
             }
             comentandoEn?.let { p -> HojaComentarios(vm, p, onCerrar = { comentandoEn = null }, onAbrirDetalle = { comentandoEn = null; onAbrirPost(p.id) }) }
             opcionesDe?.let { p -> HojaOpciones(vm, p, onChat = onChat, onCerrar = { opcionesDe = null }) }
@@ -524,7 +533,7 @@ private fun Filtros(vm: ComunidadViewModel) {
  * subrayado dorado fino, y las cordadas y los mensajes a la derecha. Todo sobre un velo para leerse.
  */
 @Composable
-private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas: () -> Unit, onMensajes: () -> Unit, onCuenta: () -> Unit, noLeidos: Int = 0, onAvisos: () -> Unit = {}, onBuscar: () -> Unit = {}) {
+private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas: () -> Unit, onMensajes: () -> Unit, onCuenta: () -> Unit, noLeidos: Int = 0, onAvisos: () -> Unit = {}, onBuscar: () -> Unit = {}, fogatas: @Composable () -> Unit = {}) {
     var dxCab by androidx.compose.runtime.remember { mutableStateOf(0f) }
     Column(Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 4.dp, vertical = 4.dp)
         // Deslizar de lado sobre la cabecera cambia de sendero
@@ -559,6 +568,7 @@ private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas
         }
         // Los senderos (ejes) ya no van fijos arriba: se eligen en Buscar › Temas. Si hay uno elegido, se puede quitar aquí.
         vm.eje?.let { e -> Senderos(e, vm::elegirEje) }
+        fogatas()
         if (!vm.enLinea) {
             Text(
                 stringResource(R.string.modo_demo_titulo), color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelSmall,

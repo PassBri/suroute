@@ -101,6 +101,8 @@ android {
 }
 
 dependencies {
+    // Fogatas en vivo: video y audio en tiempo real (LiveKit)
+    implementation("io.livekit:livekit-android:2.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.runtime.compose)

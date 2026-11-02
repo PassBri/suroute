@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">عرض المنشورات مع #%1$s</string>
     <string name="bs_palabra">منشورات عن «%1$s»</string>
     <string name="bs_hint">موضوع أو #وسم أو شخص</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">مباشر</string>
+    <string name="fg_entrada_t">أشعل نار مخيّم مباشرة</string>
+    <string name="fg_entrada_d">تحدّث مع مجتمعك عن خطوة في صعودك. في النهاية، يأخذ كل شخص شيئًا لخطوته غدًا.</string>
+    <string name="fg_esperando">نُذكي اللهب…</string>
+    <string name="fg_error">تعذّر الاتصال بنار المخيّم.</string>
+    <string name="fg_salir">غادر نار المخيّم</string>
+    <string name="fg_encender_t">أشعل نار مخيّم</string>
+    <string name="fg_encender_d">قل عمّ ستتحدث. سيتفاعل مجتمعك بالأضواء، وفي النهاية سيكتب كل شخص ما يأخذه لخطوته غدًا.</string>
+    <string name="fg_tema">عمّ ستتحدث؟</string>
+    <string name="fg_tema_ej">مثال: كيف أعود إلى الطريق بعد سقطة</string>
+    <string name="fg_sin_eje">بلا محور</string>
+    <string name="fg_no_puede">حاليًا يُشعل نيران المخيّم المدرّبون الموثَّقون. قريبًا جدًا ستتمكن من إشعال نارك.</string>
+    <string name="fg_encendiendo">جارٍ الإشعال…</string>
+    <string name="fg_encender">أشعل النار</string>
+    <string name="fg_permiso">لإشعال نار مخيّم يحتاج التطبيق إلى الكاميرا والميكروفون.</string>
+    <string name="fg_personas">أشخاص يشاهدون</string>
+    <string name="fg_apagar">أطفئ النار</string>
+    <string name="fg_mic">الميكروفون</string>
+    <string name="fg_cam">الكاميرا</string>
+    <string name="fg_girar">تبديل الكاميرا</string>
+    <string name="fg_reportar">أبلغ عن نار المخيّم هذه</string>
+    <string name="fg_cortar">إيقاف</string>
+    <string name="fg_apagar_t">هل تطفئ النار؟</string>
+    <string name="fg_apagar_d">سيغادر الجميع وسيكتب كل شخص ما يأخذه لخطوته غدًا.</string>
+    <string name="fg_apagar_si">أطفئ</string>
+    <string name="fg_seguir">ابقَ مباشرًا</string>
+    <string name="fg_cortar_d">ينتهي البث للجميع ويُسجَّل على أنه أوقفته الإشراف.</string>
+    <string name="fg_reportar_ph">أخبرنا بما رأيت أو سمعت</string>
+    <string name="fg_reporte_ok">شكرًا. سيراجعه فريق الإشراف.</string>
+    <string name="fg_apagada">انطفأت النار</string>
+    <string name="fg_llevo_t">قبل أن تغادر</string>
+    <string name="fg_llevo_d">مما سمعته في نار %1$s، ماذا تأخذ لخطوتك غدًا؟</string>
+    <string name="fg_llevo_ph">مثال: تجهيز الملابس في الليلة السابقة</string>
+    <string name="fg_llevo_nota">سيرى %1$s ما تأخذه، فيعرف ما تركه في أهله.</string>
+    <string name="fg_llevo_ok">إنه لك. غدًا خطوتك.</string>
+    <string name="fg_llevo_btn">آخذه معي</string>
+    <string name="fg_ahora_no">ليس الآن</string>
+    <string name="fg_resumen_t">انطفأت نارك</string>
+    <string name="fg_resumen_d">%1$d د مشتعلة · %2$d أضواء مستلمة</string>
+    <string name="fg_llevaron">ما أخذوه</string>
+    <string name="fg_llevaron_vacio">الناس يكتبونه الآن. ستراه في ملخص هذه النار خلال دقائق.</string>
 </resources>

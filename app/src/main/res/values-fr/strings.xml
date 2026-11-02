@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">Voir les publications avec #%1$s</string>
     <string name="bs_palabra">Publications sur « %1$s »</string>
     <string name="bs_hint">Un thème, #étiquette ou une personne</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">En direct</string>
+    <string name="fg_entrada_t">Allumer un feu de camp en direct</string>
+    <string name="fg_entrada_d">Parlez avec votre communauté d\'une étape de votre ascension. À la fin, chacun emporte quelque chose pour son pas de demain.</string>
+    <string name="fg_esperando">On attise la flamme…</string>
+    <string name="fg_error">Impossible de rejoindre le feu de camp.</string>
+    <string name="fg_salir">Quitter le feu de camp</string>
+    <string name="fg_encender_t">Allumer un feu de camp</string>
+    <string name="fg_encender_d">Dites de quoi vous parlerez. Votre communauté réagira avec des lumières et, à la fin, chaque personne écrira ce qu\'elle emporte pour son pas de demain.</string>
+    <string name="fg_tema">De quoi parlerez-vous ?</string>
+    <string name="fg_tema_ej">Ex. : Comment je reprends la route après une chute</string>
+    <string name="fg_sin_eje">Sans axe</string>
+    <string name="fg_no_puede">Pour l\'instant, les coachs vérifiés allument les feux de camp. Bientôt, vous pourrez allumer le vôtre.</string>
+    <string name="fg_encendiendo">Allumage…</string>
+    <string name="fg_encender">Allumer le feu</string>
+    <string name="fg_permiso">Pour allumer un feu de camp, l\'app a besoin de la caméra et du micro.</string>
+    <string name="fg_personas">Personnes qui regardent</string>
+    <string name="fg_apagar">Éteindre le feu</string>
+    <string name="fg_mic">Micro</string>
+    <string name="fg_cam">Caméra</string>
+    <string name="fg_girar">Changer de caméra</string>
+    <string name="fg_reportar">Signaler ce feu de camp</string>
+    <string name="fg_cortar">Couper</string>
+    <string name="fg_apagar_t">Éteindre le feu ?</string>
+    <string name="fg_apagar_d">Tout le monde partira et chacun écrira ce qu\'il emporte pour son pas de demain.</string>
+    <string name="fg_apagar_si">Éteindre</string>
+    <string name="fg_seguir">Rester en direct</string>
+    <string name="fg_cortar_d">La diffusion s\'arrête pour tous et est enregistrée comme coupée par la modération.</string>
+    <string name="fg_reportar_ph">Dites-nous ce que vous avez vu ou entendu</string>
+    <string name="fg_reporte_ok">Merci. La modération va l\'examiner.</string>
+    <string name="fg_apagada">Le feu s\'est éteint</string>
+    <string name="fg_llevo_t">Avant de partir</string>
+    <string name="fg_llevo_d">De ce que vous avez entendu au feu de %1$s, qu\'emportez-vous pour votre pas de demain ?</string>
+    <string name="fg_llevo_ph">Ex. : préparer mes vêtements la veille</string>
+    <string name="fg_llevo_nota">%1$s verra ce que vous emportez. Ainsi, il sait ce qu\'il a laissé aux siens.</string>
+    <string name="fg_llevo_ok">C\'est à vous. Demain, c\'est votre pas.</string>
+    <string name="fg_llevo_btn">L\'emporter</string>
+    <string name="fg_ahora_no">Pas maintenant</string>
+    <string name="fg_resumen_t">Votre feu s\'est éteint</string>
+    <string name="fg_resumen_d">%1$d min allumé · %2$d lumières reçues</string>
+    <string name="fg_llevaron">Ce qu\'ils ont emporté</string>
+    <string name="fg_llevaron_vacio">Les personnes l\'écrivent maintenant. Vous le verrez dans le résumé de ce feu dans quelques minutes.</string>
 </resources>

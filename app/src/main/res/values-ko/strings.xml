@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">#%1$s 게시물 보기</string>
     <string name="bs_palabra">「%1$s」에 관한 게시물</string>
     <string name="bs_hint">주제, #태그 또는 사람</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">라이브</string>
+    <string name="fg_entrada_t">라이브 모닥불 피우기</string>
+    <string name="fg_entrada_d">등반의 한 걸음에 대해 커뮤니티와 이야기해 보세요. 마지막에는 모두가 내일의 한 걸음을 위해 무언가를 가져갑니다.</string>
+    <string name="fg_esperando">불씨를 살리는 중…</string>
+    <string name="fg_error">모닥불에 연결할 수 없습니다.</string>
+    <string name="fg_salir">모닥불 떠나기</string>
+    <string name="fg_encender_t">모닥불 피우기</string>
+    <string name="fg_encender_d">무엇에 대해 이야기할지 말해 주세요. 커뮤니티는 빛으로 반응하고, 마지막에 각자 내일의 한 걸음을 위해 가져갈 것을 적습니다.</string>
+    <string name="fg_tema">무엇에 대해 이야기하나요?</string>
+    <string name="fg_tema_ej">예: 넘어진 뒤 다시 길로 돌아오는 방법</string>
+    <string name="fg_sin_eje">축 없음</string>
+    <string name="fg_no_puede">지금은 인증된 코치가 모닥불을 피웁니다. 곧 당신도 모닥불을 피울 수 있어요.</string>
+    <string name="fg_encendiendo">피우는 중…</string>
+    <string name="fg_encender">모닥불 피우기</string>
+    <string name="fg_permiso">모닥불을 피우려면 카메라와 마이크가 필요합니다.</string>
+    <string name="fg_personas">보고 있는 사람</string>
+    <string name="fg_apagar">모닥불 끄기</string>
+    <string name="fg_mic">마이크</string>
+    <string name="fg_cam">카메라</string>
+    <string name="fg_girar">카메라 전환</string>
+    <string name="fg_reportar">이 모닥불 신고</string>
+    <string name="fg_cortar">중단</string>
+    <string name="fg_apagar_t">모닥불을 끌까요?</string>
+    <string name="fg_apagar_d">모두가 나가고, 각자 내일의 한 걸음을 위해 가져갈 것을 적습니다.</string>
+    <string name="fg_apagar_si">끄기</string>
+    <string name="fg_seguir">계속 라이브</string>
+    <string name="fg_cortar_d">방송이 모두에게 종료되고 운영진에 의한 중단으로 기록됩니다.</string>
+    <string name="fg_reportar_ph">보거나 들은 것을 알려 주세요</string>
+    <string name="fg_reporte_ok">감사합니다. 운영진이 검토합니다.</string>
+    <string name="fg_apagada">모닥불이 꺼졌어요</string>
+    <string name="fg_llevo_t">떠나기 전에</string>
+    <string name="fg_llevo_d">%1$s 님의 모닥불에서 들은 것 중 내일의 한 걸음을 위해 무엇을 가져가나요?</string>
+    <string name="fg_llevo_ph">예: 전날 밤 옷을 미리 준비하기</string>
+    <string name="fg_llevo_nota">%1$s 님이 당신이 가져가는 것을 봅니다. 그래서 사람들에게 무엇을 남겼는지 알 수 있어요.</string>
+    <string name="fg_llevo_ok">가져갔어요. 내일은 당신의 한 걸음입니다.</string>
+    <string name="fg_llevo_btn">가져가기</string>
+    <string name="fg_ahora_no">나중에</string>
+    <string name="fg_resumen_t">당신의 모닥불이 꺼졌어요</string>
+    <string name="fg_resumen_d">%1$d분 동안 피움 · 빛 %2$d개 받음</string>
+    <string name="fg_llevaron">사람들이 가져간 것</string>
+    <string name="fg_llevaron_vacio">사람들이 지금 쓰고 있어요. 몇 분 뒤 이 모닥불 요약에서 볼 수 있어요.</string>
 </resources>

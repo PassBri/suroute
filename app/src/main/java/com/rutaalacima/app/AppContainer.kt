@@ -66,6 +66,8 @@ class AppContainer(context: Context) {
 
     /** Avisos, personas, perfiles públicos y sugerencias de la comunidad. */
     val red = com.rutaalacima.app.data.social.RedRepository(context, supabase, social)
+    /** Fogatas en vivo (LiveKit): encender, entrar y lo que cada quien se lleva. */
+    val fogatas = com.rutaalacima.app.data.social.FogataRepository(supabase)
     /** Mensajes 1 a 1 y coaches de vida. */
     val mensajes = com.rutaalacima.app.data.social.MensajesRepository(supabase)
     /** Moderación de la comunidad: reportes, decisiones y suspensiones (solo moderadores). */

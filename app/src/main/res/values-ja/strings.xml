@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">#%1$s の投稿を見る</string>
     <string name="bs_palabra">「%1$s」についての投稿</string>
     <string name="bs_hint">テーマ、#タグ、または人</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">ライブ</string>
+    <string name="fg_entrada_t">ライブのたき火をともす</string>
+    <string name="fg_entrada_d">登山の一歩についてコミュニティと話しましょう。最後に、みんなが明日の一歩のために何かを持ち帰ります。</string>
+    <string name="fg_esperando">炎をおこしています…</string>
+    <string name="fg_error">たき火に接続できませんでした。</string>
+    <string name="fg_salir">たき火を離れる</string>
+    <string name="fg_encender_t">たき火をともす</string>
+    <string name="fg_encender_d">何について話すか書きましょう。コミュニティは光で反応し、最後にそれぞれが明日の一歩のために持ち帰ることを書きます。</string>
+    <string name="fg_tema">何について話しますか？</string>
+    <string name="fg_tema_ej">例：転んだあと道に戻る方法</string>
+    <string name="fg_sin_eje">軸なし</string>
+    <string name="fg_no_puede">いまは認証済みのコーチがたき火をともします。もうすぐあなたもともせるようになります。</string>
+    <string name="fg_encendiendo">ともしています…</string>
+    <string name="fg_encender">たき火をともす</string>
+    <string name="fg_permiso">たき火をともすには、カメラとマイクが必要です。</string>
+    <string name="fg_personas">見ている人</string>
+    <string name="fg_apagar">たき火を消す</string>
+    <string name="fg_mic">マイク</string>
+    <string name="fg_cam">カメラ</string>
+    <string name="fg_girar">カメラを切り替える</string>
+    <string name="fg_reportar">このたき火を報告</string>
+    <string name="fg_cortar">中断する</string>
+    <string name="fg_apagar_t">たき火を消しますか？</string>
+    <string name="fg_apagar_d">全員が退出し、それぞれが明日の一歩のために持ち帰ることを書きます。</string>
+    <string name="fg_apagar_si">消す</string>
+    <string name="fg_seguir">ライブを続ける</string>
+    <string name="fg_cortar_d">配信は全員に対して終了し、モデレーションによる中断として記録されます。</string>
+    <string name="fg_reportar_ph">見たことや聞いたことを教えてください</string>
+    <string name="fg_reporte_ok">ありがとうございます。モデレーションが確認します。</string>
+    <string name="fg_apagada">たき火が消えました</string>
+    <string name="fg_llevo_t">行く前に</string>
+    <string name="fg_llevo_d">%1$s さんのたき火で聞いたことから、明日の一歩のために何を持ち帰りますか？</string>
+    <string name="fg_llevo_ph">例：前の晩に服を用意しておく</string>
+    <string name="fg_llevo_nota">%1$s さんはあなたが持ち帰ることを見られます。仲間に何を残せたかがわかります。</string>
+    <string name="fg_llevo_ok">持ち帰りました。明日はあなたの一歩です。</string>
+    <string name="fg_llevo_btn">持ち帰る</string>
+    <string name="fg_ahora_no">今はしない</string>
+    <string name="fg_resumen_t">あなたのたき火が消えました</string>
+    <string name="fg_resumen_d">%1$d 分ともした · 光を %2$d 個受け取りました</string>
+    <string name="fg_llevaron">みんなが持ち帰ったこと</string>
+    <string name="fg_llevaron_vacio">いまみんなが書いています。数分後にこのたき火のまとめで見られます。</string>
 </resources>

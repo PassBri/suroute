@@ -2949,4 +2949,47 @@
     <string name="bs_etiqueta">Ver publicações com #%1$s</string>
     <string name="bs_palabra">Publicações sobre «%1$s»</string>
     <string name="bs_hint">Um tema, #etiqueta ou pessoa</string>
+
+    <!-- Fogatas en vivo -->
+    <string name="fg_vivo">Ao vivo</string>
+    <string name="fg_entrada_t">Acender uma fogueira ao vivo</string>
+    <string name="fg_entrada_d">Converse com sua comunidade sobre um passo da sua subida. No final, cada pessoa leva algo para o passo de amanhã.</string>
+    <string name="fg_esperando">Avivando a chama…</string>
+    <string name="fg_error">Não foi possível conectar à fogueira.</string>
+    <string name="fg_salir">Sair da fogueira</string>
+    <string name="fg_encender_t">Acender uma fogueira</string>
+    <string name="fg_encender_d">Diga sobre o que vai falar. Sua comunidade reagirá com luzes e, no final, cada pessoa escreverá o que leva para o passo de amanhã.</string>
+    <string name="fg_tema">Sobre o que você vai falar?</string>
+    <string name="fg_tema_ej">Ex.: Como volto à rota depois de uma queda</string>
+    <string name="fg_sin_eje">Sem eixo</string>
+    <string name="fg_no_puede">Por enquanto, coaches verificados acendem fogueiras. Em breve você poderá acender a sua.</string>
+    <string name="fg_encendiendo">Acendendo…</string>
+    <string name="fg_encender">Acender a fogueira</string>
+    <string name="fg_permiso">Para acender uma fogueira, o app precisa da câmera e do microfone.</string>
+    <string name="fg_personas">Pessoas assistindo</string>
+    <string name="fg_apagar">Apagar a fogueira</string>
+    <string name="fg_mic">Microfone</string>
+    <string name="fg_cam">Câmera</string>
+    <string name="fg_girar">Trocar de câmera</string>
+    <string name="fg_reportar">Denunciar esta fogueira</string>
+    <string name="fg_cortar">Interromper</string>
+    <string name="fg_apagar_t">Apagar a fogueira?</string>
+    <string name="fg_apagar_d">Todas as pessoas sairão e cada uma escreverá o que leva para o passo de amanhã.</string>
+    <string name="fg_apagar_si">Apagar</string>
+    <string name="fg_seguir">Continuar ao vivo</string>
+    <string name="fg_cortar_d">A transmissão termina para todos e fica registrada como interrompida pela moderação.</string>
+    <string name="fg_reportar_ph">Conte o que você viu ou ouviu</string>
+    <string name="fg_reporte_ok">Obrigado. A moderação vai revisar.</string>
+    <string name="fg_apagada">A fogueira se apagou</string>
+    <string name="fg_llevo_t">Antes de sair</string>
+    <string name="fg_llevo_d">Do que você ouviu na fogueira de %1$s, o que leva para o seu passo de amanhã?</string>
+    <string name="fg_llevo_ph">Ex.: deixar a roupa pronta na noite anterior</string>
+    <string name="fg_llevo_nota">%1$s verá o que você leva. Assim sabe o que deixou na sua gente.</string>
+    <string name="fg_llevo_ok">É seu. Amanhã é o seu passo.</string>
+    <string name="fg_llevo_btn">Levar comigo</string>
+    <string name="fg_ahora_no">Agora não</string>
+    <string name="fg_resumen_t">Sua fogueira se apagou</string>
+    <string name="fg_resumen_d">%1$d min acesa · %2$d luzes recebidas</string>
+    <string name="fg_llevaron">O que levaram</string>
+    <string name="fg_llevaron_vacio">As pessoas estão escrevendo agora. Você verá no resumo desta fogueira em alguns minutos.</string>
 </resources>

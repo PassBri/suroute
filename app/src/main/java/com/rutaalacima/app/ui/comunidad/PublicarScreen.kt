@@ -147,6 +147,8 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
             onCancelar = { editando = null })
     }
 
+    var encendiendoFogata by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf(false) }
+    if (encendiendoFogata) FogataSesion(null) { encendiendoFogata = false }
     Scaffold(
         modifier = Modifier.fondoPapel(),
         containerColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -175,6 +177,8 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
+            // En vivo: encender una fogata (no aplica a un recuerdo de otro año)
+            if (vm.anio == null || vm.anio == hoy().year) item { EntradaFogata(onClick = { encendiendoFogata = true }) }
             item {
                 ChipSelector(null, TipoPost.entries, vm.tipo, { it.texto() }, { vm.tipo = it })
                 Text(
