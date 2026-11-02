@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">मेरी प्रोफ़ाइल देखें</string>
     <string name="hs_crecer">आगे बढ़ें</string>
     <string name="hs_herramientas">आपके साधन</string>
+    <string name="bs_titulo">खोजें</string>
+    <string name="bs_temas">विषय</string>
+    <string name="bs_etiqueta">#%1$s वाली पोस्ट देखें</string>
+    <string name="bs_palabra">«%1$s» के बारे में पोस्ट</string>
+    <string name="bs_hint">कोई विषय, #टैग या व्यक्ति</string>
 </resources>

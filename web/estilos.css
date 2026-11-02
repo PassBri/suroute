@@ -5255,3 +5255,9 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .hc-ic { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--hoja-2); color: var(--tinta-suave); }
 .hc-ic svg { width: 24px; height: 24px; }
 @media (hover: hover) and (pointer: fine) { .hc-b:hover .hc-ic { background: var(--oro-suave); } }
+/* Buscar: temas, #etiquetas, palabras y personas */
+.busca-tema { display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px 14px; margin-bottom: 8px; border-radius: 14px; background: var(--hoja-2); color: var(--tinta); text-align: left; }
+.busca-tema svg { width: 20px; height: 20px; color: var(--tinta-suave); flex: none; }
+.busca-temas { margin: 0 0 6px; }
+/* Sendero elegido: una sola etiqueta pequeña bajo las pestañas, para quitarlo */
+.senderos.solo-uno { justify-content: center; }

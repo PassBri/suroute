@@ -253,18 +253,32 @@ async function sugeridasRed(cuantas = 8) {
 window.sugeridasRed = sugeridasRed;
 function pintarResultados() {
   const caja = document.getElementById("resultadosPersonas"); if (!caja) return;
-  caja.innerHTML = RED.resultados ? (RED.resultados.length ? RED.resultados.map(filaPersonaHtml).join("") : `<p class="suave">No encontramos a nadie con ese nombre.</p>`)
-    : RED.sugeridas?.length ? `<h3 class="aviso-tramo">A quién seguir</h3>${RED.sugeridas.map(filaPersonaHtml).join("")}` : "";
+  const t = (RED.textoBusqueda || "").trim(), tag = t.startsWith("#") ? t.slice(1).replace(/[^\p{L}\p{N}_]/gu, "") : "";
+  // Primero, ver publicaciones sobre lo que escribiste (una #etiqueta o una palabra); después, las personas
+  const pubs = t.length >= 2 ? (tag.length >= 2
+      ? `<button class="busca-tema" data-ir="comunidad" data-arg="etiqueta:${esc(tag)}">${ic("buscar")}<span>Ver publicaciones con <b>#${esc(tag)}</b></span></button>`
+      : t.startsWith("@") ? "" : `<button class="busca-tema" data-ir="comunidad" data-arg="palabra:${esc(t)}">${ic("buscar")}<span>Publicaciones sobre <b>«${esc(t)}»</b></span></button>`) : "";
+  caja.innerHTML = pubs + (RED.resultados ? (RED.resultados.length ? `<h3 class="aviso-tramo">Personas</h3>` + RED.resultados.map(filaPersonaHtml).join("") : tag ? "" : `<p class="suave">No encontramos a nadie con ese nombre.</p>`)
+    : RED.sugeridas?.length ? `<h3 class="aviso-tramo">A quién seguir</h3>${RED.sugeridas.map(filaPersonaHtml).join("")}` : "");
 }
 DET["comunidad.buscar"] = () => {
   if (!RED.sugeridas) seguidosRed().then(() => sugeridasRed(10)).then(s => { RED.sugeridas = s; pintarResultados(); });
   requestAnimationFrame(() => { const i = document.getElementById("buscarPersonas"); if (i && document.activeElement !== i) i.focus({ preventScroll: true }); pintarResultados(); });
-  return cab(av(ic("buscar"), "var(--burdeos)"), "Buscar personas", "Por nombre o @usuario") + cuerpo(
-    `<label class="buscador-red">${ic("buscar")}<input id="buscarPersonas" type="search" placeholder="Nombre o @usuario" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search"></label>
-     <div id="resultadosPersonas" class="personas"></div>`, "max-width:640px");
+  const temas = `<h3 class="aviso-tramo">Temas</h3><div class="pp-ejes busca-temas">${EJES.map(([c, n]) => `<button class="pp-eje" data-ir="comunidad" data-arg="eje:${c}" style="--c:${COLOR_EJE[c]}">${esc(n)}</button>`).join("")}</div>`;
+  return cab(av(ic("buscar"), "var(--burdeos)"), "Buscar", "Temas, #etiquetas, palabras y personas") + cuerpo(
+    `<label class="buscador-red">${ic("buscar")}<input id="buscarPersonas" type="search" placeholder="Un tema, #etiqueta o persona" value="${esc(RED.textoBusqueda || "")}" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="search"></label>
+     ${temas}<div id="resultadosPersonas" class="personas"></div>`, "max-width:640px");
+};
+/** Publicaciones que hablan de una palabra (búsqueda por tema libre). */
+DET["comunidad.palabra"] = t => {
+  const k = "palabra:" + t.toLowerCase(), ps = RED.listados?.[k];
+  // Después de pintar: así la cuadrícula reemplaza al «Cargando…» (también sin cuenta)
+  if (!ps) setTimeout(() => cargarListado(k, q => q.ilike("texto", `%${t.replace(/[%_,()*]/g, " ")}%`), () => DEMO_POSTS.filter(p => (p.texto + " " + (p.metaTitulo || "")).toLowerCase().includes(t.toLowerCase()))));
+  return cab(av(ic("buscar"), "var(--burdeos)"), "«" + esc(t) + "»", ps && !ps.cargando ? `${ps.length} ${ps.length === 1 ? "publicación" : "publicaciones"}` : "Cargando…") +
+    cuerpo(ps && !ps.cargando ? grillaPosts(ps) : "", "max-width:720px");
 };
 let esperaBusqueda = null;
-document.addEventListener("input", e => { if (e.target.id !== "buscarPersonas") return; clearTimeout(esperaBusqueda); esperaBusqueda = setTimeout(() => buscarPersonas(e.target.value), 280); });
+document.addEventListener("input", e => { if (e.target.id !== "buscarPersonas") return; RED.textoBusqueda = e.target.value; pintarResultados(); clearTimeout(esperaBusqueda); esperaBusqueda = setTimeout(() => buscarPersonas(e.target.value.startsWith("#") ? "" : e.target.value), 280); });
 
 /** Perfil público: quién es, sus cifras, su cumbre y lo que comparte. */
 async function cargarPersona(id) {
@@ -325,9 +339,9 @@ ACC.seguirPersona = async (el, id) => {
   const feed = DET["comunidad.feed"];
   DET["comunidad.feed"] = (...a) => feed(...a)
     .replace(/<button class="cima-autor" data-acc="escribirA" data-arg="([^"|]*)\|[^"]*"/g, '<button class="cima-autor" data-ir="comunidad" data-arg="persona:$1"')
-    .replace(/(<span class="cimas-ancla")/, `<button class="cimas-ic" data-ir="comunidad" data-arg="buscar" aria-label="Buscar personas" title="Buscar personas">${ic("buscar")}</button>$1`);
+    .replace(/(<span class="cimas-ancla")/, `<button class="cimas-ic" data-ir="comunidad" data-arg="buscar" aria-label="Buscar temas y personas" title="Buscar temas y personas">${ic("buscar")}</button>$1`);
   const lista = LISTAS.comunidad;
-  LISTAS.comunidad = (...a) => lista(...a).replace(/(<button class="rb campana)/, `<button class="rb" data-ir="comunidad" data-arg="buscar" aria-label="Buscar personas" title="Buscar personas">${ic("buscar")}</button>$1`);
+  LISTAS.comunidad = (...a) => lista(...a).replace(/(<button class="rb campana)/, `<button class="rb" data-ir="comunidad" data-arg="buscar" aria-label="Buscar temas y personas" title="Buscar temas y personas">${ic("buscar")}</button>$1`);
 }
 
 /* ---------- 4. Primeros pasos en Comunidad ---------- */

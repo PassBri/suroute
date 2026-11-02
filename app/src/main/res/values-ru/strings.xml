@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">Мой профиль</string>
     <string name="hs_crecer">Расти</string>
     <string name="hs_herramientas">Ваши инструменты</string>
+    <string name="bs_titulo">Поиск</string>
+    <string name="bs_temas">Темы</string>
+    <string name="bs_etiqueta">Публикации с #%1$s</string>
+    <string name="bs_palabra">Публикации о «%1$s»</string>
+    <string name="bs_hint">Тема, #тег или человек</string>
 </resources>

@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">내 프로필 보기</string>
     <string name="hs_crecer">성장</string>
     <string name="hs_herramientas">내 도구</string>
+    <string name="bs_titulo">검색</string>
+    <string name="bs_temas">주제</string>
+    <string name="bs_etiqueta">#%1$s 게시물 보기</string>
+    <string name="bs_palabra">「%1$s」에 관한 게시물</string>
+    <string name="bs_hint">주제, #태그 또는 사람</string>
 </resources>

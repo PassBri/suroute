@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">查看我的资料</string>
     <string name="hs_crecer">成长</string>
     <string name="hs_herramientas">你的工具</string>
+    <string name="bs_titulo">搜索</string>
+    <string name="bs_temas">主题</string>
+    <string name="bs_etiqueta">查看带 #%1$s 的帖子</string>
+    <string name="bs_palabra">关于「%1$s」的帖子</string>
+    <string name="bs_hint">主题、#标签或用户</string>
 </resources>

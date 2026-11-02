@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">عرض ملفي</string>
     <string name="hs_crecer">النمو</string>
     <string name="hs_herramientas">أدواتك</string>
+    <string name="bs_titulo">بحث</string>
+    <string name="bs_temas">مواضيع</string>
+    <string name="bs_etiqueta">عرض المنشورات مع #%1$s</string>
+    <string name="bs_palabra">منشورات عن «%1$s»</string>
+    <string name="bs_hint">موضوع أو #وسم أو شخص</string>
 </resources>

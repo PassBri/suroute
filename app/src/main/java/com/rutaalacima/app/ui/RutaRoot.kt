@@ -599,7 +599,7 @@ private fun AppPrincipal() {
                     onBack = { nav.popBackStack() }, onPost = { nav.navigate(Rutas.post(it)) })
             }
             composable(Rutas.PERSONAS) {
-                com.rutaalacima.app.ui.comunidad.BuscarPersonasScreen(onBack = { nav.popBackStack() }, onPersona = { nav.navigate(Rutas.persona(it)) })
+                com.rutaalacima.app.ui.comunidad.BuscarPersonasScreen(onBack = { nav.popBackStack() }, onPersona = { nav.navigate(Rutas.persona(it)) }, onListado = { nav.navigate(Rutas.listado(it)) })
             }
             composable(Rutas.PERSONA, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
                 com.rutaalacima.app.ui.comunidad.PersonaScreen(

@@ -2953,4 +2953,9 @@
     <string name="hs_ver_perfil">Ver mi perfil</string>
     <string name="hs_crecer">Crecer</string>
     <string name="hs_herramientas">Tus herramientas</string>
+    <string name="bs_titulo">Buscar</string>
+    <string name="bs_temas">Temas</string>
+    <string name="bs_etiqueta">Ver publicaciones con #%1$s</string>
+    <string name="bs_palabra">Publicaciones sobre «%1$s»</string>
+    <string name="bs_hint">Un tema, #etiqueta o persona</string>
 </resources>

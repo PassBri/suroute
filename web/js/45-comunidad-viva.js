@@ -203,8 +203,10 @@ const SENDEROS = [[null, "Todos"], ...EJES.map(([c, n]) => [c, n])];
   DET["comunidad.feed"] = (...a) => {
     const h = feed(...a);
     if (estado.vistaCom !== "cimas" || !estado.feed) return h;
-    const franja = `<nav class="senderos" aria-label="Senderos: desliza de lado para cambiar">${SENDEROS.map(([c, n]) =>
-      `<button data-acc="sendero" data-arg="${c || ""}" aria-pressed="${(estado.feedEje || null) === c}"${c ? ` style="--c:${COLOR_EJE[c]}"` : ""}>${c ? `<i></i>` : ""}${n}</button>`).join("")}</nav>`;
+    // La franja de senderos ya no va fija arriba (recargaba la imagen): los temas se eligen en Buscar.
+    // Si hay un sendero elegido, se ve solo una etiqueta pequeña para quitarlo.
+    if (!estado.feedEje) return h;
+    const franja = `<nav class="senderos solo-uno" aria-label="Sendero elegido"><button data-acc="sendero" data-arg="" aria-pressed="true" style="--c:${COLOR_EJE[estado.feedEje]}" aria-label="Quitar el sendero ${esc(NOMBRE_EJE[estado.feedEje] || "")}"><i></i>${esc(NOMBRE_EJE[estado.feedEje] || "")} ✕</button></nav>`;
     return h.replace(/(<div class="cimas-cab">[\s\S]*?<\/div>)/, `$1${franja}`);
   };
 }
@@ -280,7 +282,8 @@ function meLoLlevo(p, el) {
   document.addEventListener("pointerdown", e => { s = e.target.closest?.(".cimas-cab, .senderos") ? { x: e.clientX, y: e.clientY } : null; }, { passive: true });
   document.addEventListener("pointerup", e => {
     if (!s) return; const dx = e.clientX - s.x, dy = e.clientY - s.y; s = null;
-    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5 && !e.target.closest?.(".senderos")) cambiarSendero(dx < 0 ? 1 : -1);
+    // Sin la franja visible, deslizar sobre la cabecera ya no cambia de sendero (era un cambio invisible)
+    void dx; void dy;
   });
   // Teclado (computador): ← detrás de la cima, → me lo llevo, sobre la cima visible
   document.addEventListener("keydown", e => {
@@ -297,4 +300,4 @@ function meLoLlevo(p, el) {
 GUIA_COMUNIDAD.splice(2, 0,
   ["izq", "Desliza a la izquierda: detrás de la cima", "Ves el camino de esa persona: su constancia, sus pasos de la Brújula, su compromiso y sus otras cimas. En el computador, flecha ←."],
   ["morral", "Desliza a la derecha: me lo llevo", "La publicación queda en tu mochila y le das impulso. Aquí nunca se rechaza a nadie. En el computador, flecha →."],
-  ["ejes", "Senderos", "Arriba eliges un sendero (Voluntad, Maestría, Voz, Valor, Evolución, Trascendencia) o deslizas de lado sobre la cabecera para cambiarlo."]);
+  ["buscar", "Buscar por temas", "La lupa de arriba busca personas, #etiquetas y palabras, y abre los temas: Voluntad, Maestría, Voz, Valor, Evolución y Trascendencia."]);

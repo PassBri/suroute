@@ -250,6 +250,8 @@ class RedRepository(private val context: Context, private val supa: SupabaseClie
 
     suspend fun etiqueta(tag: String): List<Post> = social.publicasCon("texto=ilike.*${cod("#$tag")}*") { it.texto.contains("#$tag", true) }
     suspend fun deEje(eje: String): List<Post> = social.publicasCon("eje=eq.$eje") { it.eje == eje }
+    /** Publicaciones que hablan de una palabra (búsqueda por tema libre). */
+    suspend fun palabra(t: String): List<Post> = social.publicasCon("texto=ilike.*${cod(t)}*") { it.texto.contains(t, true) || it.metaTitulo.contains(t, true) }
 
     // ------------------------------------------------------------------ Retos de la comunidad
 

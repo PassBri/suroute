@@ -357,7 +357,7 @@ fun ComunidadScreen(
                         modifier = Modifier.align(Alignment.Center).padding(24.dp),
                     )
                 }
-                PestanasCimas(vm, onMuro = { volverA = pagina; enMuro = true }, onCordadas = onCordadas, onMensajes = onMensajes, onCuenta = onCuenta, noLeidos = noLeidos, onAvisos = onAvisos)
+                PestanasCimas(vm, onMuro = { volverA = pagina; enMuro = true }, onCordadas = onCordadas, onMensajes = onMensajes, onCuenta = onCuenta, noLeidos = noLeidos, onAvisos = onAvisos, onBuscar = onBuscar)
             }
             comentandoEn?.let { p -> HojaComentarios(vm, p, onCerrar = { comentandoEn = null }, onAbrirDetalle = { comentandoEn = null; onAbrirPost(p.id) }) }
             opcionesDe?.let { p -> HojaOpciones(vm, p, onChat = onChat, onCerrar = { opcionesDe = null }) }
@@ -524,7 +524,7 @@ private fun Filtros(vm: ComunidadViewModel) {
  * subrayado dorado fino, y las cordadas y los mensajes a la derecha. Todo sobre un velo para leerse.
  */
 @Composable
-private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas: () -> Unit, onMensajes: () -> Unit, onCuenta: () -> Unit, noLeidos: Int = 0, onAvisos: () -> Unit = {}) {
+private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas: () -> Unit, onMensajes: () -> Unit, onCuenta: () -> Unit, noLeidos: Int = 0, onAvisos: () -> Unit = {}, onBuscar: () -> Unit = {}) {
     var dxCab by androidx.compose.runtime.remember { mutableStateOf(0f) }
     Column(Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 4.dp, vertical = 4.dp)
         // Deslizar de lado sobre la cabecera cambia de sendero
@@ -553,10 +553,12 @@ private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas
                     }
                 }
             }
-            // Mensajes está en la barra de abajo y las Cordadas viven dentro de Mensajes: aquí solo los avisos
+            // Mensajes está en la barra de abajo y las Cordadas viven dentro de Mensajes: aquí los avisos y buscar por temas
             Campana(noLeidos, onAvisos, Color.White)
+            androidx.compose.material3.IconButton(onClick = onBuscar) { Icon(Icons.Filled.Search, stringResource(R.string.bs_titulo), tint = Color.White) }
         }
-        Senderos(vm.eje, vm::elegirEje)
+        // Los senderos (ejes) ya no van fijos arriba: se eligen en Buscar › Temas. Si hay uno elegido, se puede quitar aquí.
+        vm.eje?.let { e -> Senderos(e, vm::elegirEje) }
         if (!vm.enLinea) {
             Text(
                 stringResource(R.string.modo_demo_titulo), color = Color.White.copy(alpha = 0.8f), style = MaterialTheme.typography.labelSmall,

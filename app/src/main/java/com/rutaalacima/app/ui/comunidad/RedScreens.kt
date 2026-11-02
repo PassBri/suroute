@@ -60,6 +60,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.draw.clip
+import com.rutaalacima.app.ui.theme.asColor
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -259,9 +260,9 @@ class PersonasViewModel(private val c: AppContainer) : ViewModel() {
     fun alternar(id: String) = viewModelScope.launch { val si = id !in sigo; c.red.seguir(id, si); sigo = if (si) sigo + id else sigo - id }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-fun BuscarPersonasScreen(onBack: () -> Unit, onPersona: (String) -> Unit) {
+fun BuscarPersonasScreen(onBack: () -> Unit, onPersona: (String) -> Unit, onListado: (String) -> Unit = {}) {
     val vm = rutaViewModel { PersonasViewModel(it) }
     var texto by rememberSaveable { mutableStateOf("") }
     Scaffold(
@@ -269,7 +270,7 @@ fun BuscarPersonasScreen(onBack: () -> Unit, onPersona: (String) -> Unit) {
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                title = { Text(stringResource(R.string.red_buscar)) },
+                title = { Text(stringResource(R.string.bs_titulo)) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } },
             )
         },
@@ -278,9 +279,32 @@ fun BuscarPersonasScreen(onBack: () -> Unit, onPersona: (String) -> Unit) {
             item("campo") {
                 OutlinedTextField(
                     texto, { texto = it; vm.buscar(it) }, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                    placeholder = { Text(stringResource(R.string.red_buscar_hint)) }, singleLine = true, shape = RoundedCornerShape(28.dp),
+                    placeholder = { Text(stringResource(R.string.bs_hint)) }, singleLine = true, shape = RoundedCornerShape(28.dp),
                     leadingIcon = { Icon(Icons.Filled.Search, null) },
                     trailingIcon = if (texto.isNotEmpty()) ({ IconButton(onClick = { texto = ""; vm.buscar("") }) { Icon(Icons.Filled.Close, null) } }) else null,
+                )
+            }
+            // Temas: los seis ejes, para ver lo que la comunidad publica sobre cada uno
+            item("temas") {
+                Column(Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
+                    Text(stringResource(R.string.bs_temas), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 4.dp, bottom = 6.dp))
+                    androidx.compose.foundation.layout.FlowRow(horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)) {
+                        com.rutaalacima.app.domain.model.Eje.entries.forEach { e ->
+                            androidx.compose.material3.AssistChip(onClick = { onListado("eje:" + e.codigo) }, label = { Text(e.texto()) },
+                                leadingIcon = { androidx.compose.foundation.layout.Box(Modifier.size(10.dp).clip(androidx.compose.foundation.shape.CircleShape).background(e.color.asColor())) })
+                        }
+                    }
+                }
+            }
+            // Lo escrito: ver las publicaciones con esa #etiqueta o que hablan de esa palabra
+            val t = texto.trim()
+            if (t.length >= 2 && !t.startsWith("@")) item("pubs") {
+                val tag = if (t.startsWith("#")) t.drop(1).filter { it.isLetterOrDigit() || it == '_' } else ""
+                ListItem(
+                    modifier = Modifier.padding(horizontal = 8.dp).clip(RoundedCornerShape(16.dp)).clickable { onListado(if (tag.length >= 2) "#$tag" else "palabra:$t") },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
+                    leadingContent = { Icon(Icons.Filled.Search, null) },
+                    headlineContent = { Text(if (tag.length >= 2) stringResource(R.string.bs_etiqueta, tag) else stringResource(R.string.bs_palabra, t)) },
                 )
             }
             val lista = if (texto.trim().length >= 2) vm.resultados else vm.sugeridas
@@ -498,7 +522,7 @@ class ListadoViewModel(private val c: AppContainer, private val clave: String) :
         private set
     init {
         viewModelScope.launch {
-            posts = runCatching { if (clave.startsWith("#")) c.red.etiqueta(clave.drop(1)) else c.red.deEje(clave.removePrefix("eje:")) }.getOrDefault(emptyList())
+            posts = runCatching { when { clave.startsWith("#") -> c.red.etiqueta(clave.drop(1)); clave.startsWith("palabra:") -> c.red.palabra(clave.removePrefix("palabra:")); else -> c.red.deEje(clave.removePrefix("eje:")) } }.getOrDefault(emptyList())
         }
     }
 }
@@ -514,7 +538,7 @@ fun ListadoPublicacionesScreen(clave: String, onBack: () -> Unit, onPost: (Strin
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                title = { Text(eje?.texto() ?: clave) },
+                title = { Text(eje?.texto() ?: if (clave.startsWith("palabra:")) "«${clave.removePrefix("palabra:")}»" else clave) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } },
             )
         },

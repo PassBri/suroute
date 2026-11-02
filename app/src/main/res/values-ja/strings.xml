@@ -2944,4 +2944,9 @@
     <string name="hs_ver_perfil">プロフィールを見る</string>
     <string name="hs_crecer">成長する</string>
     <string name="hs_herramientas">あなたの道具</string>
+    <string name="bs_titulo">検索</string>
+    <string name="bs_temas">テーマ</string>
+    <string name="bs_etiqueta">#%1$s の投稿を見る</string>
+    <string name="bs_palabra">「%1$s」についての投稿</string>
+    <string name="bs_hint">テーマ、#タグ、または人</string>
 </resources>
