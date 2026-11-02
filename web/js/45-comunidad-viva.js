@@ -65,7 +65,7 @@ window.chipsCamino = p => {
   const ch = [], c = p.camino, k = p.compromiso, hoyI = iso(hoyFecha());
   if (c && (c.racha || c.ganados)) {
     if (c.racha) ch.push(`<span class="cv-chip cv-camino" title="Días seguidos marcando sus hábitos">${ic("ruta")}Día ${c.racha} de constancia</span>`);
-    if (c.ganados) ch.push(`<span class="cv-chip cv-camino" title="Pasos ganados de los 64 de su Brújula">${ic("cima")}${c.ganados}/64 pasos</span>`);
+    if (c.ganados) ch.push(`<span class="cv-chip cv-camino cv-ganados" title="Pasos ganados de los 64 de su Brújula">${ic("cima")}${c.ganados}/64 pasos</span>`);
   }
   if (k?.hasta) {
     if (k.estado === "LOGRADO") ch.push(`<span class="cv-chip cv-logrado">${ic("check")}Compromiso cumplido</span>`);

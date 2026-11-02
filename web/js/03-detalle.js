@@ -804,16 +804,18 @@ Object.assign(DET, {
           <nav class="cimas-pestanas" aria-label="Qué ver">${pestanas.map(([k, n]) => `<button data-feed="${k}" aria-pressed="${estado.feedFiltro === k}">${n}</button>`).join("")}</nav>
 <span class="cimas-ancla" hidden></span></div>
         ${p0Demo(ps)}
-        <div class="cimas" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
+        <div class="cimas hoja-exp" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
           <div class="cima-fondo">${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${window.selladaCima?.(p) || (window.mediaCima?.(p) || "") + (window.mediaCima?.(p) ? "" : p.foto ? `<img src="${esc(p.foto)}" alt="${altFoto(p)}" loading="lazy">`
             : `<div class="cielo cima-cielo" data-cielo-post="${p.creadoEn}" aria-hidden="true"></div><p class="cima-cita">“${enlazarTexto(p.texto)}”</p>`)}</div>
           <div class="cima-acciones">
             <button class="cima-autor" data-acc="escribirA" data-arg="${esc(p.autorId)}|${esc(p.autorNombre)}" aria-label="Escribir a ${esc(p.autorNombre)}">${autor(p)}</button>
             ${globalThis.botonLuz ? botonLuz(p) : ""}
             <button data-acc="comentariosCima" data-arg="${esc(p.id)}" aria-label="Comentarios, ${p.comentarios}">${ic("comentario")}<b>${num(p.comentarios)}</b></button>
-            ${globalThis.botonMochila ? botonMochila(p) : ""}
+            ${window.botonLlevo ? botonLlevo(p) : globalThis.botonMochila ? botonMochila(p) : ""}
             <button data-acc="compartirPost" data-arg="${esc(p.id)}" aria-label="Compartir">${ic("compartir")}</button></div>
-          <div class="cima-pie"><div class="cima-quien-fila"><b class="cima-quien">${p.autorUsuario ? "@" + esc(p.autorUsuario) : esc(p.autorNombre)}</b><button class="cima-mas-op" data-acc="masCima" data-arg="${esc(p.id)}" aria-label="Más opciones" title="Más opciones">${ic("masH")}</button></div>
+          <div class="cima-pie"><div class="cima-quien-fila"><button class="cima-autor-h" ${Store.nube && !p.demo ? `data-ir="comunidad" data-arg="persona:${esc(p.autorId)}"` : `data-acc="escribirA" data-arg="${esc(p.autorId)}|${esc(p.autorNombre)}"`} aria-label="${esc(p.autorNombre)}" tabindex="-1">${autor(p)}</button>
+              <span class="cima-quien-txt"><b class="cima-quien">${p.autorUsuario ? "@" + esc(p.autorUsuario) : esc(p.autorNombre)}</b>${window.lineaRuta?.(p) || ""}</span>
+              ${window.miniBrujulaPost?.(p) || ""}<button class="cima-mas-op" data-acc="masCima" data-arg="${esc(p.id)}" aria-label="Más opciones" title="Más opciones">${ic("masH")}</button></div>
             <span class="cima-dato">${[TIPOS_POST.find(t => t[0] === p.tipo)?.[1], hace(p.creadoEn)].filter(Boolean).join(" · ")}${p.eje ? ` · <button class="cima-eje" data-ir="comunidad" data-arg="eje:${p.eje}">${esc(NOMBRE_EJE[p.eje])}</button>` : ""}</span>
             ${window.chipsCamino?.(p) || ""}
             ${p.foto && p.texto && !window.estaSellada?.(p) ? `<p class="cima-texto">${enlazarTexto(p.texto)}</p>${p.texto.length > 90 ? `<button class="cima-mas" data-acc="masTexto" aria-expanded="false">más</button>` : ""}` : p.foto ? "" : `<span class="cima-dato suave-c">Publicado bajo este cielo</span>`}
