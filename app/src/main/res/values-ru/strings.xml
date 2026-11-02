@@ -2958,7 +2958,7 @@
     <string name="fg_error">Не удалось подключиться к костру.</string>
     <string name="fg_salir">Покинуть костёр</string>
     <string name="fg_encender_t">Разжечь костёр</string>
-    <string name="fg_encender_d">Скажите, о чём будете говорить. Сообщество ответит огоньками, а в конце каждый напишет, что уносит для завтрашнего шага.</string>
+    <string name="fg_encender_d">Скажите, о чём будете говорить. Сообщество раздует огонь дровами, спичками и не только, а в конце каждый напишет, что уносит для завтрашнего шага.</string>
     <string name="fg_tema">О чём вы будете говорить?</string>
     <string name="fg_tema_ej">Напр.: как я возвращаюсь на путь после падения</string>
     <string name="fg_sin_eje">Без оси</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">Поделиться в Сообществе</string>
     <string name="ex_previa_d">Ваша публикация будет с вашим Компасом и этой горящей клеткой.</string>
     <string name="ex_sin_brujula">Опубликовать без Компаса</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Раздувает огонь</string>
+    <string name="fo_fosforo">Зажигает огонь</string>
+    <string name="fo_piedra">Бережёт огонь</string>
+    <string name="fo_chispa">Высекает огонь</string>
+    <string name="fo_cafe">Лучший спутник</string>
+    <string name="fo_manta">Для трудной минуты</string>
+    <string name="fo_aportes">Вкладов в костёр: %1$d</string>
+    <string name="fo_minutos">Горел %1$d мин</string>
+    <string name="fo_recibio">Ваш костёр получил</string>
+    <string name="fo_nadie">В этот раз никто не подбросил дров. В следующий раз позовите свою связку.</string>
+    <string name="fo_brasas">От костра остались угли</string>
+    <string name="fo_arde">Костёр горит на %1$d %%</string>
 </resources>

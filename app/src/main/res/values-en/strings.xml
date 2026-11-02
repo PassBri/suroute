@@ -2958,7 +2958,7 @@
     <string name="fg_error">Couldn\'t connect to the campfire.</string>
     <string name="fg_salir">Leave the campfire</string>
     <string name="fg_encender_t">Light a campfire</string>
-    <string name="fg_encender_d">Say what you\'ll talk about. Your community will react with lights and, at the end, each person will write what they take away for tomorrow\'s step.</string>
+    <string name="fg_encender_d">Say what you\'ll talk about. Your community will stoke the fire with wood, matches and more, and at the end each person will write what they take away for tomorrow\'s step.</string>
     <string name="fg_tema">What will you talk about?</string>
     <string name="fg_tema_ej">E.g.: How I get back on the path after a fall</string>
     <string name="fg_sin_eje">No axis</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">Share in Community</string>
     <string name="ex_previa_d">Your post will carry your Compass with this square lit.</string>
     <string name="ex_sin_brujula">Post without the Compass</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Stokes the fire</string>
+    <string name="fo_fosforo">Lights the fire</string>
+    <string name="fo_piedra">Guards the fire</string>
+    <string name="fo_chispa">Sparks the fire</string>
+    <string name="fo_cafe">The best companion</string>
+    <string name="fo_manta">For a hard moment</string>
+    <string name="fo_aportes">%1$d gifts to the campfire</string>
+    <string name="fo_minutos">%1$d min lit</string>
+    <string name="fo_recibio">Your campfire received</string>
+    <string name="fo_nadie">No one added wood this time. Next time, invite your rope team.</string>
+    <string name="fo_brasas">The campfire is down to embers</string>
+    <string name="fo_arde">The campfire burns at %1$d %% strength</string>
 </resources>

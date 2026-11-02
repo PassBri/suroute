@@ -2958,7 +2958,7 @@
     <string name="fg_error">Impossibile collegarsi al falò.</string>
     <string name="fg_salir">Esci dal falò</string>
     <string name="fg_encender_t">Accendi un falò</string>
-    <string name="fg_encender_d">Di\' di cosa parlerai. La tua comunità reagirà con le luci e, alla fine, ognuno scriverà cosa porta via per il passo di domani.</string>
+    <string name="fg_encender_d">Di\' di cosa parlerai. La tua comunità ravviverà il fuoco con legna, fiammiferi e altro e, alla fine, ognuno scriverà cosa porta via per il passo di domani.</string>
     <string name="fg_tema">Di cosa parlerai?</string>
     <string name="fg_tema_ej">Es.: Come torno sul sentiero dopo una caduta</string>
     <string name="fg_sin_eje">Senza asse</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">Condividi nella Comunità</string>
     <string name="ex_previa_d">La tua pubblicazione porterà la tua Bussola con questa casella accesa.</string>
     <string name="ex_sin_brujula">Pubblica senza la Bussola</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Ravviva il fuoco</string>
+    <string name="fo_fosforo">Accende il fuoco</string>
+    <string name="fo_piedra">Custodisce il fuoco</string>
+    <string name="fo_chispa">Fa nascere il fuoco</string>
+    <string name="fo_cafe">Il miglior compagno</string>
+    <string name="fo_manta">Per un momento difficile</string>
+    <string name="fo_aportes">%1$d contributi al falò</string>
+    <string name="fo_minutos">%1$d min acceso</string>
+    <string name="fo_recibio">Il tuo falò ha ricevuto</string>
+    <string name="fo_nadie">Questa volta nessuno ha aggiunto legna. La prossima, invita la tua cordata.</string>
+    <string name="fo_brasas">Il falò è ridotto a brace</string>
+    <string name="fo_arde">Il falò arde al %1$d %%</string>
 </resources>

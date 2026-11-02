@@ -2958,7 +2958,7 @@
     <string name="fg_error">تعذّر الاتصال بنار المخيّم.</string>
     <string name="fg_salir">غادر نار المخيّم</string>
     <string name="fg_encender_t">أشعل نار مخيّم</string>
-    <string name="fg_encender_d">قل عمّ ستتحدث. سيتفاعل مجتمعك بالأضواء، وفي النهاية سيكتب كل شخص ما يأخذه لخطوته غدًا.</string>
+    <string name="fg_encender_d">قل عمّ ستتحدث. سيؤجّج مجتمعك النار بالحطب وأعواد الثقاب وغيرها، وفي النهاية سيكتب كل شخص ما يأخذه لخطوته غدًا.</string>
     <string name="fg_tema">عمّ ستتحدث؟</string>
     <string name="fg_tema_ej">مثال: كيف أعود إلى الطريق بعد سقطة</string>
     <string name="fg_sin_eje">بلا محور</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">شارك في المجتمع</string>
     <string name="ex_previa_d">سيظهر منشورك مع بوصلتك وهذه الخانة مضاءة.</string>
     <string name="ex_sin_brujula">انشر بدون البوصلة</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">يؤجّج النار</string>
+    <string name="fo_fosforo">يشعل النار</string>
+    <string name="fo_piedra">يحرس النار</string>
+    <string name="fo_chispa">يقدح النار</string>
+    <string name="fo_cafe">أفضل رفيق</string>
+    <string name="fo_manta">للحظة صعبة</string>
+    <string name="fo_aportes">%1$d مساهمات في النار</string>
+    <string name="fo_minutos">%1$d د مشتعلة</string>
+    <string name="fo_recibio">تلقّت نارك</string>
+    <string name="fo_nadie">لم يضف أحد حطبًا هذه المرة. ادعُ فريقك في المرة القادمة.</string>
+    <string name="fo_brasas">تحوّلت النار إلى جمر</string>
+    <string name="fo_arde">النار تشتعل بقوة %1$d %%</string>
 </resources>

@@ -2958,7 +2958,7 @@
     <string name="fg_error">Não foi possível conectar à fogueira.</string>
     <string name="fg_salir">Sair da fogueira</string>
     <string name="fg_encender_t">Acender uma fogueira</string>
-    <string name="fg_encender_d">Diga sobre o que vai falar. Sua comunidade reagirá com luzes e, no final, cada pessoa escreverá o que leva para o passo de amanhã.</string>
+    <string name="fg_encender_d">Diga sobre o que vai falar. Sua comunidade vai avivar o fogo com lenha, fósforos e mais e, no final, cada pessoa escreverá o que leva para o passo de amanhã.</string>
     <string name="fg_tema">Sobre o que você vai falar?</string>
     <string name="fg_tema_ej">Ex.: Como volto à rota depois de uma queda</string>
     <string name="fg_sin_eje">Sem eixo</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">Compartilhar na Comunidade</string>
     <string name="ex_previa_d">Sua publicação irá com sua Bússola e esta casa acesa.</string>
     <string name="ex_sin_brujula">Publicar sem a Bússola</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Aviva o fogo</string>
+    <string name="fo_fosforo">Acende o fogo</string>
+    <string name="fo_piedra">Cuida do fogo</string>
+    <string name="fo_chispa">Inicia o fogo</string>
+    <string name="fo_cafe">O melhor companheiro</string>
+    <string name="fo_manta">Para um momento difícil</string>
+    <string name="fo_aportes">%1$d contribuições à fogueira</string>
+    <string name="fo_minutos">%1$d min acesa</string>
+    <string name="fo_recibio">Sua fogueira recebeu</string>
+    <string name="fo_nadie">Desta vez ninguém pôs lenha. Na próxima, convide sua cordada.</string>
+    <string name="fo_brasas">A fogueira está em brasas</string>
+    <string name="fo_arde">A fogueira arde com %1$d %% de força</string>
 </resources>

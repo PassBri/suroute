@@ -2958,7 +2958,7 @@
     <string name="fg_error">모닥불에 연결할 수 없습니다.</string>
     <string name="fg_salir">모닥불 떠나기</string>
     <string name="fg_encender_t">모닥불 피우기</string>
-    <string name="fg_encender_d">무엇에 대해 이야기할지 말해 주세요. 커뮤니티는 빛으로 반응하고, 마지막에 각자 내일의 한 걸음을 위해 가져갈 것을 적습니다.</string>
+    <string name="fg_encender_d">무엇에 대해 이야기할지 말해 주세요. 커뮤니티는 장작, 성냥 등으로 불을 키우고, 마지막에 각자 내일의 한 걸음을 위해 가져갈 것을 적습니다.</string>
     <string name="fg_tema">무엇에 대해 이야기하나요?</string>
     <string name="fg_tema_ej">예: 넘어진 뒤 다시 길로 돌아오는 방법</string>
     <string name="fg_sin_eje">축 없음</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">커뮤니티에 공유</string>
     <string name="ex_previa_d">게시물에 나침반과 불 켜진 이 칸이 함께 표시됩니다.</string>
     <string name="ex_sin_brujula">나침반 없이 게시</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">불을 키워요</string>
+    <string name="fo_fosforo">불을 붙여요</string>
+    <string name="fo_piedra">불을 지켜요</string>
+    <string name="fo_chispa">불씨를 일으켜요</string>
+    <string name="fo_cafe">최고의 동반자</string>
+    <string name="fo_manta">힘든 순간을 위해</string>
+    <string name="fo_aportes">모닥불에 %1$d개의 마음</string>
+    <string name="fo_minutos">%1$d분 동안 피움</string>
+    <string name="fo_recibio">모닥불이 받은 것</string>
+    <string name="fo_nadie">이번엔 아무도 장작을 넣지 않았어요. 다음엔 로프 팀을 초대해 보세요.</string>
+    <string name="fo_brasas">모닥불이 숯불만 남았어요</string>
+    <string name="fo_arde">모닥불이 %1$d%% 세기로 타고 있어요</string>
 </resources>

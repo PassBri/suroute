@@ -2958,7 +2958,7 @@
     <string name="fg_error">अलाव से जुड़ नहीं सके।</string>
     <string name="fg_salir">अलाव छोड़ें</string>
     <string name="fg_encender_t">अलाव जलाएँ</string>
-    <string name="fg_encender_d">बताइए आप किस बारे में बात करेंगे। आपका समुदाय रोशनी से प्रतिक्रिया देगा और अंत में हर व्यक्ति लिखेगा कि वह कल के कदम के लिए क्या ले जा रहा है।</string>
+    <string name="fg_encender_d">बताइए आप किस बारे में बात करेंगे। आपका समुदाय लकड़ी, माचिस और बहुत कुछ से आग तेज़ करेगा और अंत में हर व्यक्ति लिखेगा कि वह कल के कदम के लिए क्या ले जा रहा है।</string>
     <string name="fg_tema">आप किस बारे में बात करेंगे?</string>
     <string name="fg_tema_ej">जैसे: गिरने के बाद मैं राह पर कैसे लौटता हूँ</string>
     <string name="fg_sin_eje">कोई धुरी नहीं</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">समुदाय में साझा करें</string>
     <string name="ex_previa_d">आपकी पोस्ट आपके कम्पास और इस जले हुए खाने के साथ जाएगी।</string>
     <string name="ex_sin_brujula">कम्पास के बिना पोस्ट करें</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">आग तेज़ करता है</string>
+    <string name="fo_fosforo">आग जलाता है</string>
+    <string name="fo_piedra">आग की रक्षा करता है</string>
+    <string name="fo_chispa">आग शुरू करता है</string>
+    <string name="fo_cafe">सबसे अच्छा साथी</string>
+    <string name="fo_manta">मुश्किल पल के लिए</string>
+    <string name="fo_aportes">अलाव को %1$d योगदान</string>
+    <string name="fo_minutos">%1$d मिनट जला</string>
+    <string name="fo_recibio">आपके अलाव को मिला</string>
+    <string name="fo_nadie">इस बार किसी ने लकड़ी नहीं डाली। अगली बार अपनी टोली को बुलाएँ।</string>
+    <string name="fo_brasas">अलाव अंगारों में बदल गया है</string>
+    <string name="fo_arde">अलाव %1$d %% ताकत से जल रहा है</string>
 </resources>

@@ -2958,7 +2958,7 @@
     <string name="fg_error">Impossible de rejoindre le feu de camp.</string>
     <string name="fg_salir">Quitter le feu de camp</string>
     <string name="fg_encender_t">Allumer un feu de camp</string>
-    <string name="fg_encender_d">Dites de quoi vous parlerez. Votre communauté réagira avec des lumières et, à la fin, chaque personne écrira ce qu\'elle emporte pour son pas de demain.</string>
+    <string name="fg_encender_d">Dites de quoi vous parlerez. Votre communauté attisera le feu avec du bois, des allumettes et plus encore et, à la fin, chacun écrira ce qu\'il emporte pour son pas de demain.</string>
     <string name="fg_tema">De quoi parlerez-vous ?</string>
     <string name="fg_tema_ej">Ex. : Comment je reprends la route après une chute</string>
     <string name="fg_sin_eje">Sans axe</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">Partager dans la Communauté</string>
     <string name="ex_previa_d">Votre publication portera votre Boussole avec cette case allumée.</string>
     <string name="ex_sin_brujula">Publier sans la Boussole</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Attise le feu</string>
+    <string name="fo_fosforo">Allume le feu</string>
+    <string name="fo_piedra">Protège le feu</string>
+    <string name="fo_chispa">Fait jaillir le feu</string>
+    <string name="fo_cafe">Le meilleur compagnon</string>
+    <string name="fo_manta">Pour un moment difficile</string>
+    <string name="fo_aportes">%1$d apports au feu</string>
+    <string name="fo_minutos">%1$d min allumé</string>
+    <string name="fo_recibio">Votre feu a reçu</string>
+    <string name="fo_nadie">Personne n\'a ajouté de bois cette fois. La prochaine fois, invitez votre cordée.</string>
+    <string name="fo_brasas">Le feu n\'est plus que braises</string>
+    <string name="fo_arde">Le feu brûle à %1$d %%</string>
 </resources>

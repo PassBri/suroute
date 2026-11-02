@@ -144,7 +144,7 @@ private sealed interface Fase {
     data class Entrando(val f: Fogata) : Fase
     data class Vivo(val c: ConexionFogata) : Fase
     data class Llevo(val f: Fogata, val apagada: Boolean) : Fase
-    data class Resumen(val f: Fogata, val minutos: Int, val luces: Int) : Fase
+    data class Resumen(val f: Fogata, val minutos: Int, val cuenta: Map<String, Int>) : Fase
 }
 
 /** Encender una fogata ([ver] = null) o entrar a mirar una ([ver]); al terminar llama a [onCerrar]. */
@@ -168,12 +168,12 @@ fun FogataSesion(ver: Fogata?, onCerrar: () -> Unit) {
             }
         }
         is Fase.Vivo -> PantallaCompleta(onCerrar = {}) {
-            FogataVivo(x.c, onFin = { apagada, minutos, luces ->
-                fase = if (x.c.anfitrion) Fase.Resumen(x.c.fogata, minutos, luces) else Fase.Llevo(x.c.fogata, apagada)
+            FogataVivo(x.c, onFin = { apagada, minutos, cuenta ->
+                fase = if (x.c.anfitrion) Fase.Resumen(x.c.fogata, minutos, cuenta) else Fase.Llevo(x.c.fogata, apagada)
             })
         }
         is Fase.Llevo -> DialogoLlevo(x.f, x.apagada, onCerrar)
-        is Fase.Resumen -> DialogoResumen(x.f, x.minutos, x.luces, onCerrar)
+        is Fase.Resumen -> DialogoResumen(x.f, x.minutos, x.cuenta, onCerrar)
     }
 }
 
@@ -247,7 +247,7 @@ private fun EncenderFogata(onCerrar: () -> Unit, onEncendida: (ConexionFogata) -
 private data class LuzSube(val id: Long, val k: String, val quien: String, val x: Float, val giro: Float)
 
 @Composable
-private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int, luces: Int) -> Unit) {
+private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int, cuenta: Map<String, Int>) -> Unit) {
     val ctx = LocalContext.current
     val app = ctx.applicationContext
     val repo = remember { (app as RutaApp).container.fogatas }
@@ -258,6 +258,11 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
     var video by remember { mutableStateOf<VideoTrack?>(null) }
     var personas by remember { mutableIntStateOf(1) }
     var luces by remember { mutableIntStateOf(0) }
+    // La hoguera: crece con lo que da la comunidad y baja a brasas si nadie aporta (la piedra la cuida 20 s).
+    // Quien transmite manda el calor a todos cada 3 s, así todos ven la misma fogata.
+    var calor by remember { mutableFloatStateOf(if (c.anfitrion) 6f else 0f) }
+    val cuenta = remember { mutableStateMapOf<String, Int>() }
+    var piedraHasta by remember { mutableLongStateOf(0L) }
     val suben = remember { mutableStateListOf<LuzSube>() }
     var mic by remember { mutableStateOf(true) }
     var cam by remember { mutableStateOf(true) }
@@ -270,9 +275,12 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
     var terminado by remember { mutableStateOf(false) }
 
     fun minutos() = ((System.currentTimeMillis() - inicio) / 60000).toInt().coerceAtLeast(1)
-    fun terminar(apagada: Boolean) { if (terminado) return; terminado = true; onFin(apagada, minutos(), luces) }
-    fun subir(k: String, quien: String) {
-        luces++
+    fun terminar(apagada: Boolean) { if (terminado) return; terminado = true; onFin(apagada, minutos(), cuenta.toMap()) }
+    fun subir(k0: String, quien: String) {
+        val k = k0.takeIf { it in ObjetosFogata.IDS } ?: "lena"
+        luces++; cuenta[k] = (cuenta[k] ?: 0) + 1
+        calor = minOf(48f, calor + ObjetosFogata.calor(k))
+        if (k == "piedra") piedraHasta = System.currentTimeMillis() + 20_000
         suben += LuzSube(System.nanoTime(), k, quien, (Math.random() * 46 - 23).toFloat(), (Math.random() * 16 - 8).toFloat())
         if (suben.size > 24) suben.removeAt(0)
     }
@@ -285,7 +293,13 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
                     is RoomEvent.TrackUnsubscribed -> if (e.track == video) video = null
                     is RoomEvent.DataReceived -> runCatching {
                         val o = JSONObject(String(e.data, Charsets.UTF_8))
-                        if (o.optString("t") == "luz") subir(o.optString("k", "sol"), e.participant?.name.orEmpty().substringBefore(' '))
+                        when (o.optString("t")) {
+                            "obj" -> subir(o.optString("k", "lena"), e.participant?.name.orEmpty().substringBefore(' '))
+                            "calor" -> if (!c.anfitrion) {
+                                calor = o.optDouble("v", 0.0).toFloat(); piedraHasta = o.optLong("p", 0L)
+                                o.optJSONObject("c")?.let { m -> m.keys().forEach { key -> cuenta[key] = m.optInt(key) } }
+                            }
+                        }
                     }
                     is RoomEvent.ParticipantConnected, is RoomEvent.ParticipantDisconnected -> personas = room.remoteParticipants.size + 1
                     is RoomEvent.Disconnected -> terminar(true)
@@ -306,11 +320,24 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
         }
     }
     DisposableEffect(room) { onDispose { runCatching { room.disconnect() }; runCatching { room.release() } } }
+    // El fuego se enfría cada segundo; quien transmite comparte el calor
+    LaunchedEffect(Unit) {
+        var envio = 0L
+        while (isActive) {
+            delay(1000)
+            val cuida = System.currentTimeMillis() < piedraHasta
+            calor = maxOf(0f, calor * (if (cuida) 0.995f else 0.985f) - (if (cuida) 0.01f else 0.03f))
+            if (c.anfitrion && System.currentTimeMillis() - envio > 3000) {
+                envio = System.currentTimeMillis()
+                val m = JSONObject(); cuenta.forEach { (k, v) -> m.put(k, v) }
+                runCatching { room.localParticipant.publishData(JSONObject().put("t", "calor").put("v", calor.toDouble()).put("c", m).put("p", piedraHasta).toString().toByteArray()) }
+            }
+        }
+    }
 
     fun darLuz(k: String) {
         subir(k, "")
-        Luces.recordar(ctx, k)
-        scope.launch { runCatching { room.localParticipant.publishData(JSONObject().put("t", "luz").put("k", k).toString().toByteArray()) } }
+        scope.launch { runCatching { room.localParticipant.publishData(JSONObject().put("t", "obj").put("k", k).toString().toByteArray()) } }
     }
 
     Box(Modifier.fillMaxSize().background(NOCHE)) {
@@ -320,7 +347,9 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
             modifier = Modifier.align(Alignment.Center).padding(24.dp))
         // Sombra arriba y abajo para leer encima del video
         Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Color.Black.copy(alpha = 0.5f), 0.22f to Color.Transparent, 0.62f to Color.Transparent, 1f to Color.Black.copy(alpha = 0.62f))))
-        // Las luces suben por la pantalla
+        // La hoguera de la esquina
+        Hoguera(calor, Modifier.align(Alignment.BottomStart).navigationBarsPadding().padding(start = 14.dp, bottom = 168.dp))
+        // Lo que se le da a la fogata sube por la pantalla
         Box(Modifier.align(Alignment.BottomEnd).padding(end = 18.dp, bottom = 150.dp).width(90.dp).fillMaxHeight(0.6f)) {
             suben.forEach { s -> key(s.id) { LuzQueSube(s) { suben.remove(s) } } }
         }
@@ -346,11 +375,11 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
 
         Column(Modifier.align(Alignment.BottomCenter).fillMaxWidth().navigationBarsPadding().padding(start = 12.dp, end = 12.dp, bottom = 14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.CenterHorizontally)) {
-                Luces.IDS.forEach { k ->
-                    val nombre = Luces.nombre(ctx, k)
-                    Column(Modifier.width(56.dp).clip(RoundedCornerShape(16.dp)).clickable(onClickLabel = nombre) { darLuz(k) }.padding(vertical = 6.dp),
+                ObjetosFogata.IDS.forEach { k ->
+                    val nombre = stringResource(ObjetosFogata.nombre(k))
+                    Column(Modifier.width(58.dp).clip(RoundedCornerShape(16.dp)).clickable(onClickLabel = nombre) { darLuz(k) }.padding(vertical = 6.dp),
                         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                        Luz(k, Modifier.size(34.dp))
+                        ObjetoFogata(k, Modifier.size(34.dp))
                         Text(nombre, color = Color.White.copy(alpha = 0.88f), fontSize = 9.5.sp, lineHeight = 11.sp, textAlign = TextAlign.Center, maxLines = 2)
                     }
                 }
@@ -371,7 +400,8 @@ private fun FogataVivo(c: ConexionFogata, onFin: (apagada: Boolean, minutos: Int
                         Text(stringResource(R.string.fg_apagar))
                     }
                 } else {
-                    Text(if (luces > 0) stringResource(R.string.lz_total, luces) else "", color = Color.White.copy(alpha = 0.85f), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
+                    val aportes = cuenta.values.sum()
+                    Text(if (aportes > 0) stringResource(R.string.fo_aportes, aportes) else "", color = Color.White.copy(alpha = 0.85f), style = MaterialTheme.typography.bodySmall, modifier = Modifier.weight(1f))
                     IconCirculo(Icons.Filled.Flag, stringResource(R.string.fg_reportar)) { reportando = true }
                     if (moderador) Button(onClick = { cortando = true }, colors = ButtonDefaults.buttonColors(containerColor = APAGAR, contentColor = Color.White), modifier = Modifier.heightIn(min = 48.dp)) {
                         Text(stringResource(R.string.fg_cortar))
@@ -432,7 +462,7 @@ private fun LuzQueSube(s: LuzSube, alTerminar: () -> Unit) {
         },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Luz(s.k, Modifier.size(40.dp))
+        ObjetoFogata(s.k, Modifier.size(40.dp))
         if (s.quien.isNotBlank()) Text(s.quien, color = Color.White, fontSize = 10.sp)
     }
 }
@@ -485,8 +515,9 @@ private fun DialogoLlevo(f: Fogata, apagada: Boolean, onCerrar: () -> Unit) {
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun DialogoResumen(f: Fogata, minutos: Int, luces: Int, onCerrar: () -> Unit) {
+private fun DialogoResumen(f: Fogata, minutos: Int, cuenta: Map<String, Int>, onCerrar: () -> Unit) {
     val ctx = LocalContext.current
     val repo = remember { (ctx.applicationContext as RutaApp).container.fogatas }
     var llevaron by remember { mutableStateOf<List<Pair<String, String>>?>(null) }
@@ -496,7 +527,20 @@ private fun DialogoResumen(f: Fogata, minutos: Int, luces: Int, onCerrar: () -> 
         title = { Text(stringResource(R.string.fg_resumen_t)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(stringResource(R.string.fg_resumen_d, minutos, luces))
+                Text(stringResource(R.string.fo_minutos, minutos))
+                if (cuenta.values.sum() > 0) {
+                    Text(stringResource(R.string.fo_recibio), style = MaterialTheme.typography.titleSmall)
+                    FlowRow(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        ObjetosFogata.IDS.filter { (cuenta[it] ?: 0) > 0 }.forEach { k ->
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                modifier = Modifier.semantics(mergeDescendants = true) {}) {
+                                ObjetoFogata(k, Modifier.size(26.dp))
+                                Text("${cuenta[k]}", style = MaterialTheme.typography.titleSmall)
+                                Text(stringResource(ObjetosFogata.nombre(k)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                    }
+                } else Text(stringResource(R.string.fo_nadie), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(stringResource(R.string.fg_llevaron), style = MaterialTheme.typography.titleSmall)
                 val l = llevaron
                 when {
@@ -508,4 +552,21 @@ private fun DialogoResumen(f: Fogata, minutos: Int, luces: Int, onCerrar: () -> 
         },
         confirmButton = { TextButton(onClick = onCerrar) { Text(stringResource(R.string.listo)) } },
     )
+}
+
+/** La hoguera: crece con el calor y, si se apaga, quedan las brasas. */
+@Composable
+private fun Hoguera(calor: Float, modifier: Modifier = Modifier) {
+    val x = (calor / 40f).coerceIn(0f, 1f)
+    val brasas = calor < 1.5f
+    val escala by androidx.compose.animation.core.animateFloatAsState(0.55f + x * 0.95f, tween(900), label = "hoguera")
+    val llama by androidx.compose.animation.core.animateFloatAsState(if (brasas) 0.18f else 1f, tween(900), label = "llama")
+    val ctx = LocalContext.current
+    Box(modifier.size(76.dp).graphicsLayer { scaleX = escala; scaleY = escala; transformOrigin = androidx.compose.ui.graphics.TransformOrigin(0.5f, 1f) }
+        .semantics { contentDescription = if (brasas) ctx.getString(R.string.fo_brasas) else ctx.getString(R.string.fo_arde, (x * 100).toInt()) },
+        contentAlignment = Alignment.BottomCenter) {
+        if (brasas) Box(Modifier.padding(bottom = 4.dp).size(48.dp, 14.dp).clip(RoundedCornerShape(50))
+            .background(Brush.radialGradient(listOf(Color(0xFFFF8A3D), Color(0xFFB3361A), Color.Transparent))))
+        Luz("fogata", Modifier.fillMaxSize().alpha(llama), animada = true)
+    }
 }

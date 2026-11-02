@@ -2958,7 +2958,7 @@
     <string name="fg_error">Verbindung zum Lagerfeuer fehlgeschlagen.</string>
     <string name="fg_salir">Lagerfeuer verlassen</string>
     <string name="fg_encender_t">Lagerfeuer entzünden</string>
-    <string name="fg_encender_d">Sag, worüber du sprechen wirst. Deine Gemeinschaft reagiert mit Lichtern, und am Ende schreibt jede Person, was sie für ihren Schritt von morgen mitnimmt.</string>
+    <string name="fg_encender_d">Sag, worüber du sprechen wirst. Deine Gemeinschaft facht das Feuer mit Holz, Streichhölzern und mehr an, und am Ende schreibt jede Person, was sie für ihren Schritt von morgen mitnimmt.</string>
     <string name="fg_tema">Worüber sprichst du?</string>
     <string name="fg_tema_ej">Z. B.: Wie ich nach einem Sturz auf den Weg zurückfinde</string>
     <string name="fg_sin_eje">Ohne Achse</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">In der Gemeinschaft teilen</string>
     <string name="ex_previa_d">Dein Beitrag zeigt deinen Kompass mit diesem leuchtenden Feld.</string>
     <string name="ex_sin_brujula">Ohne Kompass veröffentlichen</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">Facht das Feuer an</string>
+    <string name="fo_fosforo">Zündet das Feuer an</string>
+    <string name="fo_piedra">Hütet das Feuer</string>
+    <string name="fo_chispa">Entfacht das Feuer</string>
+    <string name="fo_cafe">Der beste Begleiter</string>
+    <string name="fo_manta">Für einen schweren Moment</string>
+    <string name="fo_aportes">%1$d Beiträge zum Lagerfeuer</string>
+    <string name="fo_minutos">%1$d Min. entzündet</string>
+    <string name="fo_recibio">Dein Lagerfeuer hat bekommen</string>
+    <string name="fo_nadie">Diesmal hat niemand Holz nachgelegt. Lade beim nächsten Mal deine Seilschaft ein.</string>
+    <string name="fo_brasas">Vom Lagerfeuer ist nur Glut übrig</string>
+    <string name="fo_arde">Das Lagerfeuer brennt mit %1$d %% Kraft</string>
 </resources>

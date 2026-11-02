@@ -2958,7 +2958,7 @@
     <string name="fg_error">无法连接到篝火。</string>
     <string name="fg_salir">离开篝火</string>
     <string name="fg_encender_t">点燃篝火</string>
-    <string name="fg_encender_d">说说你要聊什么。你的社区会用光来回应，最后每个人都会写下为明天的一步带走了什么。</string>
+    <string name="fg_encender_d">说说你要聊什么。你的社区会用木柴、火柴等让火更旺，最后每个人都会写下为明天的一步带走了什么。</string>
     <string name="fg_tema">你要聊什么？</string>
     <string name="fg_tema_ej">例如：跌倒之后我如何回到路上</string>
     <string name="fg_sin_eje">不选维度</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">分享到社区</string>
     <string name="ex_previa_d">你的帖子会带上你的指南针，并点亮这一格。</string>
     <string name="ex_sin_brujula">不带指南针发布</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">让火更旺</string>
+    <string name="fo_fosforo">点燃火焰</string>
+    <string name="fo_piedra">守护火焰</string>
+    <string name="fo_chispa">引燃火焰</string>
+    <string name="fo_cafe">最好的陪伴</string>
+    <string name="fo_manta">给艰难的时刻</string>
+    <string name="fo_aportes">篝火收到 %1$d 份心意</string>
+    <string name="fo_minutos">燃烧了 %1$d 分钟</string>
+    <string name="fo_recibio">你的篝火收到了</string>
+    <string name="fo_nadie">这次没人添柴。下次邀请你的绳队吧。</string>
+    <string name="fo_brasas">篝火只剩余烬</string>
+    <string name="fo_arde">篝火燃烧强度 %1$d %%</string>
 </resources>

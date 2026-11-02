@@ -2958,7 +2958,7 @@
     <string name="fg_error">たき火に接続できませんでした。</string>
     <string name="fg_salir">たき火を離れる</string>
     <string name="fg_encender_t">たき火をともす</string>
-    <string name="fg_encender_d">何について話すか書きましょう。コミュニティは光で反応し、最後にそれぞれが明日の一歩のために持ち帰ることを書きます。</string>
+    <string name="fg_encender_d">何について話すか書きましょう。コミュニティは薪やマッチなどで火を強め、最後にそれぞれが明日の一歩のために持ち帰ることを書きます。</string>
     <string name="fg_tema">何について話しますか？</string>
     <string name="fg_tema_ej">例：転んだあと道に戻る方法</string>
     <string name="fg_sin_eje">軸なし</string>
@@ -3028,4 +3028,18 @@
     <string name="ex_compartir_comunidad">コミュニティで共有</string>
     <string name="ex_previa_d">投稿にあなたのコンパスと、光ったこのマスが付きます。</string>
     <string name="ex_sin_brujula">コンパスなしで投稿</string>
+
+    <!-- Fogata: los objetos y la hoguera -->
+    <string name="fo_lena">火を強める</string>
+    <string name="fo_fosforo">火をつける</string>
+    <string name="fo_piedra">火を守る</string>
+    <string name="fo_chispa">火を起こす</string>
+    <string name="fo_cafe">最高の相棒</string>
+    <string name="fo_manta">つらいときに</string>
+    <string name="fo_aportes">たき火への贈り物 %1$d 件</string>
+    <string name="fo_minutos">%1$d 分ともした</string>
+    <string name="fo_recibio">あなたのたき火が受け取ったもの</string>
+    <string name="fo_nadie">今回は誰も薪をくべませんでした。次はザイルパーティを誘いましょう。</string>
+    <string name="fo_brasas">たき火は熾火になっています</string>
+    <string name="fo_arde">たき火は %1$d %% の強さで燃えています</string>
 </resources>
