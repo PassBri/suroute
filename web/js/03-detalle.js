@@ -799,7 +799,7 @@ Object.assign(DET, {
       return `<div class="cimas-cab">
           <button class="cimas-ic" data-vista="lista" aria-label="Ver el muro" title="Ver el muro">${ic("lista")}</button>
           <nav class="cimas-pestanas" aria-label="Qué ver">${pestanas.map(([k, n]) => `<button data-feed="${k}" aria-pressed="${estado.feedFiltro === k}">${n}</button>`).join("")}</nav>
-          <button class="cimas-ic" data-sec="mensajes" aria-label="Mensajes" title="Mensajes">${ic("mensajes")}</button></div>
+<span class="cimas-ancla" hidden></span></div>
         ${p0Demo(ps)}
         <div class="cimas" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
           <div class="cima-fondo">${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${window.selladaCima?.(p) || (window.mediaCima?.(p) || "") + (window.mediaCima?.(p) ? "" : p.foto ? `<img src="${esc(p.foto)}" alt="${altFoto(p)}" loading="lazy">`

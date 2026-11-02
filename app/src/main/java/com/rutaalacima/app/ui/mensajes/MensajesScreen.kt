@@ -26,6 +26,7 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Hiking
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.Diversity3
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
@@ -86,7 +87,7 @@ class MensajesViewModel(c: AppContainer) : ViewModel() {
 /** Mensajes: mis conversaciones 1 a 1 y las solicitudes que me llegaron. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MensajesScreen(onBack: () -> Unit, onAbrir: (String) -> Unit, onCuenta: () -> Unit, onCoachVida: () -> Unit, onContactos: () -> Unit = {}) {
+fun MensajesScreen(onBack: () -> Unit, onAbrir: (String) -> Unit, onCuenta: () -> Unit, onCoachVida: () -> Unit, onContactos: () -> Unit = {}, onCordadas: () -> Unit = {}) {
     val vm = rutaViewModel { MensajesViewModel(it) }
     LaunchedEffect(Unit) { while (true) { vm.cargar(); delay(15_000) } }
     Scaffold(
@@ -98,6 +99,8 @@ fun MensajesScreen(onBack: () -> Unit, onAbrir: (String) -> Unit, onCuenta: () -
                 title = { Text(stringResource(R.string.mensajes)) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } },
                 actions = {
+                    // Las cordadas (retos en grupo) viven junto a tus conversaciones, igual que en la web
+                    IconButton(onClick = onCordadas) { Icon(Icons.Filled.Diversity3, stringResource(R.string.cordadas)) }
                     IconButton(onClick = onContactos) { Icon(Icons.Filled.PersonAdd, stringResource(R.string.contactos_titulo)) }
                     IconButton(onClick = onCoachVida) { Icon(Icons.Filled.Hiking, stringResource(R.string.coach_vida)) }
                 },

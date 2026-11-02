@@ -553,9 +553,8 @@ private fun PestanasCimas(vm: ComunidadViewModel, onMuro: () -> Unit, onCordadas
                     }
                 }
             }
-            androidx.compose.material3.IconButton(onClick = onCordadas) { Icon(Icons.Filled.Diversity3, stringResource(R.string.cordadas), tint = Color.White) }
+            // Mensajes está en la barra de abajo y las Cordadas viven dentro de Mensajes: aquí solo los avisos
             Campana(noLeidos, onAvisos, Color.White)
-            androidx.compose.material3.IconButton(onClick = onMensajes) { Icon(com.rutaalacima.app.ui.components.IconosRuta.Radio, stringResource(R.string.mensajes), tint = Color.White) }
         }
         Senderos(vm.eje, vm::elegirEje)
         if (!vm.enLinea) {

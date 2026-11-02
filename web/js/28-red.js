@@ -159,7 +159,7 @@ function pintarCampanas() {
   LISTAS.comunidad = (...a) => lista(...a).replace(/(<span style="display:flex;gap:4px;align-items:center">)/, `$1${campana("rb campana-lista")}`);
   // Arriba de Cimas, junto a Mensajes
   const feed = DET["comunidad.feed"];
-  DET["comunidad.feed"] = (...a) => feed(...a).replace(/(<button class="cimas-ic" data-sec="mensajes")/, `${campana("cimas-ic")}$1`);
+  DET["comunidad.feed"] = (...a) => feed(...a).replace(/(<span class="cimas-ancla")/, `${campana("cimas-ic")}$1`);
 }
 // Revisa los avisos al entrar y cada minuto mientras la página está abierta
 setTimeout(() => cargarAvisos(), 1500);
@@ -325,7 +325,7 @@ ACC.seguirPersona = async (el, id) => {
   const feed = DET["comunidad.feed"];
   DET["comunidad.feed"] = (...a) => feed(...a)
     .replace(/<button class="cima-autor" data-acc="escribirA" data-arg="([^"|]*)\|[^"]*"/g, '<button class="cima-autor" data-ir="comunidad" data-arg="persona:$1"')
-    .replace(/(<button class="cimas-ic" data-sec="mensajes")/, `<button class="cimas-ic" data-ir="comunidad" data-arg="buscar" aria-label="Buscar personas" title="Buscar personas">${ic("buscar")}</button>$1`);
+    .replace(/(<span class="cimas-ancla")/, `<button class="cimas-ic" data-ir="comunidad" data-arg="buscar" aria-label="Buscar personas" title="Buscar personas">${ic("buscar")}</button>$1`);
   const lista = LISTAS.comunidad;
   LISTAS.comunidad = (...a) => lista(...a).replace(/(<button class="rb campana)/, `<button class="rb" data-ir="comunidad" data-arg="buscar" aria-label="Buscar personas" title="Buscar personas">${ic("buscar")}</button>$1`);
 }

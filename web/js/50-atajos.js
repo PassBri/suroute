@@ -60,12 +60,7 @@ try { estado.ascOculto = localStorage.getItem("suroute-ocultar") === "1"; } catc
     try { localStorage.setItem("suroute-ocultar", estado.ascOculto ? "1" : ""); } catch {}
     pintarRiel(); toast(estado.ascOculto ? "Cifras ocultas en toda la app" : "Cifras visibles");
   };
-  const riel = pintarRiel;
-  pintarRiel = function (...a) {
-    riel.apply(this, a);
-    const tema = document.querySelector('#riel [data-acc="tema"]'), n = estado.ascOculto ? "Mostrar cifras" : "Ocultar cifras";
-    tema?.insertAdjacentHTML("beforebegin", `<button class="rb solo-pc" data-acc="ascOjo" aria-label="${n}" aria-pressed="${!!estado.ascOculto}">${ic(estado.ascOculto ? "ojoNo" : "ojo")}<span class="tip">${n}</span></button>`);
-  };
+  // El ojo vive solo en Ascenso financiero (ahí se ven las cifras); ya no va en la barra ni en Hoy
 }
 const ojoHoy = () => { const n = estado.ascOculto ? "Mostrar cifras" : "Ocultar cifras";
   return `<button class="rb" data-acc="ascOjo" aria-label="${n}" title="${n}" aria-pressed="${!!estado.ascOculto}">${ic(estado.ascOculto ? "ojoNo" : "ojo")}</button>`; };
@@ -187,7 +182,6 @@ Object.assign(ACC, {
   const base = LISTAS.hoy;
   LISTAS.hoy = (...a) => {
     let h = base(...a);
-    h = h.replace(/(<div class="cab-lista-btn"><h1>Hoy<\/h1><span style="display:flex;gap:4px;align-items:center">)/, `$1${ojoHoy()}`);
     const j = h.indexOf('<div class="items');
     return j < 0 ? h : h.slice(0, j) + atajosHoy() + avisosCarrusel() + h.slice(j);
   };

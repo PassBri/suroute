@@ -364,23 +364,7 @@ private fun AppPrincipal() {
                         }
                     },
                     actions = {
-                        if (pestana.ruta == Rutas.COMUNIDAD) {
-                            IconButton(onClick = { nav.navigate(Rutas.CORDADAS) }) {
-                                Icon(Icons.Filled.Diversity3, stringResource(R.string.cordadas))
-                            }
-                        }
-                        // El ojo para toda la app: esconde las cifras de dinero en todas partes (como el «Visible» de la banca)
-                        if (pestana.ruta == Rutas.RUTA || pestana.ruta == Rutas.HOY) {
-                            val oculto = com.rutaalacima.app.seguridad.Discreto.activo
-                            val avisoOculto = stringResource(R.string.disc_oculto); val avisoVisible = stringResource(R.string.disc_visible)
-                            IconButton(onClick = {
-                                com.rutaalacima.app.seguridad.Discreto.activo = !oculto
-                                com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(if (!oculto) avisoOculto else avisoVisible)
-                            }) {
-                                Icon(if (oculto) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                                    stringResource(if (oculto) R.string.cu_mostrar_montos else R.string.cu_ocultar_montos))
-                            }
-                        }
+                        // El ojo vive solo en Ascenso financiero (su propia barra): allí se ven las cifras de dinero
                         if (pestana.ruta == Rutas.PERFIL) {
                             IconButton(onClick = { nav.navigate(Rutas.AJUSTES) }) { Icon(Icons.Filled.Settings, stringResource(R.string.ajustes)) }
                         } else if (!ancho) {
@@ -642,6 +626,7 @@ private fun AppPrincipal() {
                     onCuenta = { nav.navigate(Rutas.AJUSTES) },
                     onCoachVida = { nav.navigate(Rutas.COACH_VIDA) },
                     onContactos = { nav.navigate(Rutas.CONTACTOS) },
+                    onCordadas = { nav.navigate(Rutas.CORDADAS) },
                 )
             }
             composable(Rutas.CONTACTOS) {
