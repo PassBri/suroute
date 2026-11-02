@@ -23,6 +23,8 @@ const ATAJOS = {
   comunidad: ["Comunidad", "comunidad", () => `data-sec="comunidad"`],
   mensajes: ["Mensajes", "mensajes", () => `data-sec="mensajes"`],
   aprende: ["Aprende", "aprende", () => `data-sec="aprende"`],
+  equipo: ["Tu equipo", "mochila", () => `data-sec="mochila"`],
+  evaluacion: ["Evaluación", "evaluacion", () => `data-sec="evaluacion"`],
 };
 const ATAJOS_BASE = ["gasto", "brujula", "publicar", "coach"];
 function atajosElegidos() {
@@ -192,3 +194,22 @@ Object.assign(ACC, {
   const pl = pintarLista;
   pintarLista = function (...a) { const r = pl.apply(this, a); if (estado.sec === "hoy") avPreparar(); return r; };
 }
+
+/* ---------- Tu cuenta y más secciones (teléfono): la hoja que abre tu foto ----------
+   Arriba tu perfil y Ajustes; abajo, en dos grupos, lo que no está en la barra de abajo (nada se repite). */
+const HOJA_CUENTA = [["Crecer", [["aprende", "Aprende"], ["coach", "Coach IA"], ["evaluacion", "Evaluación"]]],
+  ["Tus herramientas", [["mochila", "Tu equipo"], ["frases", "Mis frases"]]]];
+Object.assign(ACC, {
+  hojaCuenta() {
+    const p = perfil(), foto = globalThis.mv?.demo?.avatar || p.fotoPerfilUrl;
+    const usuario = Store.nube?.perfil?.username ? "@" + Store.nube.perfil.username : "";
+    abrirHoja(`<div class="hc">
+      <div class="hc-yo"><span class="hc-av">${foto ? `<img src="${esc(foto)}" alt="">` : esc((p.nombre || "S")[0].toUpperCase())}</span>
+        <div class="hc-txt"><b>${esc(p.nombre || "Tu perfil")}</b>${usuario ? `<small>${esc(usuario)}</small>` : ""}
+          <button class="enlace" data-acc="hcIr" data-arg="perfil">Ver mi perfil</button></div>
+        <button class="rb" data-acc="hcIr" data-arg="perfil|cuenta" aria-label="Ajustes" title="Ajustes">${ic("ajustes")}</button></div>
+      ${HOJA_CUENTA.map(([t, xs]) => `<h3 class="hc-t">${t}</h3><div class="hc-fila">${xs.map(([k, n]) =>
+        `<button class="hc-b" data-acc="hcIr" data-arg="${k}"><span class="hc-ic">${ic(k)}</span><span>${n}</span></button>`).join("")}</div>`).join("")}</div>`);
+  },
+  hcIr(el, arg) { cerrarHoja(); const [sec, sel] = String(arg).split("|"); ir(sec, sel || null); },
+});

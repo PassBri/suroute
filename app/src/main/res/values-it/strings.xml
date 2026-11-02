@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">un falò</string>
     <string name="lz_fugaz">Mi hai fatto sognare</string>
     <string name="lz_cosa_fugaz">una stella cadente</string>
+    <string name="hs_cuenta">Il tuo account e altre sezioni</string>
+    <string name="hs_ver_perfil">Vedi il mio profilo</string>
+    <string name="hs_crecer">Crescere</string>
+    <string name="hs_herramientas">I tuoi strumenti</string>
 </resources>

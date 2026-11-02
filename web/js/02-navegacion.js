@@ -88,9 +88,9 @@ document.addEventListener("focusout", () => setTimeout(pintarSiPendiente, 0));
 
 /* ---------- Lista ---------- */
 function cabLista(titulo, { chips = [], buscar = true, nuevo = null } = {}) {
-  // Teléfono, arriba: Mis frases, Aprende, Equipo y Perfil (en Hoy, junto al ojo); en las demás secciones, también el Coach
-  const at = (k, n, extra = "") => estado.sec !== k ? `<button class="rb" data-sec="${k}" aria-label="${n}" title="${n}"${extra}>${ic(k)}</button>` : "";
-  const atajos = `<span class="solo-movil atajos">${at("frases", "Mis frases")}${at("aprende", "Aprende")}${at("mochila", "Equipo")}${at("perfil", "Perfil")}${estado.sec !== "hoy" ? at("coach", "Coach", ' style="color:var(--oro)"') : ""}</span>`;
+  // Teléfono, arriba: una sola puerta, tu foto (abre tu perfil, Ajustes y las secciones que no están en la barra de abajo)
+  const p0 = perfil(), foto = globalThis.mv?.demo?.avatar || p0.fotoPerfilUrl;
+  const atajos = `<span class="solo-movil atajos"><button class="rb cuenta-btn" data-acc="hojaCuenta" aria-label="Tu cuenta y más secciones" title="Tu cuenta y más secciones">${foto ? `<img src="${esc(foto)}" alt="">` : `<span>${esc((p0.nombre || "S")[0].toUpperCase())}</span>`}</button></span>`;
   return `<div class="lista-cab"><div class="cab-lista-btn"><h1>${titulo}</h1><span style="display:flex;gap:4px;align-items:center">${atajos}${nuevo ? `<button class="nuevo" data-sel="${nuevo[0]}" aria-label="${nuevo[1]}" title="${nuevo[1]}">${ic("mas")}</button>` : ""}</span></div>
     ${buscar ? `<label class="buscar">${ic("buscar")}<input id="busq" type="search" placeholder="Buscar" value="${esc(estado.busqueda)}" aria-label="Buscar"></label>` : ""}
     ${chips.length ? `<div class="chips">${chips.map(([k, n]) => `<button class="chip" data-filtro="${k}" aria-pressed="${estado.filtro === k}">${n}</button>`).join("")}</div>` : ""}</div>`;

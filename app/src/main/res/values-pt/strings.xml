@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">uma fogueira</string>
     <string name="lz_fugaz">Você me encheu de esperança</string>
     <string name="lz_cosa_fugaz">uma estrela cadente</string>
+    <string name="hs_cuenta">Sua conta e mais seções</string>
+    <string name="hs_ver_perfil">Ver meu perfil</string>
+    <string name="hs_crecer">Crescer</string>
+    <string name="hs_herramientas">Suas ferramentas</string>
 </resources>

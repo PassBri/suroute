@@ -5238,3 +5238,20 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 .luz-selector .lz-op { width: 52px; }
 .luz-selector .lz-op svg.luz { width: 42px; height: 42px; }
 .luz-selector .lz-n { font-size: 9.5px; }
+
+/* Tu cuenta y más secciones (teléfono) */
+.cuenta-btn { width: 36px; height: 36px; padding: 0; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: var(--burdeos-suave); color: var(--burdeos); font-weight: 700; border: 1px solid var(--linea); }
+.cuenta-btn img { width: 100%; height: 100%; object-fit: cover; }
+.hc { display: grid; gap: 10px; padding: 4px 4px 12px; }
+.hc-yo { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 20px; background: var(--hoja-2); }
+.hc-av { width: 48px; height: 48px; flex: none; border-radius: 50%; overflow: hidden; display: grid; place-items: center; background: var(--burdeos-suave); color: var(--burdeos); font: 700 20px/1 var(--font-titulo); }
+.hc-av img { width: 100%; height: 100%; object-fit: cover; }
+.hc-txt { flex: 1; min-width: 0; display: grid; justify-items: start; }
+.hc-txt b { font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.hc-txt small { color: var(--tinta-suave); }
+.hc-t { margin: 6px 4px 0; font-size: 14px; font-weight: 600; color: var(--tinta-suave); }
+.hc-fila { display: grid; grid-template-columns: repeat(3, 1fr); }
+.hc-b { display: grid; justify-items: center; gap: 6px; padding: 10px 2px; border-radius: 16px; font-size: 13px; color: var(--tinta); }
+.hc-ic { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--hoja-2); color: var(--tinta-suave); }
+.hc-ic svg { width: 24px; height: 24px; }
+@media (hover: hover) and (pointer: fine) { .hc-b:hover .hc-ic { background: var(--oro-suave); } }

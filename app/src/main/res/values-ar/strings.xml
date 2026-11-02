@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">نار مخيم</string>
     <string name="lz_fugaz">منحتني الأمل</string>
     <string name="lz_cosa_fugaz">شهابًا</string>
+    <string name="hs_cuenta">حسابك والمزيد من الأقسام</string>
+    <string name="hs_ver_perfil">عرض ملفي</string>
+    <string name="hs_crecer">النمو</string>
+    <string name="hs_herramientas">أدواتك</string>
 </resources>

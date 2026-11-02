@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">ein Lagerfeuer</string>
     <string name="lz_fugaz">Du hast mich träumen lassen</string>
     <string name="lz_cosa_fugaz">eine Sternschnuppe</string>
+    <string name="hs_cuenta">Dein Konto und weitere Bereiche</string>
+    <string name="hs_ver_perfil">Mein Profil ansehen</string>
+    <string name="hs_crecer">Wachsen</string>
+    <string name="hs_herramientas">Deine Werkzeuge</string>
 </resources>

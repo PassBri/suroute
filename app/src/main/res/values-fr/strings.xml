@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">un feu de camp</string>
     <string name="lz_fugaz">Tu m’as fait rêver</string>
     <string name="lz_cosa_fugaz">une étoile filante</string>
+    <string name="hs_cuenta">Ton compte et plus de sections</string>
+    <string name="hs_ver_perfil">Voir mon profil</string>
+    <string name="hs_crecer">Grandir</string>
+    <string name="hs_herramientas">Tes outils</string>
 </resources>

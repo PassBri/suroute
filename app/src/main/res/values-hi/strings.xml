@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">एक अलाव</string>
     <string name="lz_fugaz">तुमने उम्मीद जगाई</string>
     <string name="lz_cosa_fugaz">एक टूटता तारा</string>
+    <string name="hs_cuenta">आपका खाता और अन्य अनुभाग</string>
+    <string name="hs_ver_perfil">मेरी प्रोफ़ाइल देखें</string>
+    <string name="hs_crecer">आगे बढ़ें</string>
+    <string name="hs_herramientas">आपके साधन</string>
 </resources>

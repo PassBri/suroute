@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">一堆篝火</string>
     <string name="lz_fugaz">你让我心生希望</string>
     <string name="lz_cosa_fugaz">一颗流星</string>
+    <string name="hs_cuenta">你的账户和更多版块</string>
+    <string name="hs_ver_perfil">查看我的资料</string>
+    <string name="hs_crecer">成长</string>
+    <string name="hs_herramientas">你的工具</string>
 </resources>

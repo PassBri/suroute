@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">모닥불</string>
     <string name="lz_fugaz">설렘을 줬어요</string>
     <string name="lz_cosa_fugaz">별똥별</string>
+    <string name="hs_cuenta">내 계정과 더 많은 섹션</string>
+    <string name="hs_ver_perfil">내 프로필 보기</string>
+    <string name="hs_crecer">성장</string>
+    <string name="hs_herramientas">내 도구</string>
 </resources>

@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">костёр</string>
     <string name="lz_fugaz">Ты вдохновил мечтать</string>
     <string name="lz_cosa_fugaz">падающую звезду</string>
+    <string name="hs_cuenta">Ваш аккаунт и другие разделы</string>
+    <string name="hs_ver_perfil">Мой профиль</string>
+    <string name="hs_crecer">Расти</string>
+    <string name="hs_herramientas">Ваши инструменты</string>
 </resources>

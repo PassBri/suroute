@@ -335,6 +335,8 @@ private fun AppPrincipal() {
     // Tableta o teléfono en horizontal: las pestañas van en un riel a la izquierda
     val ancho = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp >= 600
     var hojaSecciones by remember { mutableStateOf(false) }
+    val perfilYo by contenedor.perfil.perfil.collectAsStateWithLifecycle(com.rutaalacima.app.data.local.PerfilEntity())
+    val textoCuenta = stringResource(R.string.hs_cuenta)
     val irSeccion: (String) -> Unit = { r -> if (PESTANAS.any { it.ruta == r }) nav.irAPestana(r) else nav.navigate(r) }
     val celebracion by contenedor.celebracion.collectAsStateWithLifecycle()
   Box(Modifier.fillMaxSize().fondoPapel()) {
@@ -353,8 +355,6 @@ private fun AppPrincipal() {
             if (pestana != null && pestana.ruta !in setOf(Rutas.VISION, Rutas.MENSAJES, Rutas.FINANZAS) && !inmersivo) {
                 TopAppBar(
                     scrollBehavior = desplazamiento,
-                    // En el teléfono: todas las secciones de la web (las que no caben en la barra de abajo), en el mismo orden
-                    navigationIcon = { if (!ancho) IconButton(onClick = { hojaSecciones = true }) { Icon(Icons.Filled.Apps, stringResource(R.string.todas_secciones)) } },
                     // El sello firma la app; el texto dice dónde estás (Mi ruta, Hoy, Comunidad…).
                     title = {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -367,9 +367,6 @@ private fun AppPrincipal() {
                         if (pestana.ruta == Rutas.COMUNIDAD) {
                             IconButton(onClick = { nav.navigate(Rutas.CORDADAS) }) {
                                 Icon(Icons.Filled.Diversity3, stringResource(R.string.cordadas))
-                            }
-                            IconButton(onClick = { nav.navigate(Rutas.MENSAJES) }) {
-                                Icon(com.rutaalacima.app.ui.components.IconosRuta.Radio, stringResource(R.string.mensajes))
                             }
                         }
                         // El ojo para toda la app: esconde las cifras de dinero en todas partes (como el «Visible» de la banca)
@@ -384,36 +381,15 @@ private fun AppPrincipal() {
                                     stringResource(if (oculto) R.string.cu_mostrar_montos else R.string.cu_ocultar_montos))
                             }
                         }
-                        // Evaluación: el balance del mes, del año y de los propósitos, a un toque desde Mi ruta
-                        if (pestana.ruta == Rutas.RUTA) {
-                            IconButton(onClick = { nav.navigate(Rutas.evaluacion()) }) {
-                                Icon(Icons.Filled.Insights, stringResource(R.string.ev_titulo))
-                            }
-                        }
-                        // Hoy, arriba: Mis frases, Aprende, Equipo y Perfil (junto al ojo)
-                        if (pestana.ruta == Rutas.HOY) {
-                            IconButton(onClick = { nav.navigate(Rutas.FRASES) }) { Icon(Icons.Filled.FormatQuote, stringResource(R.string.mis_frases)) }
-                            IconButton(onClick = { nav.irAPestana(Rutas.APRENDE) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.MapaRuta, stringResource(R.string.tab_aprende)) }
-                            IconButton(onClick = { nav.navigate(Rutas.MOCHILA) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.Mosqueton, stringResource(R.string.mochila_titulo)) }
-                            IconButton(onClick = { nav.irAPestana(Rutas.PERFIL) }) { Icon(com.rutaalacima.app.ui.components.IconosRuta.Perfil, stringResource(R.string.tab_perfil)) }
-                        }
-                        // Ascenso financiero: el libro de cuentas, a un toque desde Mi ruta
-                        if (pestana.ruta == Rutas.RUTA) {
-                            IconButton(onClick = { nav.navigate(Rutas.finanzas(if (pestana.ruta == Rutas.HOY) "d:" + java.time.LocalDate.now() else null)) }) {
-                                Icon(com.rutaalacima.app.ui.components.IconosRuta.Finanzas, stringResource(R.string.cu_titulo))
-                            }
-                        }
-                        // Tu mochila: las herramientas del método, a un toque mientras construyes tus metas
-                        if (pestana.ruta == Rutas.RUTA) {
-                            IconButton(onClick = { nav.navigate(Rutas.MOCHILA) }) {
-                                Icon(com.rutaalacima.app.ui.components.IconosRuta.Mosqueton, stringResource(R.string.mochila_titulo))
-                            }
-                        }
                         if (pestana.ruta == Rutas.PERFIL) {
                             IconButton(onClick = { nav.navigate(Rutas.AJUSTES) }) { Icon(Icons.Filled.Settings, stringResource(R.string.ajustes)) }
-                        }
-                        if (pestana.ruta != Rutas.HOY) IconButton(onClick = { nav.navigate(Rutas.COACH) }) {
-                            Icon(com.rutaalacima.app.ui.components.IconosRuta.Coach, stringResource(R.string.coach), tint = MaterialTheme.colorScheme.secondary)
+                        } else if (!ancho) {
+                            // Una sola puerta: tu foto abre tu perfil, Ajustes y las secciones que no están en la barra de abajo
+                            IconButton(onClick = { hojaSecciones = true }) {
+                                Box(Modifier.semantics { contentDescription = textoCuenta }) {
+                                    com.rutaalacima.app.ui.comunidad.Avatar(perfilYo.nombre.ifBlank { "S" }, perfilYo.fotoPerfilUrl.ifBlank { perfilYo.fotoPerfil }, tamano = 32)
+                                }
+                            }
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -743,7 +719,8 @@ private fun AppPrincipal() {
     }
    }
     // Meta cumplida: la bandera se clava en la cumbre
-    if (hojaSecciones) HojaSecciones(actual = rutaActual, onIr = irSeccion, onPublicar = { nav.navigate(Rutas.publicar()) }, onCerrar = { hojaSecciones = false })
+    if (hojaSecciones) HojaSecciones(actual = rutaActual, nombre = perfilYo.nombre, foto = perfilYo.fotoPerfilUrl.ifBlank { perfilYo.fotoPerfil },
+        onIr = irSeccion, onAjustes = { nav.navigate(Rutas.AJUSTES) }, onCerrar = { hojaSecciones = false })
     celebracion?.let { c ->
         com.rutaalacima.app.ui.components.CelebracionCumbre(c, onFin = { contenedor.celebracion.value = null }, onCompartir = {
             // Como en Strava: el logro se puede compartir al instante, ya con la meta vinculada
@@ -790,27 +767,55 @@ private fun RielLateral(actual: String?, onIr: (String) -> Unit, onPublicar: () 
 /** En el teléfono: todas las secciones (las de la barra izquierda de la web) en una hoja, en el mismo orden. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HojaSecciones(actual: String?, onIr: (String) -> Unit, onPublicar: () -> Unit, onCerrar: () -> Unit) {
+private fun HojaSecciones(actual: String?, nombre: String, foto: String, onIr: (String) -> Unit, onAjustes: () -> Unit, onCerrar: () -> Unit) {
+    // Lo que no está en la barra de abajo, en dos grupos (nada se repite)
+    val grupos = listOf(
+        R.string.hs_crecer to listOf(
+            Seccion(Rutas.APRENDE, R.string.tab_aprende, com.rutaalacima.app.ui.components.IconosRuta.MapaRuta),
+            Seccion(Rutas.COACH, R.string.coach, com.rutaalacima.app.ui.components.IconosRuta.Coach),
+            Seccion(Rutas.evaluacion(), R.string.ev_titulo, Icons.Filled.Insights),
+        ),
+        R.string.hs_herramientas to listOf(
+            Seccion(Rutas.MOCHILA, R.string.mochila_titulo, com.rutaalacima.app.ui.components.IconosRuta.Mosqueton),
+            Seccion(Rutas.FRASES, R.string.mis_frases, Icons.Filled.FormatQuote),
+        ),
+    )
     androidx.compose.material3.ModalBottomSheet(onDismissRequest = onCerrar) {
-        Column(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 24.dp)) {
-            Text(stringResource(R.string.todas_secciones), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(bottom = 12.dp))
-            SECCIONES_TODAS.chunked(4).forEach { fila ->
+        Column(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            // Tu cuenta: foto, nombre, Ver mi perfil y Ajustes
+            Row(
+                Modifier.fillMaxWidth().clip(androidx.compose.foundation.shape.RoundedCornerShape(20.dp))
+                    .background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                com.rutaalacima.app.ui.comunidad.Avatar(nombre.ifBlank { "S" }, foto, tamano = 48)
+                Spacer(Modifier.width(12.dp))
+                Column(Modifier.weight(1f)) {
+                    Text(nombre.ifBlank { stringResource(R.string.tab_perfil) }, style = MaterialTheme.typography.titleMedium, maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                    androidx.compose.material3.TextButton(onClick = { onCerrar(); onIr(Rutas.PERFIL) }, contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp)) {
+                        Text(stringResource(R.string.hs_ver_perfil))
+                    }
+                }
+                IconButton(onClick = { onCerrar(); onAjustes() }) { Icon(Icons.Filled.Settings, stringResource(R.string.ajustes)) }
+            }
+            grupos.forEach { (titulo, secciones) ->
+                Text(stringResource(titulo), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 4.dp))
                 Row(Modifier.fillMaxWidth()) {
-                    fila.forEach { sec ->
-                        val nombre = sec?.let { stringResource(it.titulo) } ?: stringResource(R.string.publicar)
-                        val activa = sec != null && actual != null && actual.substringBefore('?') == sec.ruta.substringBefore('?')
+                    secciones.forEach { sec ->
+                        val activa = actual != null && actual.substringBefore('?') == sec.ruta.substringBefore('?')
                         Column(Modifier.weight(1f).clip(androidx.compose.foundation.shape.RoundedCornerShape(16.dp))
-                            .clickable { onCerrar(); if (sec == null) onPublicar() else onIr(sec.ruta) }.padding(vertical = 10.dp),
+                            .clickable { onCerrar(); onIr(sec.ruta) }.padding(vertical = 10.dp),
                             horizontalAlignment = Alignment.CenterHorizontally) {
                             Box(Modifier.size(48.dp).background(if (activa) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
                                 contentAlignment = Alignment.Center) {
-                                Icon(sec?.icono ?: com.rutaalacima.app.ui.components.IconoPublicar, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Icon(sec.icono, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
-                            Text(nombre, style = MaterialTheme.typography.labelMedium, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                            Text(stringResource(sec.titulo), style = MaterialTheme.typography.labelMedium, maxLines = 2, textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                 modifier = Modifier.padding(top = 6.dp, start = 2.dp, end = 2.dp))
                         }
                     }
-                    repeat(4 - fila.size) { Spacer(Modifier.weight(1f)) }
+                    repeat(3 - secciones.size) { Spacer(Modifier.weight(1f)) }
                 }
             }
         }

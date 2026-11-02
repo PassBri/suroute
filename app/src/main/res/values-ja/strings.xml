@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">焚き火</string>
     <string name="lz_fugaz">希望をもらった</string>
     <string name="lz_cosa_fugaz">流れ星</string>
+    <string name="hs_cuenta">アカウントとその他のセクション</string>
+    <string name="hs_ver_perfil">プロフィールを見る</string>
+    <string name="hs_crecer">成長する</string>
+    <string name="hs_herramientas">あなたの道具</string>
 </resources>

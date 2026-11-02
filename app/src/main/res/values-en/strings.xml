@@ -2940,4 +2940,8 @@
     <string name="lz_cosa_fogata">a campfire</string>
     <string name="lz_fugaz">You gave me hope</string>
     <string name="lz_cosa_fugaz">a shooting star</string>
+    <string name="hs_cuenta">Your account and more sections</string>
+    <string name="hs_ver_perfil">View my profile</string>
+    <string name="hs_crecer">Grow</string>
+    <string name="hs_herramientas">Your tools</string>
 </resources>

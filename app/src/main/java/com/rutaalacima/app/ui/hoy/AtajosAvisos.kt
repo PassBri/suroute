@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.Insights
 import androidx.compose.material.icons.filled.Alarm
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material.icons.filled.Explore
@@ -106,6 +107,8 @@ object Atajos {
             Atajo("comunidad", R.string.tab_comunidad, IconosRuta.Fogata) { Rutas.COMUNIDAD },
             Atajo("mensajes", R.string.mensajes, IconosRuta.Radio) { Rutas.MENSAJES },
             Atajo("aprende", R.string.tab_aprende, IconosRuta.MapaRuta) { Rutas.APRENDE },
+            Atajo("equipo", R.string.mochila_titulo, IconosRuta.Mosqueton) { Rutas.MOCHILA },
+            Atajo("evaluacion", R.string.ev_titulo, androidx.compose.material.icons.Icons.Filled.Insights) { Rutas.evaluacion() },
         )
     }
     val BASE = listOf("gasto", "brujula", "publicar", "coach")

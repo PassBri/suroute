@@ -2949,4 +2949,8 @@
     <string name="lz_cosa_fogata">una fogata</string>
     <string name="lz_fugaz">Me ilusionó</string>
     <string name="lz_cosa_fugaz">una estrella fugaz</string>
+    <string name="hs_cuenta">Tu cuenta y más secciones</string>
+    <string name="hs_ver_perfil">Ver mi perfil</string>
+    <string name="hs_crecer">Crecer</string>
+    <string name="hs_herramientas">Tus herramientas</string>
 </resources>
