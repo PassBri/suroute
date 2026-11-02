@@ -408,7 +408,7 @@ async function abrirPostEnlazado(id) {
   if (!(estado.feed || []).some(x => String(x.id) === id) && Store.nube) {
     const { data: q } = await Store.nube.sb.from("posts").select("*,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)").eq("id", id).maybeSingle();
     if (!q) { toast("Esa publicación ya no está disponible."); return; }
-    (estado.feed ||= []).unshift({ id: q.id, autorId: q.user_id, autorNombre: q.autor?.nombre || q.autor?.username || "Senderista", autorUsuario: q.autor?.username || "", tipo: q.tipo, eje: q.eje,
+    (estado.feed ||= []).unshift({ id: q.id, autorId: q.user_id, autorNombre: q.autor?.nombre || q.autor?.username || "Senderista", autorUsuario: q.autor?.username || "", autorAvatar: q.autor?.avatar_url || "", tipo: q.tipo, eje: q.eje,
       texto: q.texto, foto: q.image_url, metaTitulo: q.meta_titulo, visibilidad: q.visibilidad, impulsos: q.impulsos?.[0]?.count || 0, comentarios: q.comentarios?.[0]?.count || 0,
       brujula: q.brujula || null, creadoEn: Date.parse(q.created_at), propio: q.user_id === Store.nube.dueno, ...(window.extrasPost?.(q) || {}) });
   }
@@ -422,7 +422,7 @@ async function cargarListado(clave, consulta, demo) {
   else {
     const { data } = await consulta(Store.nube.sb.from("posts").select("*,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)")
       .eq("visibilidad", "PUBLICA").order("created_at", { ascending: false }).limit(60));
-    ps = (data || []).map(q => ({ id: q.id, autorId: q.user_id, autorNombre: q.autor?.nombre || q.autor?.username || "Senderista", autorUsuario: q.autor?.username || "", tipo: q.tipo, eje: q.eje,
+    ps = (data || []).map(q => ({ id: q.id, autorId: q.user_id, autorNombre: q.autor?.nombre || q.autor?.username || "Senderista", autorUsuario: q.autor?.username || "", autorAvatar: q.autor?.avatar_url || "", tipo: q.tipo, eje: q.eje,
       texto: q.texto, foto: q.image_url, metaTitulo: q.meta_titulo, impulsos: q.impulsos?.[0]?.count || 0, comentarios: q.comentarios?.[0]?.count || 0, brujula: q.brujula || null,
       creadoEn: Date.parse(q.created_at), propio: q.user_id === Store.nube.dueno, ...(window.extrasPost?.(q) || {}) }));
   }

@@ -735,7 +735,7 @@ async function cargarFeed(mas = false) {
       } catch { estado.tramos = null; }
       estado.feedN = desde + data.length; estado.feedMas = data.length === PAGINA_FEED;
       const nuevos = data.map(p => ({
-        id: p.id, autorId: p.user_id, autorNombre: p.autor?.nombre || p.autor?.username || "Senderista", autorUsuario: p.autor?.username || "",
+        id: p.id, autorId: p.user_id, autorNombre: p.autor?.nombre || p.autor?.username || "Senderista", autorUsuario: p.autor?.username || "", autorAvatar: p.autor?.avatar_url || "",
         tipo: p.tipo, eje: p.eje, texto: p.texto, foto: p.image_url, metaTitulo: p.meta_titulo, visibilidad: p.visibilidad,
         impulsos: p.impulsos?.[0]?.count || 0, comentarios: p.comentarios?.[0]?.count || 0, yoImpulse: mios.has(p.id),
         brujula: p.brujula || null, creadoEn: Date.parse(p.created_at), propio: p.user_id === yo, media: Array.isArray(p.media) ? p.media : [],
@@ -789,7 +789,10 @@ Object.assign(DET, {
     const p0Demo = ps => ps.some(p => p.demo) && !Store.nube ? `<p class="cimas-demo">Comunidad de ejemplo</p>` : "";
     if (!estado.feed) { cargarFeed(); return cab(av(ic("comunidad"), "var(--burdeos)"), "Comunidad", "Cargando…") + cuerpo(""); }
     const ps = estado.feed;
-    const autor = p => { const ini = (p.autorNombre || "?").split(" ").map(x => x[0]).join("").slice(0, 2).toUpperCase(); return `<span class="aro-marca claro">${av(esc(ini), COLOR_EJE[p.eje] || "var(--burdeos)")}</span>`; };
+    // La foto de perfil de quien publica (la propia, también desde este navegador); si no hay, sus iniciales
+    const autor = p => { const ini = (p.autorNombre || "?").split(" ").map(x => x[0]).join("").slice(0, 2).toUpperCase();
+      const foto = p.autorAvatar || (p.propio ? perfil().fotoPerfilUrl || globalThis.mv?.demo?.avatar : "");
+      return `<span class="aro-marca claro">${foto ? `<span class="avatar" style="padding:0;overflow:hidden"><img src="${esc(foto)}" alt="" style="width:100%;height:100%;border-radius:50%;object-fit:cover"></span>` : av(esc(ini), COLOR_EJE[p.eje] || "var(--burdeos)")}</span>`; };
     const vacioFeed = `<p class="vacio-mini">${estado.feedFiltro === "SIGUIENDO" ? "Todavía no sigues a nadie." : "Aún no hay publicaciones."}</p>`;
     if (estado.vistaCom === "cimas") {
       // Cimas: la comunidad a pantalla completa, como los videos cortos, en el mundo de Ruta a la Cima.
