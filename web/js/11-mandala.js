@@ -229,12 +229,12 @@ function mdBarraAvance(d, camp) {
 function mdCelda(d, cel, grande) {
   if (cel.tipo === "CUMBRE") {
     const foto = mdFoto(d.cumbre);
-    return `<span class="md-c md-cumbre${foto ? " con-foto" : ""}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b>${esc(d.titulo)}</b>${mdBarraMini(mdPct(d, -1))}</span>`;
+    return `<span class="md-c md-cumbre${foto ? " con-foto" : ""}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="▲">${esc(d.titulo)}</b>${mdBarraMini(mdPct(d, -1))}</span>`;
   }
   const camp = d.camps[cel.camp], color = d.color(cel.camp);
   if (cel.tipo === "CAMPAMENTO") {
     const foto = mdFoto(camp);
-    return `<span class="md-c md-camp${camp ? "" : " libre"}" style="--c:${color}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b>${camp ? esc(mdNombre(camp)) : "+ " + Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp])}</b>${camp ? mdBarraMini(mdPct(d, cel.camp)) : ""}</span>`;
+    return `<span class="md-c md-camp${camp ? "" : " libre"}" style="--c:${color}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="${Mandala.RUMBOS[cel.camp]}">${camp ? esc(mdNombre(camp)) : "+ " + Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp])}</b>${camp ? mdBarraMini(mdPct(d, cel.camp)) : ""}</span>`;
   }
   const est = Mandala.estado(camp?.id, cel.paso), texto = camp ? respuesta(Mandala.clave(camp.id, cel.paso)) : "";
   const evid = mdFotoPaso(camp, cel.paso), fase = `<small class="md-fase">${cel.paso + 1}</small>`;
@@ -250,7 +250,7 @@ function mdCelda(d, cel, grande) {
   const extra = (d.niebla(cel.camp, cel.paso) ? `<span class="md-niebla" title="Niebla: más de ${Travesia.NIEBLA_DIAS} días sin avanzar">☁</span>` : "") +
     (d.enlaces(cel.camp, cel.paso).length ? `<span class="md-enlace" title="Paso de confluencia">⇄</span>` : "");
   const t81 = camp ? `<textarea class="md-t81" data-resp="mandala|${Mandala.clave(camp.id, cel.paso)}" placeholder="${cel.paso + 1}" aria-label="Paso ${cel.paso + 1} de ${esc(mdNombre(camp))}">${esc(texto)}</textarea>` : "";
-  return `<span class="md-c md-paso md-${est.toLowerCase()}${evid ? " con-evid" : ""}" style="--c:${color}"${texto ? ` title="${esc(texto)}"` : ""}>${evid ? `<img src="${esc(evid)}" alt="">` : ""}<span class="t">${esc(texto)}</span>${t81}${est === "HECHO" ? "<i>✓</i>" : ""}${extra}</span>`;
+  return `<span class="md-c md-paso md-${est.toLowerCase()}${evid ? " con-evid" : ""}" style="--c:${color}"${texto ? ` title="${esc(texto)}"` : ""}>${evid ? `<img src="${esc(evid)}" alt="">` : ""}<span class="t" data-corto="${texto ? cel.paso + 1 : ""}">${esc(texto)}</span>${t81}${est === "HECHO" ? "<i>✓</i>" : ""}${extra}</span>`;
 }
 
 /** Jornadas de un paso y el botón para registrar la de hoy. */

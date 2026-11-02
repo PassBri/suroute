@@ -386,8 +386,8 @@ fun BotonLuces(luces: Map<String, Int>, miLuz: String?, onElegir: (String?) -> U
             Column(Modifier.width(56.dp).then(gesto).then(sem), horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     Modifier.size(48.dp).graphicsLayer { scaleX = pop; scaleY = pop }.clip(CircleShape)
-                        .background(if (miLuz != null) Color(0x4DF6EAD3) else Color(0x29FBF8F3))
-                        .then(if (miLuz != null) Modifier.border(1.5.dp, Color(0xCCE9CB7E), CircleShape) else Modifier),
+                        .background(if (miLuz != null) Color(0x9E0A0E18) else Color(0x29FBF8F3))
+                        .then(if (miLuz != null) Modifier.border(2.dp, Color(0xFFE9CB7E), CircleShape) else Modifier),
                     contentAlignment = Alignment.Center,
                 ) {
                     Luz(muestra, Modifier.size(34.dp).graphicsLayer { alpha = if (miLuz == null && total == 0) 0.72f else 1f }, animada = miLuz != null)
@@ -434,7 +434,7 @@ private fun FilaLuces(miLuz: String?, sobre: Int, oscura: Boolean, onElegir: (St
             val marcada = k == miLuz || i == sobre
             Column(
                 Modifier.width(ANCHO_OP).clip(RoundedCornerShape(22.dp))
-                    .background(if (k == miLuz) (if (oscura) Color.White.copy(alpha = 0.14f) else MaterialTheme.colorScheme.secondaryContainer) else Color.Transparent)
+                    .then(if (k == miLuz) Modifier.border(2.dp, if (oscura) Color(0xFFE9CB7E) else MaterialTheme.colorScheme.secondary, RoundedCornerShape(22.dp)) else Modifier)
                     .clickable { onElegir(k) }.semantics { contentDescription = nombre }.padding(top = 4.dp, bottom = 6.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -448,19 +448,6 @@ private fun FilaLuces(miLuz: String?, sobre: Int, oscura: Boolean, onElegir: (St
                     fontWeight = if (marcada) FontWeight.SemiBold else FontWeight.Normal,
                     color = if (oscura) Color.White.copy(alpha = if (marcada) 1f else 0.86f) else if (marcada) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant)
             }
-        }
-    }
-    // El nombre de la luz bajo el dedo, encima de la fila
-    if (sobre >= 0) {
-        val dens = LocalDensity.current
-        Popup(alignment = Alignment.TopStart, offset = with(dens) { IntOffset((6.dp + PASO_OP * sobre - 16.dp).roundToPx(), (-30).dp.roundToPx()) }) {
-            Text(
-                Luces.nombre(ctx, Luces.IDS[sobre]),
-                color = if (oscura) Color(0xFF1D2427) else MaterialTheme.colorScheme.inverseOnSurface,
-                fontSize = 13.sp, fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.clip(RoundedCornerShape(12.dp)).background(if (oscura) Color(0xFFF4F1EA) else MaterialTheme.colorScheme.inverseSurface)
-                    .padding(horizontal = 10.dp, vertical = 3.dp),
-            )
         }
     }
 }

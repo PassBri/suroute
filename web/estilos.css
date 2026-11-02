@@ -5190,3 +5190,43 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 }
 @keyframes luzSube { from { opacity: 0; transform: translateY(10px) scale(.6); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .luz *, .luz-selector .lz-op, .luz-btn.recien svg.luz { animation: none !important; } .luz-selector .lz-op svg.luz { transition: none; } }
+
+/* ---------- Brújula legible en modo oscuro y en el teléfono ----------
+   El color de cada eje (--c) es oscuro (burdeos, oliva, petróleo): sobre papel claro se lee, pero sobre la
+   noche no. En oscuro, el texto que usa el color del eje se aclara mezclándolo con papel (sigue siendo su color). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) :is(.lect-frase, .lect-apodo, .cara-apodo, .pct-m3, .casilla-apodo, .casilla-af, .md-rumbo, .md-fase, .md-ganado, .md-paso i, .md-tk small, .tarjeta-libre, .pp-eje, .mdp-estado, .md-c .mdp-num, .ba-pct, .ba-camp header small, .vv-panel-cab small, .est-camino .casilla-estado) { color: color-mix(in srgb, var(--c) 42%, #F3EEE7); }
+  :root:not([data-theme="light"]) .est-camino .casilla-estado { border-color: color-mix(in srgb, var(--c) 55%, #F3EEE7); }
+  :root:not([data-theme="light"]) .lect-apodo { background: color-mix(in srgb, var(--c) 22%, transparent); }
+}
+:root[data-theme="dark"] :is(.lect-frase, .lect-apodo, .cara-apodo, .pct-m3, .casilla-apodo, .casilla-af, .md-rumbo, .md-fase, .md-ganado, .md-paso i, .md-tk small, .tarjeta-libre, .pp-eje, .mdp-estado, .md-c .mdp-num, .ba-pct, .ba-camp header small, .vv-panel-cab small, .est-camino .casilla-estado) { color: color-mix(in srgb, var(--c) 42%, #F3EEE7); }
+:root[data-theme="dark"] .est-camino .casilla-estado { border-color: color-mix(in srgb, var(--c) 55%, #F3EEE7); }
+:root[data-theme="dark"] .lect-apodo { background: color-mix(in srgb, var(--c) 22%, transparent); }
+
+/* La Ruta (9×9) en el teléfono: las palabras no se parten por la mitad; se dividen con guion (español)
+   y, si no caben, terminan en «…» arriba, en lugar de cortarse arriba y abajo. */
+.md-grilla .md-paso .t, .md-grilla .md-camp b, .md-grilla .md-cumbre b { word-break: normal; overflow-wrap: break-word; -webkit-hyphens: auto; hyphens: auto; }
+@media (max-width: 700px) {
+  /* En el teléfono la Ruta usa todo el ancho (sin la rosa alrededor) */
+  .rosa-brujula.rb-81.rb-81 > .md-grilla-caja { width: 100% !important; }
+  .rosa-brujula.rb-81 .rb-rumbo, .rosa-brujula.rb-81 .rb-esfera { display: none !important; }
+  /* Las 81 casillas miden unos 30 px: ahí ninguna frase se lee. En vez de partir palabras, cada paso muestra
+     su número, cada campamento su rumbo (N, NE…) y la cumbre su pico; el texto completo se lee al tocar el bloque. */
+  html:not([data-modo-tarjetas="edicion"]) .md-flip .cara-texto .md-grilla :is(.md-paso .t, .md-camp b, .md-cumbre b)[data-corto] {
+    display: grid !important; place-items: center; font-size: 0 !important; line-height: 1; -webkit-line-clamp: unset !important; }
+  html:not([data-modo-tarjetas="edicion"]) .md-flip .cara-texto .md-grilla :is(.md-paso .t, .md-camp b, .md-cumbre b)[data-corto]::before {
+    content: attr(data-corto); font-size: 12px; font-weight: 700; }
+  html:not([data-modo-tarjetas="edicion"]) .md-flip .cara-texto .md-grilla .md-paso .t[data-corto]::before { font-size: 11px; font-weight: 600; opacity: .85; }
+  html:not([data-modo-tarjetas="edicion"]) .md-flip .cara-texto .md-grilla .md-paso.md-hecho > i { display: none; }
+  .md-flip .cara-texto::after { content: "Toca un bloque para leer sus 8 pasos"; display: block; margin-top: 8px; text-align: center; font-size: 13px; color: var(--tinta-suave); }
+}
+/* El botón de girar sobre la foto: círculo blanco con ícono de tinta clara en oscuro no se veía */
+.casilla-girar { color: #1D2427; }
+.dorso .casilla-girar, .dorso.compacta .casilla-girar, .visor-t-papel .casilla-girar, .dorso-lectura .casilla-girar { color: var(--tinta); }
+/* Luz elegida: nítida, sin velo blanco ni desenfoque. Fondo de noche y un aro dorado; el halo se atenúa
+   dentro del círculo para que la luz conserve su color. */
+.luz-btn.en-cima.mia .lb-circ { background: rgb(10 14 24 / .62); -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: 0 0 0 2px #E9CB7E, 0 2px 8px rgb(0 0 0 / .3); }
+.luz-btn .luz-halo { opacity: .55; }
+.luz-selector .lz-op.si, .luz-wrap.en-cima .lz-op.si { background: transparent; box-shadow: inset 0 0 0 2px #E9CB7E; }
+.luz-wrap.en-lista .lz-op.si { box-shadow: inset 0 0 0 2px var(--oro); }
