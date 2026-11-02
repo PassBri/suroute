@@ -105,7 +105,7 @@
   const OBJETOS = [
     { id: "lena", nombre: "Aviva el fuego", uno: "leño", varios: "leños", calor: 3 },
     { id: "fosforo", nombre: "Prende el fuego", uno: "fósforo", varios: "fósforos", calor: 2 },
-    { id: "piedra", nombre: "Cuida el fuego", uno: "piedra", varios: "piedras", calor: 1 },
+    { id: "piedra", nombre: "Me siento contigo", uno: "piedra", varios: "piedras", calor: 1 },
     { id: "chispa", nombre: "Inicia el fuego", uno: "chispa", varios: "chispas", calor: 2 },
     { id: "cafe", nombre: "El mejor compañero", uno: "taza de café", varios: "tazas de café", calor: 1 },
     { id: "manta", nombre: "Para un momento difícil", uno: "manta", varios: "mantas", calor: 1 },

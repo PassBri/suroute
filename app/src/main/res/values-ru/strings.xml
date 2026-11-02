@@ -3032,7 +3032,7 @@
     <!-- Fogata: los objetos y la hoguera -->
     <string name="fo_lena">Раздувает огонь</string>
     <string name="fo_fosforo">Зажигает огонь</string>
-    <string name="fo_piedra">Бережёт огонь</string>
+    <string name="fo_piedra">Сяду рядом</string>
     <string name="fo_chispa">Высекает огонь</string>
     <string name="fo_cafe">Лучший спутник</string>
     <string name="fo_manta">Для трудной минуты</string>

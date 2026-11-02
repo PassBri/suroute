@@ -3032,7 +3032,7 @@
     <!-- Fogata: los objetos y la hoguera -->
     <string name="fo_lena">불을 키워요</string>
     <string name="fo_fosforo">불을 붙여요</string>
-    <string name="fo_piedra">불을 지켜요</string>
+    <string name="fo_piedra">곁에 앉을게요</string>
     <string name="fo_chispa">불씨를 일으켜요</string>
     <string name="fo_cafe">최고의 동반자</string>
     <string name="fo_manta">힘든 순간을 위해</string>
