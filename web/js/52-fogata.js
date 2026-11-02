@@ -72,7 +72,13 @@
   }));
   async function pedir(cuerpo) {
     const { data, error } = await Store.nube.sb.functions.invoke("fogata", { body: cuerpo });
-    if (error) { let m = ""; try { m = (await error.context?.json())?.error; } catch {} throw new Error(m || "No se pudo conectar con la fogata."); }
+    if (error) {
+      // Se muestra la causa real: la función no está publicada (404), falta un secreto (500) o no hay conexión
+      let m = "", st = error.context?.status;
+      try { const j = await error.context?.json(); m = j?.error || j?.message || j?.msg || ""; } catch {}
+      if (st === 404) m = "La función «fogata» no está publicada en Supabase (Edge Functions).";
+      throw new Error(m ? m + (st && st !== 404 ? ` (${st})` : "") : `No se pudo conectar con la fogata${st ? ` (${st})` : ""}: ${error.message || "sin respuesta"}`);
+    }
     if (data?.error) throw new Error(data.error);
     return data;
   }
