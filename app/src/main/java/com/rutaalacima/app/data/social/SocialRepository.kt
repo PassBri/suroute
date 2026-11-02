@@ -12,6 +12,7 @@ import com.rutaalacima.app.data.remote.SupabaseClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -395,12 +396,48 @@ class SocialRepository(
 
     fun guardados(): Set<String> = prefs.getStringSet("guardados", emptySet()).orEmpty()
 
-    /** Guarda o quita una publicación de "Guardados". Devuelve si quedó guardada. */
+    /** Guarda o quita una publicación de "Guardados". Devuelve si quedó guardada. También en la cuenta (tabla guardadas). */
     fun alternarGuardado(id: String): Boolean {
         val g = guardados()
         val queda = id !in g
         prefs.edit().putStringSet("guardados", if (queda) g + id else g - id).apply()
+        if (enLinea && id.matches(UUID_RE)) alcance.launch {
+            runCatching {
+                val uid = supa.sesion.value!!.userId
+                if (queda) supa.upsert("guardadas", buildJsonObject { put("user_id", uid); put("post_id", id) })
+                else supa.delete("guardadas", "user_id=eq.$uid&post_id=eq.$id")
+                val n = guardadosNube(); prefs.edit().putStringSet("guardados_nube", if (queda) n + id else n - id).apply()
+            }
+        }
         return queda
+    }
+
+    private val alcance = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + Dispatchers.IO)
+    private val UUID_RE = Regex("[0-9a-fA-F-]{36}")
+    /** Los ids que ya estaban en la cuenta la última vez: si uno desaparece de la nube, se quitó en otro lado. */
+    private fun guardadosNube(): Set<String> = prefs.getStringSet("guardados_nube", emptySet()).orEmpty()
+
+    /**
+     * La mochila es la misma en el teléfono y en la web: trae lo guardado en la cuenta, sube lo que solo estaba
+     * aquí (la primera vez) y quita lo que se sacó en otro lado. Devuelve los guardados ya sincronizados.
+     */
+    suspend fun sincronizarGuardados(): Set<String> = withContext(Dispatchers.IO) {
+        if (!enLinea) return@withContext guardados()
+        runCatching {
+            val uid = supa.sesion.value!!.userId
+            val nube = supa.select("guardadas", "select=post_id&user_id=eq.$uid&limit=500").jsonArray
+                .mapNotNull { it.jsonObject["post_id"]?.jsonPrimitive?.contentOrNull }.toMutableSet()
+            val antes = guardadosNube()
+            var local = guardados().filterNot { it.matches(UUID_RE) && it in antes && it !in nube }.toSet()
+            val subir = local.filter { it.matches(UUID_RE) && it !in nube && it !in antes }
+            if (subir.isNotEmpty()) runCatching {
+                supa.upsert("guardadas", JsonArray(subir.map { buildJsonObject { put("user_id", uid); put("post_id", it) } }))
+                nube += subir
+            }
+            local = local + nube
+            prefs.edit().putStringSet("guardados", local).putStringSet("guardados_nube", nube).apply()
+            local
+        }.getOrDefault(guardados())
     }
 
     /** El muro: [filtro] elige qué publicaciones y [eje] (VOL, MAE…) deja solo las de ese eje. */
@@ -408,7 +445,7 @@ class SocialRepository(
     val paginaFeed = 30
 
     suspend fun feed(filtro: FiltroFeed, eje: String? = null, desde: Int = 0): List<Post> = withContext(Dispatchers.IO) {
-        val guardados = guardados()
+        val guardados = if (filtro == FiltroFeed.GUARDADOS && desde == 0) sincronizarGuardados() else guardados()
         if (!enLinea) {
             if (desde > 0) return@withContext emptyList()
             val mias = dao.todas().filter { it.visibilidad != Visibilidad.PRIVADA.name }.map { it.aPost() }

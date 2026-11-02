@@ -318,3 +318,55 @@ DET["perfil.publicaciones"] = () => {
     e.preventDefault(); abrir(e, bl);
   });
 }
+
+/* ---------- La mochila en la cuenta: lo guardado se ve igual en el teléfono y en la web ----------
+ * Tabla guardadas (supabase/2026-11-02-guardadas.sql). Lo que ya estaba en este navegador se sube la primera vez.
+ * «rutacima-guardadas-nube»: los ids que ya estaban en la cuenta; si uno desaparece de la nube, lo quitaste en otro lado. */
+{
+  const NUBE_KEY = "rutacima-guardadas-nube", esUuid = id => /^[0-9a-f-]{36}$/i.test(String(id));
+  const nubeAntes = () => { try { return new Set(JSON.parse(localStorage.getItem(NUBE_KEY) || "[]")); } catch { return new Set(); } };
+  const guardarNube = s => { try { localStorage.setItem(NUBE_KEY, JSON.stringify([...s])); } catch {} };
+  const ficha = (p, a) => ({ id: p.id, foto: p.image_url || null, texto: p.texto || "", tipo: p.tipo || "", eje: p.eje || null, metaTitulo: p.meta_titulo || "",
+    autorNombre: a?.nombre || a?.username || "", impulsos: 0, creadoEn: Date.parse(p.created_at) || Date.now() });
+  let sincronizando = null;
+  window.sincronizarGuardadas = () => sincronizando ||= (async () => {
+    if (!Store.nube) return;
+    try {
+      const sb = Store.nube.sb, yo = Store.nube.dueno;
+      const { data, error } = await sb.from("guardadas").select("post_id,post:posts(id,image_url,texto,tipo,eje,meta_titulo,created_at,autor:profiles!posts_user_id_fkey(nombre,username))").eq("user_id", yo).order("created_at", { ascending: false }).limit(300);
+      if (error) throw error;
+      const nube = new Set((data || []).map(x => String(x.post_id))), antes = nubeAntes();
+      let local = guardadas();
+      // Quitadas en otro lado: estaban en la cuenta y ya no
+      local = local.filter(x => !(esUuid(x.id) && antes.has(String(x.id)) && !nube.has(String(x.id))));
+      // Nuevas de este navegador: se suben
+      const subir = local.filter(x => esUuid(x.id) && !nube.has(String(x.id)) && !antes.has(String(x.id))).map(x => ({ user_id: yo, post_id: x.id }));
+      if (subir.length) { const r = await sb.from("guardadas").upsert(subir, { onConflict: "user_id,post_id", ignoreDuplicates: true }); if (!r.error) subir.forEach(x => nube.add(String(x.post_id))); }
+      // Las de la cuenta que faltan aquí (guardadas en el teléfono)
+      const ids = new Set(local.map(x => String(x.id)));
+      (data || []).forEach(x => { if (x.post && !ids.has(String(x.post_id))) local.push(ficha(x.post, x.post.autor)); });
+      try { localStorage.setItem(GUARDADAS_KEY, JSON.stringify(local.slice(0, 300))); } catch {}
+      guardarNube(nube);
+      if (estado.sec === "perfil" && !enEdicion()) pintarDetalle();
+    } catch (e) { console.warn("guardadas", e); }
+    finally { setTimeout(() => { sincronizando = null; }, 30000); }
+  })();
+  // Al guardar o quitar: también en la cuenta
+  const base = ACC.guardarPost;
+  ACC.guardarPost = (el, id) => {
+    const r = base(el, id);
+    if (Store.nube && esUuid(id)) {
+      const si = estaGuardada(id), sb = Store.nube.sb, yo = Store.nube.dueno, s = nubeAntes();
+      (si ? sb.from("guardadas").upsert({ user_id: yo, post_id: id }, { onConflict: "user_id,post_id", ignoreDuplicates: true }) : sb.from("guardadas").delete().eq("user_id", yo).eq("post_id", id))
+        .then(({ error }) => { if (error) return console.warn("guardadas", error); si ? s.add(String(id)) : s.delete(String(id)); guardarNube(s); });
+    }
+    return r;
+  };
+  // Se sincroniza al abrir la mochila (pestaña Guardadas) y al entrar a Comunidad
+  const pest = ACC.pestanaPerfil;
+  ACC.pestanaPerfil = (el, v) => { pest(el, v); if (v === "guardadas") sincronizarGuardadas(); };
+  const det = DET["perfil.publicaciones"];
+  DET["perfil.publicaciones"] = (...a) => { if (estado.pestanaPerfil === "guardadas") setTimeout(() => sincronizarGuardadas(), 0); return det(...a); };
+  const feed = DET["comunidad.feed"];
+  DET["comunidad.feed"] = (...a) => { if (Store.nube && !sincronizando) setTimeout(() => sincronizarGuardadas(), 0); return feed(...a); };
+}

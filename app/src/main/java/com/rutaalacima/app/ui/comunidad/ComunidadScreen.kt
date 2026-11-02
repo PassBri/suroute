@@ -156,8 +156,10 @@ class ComunidadViewModel(private val c: AppContainer) : ViewModel() {
         cargando = true
         viewModelScope.launch {
             if (f == FiltroFeed.PARA_TI) launch { tramos = c.social.expedicion(java.time.LocalDate.now().year) }
+            // La mochila es la misma en el teléfono y en la web
+            launch { guardados = c.social.sincronizarGuardados() }
             runCatching { c.social.feed(f, eje) }
-                .onSuccess { cargadas = it.size; hayMas = c.social.enLinea && it.size >= c.social.paginaFeed; posts = ordenar(f, it); error = null }
+                .onSuccess { if (f == FiltroFeed.GUARDADOS) guardados = c.social.guardados(); cargadas = it.size; hayMas = c.social.enLinea && it.size >= c.social.paginaFeed; posts = ordenar(f, it); error = null }
                 .onFailure { error = it.message }
             cargando = false
         }
