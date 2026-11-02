@@ -294,6 +294,7 @@ fun ComunidadScreen(
     onChat: (String) -> Unit = {},
     onAvisos: () -> Unit = {},
     onBuscar: () -> Unit = {},
+    onBrujula: () -> Unit = {},
 ) {
     val vm = rutaViewModel { ComunidadViewModel(it) }
     val noLeidos by vm.noLeidos.collectAsStateWithLifecycle()
@@ -325,6 +326,8 @@ fun ComunidadScreen(
     var comentandoEn by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
     var opcionesDe by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
     var detrasDe by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
+    var llevoDe by androidx.compose.runtime.remember { mutableStateOf<Post?>(null) }
+    llevoDe?.let { p -> HojaLlevo(p, p.id in vm.guardados, onGuardar = { vm.alternarGuardado(p) }, onBrujula = onBrujula, onCerrar = { llevoDe = null }) }
     val llevado = stringResource(R.string.cv_llevado)
     // Fogatas en vivo: la franja aparece solo si alguien está transmitiendo (se revisa cada minuto)
     val ctxFog = androidx.compose.ui.platform.LocalContext.current
@@ -355,6 +358,8 @@ fun ComunidadScreen(
                             onAutor = { onAutor(it.autorId, it.autorNombre) },
                             onMas = { opcionesDe = it },
                             onFin = onHoy,
+                            onLlevoAbrir = { llevoDe = it },
+                            onBrujula = onBrujula,
                         )
                     }
                     vm.cargando -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { com.rutaalacima.app.ui.components.CargandoMarca() }

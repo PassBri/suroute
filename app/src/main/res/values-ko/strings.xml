@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d분 동안 피움 · 빛 %2$d개 받음</string>
     <string name="fg_llevaron">사람들이 가져간 것</string>
     <string name="fg_llevaron_vacio">사람들이 지금 쓰고 있어요. 몇 분 뒤 이 모닥불 요약에서 볼 수 있어요.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">내 정상에 올랐어요!</string>
+    <string name="ex_hito_camp_t">%1$s 캠프 도착</string>
+    <string name="ex_tarjeta_paso">8걸음 중 %1$d번째 · %2$s</string>
+    <string name="ex_pausa_hecho_t">오늘은 이미 한 걸음을 내디뎠어요</string>
+    <string name="ex_pausa_t">추진력을 얻었어요</string>
+    <string name="ex_pausa_vacio">이제 나침반에 첫 걸음을 적어 보세요. 보는 정상마다 당신의 정상에 더 가까워집니다.</string>
+    <string name="ex_abrir_brujula">내 나침반 열기</string>
+    <string name="ex_jornadas">%1$s · %3$d회 중 %2$d회</string>
+    <string name="ex_pausa_hoy">오늘의 한 걸음 · %1$s</string>
+    <string name="ex_pausa_hecho_d">천천히 계속 보세요. 산은 내일도 그 자리에 있어요.</string>
+    <string name="ex_darlo">지금 하기</string>
+    <string name="ex_seguir">계속 보기</string>
+    <string name="ex_llevo_t">가져갈게요</string>
+    <string name="ex_llevo_d">%1$s 님의 이 정상에서 무엇을 가져가나요?</string>
+    <string name="ex_mochila_no">내 배낭에서 빼기</string>
+    <string name="ex_mochila_si">내 배낭에 저장</string>
+    <string name="ex_mochila_d">필요할 때 다시 읽을 수 있도록.</string>
+    <string name="ex_paso_t">내 나침반의 한 걸음으로 만들기</string>
+    <string name="ex_paso_d">영감을 준 것이 당신이 하는 일이 됩니다.</string>
+    <string name="ex_sin_libres">나침반에 아직 빈칸이 없어요.</string>
+    <string name="ex_mi_paso">내 걸음</string>
+    <string name="ex_agregar">내 나침반에 추가</string>
+    <string name="ex_paso_nuevo">%1$s에 새 걸음: 8걸음 중 %2$d번째.</string>
+    <string name="ex_texto_cumbre">내 정상에 올랐어요: 나침반의 64걸음을 모두 이뤘어요.</string>
+    <string name="ex_texto_camp">%1$s 캠프에 도착했어요: 8걸음 모두 완료.</string>
+    <string name="ex_texto_paso">%1$s에서 한 걸음을 이뤘어요: %2$s</string>
+    <string name="ex_ganado">한 걸음 완료! 커뮤니티와 공유할까요?</string>
+    <string name="ex_compartir">공유</string>
+    <string name="ex_hito_cumbre_t">정상에 올랐어요!</string>
+    <string name="ex_hito_cumbre_d">나침반의 64걸음을 모두 이뤘어요. 깃발을 꽂고 커뮤니티에 오르막 이야기를 들려주세요.</string>
+    <string name="ex_hito_camp_d">%1$s의 8걸음을 모두 이뤘어요. 커뮤니티가 당신의 나침반에서 볼 수 있어요.</string>
+    <string name="ex_compartir_comunidad">커뮤니티에 공유</string>
+    <string name="ex_previa_d">게시물에 나침반과 불 켜진 이 칸이 함께 표시됩니다.</string>
+    <string name="ex_sin_brujula">나침반 없이 게시</string>
 </resources>

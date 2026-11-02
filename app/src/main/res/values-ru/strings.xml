@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">Горел %1$d мин · получено огоньков: %2$d</string>
     <string name="fg_llevaron">Что унесли</string>
     <string name="fg_llevaron_vacio">Люди сейчас пишут. Через несколько минут вы увидите это в итогах костра.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">Я дошёл до своей вершины!</string>
+    <string name="ex_hito_camp_t">Лагерь %1$s достигнут</string>
+    <string name="ex_tarjeta_paso">Шаг %1$d из 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Сегодня вы уже сделали свой шаг</string>
+    <string name="ex_pausa_t">Вы набрали разгон</string>
+    <string name="ex_pausa_vacio">Теперь запишите первый шаг в Компас: так каждая вершина, которую вы видите, приблизит вас к вашей.</string>
+    <string name="ex_abrir_brujula">Открыть мой Компас</string>
+    <string name="ex_jornadas">%1$s · %2$d из %3$d подходов</string>
+    <string name="ex_pausa_hoy">Ваш шаг сегодня · %1$s</string>
+    <string name="ex_pausa_hecho_d">Смотрите дальше спокойно. Гора будет на месте и завтра.</string>
+    <string name="ex_darlo">Сделать сейчас</string>
+    <string name="ex_seguir">Смотреть дальше</string>
+    <string name="ex_llevo_t">Забираю с собой</string>
+    <string name="ex_llevo_d">Что вы забираете с этой вершины %1$s?</string>
+    <string name="ex_mochila_no">Убрать из рюкзака</string>
+    <string name="ex_mochila_si">Сохранить в рюкзак</string>
+    <string name="ex_mochila_d">Чтобы перечитать, когда понадобится.</string>
+    <string name="ex_paso_t">Сделать шагом моего Компаса</string>
+    <string name="ex_paso_d">То, что вдохновило, становится тем, что вы делаете.</string>
+    <string name="ex_sin_libres">В вашем Компасе пока нет свободных клеток.</string>
+    <string name="ex_mi_paso">Мой шаг</string>
+    <string name="ex_agregar">Добавить в мой Компас</string>
+    <string name="ex_paso_nuevo">Новый шаг в %1$s: шаг %2$d из 8.</string>
+    <string name="ex_texto_cumbre">Я дошёл до вершины: все 64 шага моего Компаса пройдены.</string>
+    <string name="ex_texto_camp">Я дошёл до лагеря %1$s: все 8 шагов пройдены.</string>
+    <string name="ex_texto_paso">Я прошёл шаг в %1$s: %2$s</string>
+    <string name="ex_ganado">Шаг пройден! Поделиться с сообществом?</string>
+    <string name="ex_compartir">Поделиться</string>
+    <string name="ex_hito_cumbre_t">Вы дошли до своей вершины!</string>
+    <string name="ex_hito_cumbre_d">Все 64 шага вашего Компаса пройдены. Водрузите флаг и расскажите сообществу о восхождении.</string>
+    <string name="ex_hito_camp_d">Вы прошли все 8 шагов %1$s. Сообщество увидит это в вашем Компасе.</string>
+    <string name="ex_compartir_comunidad">Поделиться в Сообществе</string>
+    <string name="ex_previa_d">Ваша публикация будет с вашим Компасом и этой горящей клеткой.</string>
+    <string name="ex_sin_brujula">Опубликовать без Компаса</string>
 </resources>

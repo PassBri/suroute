@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">点燃 %1$d 分钟 · 收到 %2$d 束光</string>
     <string name="fg_llevaron">大家带走了什么</string>
     <string name="fg_llevaron_vacio">大家正在写。几分钟后你会在这堆篝火的总结里看到。</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">我登上了我的顶峰！</string>
+    <string name="ex_hito_camp_t">已到达 %1$s 营地</string>
+    <string name="ex_tarjeta_paso">第 %1$d / 8 步 · %2$s</string>
+    <string name="ex_pausa_hecho_t">今天你已经迈出了这一步</string>
+    <string name="ex_pausa_t">你已经获得动力</string>
+    <string name="ex_pausa_vacio">现在在指南针里写下你的第一步：这样你看到的每座顶峰都会让你离自己的更近。</string>
+    <string name="ex_abrir_brujula">打开我的指南针</string>
+    <string name="ex_jornadas">%1$s · %2$d / %3$d 次</string>
+    <string name="ex_pausa_hoy">你今天的一步 · %1$s</string>
+    <string name="ex_pausa_hecho_d">放松地继续看吧。山明天还在。</string>
+    <string name="ex_darlo">现在就去做</string>
+    <string name="ex_seguir">继续看</string>
+    <string name="ex_llevo_t">我带走</string>
+    <string name="ex_llevo_d">从 %1$s 的这座顶峰，你带走什么？</string>
+    <string name="ex_mochila_no">从我的背包移除</string>
+    <string name="ex_mochila_si">存入我的背包</string>
+    <string name="ex_mochila_d">在需要时再读一遍。</string>
+    <string name="ex_paso_t">把它变成我指南针里的一步</string>
+    <string name="ex_paso_d">激励你的东西会变成你去做的事。</string>
+    <string name="ex_sin_libres">你的指南针还没有空格。</string>
+    <string name="ex_mi_paso">我的一步</string>
+    <string name="ex_agregar">加入我的指南针</string>
+    <string name="ex_paso_nuevo">%1$s 新增一步：第 %2$d / 8 步。</string>
+    <string name="ex_texto_cumbre">我登上了顶峰：赢得了指南针的全部 64 步。</string>
+    <string name="ex_texto_camp">我到达了 %1$s 营地：8 步全部完成。</string>
+    <string name="ex_texto_paso">我在 %1$s 完成了一步：%2$s</string>
+    <string name="ex_ganado">完成一步！要和社区分享吗？</string>
+    <string name="ex_compartir">分享</string>
+    <string name="ex_hito_cumbre_t">你登上了你的顶峰！</string>
+    <string name="ex_hito_cumbre_d">你指南针的 64 步全部完成。插上旗帜，告诉你的社区这段攀登。</string>
+    <string name="ex_hito_camp_d">你完成了 %1$s 的全部 8 步。你的社区可以在你的指南针里看到。</string>
+    <string name="ex_compartir_comunidad">分享到社区</string>
+    <string name="ex_previa_d">你的帖子会带上你的指南针，并点亮这一格。</string>
+    <string name="ex_sin_brujula">不带指南针发布</string>
 </resources>

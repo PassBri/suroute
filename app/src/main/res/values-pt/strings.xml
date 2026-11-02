@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d min acesa · %2$d luzes recebidas</string>
     <string name="fg_llevaron">O que levaram</string>
     <string name="fg_llevaron_vacio">As pessoas estão escrevendo agora. Você verá no resumo desta fogueira em alguns minutos.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">Cheguei ao meu cume!</string>
+    <string name="ex_hito_camp_t">Acampamento %1$s alcançado</string>
+    <string name="ex_tarjeta_paso">Passo %1$d de 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Hoje você já deu seu passo</string>
+    <string name="ex_pausa_t">Você já pegou impulso</string>
+    <string name="ex_pausa_vacio">Agora escreva seu primeiro passo na Bússola: assim cada cume que você vê te aproxima do seu.</string>
+    <string name="ex_abrir_brujula">Abrir minha Bússola</string>
+    <string name="ex_jornadas">%1$s · %2$d de %3$d jornadas</string>
+    <string name="ex_pausa_hoy">Seu passo de hoje · %1$s</string>
+    <string name="ex_pausa_hecho_d">Continue olhando com calma. A montanha continua aí amanhã.</string>
+    <string name="ex_darlo">Dar agora</string>
+    <string name="ex_seguir">Continuar olhando</string>
+    <string name="ex_llevo_t">Eu levo</string>
+    <string name="ex_llevo_d">Deste cume de %1$s, o que você leva?</string>
+    <string name="ex_mochila_no">Tirar da minha mochila</string>
+    <string name="ex_mochila_si">Guardar na minha mochila</string>
+    <string name="ex_mochila_d">Para ler de novo quando precisar.</string>
+    <string name="ex_paso_t">Transformar em um passo da minha Bússola</string>
+    <string name="ex_paso_d">O que te inspirou vira algo que você faz.</string>
+    <string name="ex_sin_libres">Sua Bússola ainda não tem casas livres.</string>
+    <string name="ex_mi_paso">Meu passo</string>
+    <string name="ex_agregar">Adicionar à minha Bússola</string>
+    <string name="ex_paso_nuevo">Novo passo em %1$s: passo %2$d de 8.</string>
+    <string name="ex_texto_cumbre">Cheguei ao meu cume: ganhei os 64 passos da minha Bússola.</string>
+    <string name="ex_texto_camp">Alcancei o acampamento %1$s: os 8 passos ganhos.</string>
+    <string name="ex_texto_paso">Ganhei um passo em %1$s: %2$s</string>
+    <string name="ex_ganado">Passo ganho! Compartilha com sua comunidade?</string>
+    <string name="ex_compartir">Compartilhar</string>
+    <string name="ex_hito_cumbre_t">Você chegou ao seu cume!</string>
+    <string name="ex_hito_cumbre_d">Os 64 passos da sua Bússola estão ganhos. Finque a bandeira e conte à sua comunidade como foi a subida.</string>
+    <string name="ex_hito_camp_d">Você ganhou os 8 passos de %1$s. Sua comunidade pode ver isso na sua Bússola.</string>
+    <string name="ex_compartir_comunidad">Compartilhar na Comunidade</string>
+    <string name="ex_previa_d">Sua publicação irá com sua Bússola e esta casa acesa.</string>
+    <string name="ex_sin_brujula">Publicar sem a Bússola</string>
 </resources>

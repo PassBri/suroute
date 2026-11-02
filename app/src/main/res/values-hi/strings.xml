@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d मिनट जला · %2$d रोशनियाँ मिलीं</string>
     <string name="fg_llevaron">लोग क्या ले गए</string>
     <string name="fg_llevaron_vacio">लोग अभी लिख रहे हैं। कुछ मिनटों में इस अलाव के सारांश में दिखेगा।</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">मैं अपने शिखर पर पहुँच गया!</string>
+    <string name="ex_hito_camp_t">%1$s शिविर तक पहुँचे</string>
+    <string name="ex_tarjeta_paso">8 में से कदम %1$d · %2$s</string>
+    <string name="ex_pausa_hecho_t">आज आप अपना कदम उठा चुके हैं</string>
+    <string name="ex_pausa_t">आपको गति मिल गई है</string>
+    <string name="ex_pausa_vacio">अब अपने कम्पास में पहला कदम लिखें: ताकि हर शिखर जो आप देखें, आपको अपने शिखर के करीब ले जाए।</string>
+    <string name="ex_abrir_brujula">मेरा कम्पास खोलें</string>
+    <string name="ex_jornadas">%1$s · %3$d में से %2$d दिन</string>
+    <string name="ex_pausa_hoy">आज का आपका कदम · %1$s</string>
+    <string name="ex_pausa_hecho_d">आराम से देखते रहें। पहाड़ कल भी वहीं रहेगा।</string>
+    <string name="ex_darlo">अभी उठाएँ</string>
+    <string name="ex_seguir">देखते रहें</string>
+    <string name="ex_llevo_t">मैं साथ ले जाता हूँ</string>
+    <string name="ex_llevo_d">%1$s के इस शिखर से आप क्या ले जाते हैं?</string>
+    <string name="ex_mochila_no">मेरे बैग से हटाएँ</string>
+    <string name="ex_mochila_si">मेरे बैग में सहेजें</string>
+    <string name="ex_mochila_d">ज़रूरत पड़ने पर फिर पढ़ने के लिए।</string>
+    <string name="ex_paso_t">इसे मेरे कम्पास का एक कदम बनाएँ</string>
+    <string name="ex_paso_d">जिसने आपको प्रेरित किया, वह आपका काम बन जाता है।</string>
+    <string name="ex_sin_libres">आपके कम्पास में अभी कोई खाली खाना नहीं है।</string>
+    <string name="ex_mi_paso">मेरा कदम</string>
+    <string name="ex_agregar">मेरे कम्पास में जोड़ें</string>
+    <string name="ex_paso_nuevo">%1$s में नया कदम: 8 में से %2$d।</string>
+    <string name="ex_texto_cumbre">मैं अपने शिखर पर पहुँच गया: कम्पास के सभी 64 कदम पूरे।</string>
+    <string name="ex_texto_camp">मैं %1$s शिविर तक पहुँचा: सभी 8 कदम पूरे।</string>
+    <string name="ex_texto_paso">मैंने %1$s में एक कदम पूरा किया: %2$s</string>
+    <string name="ex_ganado">कदम पूरा! अपने समुदाय से साझा करें?</string>
+    <string name="ex_compartir">साझा करें</string>
+    <string name="ex_hito_cumbre_t">आप अपने शिखर पर पहुँच गए!</string>
+    <string name="ex_hito_cumbre_d">आपके कम्पास के सभी 64 कदम पूरे हो गए। झंडा गाड़ें और अपने समुदाय को चढ़ाई के बारे में बताएँ।</string>
+    <string name="ex_hito_camp_d">आपने %1$s के सभी 8 कदम पूरे किए। आपका समुदाय इसे आपके कम्पास में देख सकता है।</string>
+    <string name="ex_compartir_comunidad">समुदाय में साझा करें</string>
+    <string name="ex_previa_d">आपकी पोस्ट आपके कम्पास और इस जले हुए खाने के साथ जाएगी।</string>
+    <string name="ex_sin_brujula">कम्पास के बिना पोस्ट करें</string>
 </resources>

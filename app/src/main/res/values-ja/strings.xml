@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d 分ともした · 光を %2$d 個受け取りました</string>
     <string name="fg_llevaron">みんなが持ち帰ったこと</string>
     <string name="fg_llevaron_vacio">いまみんなが書いています。数分後にこのたき火のまとめで見られます。</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">自分の頂上に着いた！</string>
+    <string name="ex_hito_camp_t">%1$s キャンプに到達</string>
+    <string name="ex_tarjeta_paso">8 歩中 %1$d 歩目 · %2$s</string>
+    <string name="ex_pausa_hecho_t">今日はもう一歩を進めました</string>
+    <string name="ex_pausa_t">勢いがつきました</string>
+    <string name="ex_pausa_vacio">コンパスに最初の一歩を書きましょう。見る頂上のひとつひとつが、あなたの頂上に近づけてくれます。</string>
+    <string name="ex_abrir_brujula">コンパスを開く</string>
+    <string name="ex_jornadas">%1$s · %3$d 回中 %2$d 回</string>
+    <string name="ex_pausa_hoy">今日の一歩 · %1$s</string>
+    <string name="ex_pausa_hecho_d">落ち着いて見続けましょう。山は明日もそこにあります。</string>
+    <string name="ex_darlo">今やる</string>
+    <string name="ex_seguir">見続ける</string>
+    <string name="ex_llevo_t">持ち帰る</string>
+    <string name="ex_llevo_d">%1$s さんのこの頂上から何を持ち帰りますか？</string>
+    <string name="ex_mochila_no">リュックから外す</string>
+    <string name="ex_mochila_si">リュックに保存</string>
+    <string name="ex_mochila_d">必要なときにまた読めるように。</string>
+    <string name="ex_paso_t">コンパスの一歩にする</string>
+    <string name="ex_paso_d">刺激を受けたことが、あなたの行動になります。</string>
+    <string name="ex_sin_libres">コンパスにまだ空きマスがありません。</string>
+    <string name="ex_mi_paso">わたしの一歩</string>
+    <string name="ex_agregar">コンパスに追加</string>
+    <string name="ex_paso_nuevo">%1$s に新しい一歩：8 歩中 %2$d 歩目。</string>
+    <string name="ex_texto_cumbre">頂上に着いた：コンパスの 64 歩をすべて達成。</string>
+    <string name="ex_texto_camp">%1$s キャンプに到達：8 歩すべて達成。</string>
+    <string name="ex_texto_paso">%1$s で一歩を達成：%2$s</string>
+    <string name="ex_ganado">一歩達成！コミュニティと共有しますか？</string>
+    <string name="ex_compartir">共有</string>
+    <string name="ex_hito_cumbre_t">頂上に着きました！</string>
+    <string name="ex_hito_cumbre_d">コンパスの 64 歩をすべて達成しました。旗を立てて、登りの様子をコミュニティに伝えましょう。</string>
+    <string name="ex_hito_camp_d">%1$s の 8 歩をすべて達成しました。コミュニティはあなたのコンパスで見られます。</string>
+    <string name="ex_compartir_comunidad">コミュニティで共有</string>
+    <string name="ex_previa_d">投稿にあなたのコンパスと、光ったこのマスが付きます。</string>
+    <string name="ex_sin_brujula">コンパスなしで投稿</string>
 </resources>

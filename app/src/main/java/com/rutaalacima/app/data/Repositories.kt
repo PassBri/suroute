@@ -79,6 +79,7 @@ class RespuestasRepository(private val db: RutaDatabase) {
 
     suspend fun guardar(workbookId: String, clave: String, valor: String) {
         if (valor.isEmpty()) { db.respuestaDao().delete(clave); return }
+        com.rutaalacima.app.data.social.ExpedicionEventos.alGuardar(clave, valor)
         val fc = com.rutaalacima.app.seguridad.FinCifrado
         val v = if (workbookId == com.rutaalacima.app.domain.model.Finanzas.WB && fc.cifrable(clave) && finCifrado()) {
             if (!fc.abierta()) return          // con la llave cerrada no se escribe en claro

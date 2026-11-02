@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d min allumé · %2$d lumières reçues</string>
     <string name="fg_llevaron">Ce qu\'ils ont emporté</string>
     <string name="fg_llevaron_vacio">Les personnes l\'écrivent maintenant. Vous le verrez dans le résumé de ce feu dans quelques minutes.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">J\'ai atteint mon sommet !</string>
+    <string name="ex_hito_camp_t">Camp %1$s atteint</string>
+    <string name="ex_tarjeta_paso">Pas %1$d sur 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Vous avez déjà fait votre pas aujourd\'hui</string>
+    <string name="ex_pausa_t">Vous avez pris de l\'élan</string>
+    <string name="ex_pausa_vacio">Écrivez maintenant votre premier pas dans la Boussole : chaque sommet que vous voyez vous rapprochera du vôtre.</string>
+    <string name="ex_abrir_brujula">Ouvrir ma Boussole</string>
+    <string name="ex_jornadas">%1$s · %2$d sur %3$d journées</string>
+    <string name="ex_pausa_hoy">Votre pas du jour · %1$s</string>
+    <string name="ex_pausa_hecho_d">Continuez à regarder calmement. La montagne sera encore là demain.</string>
+    <string name="ex_darlo">Le faire maintenant</string>
+    <string name="ex_seguir">Continuer à regarder</string>
+    <string name="ex_llevo_t">Je l\'emporte</string>
+    <string name="ex_llevo_d">De ce sommet de %1$s, qu\'emportez-vous ?</string>
+    <string name="ex_mochila_no">Retirer de mon sac</string>
+    <string name="ex_mochila_si">Garder dans mon sac</string>
+    <string name="ex_mochila_d">Pour la relire quand vous en aurez besoin.</string>
+    <string name="ex_paso_t">En faire un pas de ma Boussole</string>
+    <string name="ex_paso_d">Ce qui vous a inspiré devient quelque chose que vous faites.</string>
+    <string name="ex_sin_libres">Votre Boussole n\'a pas encore de case libre.</string>
+    <string name="ex_mi_paso">Mon pas</string>
+    <string name="ex_agregar">Ajouter à ma Boussole</string>
+    <string name="ex_paso_nuevo">Nouveau pas dans %1$s : pas %2$d sur 8.</string>
+    <string name="ex_texto_cumbre">J\'ai atteint mon sommet : j\'ai gagné les 64 pas de ma Boussole.</string>
+    <string name="ex_texto_camp">J\'ai atteint le camp %1$s : les 8 pas gagnés.</string>
+    <string name="ex_texto_paso">J\'ai gagné un pas dans %1$s : %2$s</string>
+    <string name="ex_ganado">Pas gagné ! Le partager avec votre communauté ?</string>
+    <string name="ex_compartir">Partager</string>
+    <string name="ex_hito_cumbre_t">Vous avez atteint votre sommet !</string>
+    <string name="ex_hito_cumbre_d">Les 64 pas de votre Boussole sont gagnés. Plantez le drapeau et racontez à votre communauté comment s\'est passée l\'ascension.</string>
+    <string name="ex_hito_camp_d">Vous avez gagné les 8 pas de %1$s. Votre communauté peut le voir dans votre Boussole.</string>
+    <string name="ex_compartir_comunidad">Partager dans la Communauté</string>
+    <string name="ex_previa_d">Votre publication portera votre Boussole avec cette case allumée.</string>
+    <string name="ex_sin_brujula">Publier sans la Boussole</string>
 </resources>

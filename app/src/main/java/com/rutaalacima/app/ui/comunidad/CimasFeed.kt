@@ -110,10 +110,22 @@ fun CimasFeed(
     /** Moverse de lado: a la derecha «me lo llevo» (mochila e impulso); a la izquierda «detrás de la cima». */
     onLlevar: (Post) -> Unit = {},
     onDetras: (Post) -> Unit = {},
+    /** «Me lo llevo»: el botón de la mochila abre la hoja (mochila o paso de la Brújula). */
+    onLlevoAbrir: ((Post) -> Unit)? = null,
+    /** La pausa de cumbre lleva a la Brújula a dar el paso de hoy. */
+    onBrujula: () -> Unit = {},
 ) {
+    // Pausa de cumbre: cada 7 cimas el feed se detiene en tu propio paso de hoy (una vez por cima en la sesión)
+    var pausa by remember { mutableStateOf(false) }
+    val vistas = remember { mutableSetOf<Int>() }
+    LaunchedEffect(estado.currentPage) {
+        val pg = estado.currentPage
+        if (pg > 0 && pg % 7 == 0 && pg < posts.size && vistas.add(pg)) pausa = true
+    }
+    Box(modifier) {
     VerticalPager(
         state = estado,
-        modifier = modifier,
+        modifier = Modifier.fillMaxSize(),
         contentPadding = padding,
         beyondViewportPageCount = 1,
         key = { if (it < posts.size) posts[it].id else "fin" },
@@ -133,7 +145,10 @@ fun CimasFeed(
             onLuz = { k -> onLuz(posts[i], k) },
             onCompromiso = { e -> onCompromiso(posts[i], e) },
             onLlevar = { onLlevar(posts[i]) }, onDetras = { onDetras(posts[i]) },
+            onLlevoAbrir = onLlevoAbrir?.let { f -> { f(posts[i]) } },
         )
+    }
+    if (pausa) PausaCumbre(onBrujula = { pausa = false; onBrujula() }, onSeguir = { pausa = false })
     }
 }
 
@@ -159,6 +174,7 @@ private fun CimaPagina(
     onLuz: (String?) -> Unit = {},
     onCompromiso: (String) -> Unit = {},
     onLlevar: () -> Unit = {}, onDetras: () -> Unit = {},
+    onLlevoAbrir: (() -> Unit)? = null,
 ) {
     val context = LocalContext.current
     // Arrastre de lado: el contenido acompaña el dedo y una pista dice qué pasará al soltar
@@ -198,6 +214,8 @@ private fun CimaPagina(
         // Fondo: la foto de borde a borde, o el cielo real del momento en que se publicó con la frase en letra de carta
         if (com.rutaalacima.app.data.social.ComunidadViva.estaSellada(post)) {
             CartaSellada(post.sello!!, Modifier.fillMaxSize())
+        } else if (post.camino?.paso != null && post.foto.isBlank() && !post.media.esCarrusel()) {
+            TarjetaPaso(post, Modifier.fillMaxSize())
         } else if (post.media.esCarrusel()) {
             MediaCarrusel(post.media, activo, Modifier.fillMaxSize())
         } else if (post.foto.isNotBlank()) {
@@ -257,7 +275,7 @@ private fun CimaPagina(
             Accion(Icons.AutoMirrored.Outlined.Comment, contar(post.comentarios), stringResource(R.string.comentar), Color.White, onClick = onAbrir)
             Accion(if (guardado) com.rutaalacima.app.ui.components.IconosRuta.Morral else com.rutaalacima.app.ui.components.IconosRuta.MorralContorno, "", stringResource(R.string.guardar),
                 if (guardado) com.rutaalacima.app.ui.components.AzulAltura else Color.White,
-                fondo = if (guardado) com.rutaalacima.app.ui.components.AzulAltura.copy(alpha = 0.32f) else null, onClick = onGuardar)
+                fondo = if (guardado) com.rutaalacima.app.ui.components.AzulAltura.copy(alpha = 0.32f) else null, onClick = onLlevoAbrir ?: onGuardar)
             Accion(Icons.Outlined.Share, "", stringResource(R.string.compartir), Color.White) {
                 val enlace = com.rutaalacima.app.data.social.EnlacesRed.publicacion(post)
                 val texto = listOf(post.metaTitulo, post.texto, enlace.ifBlank { "— SuRoute" }).filter { it.isNotBlank() }.joinToString("\n\n")

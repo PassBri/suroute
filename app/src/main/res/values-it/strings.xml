@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d min acceso · %2$d luci ricevute</string>
     <string name="fg_llevaron">Cosa hanno portato via</string>
     <string name="fg_llevaron_vacio">Le persone lo stanno scrivendo ora. Lo vedrai nel riepilogo di questo falò tra pochi minuti.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">Ho raggiunto la mia cima!</string>
+    <string name="ex_hito_camp_t">Campo %1$s raggiunto</string>
+    <string name="ex_tarjeta_paso">Passo %1$d di 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Oggi hai già fatto il tuo passo</string>
+    <string name="ex_pausa_t">Hai preso slancio</string>
+    <string name="ex_pausa_vacio">Ora scrivi il tuo primo passo nella Bussola: così ogni cima che vedi ti avvicina alla tua.</string>
+    <string name="ex_abrir_brujula">Apri la mia Bussola</string>
+    <string name="ex_jornadas">%1$s · %2$d di %3$d giornate</string>
+    <string name="ex_pausa_hoy">Il tuo passo di oggi · %1$s</string>
+    <string name="ex_pausa_hecho_d">Continua a guardare con calma. La montagna sarà lì anche domani.</string>
+    <string name="ex_darlo">Fallo ora</string>
+    <string name="ex_seguir">Continua a guardare</string>
+    <string name="ex_llevo_t">Lo porto con me</string>
+    <string name="ex_llevo_d">Da questa cima di %1$s, cosa porti con te?</string>
+    <string name="ex_mochila_no">Togli dal mio zaino</string>
+    <string name="ex_mochila_si">Salva nel mio zaino</string>
+    <string name="ex_mochila_d">Per rileggerla quando ti serve.</string>
+    <string name="ex_paso_t">Trasformala in un passo della mia Bussola</string>
+    <string name="ex_paso_d">Ciò che ti ha ispirato diventa qualcosa che fai.</string>
+    <string name="ex_sin_libres">La tua Bussola non ha ancora caselle libere.</string>
+    <string name="ex_mi_paso">Il mio passo</string>
+    <string name="ex_agregar">Aggiungi alla mia Bussola</string>
+    <string name="ex_paso_nuevo">Nuovo passo in %1$s: passo %2$d di 8.</string>
+    <string name="ex_texto_cumbre">Ho raggiunto la mia cima: ho conquistato i 64 passi della mia Bussola.</string>
+    <string name="ex_texto_camp">Ho raggiunto il campo %1$s: tutti gli 8 passi conquistati.</string>
+    <string name="ex_texto_paso">Ho conquistato un passo in %1$s: %2$s</string>
+    <string name="ex_ganado">Passo conquistato! Lo condividi con la tua comunità?</string>
+    <string name="ex_compartir">Condividi</string>
+    <string name="ex_hito_cumbre_t">Hai raggiunto la tua cima!</string>
+    <string name="ex_hito_cumbre_d">I 64 passi della tua Bussola sono conquistati. Pianta la bandiera e racconta alla tua comunità com\'è stata la salita.</string>
+    <string name="ex_hito_camp_d">Hai conquistato gli 8 passi di %1$s. La tua comunità può vederlo nella tua Bussola.</string>
+    <string name="ex_compartir_comunidad">Condividi nella Comunità</string>
+    <string name="ex_previa_d">La tua pubblicazione porterà la tua Bussola con questa casella accesa.</string>
+    <string name="ex_sin_brujula">Pubblica senza la Bussola</string>
 </resources>

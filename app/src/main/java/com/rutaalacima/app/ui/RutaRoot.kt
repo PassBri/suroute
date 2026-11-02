@@ -344,6 +344,8 @@ private fun AppPrincipal() {
     if (ancho && pestana != null) {
         RielLateral(actual = rutaActual, onIr = irSeccion, onPublicar = { nav.navigate(Rutas.publicar()) })
     }
+    // Al ganar un paso en cualquier pantalla: compartirlo con la mini-Brújula (y celebrar campamento y cumbre)
+    com.rutaalacima.app.ui.comunidad.AvisosPasoGanado { texto -> nav.navigate(Rutas.publicar("LOGRO", texto = texto)) }
     // M3: la barra superior queda fija y toma el color del papel cuando el contenido pasa por debajo
     val desplazamiento = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
@@ -490,6 +492,7 @@ private fun AppPrincipal() {
                     onChat = { nav.navigate(Rutas.chat(it)) },
                     onAvisos = { nav.navigate(Rutas.AVISOS) },
                     onBuscar = { nav.navigate(Rutas.PERSONAS) },
+                    onBrujula = { nav.irAPestana(Rutas.VISION) },
                 )
             }
             composable(Rutas.APRENDE) { AprendeScreen(padding, onOpen = abrirWorkbook, onMochila = { nav.navigate(Rutas.MOCHILA) }, onCompanero = { nav.navigate(Rutas.VISION_COMPANERO) }) }

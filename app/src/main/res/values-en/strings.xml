@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d min lit · %2$d lights received</string>
     <string name="fg_llevaron">What they took away</string>
     <string name="fg_llevaron_vacio">People are writing it now. You\'ll see it in this campfire\'s summary in a few minutes.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">I reached my summit!</string>
+    <string name="ex_hito_camp_t">%1$s camp reached</string>
+    <string name="ex_tarjeta_paso">Step %1$d of 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">You already took your step today</string>
+    <string name="ex_pausa_t">You\'ve built momentum</string>
+    <string name="ex_pausa_vacio">Now write your first step in the Compass: that way every summit you see brings you closer to yours.</string>
+    <string name="ex_abrir_brujula">Open my Compass</string>
+    <string name="ex_jornadas">%1$s · %2$d of %3$d sessions</string>
+    <string name="ex_pausa_hoy">Today\'s step · %1$s</string>
+    <string name="ex_pausa_hecho_d">Keep browsing calmly. The mountain will still be there tomorrow.</string>
+    <string name="ex_darlo">Take it now</string>
+    <string name="ex_seguir">Keep browsing</string>
+    <string name="ex_llevo_t">I\'ll take it</string>
+    <string name="ex_llevo_d">What do you take from %1$s\'s summit?</string>
+    <string name="ex_mochila_no">Remove from my backpack</string>
+    <string name="ex_mochila_si">Save to my backpack</string>
+    <string name="ex_mochila_d">To read it again when you need it.</string>
+    <string name="ex_paso_t">Turn it into a step in my Compass</string>
+    <string name="ex_paso_d">What inspired you becomes something you do.</string>
+    <string name="ex_sin_libres">Your Compass has no free slots yet.</string>
+    <string name="ex_mi_paso">My step</string>
+    <string name="ex_agregar">Add to my Compass</string>
+    <string name="ex_paso_nuevo">New step in %1$s: step %2$d of 8.</string>
+    <string name="ex_texto_cumbre">I reached my summit: I won all 64 steps of my Compass.</string>
+    <string name="ex_texto_camp">I reached the %1$s camp: all 8 steps won.</string>
+    <string name="ex_texto_paso">I won a step in %1$s: %2$s</string>
+    <string name="ex_ganado">Step won! Share it with your community?</string>
+    <string name="ex_compartir">Share</string>
+    <string name="ex_hito_cumbre_t">You reached your summit!</string>
+    <string name="ex_hito_cumbre_d">All 64 steps of your Compass are won. Plant the flag and tell your community how the climb went.</string>
+    <string name="ex_hito_camp_d">You won all 8 steps of %1$s. Your community can see it in your Compass.</string>
+    <string name="ex_compartir_comunidad">Share in Community</string>
+    <string name="ex_previa_d">Your post will carry your Compass with this square lit.</string>
+    <string name="ex_sin_brujula">Post without the Compass</string>
 </resources>

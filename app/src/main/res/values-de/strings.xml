@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d Min. entzündet · %2$d Lichter erhalten</string>
     <string name="fg_llevaron">Was sie mitgenommen haben</string>
     <string name="fg_llevaron_vacio">Die Leute schreiben es gerade. Du siehst es in wenigen Minuten in der Zusammenfassung dieses Lagerfeuers.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">Ich habe meinen Gipfel erreicht!</string>
+    <string name="ex_hito_camp_t">Lager %1$s erreicht</string>
+    <string name="ex_tarjeta_paso">Schritt %1$d von 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Heute hast du deinen Schritt schon gemacht</string>
+    <string name="ex_pausa_t">Du hast Schwung geholt</string>
+    <string name="ex_pausa_vacio">Schreib jetzt deinen ersten Schritt in den Kompass: So bringt dich jeder Gipfel, den du siehst, deinem näher.</string>
+    <string name="ex_abrir_brujula">Meinen Kompass öffnen</string>
+    <string name="ex_jornadas">%1$s · %2$d von %3$d Etappen</string>
+    <string name="ex_pausa_hoy">Dein Schritt heute · %1$s</string>
+    <string name="ex_pausa_hecho_d">Schau in Ruhe weiter. Der Berg ist morgen noch da.</string>
+    <string name="ex_darlo">Jetzt gehen</string>
+    <string name="ex_seguir">Weiter ansehen</string>
+    <string name="ex_llevo_t">Nehme ich mit</string>
+    <string name="ex_llevo_d">Was nimmst du von diesem Gipfel von %1$s mit?</string>
+    <string name="ex_mochila_no">Aus meinem Rucksack nehmen</string>
+    <string name="ex_mochila_si">In meinem Rucksack speichern</string>
+    <string name="ex_mochila_d">Um es wieder zu lesen, wenn du es brauchst.</string>
+    <string name="ex_paso_t">Daraus einen Schritt meines Kompasses machen</string>
+    <string name="ex_paso_d">Was dich inspiriert hat, wird zu etwas, das du tust.</string>
+    <string name="ex_sin_libres">Dein Kompass hat noch keine freien Felder.</string>
+    <string name="ex_mi_paso">Mein Schritt</string>
+    <string name="ex_agregar">Zu meinem Kompass hinzufügen</string>
+    <string name="ex_paso_nuevo">Neuer Schritt in %1$s: Schritt %2$d von 8.</string>
+    <string name="ex_texto_cumbre">Ich habe meinen Gipfel erreicht: alle 64 Schritte meines Kompasses geschafft.</string>
+    <string name="ex_texto_camp">Ich habe das Lager %1$s erreicht: alle 8 Schritte geschafft.</string>
+    <string name="ex_texto_paso">Ich habe einen Schritt in %1$s geschafft: %2$s</string>
+    <string name="ex_ganado">Schritt geschafft! Mit deiner Gemeinschaft teilen?</string>
+    <string name="ex_compartir">Teilen</string>
+    <string name="ex_hito_cumbre_t">Du hast deinen Gipfel erreicht!</string>
+    <string name="ex_hito_cumbre_d">Alle 64 Schritte deines Kompasses sind geschafft. Pflanz die Fahne und erzähl deiner Gemeinschaft vom Aufstieg.</string>
+    <string name="ex_hito_camp_d">Du hast alle 8 Schritte von %1$s geschafft. Deine Gemeinschaft sieht es in deinem Kompass.</string>
+    <string name="ex_compartir_comunidad">In der Gemeinschaft teilen</string>
+    <string name="ex_previa_d">Dein Beitrag zeigt deinen Kompass mit diesem leuchtenden Feld.</string>
+    <string name="ex_sin_brujula">Ohne Kompass veröffentlichen</string>
 </resources>

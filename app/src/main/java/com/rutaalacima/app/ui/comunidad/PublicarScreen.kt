@@ -88,10 +88,13 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
     /** Comunidad viva: el camino que se mostrará, el compromiso (días) y la carta sellada (meses). */
     var camino by mutableStateOf(com.rutaalacima.app.data.social.Camino(0, 0))
         private set
+    /** El paso ganado que se comparte con esta publicación (viene de «Compartir este paso»). */
+    var paso by mutableStateOf(com.rutaalacima.app.data.social.ExpedicionEventos.pendiente.also { com.rutaalacima.app.data.social.ExpedicionEventos.pendiente = null })
     var compromisoDias by mutableStateOf(0)
     var selloMeses by mutableStateOf(0)
 
     init {
+        paso?.let { eje = Eje.fromCodigo(it.cod) }
         viewModelScope.launch { camino = com.rutaalacima.app.data.social.ComunidadViva.caminoActual(c) }
         // Metas activas para vincular la publicación (del mes, del año y propósitos).
         viewModelScope.launch {
@@ -109,7 +112,7 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
         viewModelScope.launch {
             val h = hoy()
             val extras = com.rutaalacima.app.data.social.ExtrasPost(
-                camino = camino.takeUnless { it.vacio },
+                camino = camino.copy(paso = paso).takeUnless { it.vacio },
                 compromiso = compromisoDias.takeIf { it > 0 }?.let { com.rutaalacima.app.data.social.Compromiso(h.plusDays(it.toLong()).toString()) },
                 sello = selloMeses.takeIf { it > 0 }?.let { h.plusMonths(it.toLong()).toString() },
             )
@@ -179,6 +182,7 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
         ) {
             // En vivo: encender una fogata (no aplica a un recuerdo de otro año)
             if (vm.anio == null || vm.anio == hoy().year) item { EntradaFogata(onClick = { encendiendoFogata = true }) }
+            vm.paso?.let { pa -> item { PreviaPaso(pa, vm.camino.mapa, onQuitar = { vm.paso = null }) } }
             item {
                 ChipSelector(null, TipoPost.entries, vm.tipo, { it.texto() }, { vm.tipo = it })
                 Text(

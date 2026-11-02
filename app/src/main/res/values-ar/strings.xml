@@ -2992,4 +2992,40 @@
     <string name="fg_resumen_d">%1$d د مشتعلة · %2$d أضواء مستلمة</string>
     <string name="fg_llevaron">ما أخذوه</string>
     <string name="fg_llevaron_vacio">الناس يكتبونه الآن. ستراه في ملخص هذه النار خلال دقائق.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">وصلت إلى قمّتي!</string>
+    <string name="ex_hito_camp_t">تم الوصول إلى مخيّم %1$s</string>
+    <string name="ex_tarjeta_paso">الخطوة %1$d من 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">لقد خطوت خطوتك اليوم بالفعل</string>
+    <string name="ex_pausa_t">لقد اكتسبت زخمًا</string>
+    <string name="ex_pausa_vacio">اكتب الآن خطوتك الأولى في البوصلة: هكذا تقرّبك كل قمة تراها من قمّتك.</string>
+    <string name="ex_abrir_brujula">افتح بوصلتي</string>
+    <string name="ex_jornadas">%1$s · %2$d من %3$d جولات</string>
+    <string name="ex_pausa_hoy">خطوتك اليوم · %1$s</string>
+    <string name="ex_pausa_hecho_d">تابع المشاهدة بهدوء. الجبل باقٍ غدًا.</string>
+    <string name="ex_darlo">أنجزها الآن</string>
+    <string name="ex_seguir">تابع المشاهدة</string>
+    <string name="ex_llevo_t">سآخذها معي</string>
+    <string name="ex_llevo_d">من قمة %1$s هذه، ماذا تأخذ؟</string>
+    <string name="ex_mochila_no">أزل من حقيبتي</string>
+    <string name="ex_mochila_si">احفظ في حقيبتي</string>
+    <string name="ex_mochila_d">لتقرأها مجددًا عندما تحتاجها.</string>
+    <string name="ex_paso_t">حوّلها إلى خطوة في بوصلتي</string>
+    <string name="ex_paso_d">ما ألهمك يصبح شيئًا تفعله.</string>
+    <string name="ex_sin_libres">لا توجد خانات فارغة في بوصلتك بعد.</string>
+    <string name="ex_mi_paso">خطوتي</string>
+    <string name="ex_agregar">أضف إلى بوصلتي</string>
+    <string name="ex_paso_nuevo">خطوة جديدة في %1$s: الخطوة %2$d من 8.</string>
+    <string name="ex_texto_cumbre">وصلت إلى قمّتي: ربحت الخطوات الـ64 كلها في بوصلتي.</string>
+    <string name="ex_texto_camp">وصلت إلى مخيّم %1$s: الخطوات الثماني كلها.</string>
+    <string name="ex_texto_paso">ربحت خطوة في %1$s: %2$s</string>
+    <string name="ex_ganado">ربحت خطوة! هل تشاركها مع مجتمعك؟</string>
+    <string name="ex_compartir">مشاركة</string>
+    <string name="ex_hito_cumbre_t">وصلت إلى قمّتك!</string>
+    <string name="ex_hito_cumbre_d">ربحت الخطوات الـ64 كلها في بوصلتك. اغرس العلم وأخبر مجتمعك كيف كان الصعود.</string>
+    <string name="ex_hito_camp_d">ربحت الخطوات الثماني في %1$s. يمكن لمجتمعك رؤية ذلك في بوصلتك.</string>
+    <string name="ex_compartir_comunidad">شارك في المجتمع</string>
+    <string name="ex_previa_d">سيظهر منشورك مع بوصلتك وهذه الخانة مضاءة.</string>
+    <string name="ex_sin_brujula">انشر بدون البوصلة</string>
 </resources>

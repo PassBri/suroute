@@ -3001,4 +3001,40 @@
     <string name="fg_resumen_d">%1$d min encendida · %2$d luces recibidas</string>
     <string name="fg_llevaron">Lo que se llevaron</string>
     <string name="fg_llevaron_vacio">Las personas lo están escribiendo ahora. Lo verás en el resumen de esta fogata en unos minutos.</string>
+
+    <!-- Expedición: pausa de cumbre, me lo llevo, tarjeta de paso -->
+    <string name="ex_tarjeta_cumbre">¡Llegué a mi cumbre!</string>
+    <string name="ex_hito_camp_t">Campamento %1$s alcanzado</string>
+    <string name="ex_tarjeta_paso">Paso %1$d de 8 · %2$s</string>
+    <string name="ex_pausa_hecho_t">Hoy ya diste tu paso</string>
+    <string name="ex_pausa_t">Ya tomaste impulso</string>
+    <string name="ex_pausa_vacio">Ahora escribe tu primer paso en la Brújula: así cada cima que veas te acerca a la tuya.</string>
+    <string name="ex_abrir_brujula">Abrir mi Brújula</string>
+    <string name="ex_jornadas">%1$s · %2$d de %3$d jornadas</string>
+    <string name="ex_pausa_hoy">Tu paso de hoy · %1$s</string>
+    <string name="ex_pausa_hecho_d">Sigue mirando con calma. La montaña sigue ahí mañana.</string>
+    <string name="ex_darlo">Darlo ahora</string>
+    <string name="ex_seguir">Seguir mirando</string>
+    <string name="ex_llevo_t">Me lo llevo</string>
+    <string name="ex_llevo_d">De esta cima de %1$s, ¿qué te llevas?</string>
+    <string name="ex_mochila_no">Quitar de mi mochila</string>
+    <string name="ex_mochila_si">Guardar en mi mochila</string>
+    <string name="ex_mochila_d">Para volver a leerla cuando la necesites.</string>
+    <string name="ex_paso_t">Convertirla en un paso de mi Brújula</string>
+    <string name="ex_paso_d">Lo que te inspiró se vuelve algo que haces.</string>
+    <string name="ex_sin_libres">Tu Brújula no tiene casillas libres todavía.</string>
+    <string name="ex_mi_paso">Mi paso</string>
+    <string name="ex_agregar">Agregar a mi Brújula</string>
+    <string name="ex_paso_nuevo">Nuevo paso en %1$s: paso %2$d de 8.</string>
+    <string name="ex_texto_cumbre">Llegué a mi cumbre: gané los 64 pasos de mi Brújula.</string>
+    <string name="ex_texto_camp">Alcancé el campamento %1$s: los 8 pasos ganados.</string>
+    <string name="ex_texto_paso">Gané un paso en %1$s: %2$s</string>
+    <string name="ex_ganado">¡Paso ganado! ¿Lo compartes con tu comunidad?</string>
+    <string name="ex_compartir">Compartir</string>
+    <string name="ex_hito_cumbre_t">¡Llegaste a tu cumbre!</string>
+    <string name="ex_hito_cumbre_d">Los 64 pasos de tu Brújula están ganados. Planta la bandera y cuéntale a tu comunidad cómo fue el ascenso.</string>
+    <string name="ex_hito_camp_d">Ganaste los 8 pasos de %1$s. Tu comunidad puede verlo en tu Brújula.</string>
+    <string name="ex_compartir_comunidad">Compartir en Comunidad</string>
+    <string name="ex_previa_d">Tu publicación irá con tu Brújula y esta casilla encendida.</string>
+    <string name="ex_sin_brujula">Publicar sin la Brújula</string>
 </resources>
