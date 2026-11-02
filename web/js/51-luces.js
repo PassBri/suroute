@@ -104,21 +104,6 @@
       <circle cx="50.6" cy="51.5" r="2" fill="url(#fb${u})" stroke="#5E4314" stroke-width=".5"/>
     </svg>`;
 
-    if (id === "estrella") {
-      const e = estrellaFacetas(u);
-      return `<svg ${c}><defs>
-      <radialGradient id="eg${u}" cx="32" cy="33" r="30" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9CCBFF" stop-opacity=".6"/><stop offset="1" stop-color="#9CCBFF" stop-opacity="0"/></radialGradient>
-      <linearGradient id="es-c${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#EEF6FF"/><stop offset="1" stop-color="#9CC8F4"/></linearGradient>
-      <linearGradient id="es-m${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#6BA4E6"/><stop offset="1" stop-color="#3D76C4"/></linearGradient>
-      <linearGradient id="es-o${u}" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2D5BA3"/><stop offset="1" stop-color="#1B3A70"/></linearGradient>
-    </defs>
-      <circle class="luz-halo" cx="32" cy="33" r="30" fill="url(#eg${u})"/>
-      ${e.caras}
-      <path d="${e.contorno}" fill="none" stroke="#173163" stroke-width=".7" stroke-linejoin="round" opacity=".6"/>
-      <g class="luz-destello"><path d="M50 9l1.1 4.4L55.5 14.5l-4.4 1.1L50 20l-1.1-4.4L44.5 14.5l4.4-1.1z" fill="#F4F9FF" stroke="#6FA4E8" stroke-width=".6"/></g>
-    </svg>`;
-    }
-
     if (id === "luna") return `<svg ${c}><defs>
       <radialGradient id="lg${u}" cx="30" cy="32" r="31" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#D9E6FF" stop-opacity=".55"/><stop offset="1" stop-color="#D9E6FF" stop-opacity="0"/></radialGradient>
       <radialGradient id="ld${u}" cx="30%" cy="35%" r="75%"><stop offset="0" stop-color="#FCFAF1"/><stop offset=".55" stop-color="#E2DDCD"/><stop offset="1" stop-color="#ACA591"/></radialGradient>
@@ -137,23 +122,35 @@
       </g>
     </svg>`;
 
-    // sol: un sol de verdad, sin rayos de dibujo: corona que se difumina, serpentinas de luz, oscurecimiento
-    // hacia el borde (limbo), granulación y dos manchas solares tenues
+    return astro(c, u, id === "estrella" ? AZUL : DORADO, id === "estrella");
+  }
+
+  /* Un astro de verdad, sin rayos de dibujo: corona que se difumina, serpentinas de luz finas, oscurecimiento
+   * hacia el borde (limbo) y granulación. El sol es dorado (con dos manchas solares tenues); la estrella es
+   * una estrella real, redonda y azul, con las cuatro puntas de difracción que deja la luz al fotografiarla. */
+  const DORADO = { halo: ["#FFF6D0", "#FFD27A", "#FFB04A", "#FF9A3A"], serp: ["#FFEFC2", "#FFD58A"], bloom: ["#FFFBEA", "#FFE9A8"],
+    disco: ["#FFFFFA", "#FFF4BE", "#FFCF5A", "#F7A033", "#E2701F"], grano: ".78 .38 .05" };
+  const AZUL = { halo: ["#EEF5FF", "#A9CBFF", "#6FA0F0", "#5A8CE6"], serp: ["#E2EEFF", "#A9C8FF"], bloom: ["#F6FAFF", "#C4DAFF"],
+    disco: ["#FFFFFF", "#E8F1FF", "#A9C9FF", "#6698EE", "#3F6FD1"], grano: ".15 .3 .7" };
+  function astro(c, u, k, estrella) {
     let corona = "";
     for (let i = 0; i < 14; i++) corona += `<ellipse cx="32" cy="32" rx="${i % 3 ? 0.9 : 1.4}" ry="${[30, 24, 27, 22, 29, 25, 21][i % 7]}" transform="rotate(${i * 25.7 + 6} 32 32)"/>`;
+    const r = estrella ? 14.5 : 16.5;
     return `<svg ${c}><defs>
-      <radialGradient id="sg${u}" cx="32" cy="32" r="31.5" gradientUnits="userSpaceOnUse"><stop offset=".42" stop-color="#FFF6D0" stop-opacity=".95"/><stop offset=".56" stop-color="#FFD27A" stop-opacity=".55"/><stop offset=".78" stop-color="#FFB04A" stop-opacity=".18"/><stop offset="1" stop-color="#FF9A3A" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sc${u}" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse"><stop offset=".5" stop-color="#FFEFC2" stop-opacity=".5"/><stop offset=".75" stop-color="#FFD58A" stop-opacity=".18"/><stop offset="1" stop-color="#FFD58A" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sb${u}" cx="32" cy="32" r="22" gradientUnits="userSpaceOnUse"><stop offset=".7" stop-color="#FFFBEA" stop-opacity=".85"/><stop offset="1" stop-color="#FFE9A8" stop-opacity="0"/></radialGradient>
-      <radialGradient id="sd${u}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFFFFA"/><stop offset=".5" stop-color="#FFF4BE"/><stop offset=".78" stop-color="#FFCF5A"/><stop offset=".92" stop-color="#F7A033"/><stop offset="1" stop-color="#E2701F"/></radialGradient>
-      <filter id="st${u}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .78  0 0 0 0 .38  0 0 0 0 .05  0 0 0 .9 -.22"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+      <radialGradient id="sg${u}" cx="32" cy="32" r="31.5" gradientUnits="userSpaceOnUse"><stop offset=".42" stop-color="${k.halo[0]}" stop-opacity=".95"/><stop offset=".56" stop-color="${k.halo[1]}" stop-opacity=".55"/><stop offset=".78" stop-color="${k.halo[2]}" stop-opacity=".18"/><stop offset="1" stop-color="${k.halo[3]}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sc${u}" cx="32" cy="32" r="30" gradientUnits="userSpaceOnUse"><stop offset=".5" stop-color="${k.serp[0]}" stop-opacity=".5"/><stop offset=".75" stop-color="${k.serp[1]}" stop-opacity=".18"/><stop offset="1" stop-color="${k.serp[1]}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sb${u}" cx="32" cy="32" r="${r + 5.5}" gradientUnits="userSpaceOnUse"><stop offset=".7" stop-color="${k.bloom[0]}" stop-opacity=".85"/><stop offset="1" stop-color="${k.bloom[1]}" stop-opacity="0"/></radialGradient>
+      <radialGradient id="sd${u}" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="${k.disco[0]}"/><stop offset=".5" stop-color="${k.disco[1]}"/><stop offset=".78" stop-color="${k.disco[2]}"/><stop offset=".92" stop-color="${k.disco[3]}"/><stop offset="1" stop-color="${k.disco[4]}"/></radialGradient>
+      <filter id="st${u}" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 ${k.grano.split(" ")[0]}  0 0 0 0 ${k.grano.split(" ")[1]}  0 0 0 0 ${k.grano.split(" ")[2]}  0 0 0 .9 -.22"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+      ${estrella ? `<linearGradient id="sp${u}" x1="0" x2="1"><stop offset="0" stop-color="${k.serp[0]}" stop-opacity="0"/><stop offset=".5" stop-color="#FFFFFF" stop-opacity=".95"/><stop offset="1" stop-color="${k.serp[0]}" stop-opacity="0"/></linearGradient>` : ""}
     </defs>
       <circle class="luz-halo" cx="32" cy="32" r="31.5" fill="url(#sg${u})"/>
       <g class="luz-rayos" fill="url(#sc${u})">${corona}</g>
-      <circle cx="32" cy="32" r="22" fill="url(#sb${u})"/>
-      <circle cx="32" cy="32" r="16.5" fill="url(#sd${u})"/>
-      <circle cx="32" cy="32" r="16.5" fill="#fff" filter="url(#st${u})" opacity=".45"/>
-      <circle cx="37.5" cy="28" r="1" fill="#B8571A" opacity=".45"/><circle cx="26.5" cy="36.5" r=".7" fill="#B8571A" opacity=".35"/>
+      ${estrella ? `<g class="luz-destello-x"><rect x="1" y="31.3" width="62" height="1.4" rx=".7" fill="url(#sp${u})"/><rect x="1" y="31.3" width="62" height="1.4" rx=".7" fill="url(#sp${u})" transform="rotate(90 32 32)"/></g>` : ""}
+      <circle cx="32" cy="32" r="${r + 5.5}" fill="url(#sb${u})"/>
+      <circle cx="32" cy="32" r="${r}" fill="url(#sd${u})"/>
+      <circle cx="32" cy="32" r="${r}" fill="#fff" filter="url(#st${u})" opacity="${estrella ? .3 : .45}"/>
+      ${estrella ? "" : `<circle cx="37.5" cy="28" r="1" fill="#B8571A" opacity=".45"/><circle cx="26.5" cy="36.5" r=".7" fill="#B8571A" opacity=".35"/>`}
     </svg>`;
   }
 

@@ -5133,6 +5133,8 @@ html.acceso-cerrado body > *:not(.acc-velo):not(.ic-tip) { visibility: hidden; }
 @keyframes luzHalo { from { opacity: .75; transform: scale(.94); } to { opacity: 1; transform: scale(1.04); } }
 .luz-destello { transform-box: view-box; transform-origin: 50px 14.5px; animation: luzDestello 2.6s ease-in-out infinite; }
 @keyframes luzDestello { 0%, 100% { transform: scale(.5) rotate(0); opacity: .4; } 50% { transform: scale(1.15) rotate(45deg); opacity: 1; } }
+.luz-destello-x { transform-box: view-box; transform-origin: 32px 32px; animation: luzDestelloX 2.6s ease-in-out infinite alternate; }
+@keyframes luzDestelloX { from { transform: scale(.82); opacity: .75; } to { transform: scale(1.05); opacity: 1; } }
 .luz-rayos { transform-box: view-box; transform-origin: 32px 32px; animation: luzRayos 40s linear infinite; }
 @keyframes luzRayos { to { transform: rotate(360deg); } }
 .luz.quieta * { animation: none !important; }

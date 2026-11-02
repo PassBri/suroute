@@ -239,22 +239,6 @@ private fun DrawScope.farol(pulso: Pulso) {
     drawCircle(c(0xFF5E4314), 2f, Offset(50.6f, 51.5f), style = Stroke(0.5f))
 }
 
-private fun DrawScope.estrella(pulso: Pulso) {
-    halo(Offset(32f, 33f), 30f, c(0xFF9CCBFF), 0.6f, pulso)
-    val a = Offset(6f, 7f); val b = Offset(58f, 59f)
-    val tonos = listOf(
-        Brush.linearGradient(listOf(c(0xFFEEF6FF), c(0xFF9CC8F4)), a, b),
-        Brush.linearGradient(listOf(c(0xFF6BA4E6), c(0xFF3D76C4)), a, b),
-        Brush.linearGradient(listOf(c(0xFF2D5BA3), c(0xFF1B3A70)), a, b),
-    )
-    Formas.caras.forEach { (cara, t) -> drawPath(cara, tonos[t]) }
-    drawPath(Formas.contorno, c(0xFF173163, 0.6f), style = Stroke(0.7f))
-    val f = pulso.destello; val s = 0.5f + 0.65f * sin(f * PI).toFloat()
-    withTransform({ rotate(45f * sin(f * PI).toFloat(), Offset(50f, 14.5f)); scale(s, s, Offset(50f, 14.5f)) }) {
-        val al = 0.4f + 0.6f * sin(f * PI).toFloat()
-        drawPath(Formas.destello, c(0xFFF4F9FF, al)); drawPath(Formas.destello, c(0xFF6FA4E8, al), style = Stroke(0.6f))
-    }
-}
 
 private fun DrawScope.luna(pulso: Pulso) {
     halo(Offset(30f, 32f), 31f, c(0xFFD9E6FF), 0.55f, pulso)
@@ -274,21 +258,41 @@ private val GRANOS: List<Triple<Float, Float, Float>> by lazy {
     val r = java.util.Random(7)
     List(70) { val a = r.nextFloat() * 2 * PI.toFloat(); val d = kotlin.math.sqrt(r.nextFloat()) * 15.5f; Triple(32f + d * cos(a), 32f + d * sin(a), 0.35f + r.nextFloat() * 0.45f) }
 }
-private fun DrawScope.sol(pulso: Pulso) {
+/** Colores de un astro: halo, serpentinas, resplandor, disco (centro → borde) y granulación. */
+private class Paleta(val halo: List<Long>, val serp: List<Long>, val bloom: List<Long>, val disco: List<Long>, val grano: Long)
+private val DORADO = Paleta(listOf(0xFFFFF6D0, 0xFFFFD27A, 0xFFFFB04A, 0xFFFF9A3A), listOf(0xFFFFEFC2, 0xFFFFD58A), listOf(0xFFFFFBEA, 0xFFFFE9A8),
+    listOf(0xFFFFFFFA, 0xFFFFF4BE, 0xFFFFCF5A, 0xFFF7A033, 0xFFE2701F), 0xFFC8610D)
+private val AZUL = Paleta(listOf(0xFFEEF5FF, 0xFFA9CBFF, 0xFF6FA0F0, 0xFF5A8CE6), listOf(0xFFE2EEFF, 0xFFA9C8FF), listOf(0xFFF6FAFF, 0xFFC4DAFF),
+    listOf(0xFFFFFFFF, 0xFFE8F1FF, 0xFFA9C9FF, 0xFF6698EE, 0xFF3F6FD1), 0xFF2A4C9C)
+
+private fun DrawScope.sol(pulso: Pulso) = astro(pulso, DORADO, estrella = false)
+/** La estrella es una estrella real: redonda y azul, con las cuatro puntas de difracción de la luz. */
+private fun DrawScope.estrella(pulso: Pulso) = astro(pulso, AZUL, estrella = true)
+
+private fun DrawScope.astro(pulso: Pulso, k: Paleta, estrella: Boolean) {
     val c0 = Offset(32f, 32f)
     val s = 0.94f + 0.1f * pulso.halo
-    drawCircle(Brush.radialGradient(0.42f to c(0xFFFFF6D0, 0.95f), 0.56f to c(0xFFFFD27A, 0.55f), 0.78f to c(0xFFFFB04A, 0.18f), 1f to c(0xFFFF9A3A, 0f), center = c0, radius = 31.5f * s), 31.5f * s, c0)
-    val serpentina = Brush.radialGradient(0.5f to c(0xFFFFEFC2, 0.5f), 0.75f to c(0xFFFFD58A, 0.18f), 1f to c(0xFFFFD58A, 0f), center = c0, radius = 30f)
+    val r = if (estrella) 14.5f else 16.5f
+    drawCircle(Brush.radialGradient(0.42f to c(k.halo[0], 0.95f), 0.56f to c(k.halo[1], 0.55f), 0.78f to c(k.halo[2], 0.18f), 1f to c(k.halo[3], 0f), center = c0, radius = 31.5f * s), 31.5f * s, c0)
+    val serpentina = Brush.radialGradient(0.5f to c(k.serp[0], 0.5f), 0.75f to c(k.serp[1], 0.18f), 1f to c(k.serp[1], 0f), center = c0, radius = 30f)
     withTransform({ rotate(pulso.giro, c0) }) {
         repeat(14) { i ->
             val rx = if (i % 3 != 0) 0.9f else 1.4f; val ry = LARGOS[i % 7]
             withTransform({ rotate(i * 25.7f + 6f, c0) }) { drawOval(serpentina, Offset(32f - rx, 32f - ry), Size(rx * 2, ry * 2)) }
         }
     }
-    drawCircle(Brush.radialGradient(0.7f to c(0xFFFFFBEA, 0.85f), 1f to c(0xFFFFE9A8, 0f), center = c0, radius = 22f), 22f, c0)
-    drawCircle(Brush.radialGradient(0f to c(0xFFFFFFFA), 0.5f to c(0xFFFFF4BE), 0.78f to c(0xFFFFCF5A), 0.92f to c(0xFFF7A033), 1f to c(0xFFE2701F), center = c0, radius = 16.5f), 16.5f, c0)
-    GRANOS.forEach { (x, y, r) -> drawCircle(c(0xFFC8610D, 0.16f), r, Offset(x, y)) }
-    drawCircle(c(0xFFB8571A, 0.45f), 1f, Offset(37.5f, 28f)); drawCircle(c(0xFFB8571A, 0.35f), 0.7f, Offset(26.5f, 36.5f))
+    if (estrella) {
+        val e = 0.82f + 0.23f * pulso.halo
+        val punta = Brush.horizontalGradient(0f to c(k.serp[0], 0f), 0.5f to Color.White.copy(alpha = 0.95f), 1f to c(k.serp[0], 0f), startX = 1f, endX = 63f)
+        withTransform({ scale(e, e, c0) }) {
+            drawRoundRect(punta, Offset(1f, 31.3f), Size(62f, 1.4f), CornerRadius(0.7f))
+            withTransform({ rotate(90f, c0) }) { drawRoundRect(punta, Offset(1f, 31.3f), Size(62f, 1.4f), CornerRadius(0.7f)) }
+        }
+    }
+    drawCircle(Brush.radialGradient(0.7f to c(k.bloom[0], 0.85f), 1f to c(k.bloom[1], 0f), center = c0, radius = r + 5.5f), r + 5.5f, c0)
+    drawCircle(Brush.radialGradient(0f to c(k.disco[0]), 0.5f to c(k.disco[1]), 0.78f to c(k.disco[2]), 0.92f to c(k.disco[3]), 1f to c(k.disco[4]), center = c0, radius = r), r, c0)
+    GRANOS.forEach { (x, y, g) -> if ((x - 32f) * (x - 32f) + (y - 32f) * (y - 32f) < r * r) drawCircle(c(k.grano, if (estrella) 0.1f else 0.16f), g, Offset(x, y)) }
+    if (!estrella) { drawCircle(c(0xFFB8571A, 0.45f), 1f, Offset(37.5f, 28f)); drawCircle(c(0xFFB8571A, 0.35f), 0.7f, Offset(26.5f, 36.5f)) }
 }
 
 // ====================================================================== El botón y la fila de las cinco
