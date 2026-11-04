@@ -5548,3 +5548,10 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
   html.imprime-libro .lc-libro textarea { border: 0; resize: none; }
   html.imprime-libro .lc-mes-libro { break-inside: avoid; }
 }
+/* Libro de cumbres: el ícono junto a «Tu vida en años» */
+.lc-con-libro { display: inline-flex; align-items: center; gap: 8px; }
+.lc-libro-ic { position: relative; display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; color: var(--burdeos); touch-action: manipulation; }
+.lc-libro-ic svg { width: 22px; height: 22px; fill: currentColor; }
+.lc-libro-ic b { position: absolute; top: 2px; right: 0; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 99px; font: 700 10px/16px var(--font-cuerpo, inherit); color: #fff; background: var(--burdeos-fijo, #8E2F1D); }
+@media (hover: hover) and (pointer: fine) { .lc-libro-ic:hover { background: var(--hoja-2); } }
+.lc-libro-ic:focus-visible { outline: 2px solid var(--oro); outline-offset: 2px; }

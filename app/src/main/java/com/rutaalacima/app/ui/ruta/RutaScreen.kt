@@ -331,7 +331,7 @@ fun RutaScreen(
             ) {
                 when (n) {
                     // La raíz de Mi ruta es el mapa de la vida (el tiempo); la visión tiene su propia opción
-                    Nivel.Vida -> { item(key = "libro") { EntradaLibro(onLibro) }; nivelMapa(perfil, posts, propositos, ir, onAjustes, onProposito) { vm.cambiarMeta(it) } }
+                    Nivel.Vida -> nivelMapa(perfil, posts, propositos, ir, onAjustes, onProposito, onLibro) { vm.cambiarMeta(it) }
                     Nivel.Brujula -> item(key = "vision-vida") {
                         VisionVida(casillas, anuales, vm.armando, onArmar = { vm.armarVision() }, onVision = onVision, onCompartir = onCompartirVision,
                             onAnio = { ir(Nivel.Anio(it)) }, onNuevaMeta = onNuevaMetaCampamento)
@@ -517,6 +517,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.nivelMapa(
     ir: (Nivel) -> Unit,
     onAjustes: () -> Unit,
     onProposito: (Long) -> Unit,
+    onLibro: () -> Unit,
     onMeta: (Int) -> Unit,
 ) {
     item { RecordatorioDiaCard(perfil, onAjustes) }
@@ -529,6 +530,7 @@ private fun androidx.compose.foundation.lazy.LazyListScope.nivelMapa(
         // Año en que vence cada propósito (se marca con una bandera en su punto)
         val aniosMeta = propositos.map { (com.rutaalacima.app.data.vision.LibroMetas.desde(it.id) ?: java.time.Instant.ofEpochMilli(it.creadoEn).atZone(ZoneId.systemDefault()).year) + it.horizonte }.toSet()
         item {
+          Box {
             Column(
                 Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(MaterialTheme.colorScheme.surfaceContainerLow)
                     .padding(horizontal = 14.dp, vertical = 18.dp),
@@ -568,6 +570,9 @@ private fun androidx.compose.foundation.lazy.LazyListScope.nivelMapa(
                 Text(stringResource(R.string.ruta_puntos_ayuda), style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             }
+            // Libro de cumbres: un ícono discreto junto al título (con las páginas por firmar)
+            IconoLibro(onLibro, Modifier.align(Alignment.TopEnd).padding(4.dp))
+          }
         }
     }
     if (perfil.anioNacimiento == null) {

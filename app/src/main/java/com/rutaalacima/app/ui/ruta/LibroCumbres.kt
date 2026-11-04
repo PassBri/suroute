@@ -44,6 +44,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -661,6 +663,19 @@ fun EntradaLibro(onClick: () -> Unit) {
                 Text((if (n > 0) stringResource(R.string.lb_por_firmar, n) + " · " else "") + stringResource(R.string.lb_sub_corto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+    }
+}
+
+/** El ícono del libro junto al título de la vida en años, con el número de páginas por firmar. */
+@Composable
+fun IconoLibro(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    val vm = rutaViewModel { LibroViewModel(it) }
+    val n = vm.hitos.count { it.firma == null }
+    val desc = stringResource(R.string.lb_titulo) + if (n > 0) ", " + stringResource(R.string.lb_por_firmar, n) else ""
+    IconButton(onClick = onClick, modifier = modifier.semantics { contentDescription = desc }) {
+        BadgedBox(badge = { if (n > 0) Badge { Text("$n") } }) {
+            Icon(Icons.Filled.MenuBook, null, tint = MaterialTheme.colorScheme.primary)
         }
     }
 }
