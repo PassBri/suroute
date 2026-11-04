@@ -121,7 +121,7 @@ Object.assign(ACC, {
     if (x.desde >= hoyYm) x.m = v;
     else {                                              // los meses pasados quedan con el monto de antes
       const nuevo = { ...x, id: "f" + nuevoId(), m: v, desde: hoyYm, saltar: (x.saltar || []).filter(y => y >= hoyYm) };
-      x.hasta = ymMas(hoyYm, -1); x.saltar = (x.saltar || []).filter(y => y < hoyYm); l.push(nuevo);
+      x.hasta = ymMas(hoyYm, -1); x.saltar = (x.saltar || []).filter(y => y < hoyYm); l.splice(l.indexOf(x) + 1, 0, nuevo);   // queda en su mismo lugar de la lista
       const f = fechaFijo(x, hoyYm), xs = movsGuardados(f);  // si este mes ya se había cambiado a mano, sigue enlazado
       if (xs.some(y => y.fx === x.id)) guardarMovs(f, xs.map(y => y.fx === x.id ? { ...y, fx: nuevo.id } : y));
     }

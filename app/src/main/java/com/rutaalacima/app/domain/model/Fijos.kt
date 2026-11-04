@@ -83,7 +83,7 @@ object Fijos {
         if (x.desde >= hoyYm) return l.map { if (it.id == id) it.copy(m = v) else it }
         val viejo = x.copy(hasta = YearMonth.from(hoy).minusMonths(1).toString(), saltar = x.saltar.filter { it < hoyYm })
         val nuevo = x.copy(id = nuevoId, m = v, desde = hoyYm, saltar = x.saltar.filter { it >= hoyYm })
-        return l.map { if (it.id == id) viejo else it } + nuevo
+        return l.flatMap { if (it.id == id) listOf(viejo, nuevo) else listOf(it) }   // queda en su mismo lugar de la lista
     }
 
     /** Dejar de repetir: este mes cuenta, los siguientes no. */
