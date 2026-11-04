@@ -334,7 +334,7 @@ DET["finanzas.b"] = () => {
       <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`)],
       ["salud", "Salud financiera", saludResumen("")],
       ["deudas", "Salir de deudas", deudasResumen()],
-      ["hitos", "Tus hitos", window.hitosBalance?.() || ""],
+      ["hitos", "Recuerdo de un hito", window.hitosRecuerdo?.() || ""],
       ["fijos", "Fijos de cada mes", fijosResumen()],
       ["mochilas", "Tus tres mochilas", mochilas(t)],
       ["categorias", "¿A dónde fue tu dinero?", porCategoria(t)],

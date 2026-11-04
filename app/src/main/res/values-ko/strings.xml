@@ -3229,4 +3229,6 @@
         <item quantity="one">이번 주, 1년 전</item>
         <item quantity="other">이번 주, %1$d년 전</item>
     </plurals>
+    <string name="hi_mis">나의 이정표</string>
+    <string name="hi_recuerdo_t">오르막의 추억</string>
 </resources>

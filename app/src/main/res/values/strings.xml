@@ -3238,4 +3238,6 @@
         <item quantity="one">Esta semana, hace 1 año</item>
         <item quantity="other">Esta semana, hace %1$d años</item>
     </plurals>
+    <string name="hi_mis">Mis hitos</string>
+    <string name="hi_recuerdo_t">Un recuerdo de tu ascenso</string>
 </resources>

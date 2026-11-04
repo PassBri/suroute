@@ -158,7 +158,7 @@ fun MarcarHito(f: String, vm: CuentasViewModel) {
 @Composable
 fun HitosBalance(libro: Libro, plata: (Double) -> String, vm: CuentasViewModel) {
     var editando by rememberSaveable { mutableStateOf<String?>(null) }
-    val l = libro.hitos; val hoy = hoy()
+    val l = libro.hitos
     RutaCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.Flag, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
@@ -167,19 +167,7 @@ fun HitosBalance(libro: Libro, plata: (Double) -> String, vm: CuentasViewModel) 
         }
         if (l.isEmpty()) Text(stringResource(R.string.hi_vacio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
         // Recuerdo: un hito logrado esta semana de un año anterior
-        l.filter { h -> h.ok && h.f.take(4).toInt() < hoy.year && runCatching {
-            ChronoUnit.DAYS.between(hoy, LocalDate.parse(hoy.year.toString() + h.f.drop(4))) in 0..6 }.getOrDefault(false) }.forEach { h ->
-            val n = hoy.year - h.f.take(4).toInt()
-            Row(Modifier.fillMaxWidth().padding(top = 12.dp).clip(RoundedCornerShape(16.dp))
-                .background(Brush.linearGradient(listOf(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.surfaceContainer))).padding(14.dp),
-                verticalAlignment = Alignment.CenterVertically) {
-                Icon(iconoHito(h.k), null, Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary); Spacer(Modifier.width(12.dp))
-                Column {
-                    Text(pluralStringResource(R.plurals.hi_hace_anios, n, n), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text(h.t, style = MaterialTheme.typography.titleMedium, fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold)
-                }
-            }
-        }
+        hitosRecuerdos(libro).forEach { h -> Recuerdo(h) }
         val planes = l.filter { !it.ok }.sortedBy { it.f }; val logros = l.filter { it.ok }.sortedByDescending { it.f }
         if (planes.isNotEmpty()) {
             Text(stringResource(R.string.hi_viene), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 16.dp))
@@ -188,15 +176,45 @@ fun HitosBalance(libro: Libro, plata: (Double) -> String, vm: CuentasViewModel) 
         if (logros.isNotEmpty()) {
             Text(stringResource(R.string.hi_lograste), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 16.dp))
             logros.groupBy { it.f.take(4) }.forEach { (anio, hs) ->
-                Row(Modifier.fillMaxWidth().padding(top = 6.dp)) {
-                    Text(anio, Modifier.width(52.dp).padding(top = 18.dp), style = MaterialTheme.typography.titleSmall, fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
-                    Column(Modifier.weight(1f)) { hs.forEach { h -> FilaHito(h, plata, { }) { editando = h.id } } }
-                }
+                Text(anio, Modifier.padding(top = 10.dp), style = MaterialTheme.typography.titleSmall, fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
+                hs.forEach { h -> FilaHito(h, plata, { }) { editando = h.id } }
             }
         }
     }
     DialogoHitoSiHace(editando, libro, vm) { editando = null }
+}
+
+/** Los hitos logrados que cumplen años esta semana (de años anteriores). */
+fun hitosRecuerdos(libro: Libro): List<Hito> { val d0 = hoy()
+    return libro.hitos.filter { h -> h.ok && (h.f.take(4).toIntOrNull() ?: d0.year) < d0.year && runCatching {
+        ChronoUnit.DAYS.between(d0, LocalDate.parse(d0.year.toString() + h.f.drop(4))) in 0..6 }.getOrDefault(false) } }
+
+/** En el balance, solo la semana del aniversario: el recuerdo, con el camino a «Mis hitos». */
+@Composable
+fun HitosRecuerdo(libro: Libro, onVer: () -> Unit) {
+    RutaCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Flag, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.hi_recuerdo_t), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            TextButton(onClick = onVer) { Text(stringResource(R.string.hi_mis)) }
+        }
+        hitosRecuerdos(libro).forEach { Recuerdo(it) }
+    }
+}
+
+@Composable
+private fun Recuerdo(h: Hito) {
+    val n = hoy().year - h.f.take(4).toInt()
+    Row(Modifier.fillMaxWidth().padding(top = 12.dp).clip(RoundedCornerShape(16.dp))
+        .background(Brush.linearGradient(listOf(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.surfaceContainer))).padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Icon(iconoHito(h.k), null, Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary); Spacer(Modifier.width(12.dp))
+        Column {
+            Text(pluralStringResource(R.plurals.hi_hace_anios, n, n), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(h.t, style = MaterialTheme.typography.titleMedium, fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold)
+        }
+    }
 }
 
 /** Abre el diálogo si [editando] es "nuevo:fecha" o el id de un hito. */

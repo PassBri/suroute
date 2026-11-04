@@ -3229,4 +3229,6 @@
         <item quantity="one">Diese Woche, vor 1 Jahr</item>
         <item quantity="other">Diese Woche, vor %1$d Jahren</item>
     </plurals>
+    <string name="hi_mis">Meine Meilensteine</string>
+    <string name="hi_recuerdo_t">Eine Erinnerung an Ihren Aufstieg</string>
 </resources>

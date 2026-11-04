@@ -40,17 +40,24 @@
   /** El botón para marcar un hito en un día (cuando ese día todavía no tiene). */
   window.hitoBoton = f => hitosDatos().some(h => h.f === f) ? "" : `<button class="btn texto hito-marcar" data-acc="hitoNuevo" data-arg="${f}">${ic("bandera")} Marcar un hito este día</button>`;
 
-  /** En el balance: el recuerdo, lo que viene y la línea de tiempo de lo logrado. */
+  /** Los hitos logrados que cumplen años esta semana (de años anteriores). */
+  const recuerdosDe = l => { const hoy = hoyIso(), a = Number(hoy.slice(0, 4));
+    return l.filter(h => h.ok && Number(h.f.slice(0, 4)) < a && (() => { const d = Math.round((deIso(a + h.f.slice(4)) - deIso(hoy)) / 864e5); return d >= 0 && d <= 6; })()); };
+  const recuerdoHtml = h => { const hoy = hoyIso(), n = Number(hoy.slice(0, 4)) - Number(h.f.slice(0, 4));
+    return `<div class="hito-recuerdo">${ic(tipoH(h.k)[2])}<p><small>${h.f.slice(5) === hoy.slice(5) ? "Hoy hace" : "Esta semana, hace"} ${n === 1 ? "1 año" : n + " años"}</small><b>${esc(h.t)}</b></p></div>`; };
+  /** En el balance, solo la semana del aniversario: el recuerdo, con el camino a «Mis hitos». */
+  window.hitosRecuerdo = () => { const r = recuerdosDe(hitosDatos()); if (!r.length) return "";
+    return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("bandera")} Un recuerdo de tu ascenso</h3><button class="btn mini" data-sel="hitos">Mis hitos</button></div>${r.map(recuerdoHtml).join("")}`, "hitos-hoja"); };
+  /** La página «Mis hitos»: el recuerdo, lo que viene y la línea de tiempo de lo logrado. */
   window.hitosBalance = () => {
-    const l = hitosDatos(), hoy = hoyIso(), md = hoy.slice(5), a = Number(hoy.slice(0, 4));
+    const l = hitosDatos();
     const cab = `<div class="cab-lista-btn"><h3 style="margin:0">${ic("bandera")} Tus hitos</h3><button class="btn mini lleno" data-acc="hitoNuevo" data-arg="">${ic("mas")} Nuevo hito</button></div>`;
     if (!l.length) return hoja(cab + `<p class="suave" style="margin:8px 0 0">Las cumbres que tu dinero hace posibles: comprar tu casa, el viaje que soñaste, pagar la última cuota. Planéalas con fecha y márcalas cuando las logres; quedarán aquí como recuerdo.</p>`, "hitos-hoja");
     // Recuerdo: un hito logrado tal día como hoy (o en los próximos 6 días) de un año anterior
-    const recuerdos = l.filter(h => h.ok && Number(h.f.slice(0, 4)) < a && (() => { const d = Math.round((deIso(a + h.f.slice(4)) - deIso(hoy)) / 864e5); return d >= 0 && d <= 6; })());
+    const recuerdos = recuerdosDe(l);
     const planes = l.filter(h => !h.ok).sort((x, y) => x.f.localeCompare(y.f)), logros = l.filter(h => h.ok).sort((x, y) => y.f.localeCompare(x.f));
     const porAnio = logros.reduce((m, h) => { (m[h.f.slice(0, 4)] ||= []).push(h); return m; }, {});
-    return hoja(cab + (recuerdos.length ? recuerdos.map(h => { const n = a - Number(h.f.slice(0, 4));
-      return `<div class="hito-recuerdo">${ic(tipoH(h.k)[2])}<p><small>${h.f.slice(5) === md ? "Hace" : "Esta semana, hace"} ${n === 1 ? "1 año" : n + " años"}</small><b>${esc(h.t)}</b></p></div>`; }).join("") : "") +
+    return hoja(cab + recuerdos.map(recuerdoHtml).join("") +
       (planes.length ? `<h4 class="hitos-sub">Lo que viene</h4><ul class="hitos">${planes.map(h => fila(h)).join("")}</ul>` : "") +
       (logros.length ? `<h4 class="hitos-sub">Lo que lograste</h4>${Object.keys(porAnio).sort().reverse().map(y => `<div class="hitos-anio"><span class="hitos-anio-n">${y}</span><ul class="hitos">${porAnio[y].map(h => fila(h)).join("")}</ul></div>`).join("")}` : ""), "hitos-hoja");
   };

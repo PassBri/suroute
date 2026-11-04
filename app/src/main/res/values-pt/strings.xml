@@ -3229,4 +3229,6 @@
         <item quantity="one">Nesta semana, há 1 ano</item>
         <item quantity="other">Nesta semana, há %1$d anos</item>
     </plurals>
+    <string name="hi_mis">Meus marcos</string>
+    <string name="hi_recuerdo_t">Uma lembrança da sua subida</string>
 </resources>

@@ -553,14 +553,16 @@ sealed interface NivelCuentas {
     data object MetasN : NivelCuentas
     /** Mis cuentas fijas (arriendo, salario, internet…): a un toque desde la barra. */
     data object FijosN : NivelCuentas
+    /** Mis hitos: las cumbres que el dinero hace posibles (planeadas y logradas). */
+    data object HitosN : NivelCuentas
 
-    fun codigo(): String = when (this) { Balance -> "b"; is Anio -> "a:$a"; is Mes -> "m:$ym"; is Dia -> "d:$f"; DeudasN -> "deudas"; PatrimonioN -> "patrimonio"; is SaludN -> if (a == null) "salud" else "salud:$a"; GraficaN -> "grafica"; MetasN -> "metasfin"; FijosN -> "fijos" }
-    fun arriba(): NivelCuentas? = when (this) { Balance -> null; is Anio -> Balance; is Mes -> Anio(ym.year); is Dia -> Mes(YearMonth.from(f)); DeudasN, PatrimonioN, is SaludN, GraficaN, MetasN, FijosN -> Balance }
+    fun codigo(): String = when (this) { Balance -> "b"; is Anio -> "a:$a"; is Mes -> "m:$ym"; is Dia -> "d:$f"; DeudasN -> "deudas"; PatrimonioN -> "patrimonio"; is SaludN -> if (a == null) "salud" else "salud:$a"; GraficaN -> "grafica"; MetasN -> "metasfin"; FijosN -> "fijos"; HitosN -> "hitos" }
+    fun arriba(): NivelCuentas? = when (this) { Balance -> null; is Anio -> Balance; is Mes -> Anio(ym.year); is Dia -> Mes(YearMonth.from(f)); DeudasN, PatrimonioN, is SaludN, GraficaN, MetasN, FijosN, HitosN -> Balance }
 
     companion object {
         fun de(c: String?): NivelCuentas = runCatching {
             val (t, v) = (c ?: "b").split(":", limit = 2).let { it[0] to it.getOrElse(1) { "" } }
-            when (t) { "a" -> Anio(v.toInt()); "m" -> Mes(YearMonth.parse(v)); "d" -> Dia(LocalDate.parse(v)); "deudas" -> DeudasN; "patrimonio" -> PatrimonioN; "salud" -> SaludN(v.toIntOrNull()); "grafica" -> GraficaN; "metasfin" -> MetasN; "fijos" -> FijosN; else -> Balance }
+            when (t) { "a" -> Anio(v.toInt()); "m" -> Mes(YearMonth.parse(v)); "d" -> Dia(LocalDate.parse(v)); "deudas" -> DeudasN; "patrimonio" -> PatrimonioN; "salud" -> SaludN(v.toIntOrNull()); "grafica" -> GraficaN; "metasfin" -> MetasN; "fijos" -> FijosN; "hitos" -> HitosN; else -> Balance }
         }.getOrDefault(Balance)
     }
 }
@@ -722,6 +724,7 @@ fun AscensoFinancieroScreen(inicial: String?, onBack: () -> Unit, onAprende: () 
                         NivelCuentas.PatrimonioN -> patrimonioNivel(libro, plata, ir, vm)
                         NivelCuentas.MetasN -> metasFinNivel(libro, plata, vm)
                         NivelCuentas.FijosN -> item(key = "fijos-solo") { FijosCard(libro, null, plata, vm) }
+                        NivelCuentas.HitosN -> item(key = "hitos-solo") { HitosBalance(libro, plata, vm) }
                         is NivelCuentas.SaludN -> saludNivel(n.a, libro, plata, ir)
                         NivelCuentas.GraficaN -> item(key = "grafica-sola") { if (libro.dias.isEmpty()) RutaCard { Text(stringResource(R.string.gr_vacia), style = MaterialTheme.typography.bodyMedium) } else GraficaAscensoCard(libro, plata) }
                     }
@@ -745,6 +748,7 @@ private fun Migas(n: NivelCuentas, ir: (NivelCuentas) -> Unit) {
             NivelCuentas.PatrimonioN -> add(stringResource(R.string.cu_patrimonio_titulo) to n)
             NivelCuentas.MetasN -> add(stringResource(R.string.mf_titulo) to n)
             NivelCuentas.FijosN -> add(stringResource(R.string.fb_fijos) to n)
+            NivelCuentas.HitosN -> add(stringResource(R.string.hi_mis) to n)
             is NivelCuentas.SaludN -> add(stringResource(R.string.cu_salud) to n)
             NivelCuentas.GraficaN -> add(stringResource(R.string.gr_titulo) to n)
             else -> {}
@@ -1056,7 +1060,7 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
     }
     sec("metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
     sec("deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
-    sec("hitos") { HitosBalance(libro, plata, vm) }
+    if (hitosRecuerdos(libro).isNotEmpty()) sec("hitos") { HitosRecuerdo(libro) { ir(NivelCuentas.HitosN) } }
     sec("fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }
     sec("mochilas") { MochilasCard(t, plata) }
     sec("categorias") { CategoriasCard(t, plata) }

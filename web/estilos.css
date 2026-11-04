@@ -5857,3 +5857,4 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .hito-estado .seg-b:has(input:checked) { background: var(--oro-suave); color: var(--burdeos); font-weight: 600; }
 .hito-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 @media (max-width: 520px) { .hito.logrado { grid-template-columns: 40px 1fr auto; } .hito.logrado .hito-acc { grid-column: auto; } .hitos-anio { grid-template-columns: 44px 1fr; } }
+@media (max-width: 520px) { .hitos-anio { grid-template-columns: 1fr; gap: 0; } .hitos-anio-n { border-right: 0; border-bottom: 2px solid var(--oro-suave); text-align: left; line-height: 1.6; padding: 0 0 2px; justify-self: start; } }

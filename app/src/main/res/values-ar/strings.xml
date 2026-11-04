@@ -3229,4 +3229,6 @@
         <item quantity="one">هذا الأسبوع، قبل سنة</item>
         <item quantity="other">هذا الأسبوع، قبل %1$d سنوات</item>
     </plurals>
+    <string name="hi_mis">محطاتي</string>
+    <string name="hi_recuerdo_t">ذكرى من صعودك</string>
 </resources>

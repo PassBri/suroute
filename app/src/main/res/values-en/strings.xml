@@ -3229,4 +3229,6 @@
         <item quantity="one">This week, 1 year ago</item>
         <item quantity="other">This week, %1$d years ago</item>
     </plurals>
+    <string name="hi_mis">My milestones</string>
+    <string name="hi_recuerdo_t">A memory from your climb</string>
 </resources>

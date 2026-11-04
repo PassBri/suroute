@@ -3229,4 +3229,6 @@
         <item quantity="one">今週、1 年前</item>
         <item quantity="other">今週、%1$d 年前</item>
     </plurals>
+    <string name="hi_mis">私のマイルストーン</string>
+    <string name="hi_recuerdo_t">登りの思い出</string>
 </resources>

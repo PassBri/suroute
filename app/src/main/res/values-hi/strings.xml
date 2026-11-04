@@ -3229,4 +3229,6 @@
         <item quantity="one">इस हफ़्ते, 1 साल पहले</item>
         <item quantity="other">इस हफ़्ते, %1$d साल पहले</item>
     </plurals>
+    <string name="hi_mis">मेरे पड़ाव</string>
+    <string name="hi_recuerdo_t">आपकी चढ़ाई की एक याद</string>
 </resources>

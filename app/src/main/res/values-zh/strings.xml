@@ -3229,4 +3229,6 @@
         <item quantity="one">这周，1 年前</item>
         <item quantity="other">这周，%1$d 年前</item>
     </plurals>
+    <string name="hi_mis">我的里程碑</string>
+    <string name="hi_recuerdo_t">攀登路上的回忆</string>
 </resources>

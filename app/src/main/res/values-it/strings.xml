@@ -3229,4 +3229,6 @@
         <item quantity="one">Questa settimana, 1 anno fa</item>
         <item quantity="other">Questa settimana, %1$d anni fa</item>
     </plurals>
+    <string name="hi_mis">I miei traguardi</string>
+    <string name="hi_recuerdo_t">Un ricordo della tua salita</string>
 </resources>

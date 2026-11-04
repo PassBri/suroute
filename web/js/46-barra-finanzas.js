@@ -170,7 +170,7 @@ ACC.fbResMes = (_, d) => { const s = fbResMes(fbDatos()), [a, m] = s.ym.split("-
 function fbBarra() {
   const hoy = hoyFecha(), aHoy = hoy.getFullYear(), mHoy = hoy.getMonth() + 1, l = fbLugar(), ver = fbVer(), a = ver.a, m = ver.m;
   const v = String(estado.sel || ""), arriba = fbArriba(), datos = fbDatos();
-  const ATAJOS = [["b", "plata", "Balance general"], ["fijos", "repetir", "Mis cuentas fijas"], ["deudas", "deuda", "Deudas"], ["metasfin", "alcancia", "Metas financieras"],
+  const ATAJOS = [["b", "plata", "Balance general"], ["fijos", "repetir", "Mis cuentas fijas"], ["deudas", "deuda", "Deudas"], ["metasfin", "alcancia", "Metas financieras"], ["hitos", "bandera", "Mis hitos"],
     ["salud", "salud", "Salud financiera"], ["grafica", "grafica", "Gráfica del ascenso"], ["patrimonio", "flechasVert", "Activos y pasivos"]];
   const donde = l.d ? `${l.d} ${MES_CORTO[l.m - 1]} ${l.a}` : l.m ? `${mayus(MESES[l.m - 1])} ${l.a}` : l.a ? String(l.a) : ATAJOS.find(x => x[0] === v)?.[2] || "Ascenso financiero";
   let meses = "";
@@ -204,7 +204,7 @@ function fbBarra() {
       ${sep}
       ${atj("b")}${atj("grafica")}${atj("salud")}
       ${sep}
-      ${atj("fijos")}${atj("metasfin")}${atj("deudas")}${atj("patrimonio")}
+      ${atj("fijos")}${atj("metasfin")}${atj("hitos")}${atj("deudas")}${atj("patrimonio")}
       ${sep}
       ${btn(`data-acc="ascDeshacer" ${HIST.atras.length ? "" : "disabled"}`, "deshacer", "Deshacer (Ctrl+Z)")}
       ${btn(`data-acc="ascRehacer" ${HIST.adelante.length ? "" : "disabled"}`, "rehacer", "Rehacer (Ctrl+Shift+Z)")}
@@ -275,6 +275,9 @@ ACC.fbMes = (_, d) => { const ver = fbVer(); ver.m += Number(d); if (ver.m < 1) 
 ACC.fbPlegar = () => { estado.fbAbierta = !estado.fbAbierta; fbRepintar(); };
 
 /* Mis cuentas fijas, a un toque desde la barra */
+/** Mis hitos: las cumbres que el dinero hace posibles, con su recuerdo, lo que viene y lo logrado año por año. */
+DET["finanzas.hitos"] = () => (window.finBloqueado?.() ? pantallaBloqueo() : cab(avAsc(), "Mis hitos", "Las cumbres que tu dinero hace posibles", ojoAsc()) +
+  cuerpo(window.hitosBalance ? hitosBalance() : "", "max-width:980px"));
 DET["finanzas.fijos"] = () => cab(avAsc(), "Mis cuentas fijas", "Lo que se repite cada mes: arriendo, salario, internet…", ojoAsc()) +
   cuerpo((window.fijosHoja ? fijosHoja("") : hoja(`<p class="suave">Aún no hay cuentas fijas.</p>`)), "max-width:980px");
 

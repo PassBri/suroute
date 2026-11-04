@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material3.AssistChip
@@ -163,6 +164,7 @@ fun BarraFinanzas(nivel: NivelCuentas, libro: Libro, plata: (Double) -> String, 
                 separador()
                 atajo(NivelCuentas.FijosN, Icons.Filled.Repeat, R.string.fb_fijos)
                 atajo(NivelCuentas.MetasN, Icons.Filled.Savings, R.string.mf_titulo)
+                atajo(NivelCuentas.HitosN, Icons.Filled.Flag, R.string.hi_mis)
                 atajo(NivelCuentas.DeudasN, Icons.Filled.CreditCard, R.string.cu_deudas)
                 atajo(NivelCuentas.PatrimonioN, Icons.Filled.SwapVert, R.string.cu_patrimonio_titulo)
                 separador()

@@ -3229,4 +3229,6 @@
         <item quantity="one">На этой неделе, 1 год назад</item>
         <item quantity="other">На этой неделе, лет назад: %1$d</item>
     </plurals>
+    <string name="hi_mis">Мои вехи</string>
+    <string name="hi_recuerdo_t">Воспоминание о вашем восхождении</string>
 </resources>
