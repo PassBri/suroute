@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Enviar denúncia</string>
     <string name="coach_rep_gracias">Obrigado. A moderação vai revisar esta resposta.</string>
     <string name="coach_rep_error">Não foi possível enviar a denúncia. Verifique sua conexão.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Seu fixo (%2$s) não aparece em %3$s. Também valia neste mês?</item>
+        <item quantity="other">Seus %1$d fixos (%2$s) não aparecem em %3$s. Também valiam neste mês?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Usar meus fixos em %1$s</string>
+    <string name="cu_fijos_traidos">Pronto: seus fixos já contam em %1$s. Se algum não valia, remova-o no dia dele.</string>
 </resources>

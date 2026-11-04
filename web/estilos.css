@@ -5665,3 +5665,8 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .coach-motivos { border: 0; padding: 0; margin: 0 0 10px; display: grid; gap: 2px; }
 .coach-motivos .opcion { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
 .coach-motivos input { width: 18px; height: 18px; accent-color: var(--burdeos); }
+/* Traer los fijos a un mes anterior */
+.fijos-antes { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin: 10px 0 4px; padding: 10px 12px; border-radius: 12px; background: var(--oro-suave); color: var(--tinta); white-space: normal; }
+.fijos-antes > svg { width: 20px; height: 20px; fill: var(--burdeos); }
+.fijos-antes p { margin: 0; font-size: 14px; }
+@media (max-width: 640px) { .fijos-antes { grid-template-columns: auto 1fr; } .fijos-antes .btn { grid-column: 1 / -1; justify-self: start; } }

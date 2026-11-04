@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">发送举报</string>
     <string name="coach_rep_gracias">谢谢。审核人员会查看此回复。</string>
     <string name="coach_rep_error">无法发送举报。请检查网络连接。</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">你的固定项（%2$s）没有出现在%3$s。这个月也适用吗？</item>
+        <item quantity="other">你的 %1$d 个固定项（%2$s）没有出现在%3$s。这个月也适用吗？</item>
+    </plurals>
+    <string name="cu_fijos_traer">在%1$s使用我的固定项</string>
+    <string name="cu_fijos_traidos">完成：你的固定项已计入%1$s。如果某项不适用，请在当天删除。</string>
 </resources>

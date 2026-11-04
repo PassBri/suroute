@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">신고 보내기</string>
     <string name="coach_rep_gracias">감사합니다. 운영자가 이 답변을 검토합니다.</string>
     <string name="coach_rep_error">신고를 보낼 수 없습니다. 연결을 확인하세요.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">고정 항목(%2$s)이 %3$s에 나타나지 않습니다. 이번 달에도 해당되었나요?</item>
+        <item quantity="other">고정 항목 %1$d개(%2$s)가 %3$s에 나타나지 않습니다. 이번 달에도 해당되었나요?</item>
+    </plurals>
+    <string name="cu_fijos_traer">%1$s에 고정 항목 사용</string>
+    <string name="cu_fijos_traidos">완료: 고정 항목이 이제 %1$s에 반영됩니다. 해당되지 않는 항목은 그날에서 삭제하세요.</string>
 </resources>

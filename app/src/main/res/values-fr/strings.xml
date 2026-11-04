@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Envoyer le signalement</string>
     <string name="coach_rep_gracias">Merci. La modération examinera cette réponse.</string>
     <string name="coach_rep_error">Le signalement n’a pas pu être envoyé. Vérifiez votre connexion.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Votre élément fixe (%2$s) n’apparaît pas en %3$s. S’appliquait-il aussi ce mois-ci ?</item>
+        <item quantity="other">Vos %1$d éléments fixes (%2$s) n’apparaissent pas en %3$s. S’appliquaient-ils aussi ce mois-ci ?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Utiliser mes fixes en %1$s</string>
+    <string name="cu_fijos_traidos">C’est fait : vos fixes comptent maintenant en %1$s. Si l’un ne s’appliquait pas, retirez-le à son jour.</string>
 </resources>

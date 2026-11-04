@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Send report</string>
     <string name="coach_rep_gracias">Thanks. Moderation will review this response.</string>
     <string name="coach_rep_error">The report couldn\'t be sent. Check your connection.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Your fixed item (%2$s) doesn\'t appear in %3$s. Did it also apply this month?</item>
+        <item quantity="other">Your %1$d fixed items (%2$s) don\'t appear in %3$s. Did they also apply this month?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Use my fixed items in %1$s</string>
+    <string name="cu_fijos_traidos">Done: your fixed items now count in %1$s. If one didn\'t apply, remove it on its day.</string>
 </resources>

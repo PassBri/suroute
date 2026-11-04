@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Invia segnalazione</string>
     <string name="coach_rep_gracias">Grazie. La moderazione esaminerà questa risposta.</string>
     <string name="coach_rep_error">Impossibile inviare la segnalazione. Controlla la connessione.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">La tua voce fissa (%2$s) non compare a %3$s. Valeva anche questo mese?</item>
+        <item quantity="other">Le tue %1$d voci fisse (%2$s) non compaiono a %3$s. Valevano anche questo mese?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Usa le mie voci fisse a %1$s</string>
+    <string name="cu_fijos_traidos">Fatto: le tue voci fisse ora contano a %1$s. Se una non valeva, rimuovila nel suo giorno.</string>
 </resources>

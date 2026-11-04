@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Meldung senden</string>
     <string name="coach_rep_gracias">Danke. Die Moderation prüft diese Antwort.</string>
     <string name="coach_rep_error">Die Meldung konnte nicht gesendet werden. Prüfen Sie Ihre Verbindung.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Ihr Fixposten (%2$s) erscheint nicht im %3$s. Galt er auch in diesem Monat?</item>
+        <item quantity="other">Ihre %1$d Fixposten (%2$s) erscheinen nicht im %3$s. Galten sie auch in diesem Monat?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Fixposten im %1$s verwenden</string>
+    <string name="cu_fijos_traidos">Fertig: Ihre Fixposten zählen jetzt im %1$s. Falls einer nicht galt, entfernen Sie ihn an seinem Tag.</string>
 </resources>

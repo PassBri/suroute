@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">إرسال البلاغ</string>
     <string name="coach_rep_gracias">شكرًا. سيراجع فريق الإشراف هذا الرد.</string>
     <string name="coach_rep_error">تعذّر إرسال البلاغ. تحقق من اتصالك.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">بندك الثابت (%2$s) لا يظهر في %3$s. هل كان ينطبق هذا الشهر أيضًا؟</item>
+        <item quantity="other">بنودك الثابتة الـ %1$d (%2$s) لا تظهر في %3$s. هل كانت تنطبق هذا الشهر أيضًا؟</item>
+    </plurals>
+    <string name="cu_fijos_traer">استخدم بنودي الثابتة في %1$s</string>
+    <string name="cu_fijos_traidos">تم: بنودك الثابتة تُحتسب الآن في %1$s. إن لم ينطبق أحدها فاحذفه في يومه.</string>
 </resources>

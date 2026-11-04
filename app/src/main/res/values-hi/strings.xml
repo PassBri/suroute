@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">रिपोर्ट भेजें</string>
     <string name="coach_rep_gracias">धन्यवाद। मॉडरेशन इस जवाब की समीक्षा करेगा।</string>
     <string name="coach_rep_error">रिपोर्ट नहीं भेजी जा सकी। अपना कनेक्शन जाँचें।</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">आपकी तय मद (%2$s) %3$s में नहीं दिख रही। क्या यह इस महीने भी लागू थी?</item>
+        <item quantity="other">आपकी %1$d तय मदें (%2$s) %3$s में नहीं दिख रहीं। क्या ये इस महीने भी लागू थीं?</item>
+    </plurals>
+    <string name="cu_fijos_traer">%1$s में मेरी तय मदें इस्तेमाल करें</string>
+    <string name="cu_fijos_traidos">हो गया: आपकी तय मदें अब %1$s में गिनी जाती हैं। जो लागू नहीं थी, उसे उसके दिन हटा दें।</string>
 </resources>

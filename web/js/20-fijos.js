@@ -66,6 +66,7 @@ function fijosHoja(ym) {
   const l = fijosDatos().filter(x => (!x.hasta || x.hasta >= base) && x.desde <= (ym ? ym : "9999-12"));
   const totalT = t => l.filter(x => x.t === t).reduce((a, x) => a + Number(x.m), 0);
   return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("repetir")} Fijos de cada mes</h3><span class="suave" style="font-size:13px">Aparecen solos cada mes en su día</span></div>
+    ${ym ? avisoFijosAntes(ym) : ""}
     ${l.length ? `<div class="asc-tabla"><table class="asc-movs asc-fijos"><thead><tr><th>Tipo</th><th>Concepto</th><th>Día</th><th class="num">Monto</th><th><span class="oculto">Dejar de repetir</span></th></tr></thead><tbody>
       ${l.map(x => `<tr class="t-${x.t}"><td><span class="pildora t-${x.t}">${ASC.TIPOS.find(y => y[0] === x.t)[2]}</span></td>
         <td><input value="${esc(x.n || catDe(x.t, x.c)?.[1] || "")}" data-acc-change="fijoNota" data-arg="${x.id}" maxlength="120" aria-label="Concepto"><small class="suave">${esc(catDe(x.t, x.c)?.[1] || "")} · desde ${mesCorto(x.desde)}</small></td>
@@ -76,10 +77,29 @@ function fijosHoja(ym) {
       <p class="suave" style="margin:8px 0 0;font-size:13px">Si cambias el monto, rige desde este mes. Para cambiar solo un mes, edítalo en su día.</p>`
     : `<p class="suave" style="margin:6px 0 0">¿Pagas arriendo, internet o recibes un salario fijo? Al anotarlo en un día marca <b>Se repite cada mes</b> y aparecerá solo cada mes, sin volver a escribirlo.</p>`}`);
 }
+/** Fijos que no aparecen en [ym] porque empiezan después o se saltaron ese mes: se pueden traer
+ *  para registrar ese mes con la misma base (por ejemplo, octubre con los fijos creados en noviembre). */
+const fijosAusentes = ym => fijosDatos().filter(x => (!x.hasta || x.hasta >= ym) && (x.desde > ym || (x.saltar || []).includes(ym)));
+window.fijosAusentes = fijosAusentes;
+/** Aviso con el botón para aplicar los fijos en [ym] (solo en meses que ya llegaron). */
+window.avisoFijosAntes = ym => {
+  const l = fijosAusentes(ym); if (!l.length || ym > iso(hoyFecha()).slice(0, 7)) return "";
+  const nombres = l.slice(0, 3).map(x => x.n || catDe(x.t, x.c)?.[1] || "").filter(Boolean).join(", ") + (l.length > 3 ? "…" : ""), mes = MESES[Number(ym.slice(5)) - 1], uno = l.length === 1;
+  return `<div class="fijos-antes">${ic("repetir")}<p>${uno ? "Tu fijo" : `Tus ${l.length} fijos`} (${esc(nombres)}) ${uno ? "no aparece" : "no aparecen"} en ${mes}. ¿También ${uno ? "aplicaba" : "aplicaban"} este mes?</p>
+    <button class="btn mini lleno" data-acc="fijosDesde" data-arg="${ym}">${uno ? "Usar mi fijo" : "Usar mis fijos"} en ${mes}</button></div>`;
+};
+/** Los meses entre [a] (sin incluir) y [b] (sin incluir): quedan saltados para no cambiarlos al traer un fijo hacia atrás. */
+const mesesIntermedios = (a, b) => { const r = []; for (let ym = ymMas(a, 1), n = 0; ym < b && n < 600; ym = ymMas(ym, 1), n++) r.push(ym); return r; };
 const mesCorto = ym => `${MES_C[Number(ym.slice(5)) - 1]} ${ym.slice(0, 4)}`;
 window.fijosHoja = fijosHoja;
 
 Object.assign(ACC, {
+  /** Trae a [ym] los fijos que no aparecían (solo ese mes: los meses intermedios no cambian): aparecen solos en ese mes y en los siguientes (se puede deshacer). */
+  fijosDesde(el, ym) {
+    const l = fijosDatos(), ids = new Set(fijosAusentes(ym).map(x => x.id)); if (!ids.size) return;
+    l.forEach(x => { if (!ids.has(x.id)) return; if (x.desde > ym) { x.saltar = [...(x.saltar || []), ...mesesIntermedios(ym, x.desde)]; x.desde = ym; } x.saltar = (x.saltar || []).filter(y => y !== ym); });
+    guardarFijos(l); toast(`Listo: tus fijos ya cuentan en ${MESES[Number(ym.slice(5)) - 1]}. Si alguno no aplicaba, quítalo en su día.`); pintarDetalle();
+  },
   fijoNota(el, id) { const l = fijosDatos(), x = l.find(y => y.id === id); if (!x) return; x.n = el.value.trim(); guardarFijos(l); },
   fijoDia(el, id) { const l = fijosDatos(), x = l.find(y => y.id === id), d = Math.round(Number(el.value)); if (!x || !(d >= 1 && d <= 31)) { pintarDetalle(); return; } x.dia = d; guardarFijos(l); toast(`Ahora cae el día ${d} de cada mes`); },
   fijoMonto(el, id) {

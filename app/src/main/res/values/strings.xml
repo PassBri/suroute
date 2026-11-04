@@ -3154,4 +3154,10 @@
     <string name="coach_rep_enviar">Enviar reporte</string>
     <string name="coach_rep_gracias">Gracias. Moderación revisará esta respuesta.</string>
     <string name="coach_rep_error">No se pudo enviar el reporte. Revisa tu conexión.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Tu fijo (%2$s) no aparece en %3$s. ¿También aplicaba este mes?</item>
+        <item quantity="other">Tus %1$d fijos (%2$s) no aparecen en %3$s. ¿También aplicaban este mes?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Usar mis fijos en %1$s</string>
+    <string name="cu_fijos_traidos">Listo: tus fijos ya cuentan en %1$s. Si alguno no aplicaba, quítalo en su día.</string>
 </resources>

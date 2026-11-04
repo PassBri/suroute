@@ -92,6 +92,22 @@ object Fijos {
         return l.mapNotNull { if (it.id != id) it else if (it.desde > hoyYm) null else it.copy(hasta = hoyYm) }
     }
 
+    /** Fijos que no aparecen en [ym] porque empiezan después o se saltaron ese mes (igual que la web). */
+    fun ausentes(l: List<Fijo>, ym: String): List<Fijo> =
+        l.filter { (it.hasta.isEmpty() || it.hasta >= ym) && (it.desde > ym || ym in it.saltar) }
+
+    /** Trae esos fijos a [ym]: solo ese mes; los meses intermedios quedan saltados, sin cambios. */
+    fun traerA(l: List<Fijo>, ym: YearMonth): List<Fijo> {
+        val k = ym.toString(); val ids = ausentes(l, k).map { it.id }.toSet()
+        return l.map { x ->
+            if (x.id !in ids) x
+            else {
+                val entre = if (x.desde > k) generateSequence(ym.plusMonths(1)) { it.plusMonths(1) }.takeWhile { it.toString() < x.desde }.take(600).map { it.toString() }.toList() else emptyList()
+                x.copy(desde = minOf(x.desde, k), saltar = (x.saltar + entre).distinct() - k)
+            }
+        }
+    }
+
     fun saltar(l: List<Fijo>, id: String, ym: String, si: Boolean): List<Fijo> =
         l.map { if (it.id != id) it else it.copy(saltar = if (si) (it.saltar + ym).distinct() else it.saltar - ym) }
 }

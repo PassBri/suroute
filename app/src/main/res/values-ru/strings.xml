@@ -3145,4 +3145,10 @@
     <string name="coach_rep_enviar">Отправить жалобу</string>
     <string name="coach_rep_gracias">Спасибо. Модерация проверит этот ответ.</string>
     <string name="coach_rep_error">Не удалось отправить жалобу. Проверьте подключение.</string>
+    <plurals name="cu_fijos_ausentes">
+        <item quantity="one">Ваш постоянный платёж (%2$s) не отображается в %3$s. Он действовал и в этом месяце?</item>
+        <item quantity="other">Ваши постоянные платежи (%1$d: %2$s) не отображаются в %3$s. Они действовали и в этом месяце?</item>
+    </plurals>
+    <string name="cu_fijos_traer">Учесть постоянные платежи в %1$s</string>
+    <string name="cu_fijos_traidos">Готово: постоянные платежи теперь учтены в %1$s. Если какой-то не действовал, удалите его в его день.</string>
 </resources>

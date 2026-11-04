@@ -314,6 +314,8 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
                 com.rutaalacima.app.domain.model.Fijos.escribir(com.rutaalacima.app.domain.model.Fijos.dejarDesde(l, fx, YearMonth.from(dia))))
         }
     }
+    /** Trae a [ym] los fijos que no aparecían ese mes (empezaban después o se habían saltado). */
+    fun fijosTraer(ym: YearMonth) = fijos { com.rutaalacima.app.domain.model.Fijos.traerA(it, ym) }
     fun fijoParar(id: String) = fijos { com.rutaalacima.app.domain.model.Fijos.parar(it, id, hoy()) }
     fun fijoRestaurar(x: com.rutaalacima.app.domain.model.Fijos.Fijo) = fijos { l -> l.filter { it.id != x.id } + x }
 
@@ -1073,6 +1075,8 @@ private fun LazyListScope.mes(ym: YearMonth, libro: Libro, plata: (Double) -> St
             }
         }
     }
+    if (!ym.isAfter(YearMonth.from(hoyF)) && com.rutaalacima.app.domain.model.Fijos.ausentes(libro.fijos, ym.toString()).isNotEmpty())
+        item(key = "fijos-antes") { AvisoFijosAntes(ym, libro, vm) }
     item(key = "tabla") {
         RutaCard {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -1132,6 +1136,8 @@ private fun LazyListScope.dia(f: LocalDate, libro: Libro, plata: (Double) -> Str
     if (movs.isEmpty()) item(key = "movs-vacio") {
         Text(stringResource(R.string.cu_sin_movs_dia), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
+    if (movs.isEmpty() && !ym.isAfter(YearMonth.from(hoy())) && com.rutaalacima.app.domain.model.Fijos.ausentes(libro.fijos, ym.toString()).isNotEmpty())
+        item(key = "fijos-antes") { AvisoFijosAntes(ym, libro, vm) }
     items(movs, key = { "mov-${it.id}" }) { x -> FilaMovimiento(x, fs, plata, vm, avisos) }
     if (movs.isNotEmpty()) item(key = "disp") {
         Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceContainer).padding(14.dp)) {
@@ -1152,6 +1158,28 @@ private fun LazyListScope.dia(f: LocalDate, libro: Libro, plata: (Double) -> Str
                 }
                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null)
             }
+        }
+    }
+}
+
+/** «Tus fijos no aparecen en octubre»: un toque los trae a ese mes, para registrarlo con la misma base. */
+@Composable
+private fun AvisoFijosAntes(ym: YearMonth, libro: Libro, vm: CuentasViewModel) {
+    val l = com.rutaalacima.app.domain.model.Fijos.ausentes(libro.fijos, ym.toString())
+    val ctx = LocalContext.current
+    val nombres = l.take(3).map { it.n.ifBlank { nombreCategoria(Tipo.de(it.t), it.c) } }.joinToString(", ") + if (l.size > 3) "…" else ""
+    val mes = mesFrase(ym.monthValue)
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.secondaryContainer).padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Icon(Icons.Filled.Repeat, null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+        Spacer(Modifier.width(10.dp))
+        Column(Modifier.weight(1f)) {
+            Text(androidx.compose.ui.res.pluralStringResource(R.plurals.cu_fijos_ausentes, l.size, l.size, nombres, mes),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
+            Button(onClick = {
+                vm.fijosTraer(ym)
+                com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(ctx.getString(R.string.cu_fijos_traidos, mes))
+            }, modifier = Modifier.padding(top = 6.dp)) { Text(stringResource(R.string.cu_fijos_traer, mes)) }
         }
     }
 }
