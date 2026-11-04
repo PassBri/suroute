@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">已从%1$s起删除重复的固定项</string>
     <string name="cu_fijo_repetido">重复</string>
     <string name="cu_traer_mes">从%1$s带入</string>
+    <string name="dona_titulo">你如何使用收入？</string>
+    <string name="dona_de">共收入 %1$s</string>
+    <string name="dona_construido">已积累</string>
+    <string name="dona_sin_ing">无收入</string>
+    <string name="dona_disponible">可用</string>
+    <string name="dona_falto">缺少 %1$s：支出多于收入</string>
+    <string name="dona_nota">积累 = 储蓄 + 投资。Cima financiera 的目标是至少 20 %。</string>
+    <string name="ult12_titulo">最近 12 个月</string>
+    <string name="ult12_toca">点按某月以打开</string>
+    <string name="fr_entra">每月收入</string>
+    <string name="fr_sale">每月支出</string>
+    <string name="fr_queda">剩余</string>
+    <string name="fr_falta">缺口</string>
+    <string name="fr_ver">查看和编辑（%1$d）</string>
+    <string name="fr_ver_solo">查看</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">有 1 个固定项重复，被计算了两次。请在“查看和编辑”中打开。</item>
+        <item quantity="other">有 %1$d 个固定项重复，被计算了两次。请在“查看和编辑”中打开。</item>
+    </plurals>
 </resources>

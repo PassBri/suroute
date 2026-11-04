@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">Doppelter Fixposten ab %1$s entfernt</string>
     <string name="cu_fijo_repetido">doppelt</string>
     <string name="cu_traer_mes">Aus %1$s übernehmen</string>
+    <string name="dona_titulo">Was haben Sie mit dem Eingang gemacht?</string>
+    <string name="dona_de">Von %1$s Eingängen</string>
+    <string name="dona_construido">aufgebaut</string>
+    <string name="dona_sin_ing">kein Einkommen</string>
+    <string name="dona_disponible">Verfügbar</string>
+    <string name="dona_falto">Es fehlten %1$s: Es ging mehr hinaus als herein</string>
+    <string name="dona_nota">Aufgebaut = Sparen + Investieren. Das Ziel von Cima financiera sind mindestens 20 %.</string>
+    <string name="ult12_titulo">Ihre letzten 12 Monate</string>
+    <string name="ult12_toca">Tippen Sie auf einen Monat, um ihn zu öffnen</string>
+    <string name="fr_entra">Kommt monatlich</string>
+    <string name="fr_sale">Geht monatlich</string>
+    <string name="fr_queda">Bleibt</string>
+    <string name="fr_falta">Fehlt</string>
+    <string name="fr_ver">Ansehen und bearbeiten (%1$d)</string>
+    <string name="fr_ver_solo">Ansehen</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">Ein Fixposten ist doppelt und wird zweimal gezählt. Öffnen Sie „Ansehen und bearbeiten“.</item>
+        <item quantity="other">%1$d Fixposten sind doppelt und werden zweimal gezählt. Öffnen Sie „Ansehen und bearbeiten“.</item>
+    </plurals>
 </resources>

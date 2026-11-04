@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">重複した固定項目を%1$sから削除しました</string>
     <string name="cu_fijo_repetido">重複</string>
     <string name="cu_traer_mes">%1$sから取り込む</string>
+    <string name="dona_titulo">入ったお金をどう使いましたか？</string>
+    <string name="dona_de">入金 %1$s のうち</string>
+    <string name="dona_construido">積み上げ</string>
+    <string name="dona_sin_ing">収入なし</string>
+    <string name="dona_disponible">残り</string>
+    <string name="dona_falto">%1$s 不足：入金より出金が多い</string>
+    <string name="dona_nota">積み上げ = 貯蓄 + 投資。Cima financiera の目標は 20 % 以上です。</string>
+    <string name="ult12_titulo">直近 12 か月</string>
+    <string name="ult12_toca">月をタップして開く</string>
+    <string name="fr_entra">毎月の入金</string>
+    <string name="fr_sale">毎月の出金</string>
+    <string name="fr_queda">残る額</string>
+    <string name="fr_falta">不足額</string>
+    <string name="fr_ver">表示と編集（%1$d）</string>
+    <string name="fr_ver_solo">表示</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">固定項目が重複し、2回数えられています。「表示と編集」で開いてください。</item>
+        <item quantity="other">%1$d 件の固定項目が重複し、2回数えられています。「表示と編集」で開いてください。</item>
+    </plurals>
 </resources>

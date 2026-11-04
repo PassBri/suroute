@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">Fixe en double retiré à partir de %1$s</string>
     <string name="cu_fijo_repetido">en double</string>
     <string name="cu_traer_mes">Reprendre %1$s</string>
+    <string name="dona_titulo">Qu’avez-vous fait de ce qui est entré ?</string>
+    <string name="dona_de">Sur %1$s entrés</string>
+    <string name="dona_construido">construit</string>
+    <string name="dona_sin_ing">sans revenus</string>
+    <string name="dona_disponible">Disponible</string>
+    <string name="dona_falto">Il vous a manqué %1$s : plus de sorties que d’entrées</string>
+    <string name="dona_nota">Construit = épargne + investissement. L’objectif de Cima financiera est d’au moins 20 %.</string>
+    <string name="ult12_titulo">Vos 12 derniers mois</string>
+    <string name="ult12_toca">Touchez un mois pour l’ouvrir</string>
+    <string name="fr_entra">Entre chaque mois</string>
+    <string name="fr_sale">Sort chaque mois</string>
+    <string name="fr_queda">Il vous reste</string>
+    <string name="fr_falta">Il vous manque</string>
+    <string name="fr_ver">Voir et modifier (%1$d)</string>
+    <string name="fr_ver_solo">Voir</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">Un élément fixe est en double et compté deux fois. Ouvrez « Voir et modifier ».</item>
+        <item quantity="other">%1$d éléments fixes sont en double et comptés deux fois. Ouvrez « Voir et modifier ».</item>
+    </plurals>
 </resources>

@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">Voce fissa ripetuta rimossa da %1$s</string>
     <string name="cu_fijo_repetido">ripetuta</string>
     <string name="cu_traer_mes">Porta da %1$s</string>
+    <string name="dona_titulo">Cosa hai fatto con ciò che è entrato?</string>
+    <string name="dona_de">Su %1$s entrati</string>
+    <string name="dona_construido">costruito</string>
+    <string name="dona_sin_ing">senza entrate</string>
+    <string name="dona_disponible">Disponibile</string>
+    <string name="dona_falto">Ti sono mancati %1$s: è uscito più di quanto è entrato</string>
+    <string name="dona_nota">Costruito = risparmio + investimento. L’obiettivo di Cima financiera è almeno il 20 %.</string>
+    <string name="ult12_titulo">I tuoi ultimi 12 mesi</string>
+    <string name="ult12_toca">Tocca un mese per aprirlo</string>
+    <string name="fr_entra">Entra ogni mese</string>
+    <string name="fr_sale">Esce ogni mese</string>
+    <string name="fr_queda">Ti resta</string>
+    <string name="fr_falta">Ti manca</string>
+    <string name="fr_ver">Vedi e modifica (%1$d)</string>
+    <string name="fr_ver_solo">Vedi</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">Una voce fissa è ripetuta e conta due volte. Aprila in «Vedi e modifica».</item>
+        <item quantity="other">%1$d voci fisse sono ripetute e contano due volte. Aprile in «Vedi e modifica».</item>
+    </plurals>
 </resources>

@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">중복 고정 항목을 %1$s부터 삭제했습니다</string>
     <string name="cu_fijo_repetido">중복</string>
     <string name="cu_traer_mes">%1$s에서 가져오기</string>
+    <string name="dona_titulo">들어온 돈을 어떻게 썼나요?</string>
+    <string name="dona_de">들어온 %1$s 중</string>
+    <string name="dona_construido">쌓은 돈</string>
+    <string name="dona_sin_ing">수입 없음</string>
+    <string name="dona_disponible">남은 돈</string>
+    <string name="dona_falto">%1$s 부족: 들어온 것보다 더 나갔습니다</string>
+    <string name="dona_nota">쌓은 돈 = 저축 + 투자. Cima financiera의 목표는 최소 20 %입니다.</string>
+    <string name="ult12_titulo">최근 12개월</string>
+    <string name="ult12_toca">달을 탭해 열기</string>
+    <string name="fr_entra">매달 들어옴</string>
+    <string name="fr_sale">매달 나감</string>
+    <string name="fr_queda">남음</string>
+    <string name="fr_falta">부족</string>
+    <string name="fr_ver">보기 및 편집 (%1$d)</string>
+    <string name="fr_ver_solo">보기</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">고정 항목 하나가 중복되어 두 번 계산됩니다. «보기 및 편집»에서 여세요.</item>
+        <item quantity="other">고정 항목 %1$d개가 중복되어 두 번 계산됩니다. «보기 및 편집»에서 여세요.</item>
+    </plurals>
 </resources>

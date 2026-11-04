@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">حُذف البند الثابت المكرر من %1$s</string>
     <string name="cu_fijo_repetido">مكرر</string>
     <string name="cu_traer_mes">جلب من %1$s</string>
+    <string name="dona_titulo">ماذا فعلت بما دخل؟</string>
+    <string name="dona_de">من أصل %1$s دخلت</string>
+    <string name="dona_construido">مُدّخر ومُستثمر</string>
+    <string name="dona_sin_ing">بلا دخل</string>
+    <string name="dona_disponible">المتاح</string>
+    <string name="dona_falto">نقصك %1$s: خرج أكثر مما دخل</string>
+    <string name="dona_nota">المُبنى = الادخار + الاستثمار. هدف Cima financiera هو 20 % على الأقل.</string>
+    <string name="ult12_titulo">آخر 12 شهرًا</string>
+    <string name="ult12_toca">المس شهرًا لفتحه</string>
+    <string name="fr_entra">يدخل كل شهر</string>
+    <string name="fr_sale">يخرج كل شهر</string>
+    <string name="fr_queda">يتبقى لك</string>
+    <string name="fr_falta">ينقصك</string>
+    <string name="fr_ver">عرض وتعديل (%1$d)</string>
+    <string name="fr_ver_solo">عرض</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">بند ثابت مكرر ويُحتسب مرتين. افتحه في «عرض وتعديل».</item>
+        <item quantity="other">%1$d بنود ثابتة مكررة وتُحتسب مرتين. افتحها في «عرض وتعديل».</item>
+    </plurals>
 </resources>

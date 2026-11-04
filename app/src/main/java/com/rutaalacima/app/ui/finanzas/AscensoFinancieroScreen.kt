@@ -1001,14 +1001,25 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
     }
     item(key = "salud") { SaludAcceso(libro.salud(null), null) { ir(NivelCuentas.SaludN(null)) } }
     item(key = "cifras") { CifrasCuentas(t, plata) }
+    item(key = "dona") { DonaDestino(t, plata) }
+    if (t.n > 0) item(key = "ult12") {
+        val hoyYm = YearMonth.from(hoy())
+        val filas12 = (11 downTo 0).map { k -> val ym = hoyYm.minusMonths(k.toLong())
+            FilaPeriodo("${nombreMes(ym.monthValue)} ${ym.year}", nombreMes(ym.monthValue).take(3), libro.suma("$ym-"), NivelCuentas.Mes(ym), ym == hoyYm) }
+        RutaCard {
+            Text(stringResource(R.string.ult12_titulo), style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.ult12_toca), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(10.dp))
+            GraficaPeriodos(filas12, plata, ir)
+        }
+    }
     if (libro.dias.isNotEmpty()) item(key = "grafica") { GraficaAcceso { ir(NivelCuentas.GraficaN) } }
     item(key = "tabla") {
         RutaCard {
             Text(stringResource(R.string.cu_anio_por_anio), style = MaterialTheme.typography.titleMedium)
             Text(stringResource(R.string.cu_toca_anio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(10.dp))
-            GraficaPeriodos(filas, plata, ir)
-            Spacer(Modifier.height(10.dp))
+            if (filas.size > 1) { GraficaPeriodos(filas, plata, ir); Spacer(Modifier.height(10.dp)) }
             TablaPeriodos(filas, stringResource(R.string.cu_col_anio), t, plata, ir)
             Spacer(Modifier.height(10.dp))
             Text(stringResource(R.string.cu_patrimonio, plata(t.construido)) + (t.tasa?.let { stringResource(R.string.cu_patrimonio_tasa, Math.round(it * 100).toInt()) } ?: ""),
@@ -1017,7 +1028,7 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
     }
     item(key = "metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
     item(key = "deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
-    item(key = "fijos") { FijosCard(libro, null, plata, vm) }
+    item(key = "fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }
     item(key = "mochilas") { MochilasCard(t, plata) }
     item(key = "cats") { CategoriasCard(t, plata) }
     item(key = "privacidad") { PrivacidadCard(libro, vm) }

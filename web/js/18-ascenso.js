@@ -147,6 +147,52 @@ function porCategoria(s) {
   return hoja(`<div class="cab-lista-btn" style="margin-bottom:10px"><h3 style="margin:0">¿A dónde fue tu dinero?</h3><button class="btn mini" data-acc="ascCrearCat" data-arg="gas">${ic("mas")} Crear categoría</button></div><div class="asc-cats">${l.map(([k, v]) => { const [t, c] = k.split(":"), cat = catDe(t, c);
     return `<div class="asc-cat"><span>${esc(cat?.[1] || c)}</span><span class="barra-c"><i class="b-${t}" style="width:${(v / max * 100).toFixed(1)}%"></i></span><span class="num">${plata(v)}</span></div>`; }).join("")}</div>`);
 }
+/* ---------- Balance general en gráficas ----------
+ * Una dona responde «¿qué hiciste con lo que entró?» (gastos, ahorro, inversión, dar y lo que queda),
+ * con el porcentaje que construiste en el centro. Cada porción lleva su nombre y su cifra al lado:
+ * el color nunca es la única pista. */
+function donaDestino(t, titulo = "¿Qué hiciste con lo que entró?") {
+  const partes = [["gas", "Gastos", t.gas], ["aho", "Ahorro", t.aho], ["inv", "Inversión", t.inv], ["gen", "Dar", t.gen]];
+  if (t.disp > 0) partes.push(["libre", "Disponible", t.disp]);
+  const total = partes.reduce((a, x) => a + x[2], 0); if (!total) return "";
+  const R = 46, C = 2 * Math.PI * R, hueco = partes.filter(x => x[2] > 0).length > 1 ? 1.2 : 0; let ac = 0;
+  const arcos = partes.filter(x => x[2] > 0).map(([k, n, v]) => { const largo = v / total * C, d = `<circle class="dona-p d-${k}" cx="60" cy="60" r="${R}" stroke-dasharray="${Math.max(0.1, largo - hueco).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-ac).toFixed(2)}"><title>${n}: ${plata(v)} (${Math.round(v / total * 100)} %)</title></circle>`; ac += largo; return d; }).join("");
+  const pct = t.ing ? Math.round(t.construido / t.ing * 100) : null, base = t.ing || total;
+  return hoja(`<div class="dona-marco"><h3 style="margin:0">${titulo}</h3><p class="suave" style="margin:2px 0 0;font-size:13px">De ${plata(t.ing)} que entraron</p>
+    <div class="dona-caja"><figure class="dona" role="img" aria-label="${partes.map(([, n, v]) => `${n} ${Math.round(v / base * 100)} %`).join(", ")}">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="dona-fondo" cx="60" cy="60" r="${R}"></circle><g transform="rotate(-90 60 60)">${arcos}</g></svg>
+      <figcaption>${pct != null ? `<b>${pct} %</b><span>construido</span>` : `<b>—</b><span>sin ingresos</span>`}</figcaption></figure>
+      <ul class="dona-ley">${partes.map(([k, n, v]) => `<li><i class="d-${k}"></i><span>${n}</span><b>${plata(v)}</b><small>${Math.round(v / base * 100)} %</small></li>`).join("")}
+        ${t.disp < 0 ? `<li class="falta"><i></i><span>Te faltó</span><b>${plata(-t.disp)}</b><small>salió más de lo que entró</small></li>` : ""}</ul></div>
+    <p class="asc-pie">Construido = ahorro + inversión. La meta del libro Cima financiera es al menos el 20 %.</p></div>`);
+}
+/** Los últimos 12 meses en barras (entró y salió), cada mes se abre con un toque. */
+function ultimos12() {
+  const hoyYm = iso(hoyFecha()).slice(0, 7);
+  return [...Array(12).keys()].map(i => { const ym = ymMas(hoyYm, i - 11), [a, m] = ym.split("-").map(Number);
+    return { etq: `${mayus(MESES[m - 1])} ${a}`, corto: MES_C[m - 1], sel: "m:" + ym, s: totalesDe(ym + "-"), actual: ym === hoyYm }; });
+}
+/** Los fijos, resumidos: cuánto entra y sale fijo cada mes y los más pesados; el detalle vive en «Mis cuentas fijas». */
+function fijosResumen() {
+  if (!window.fijosDatos) return "";
+  const hoyYm = iso(hoyFecha()).slice(0, 7), l = fijosDatos().filter(x => activoEn(x, hoyYm));
+  if (!l.length) return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("repetir")} Fijos de cada mes</h3><button class="btn mini" data-sel="fijos">Ver</button></div>
+    <p class="suave" style="margin:6px 0 0">¿Pagas arriendo o recibes un salario? Al anotarlo en un día marca <b>Cada mes</b> y aparecerá solo cada mes.</p>`);
+  const suma = t => l.filter(x => x.t === t).reduce((a, x) => a + Number(x.m), 0), ent = suma("ing"), sal = ["gas", "aho", "inv", "gen"].map(t => [t, suma(t)]);
+  const salT = sal.reduce((a, x) => a + x[1], 0), queda = ent - salT, escala = Math.max(ent, salT) || 1;
+  const clave = x => `${x.t}|${(x.n || x.c || "").trim().toLowerCase()}`, veces = l.reduce((m, x) => m.set(clave(x), (m.get(clave(x)) || 0) + 1), new Map());
+  const nRep = [...veces.values()].filter(v => v > 1).length;
+  const top = l.filter(x => x.t !== "ing").sort((a, b) => b.m - a.m).slice(0, 4);
+  return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("repetir")} Fijos de cada mes</h3><button class="btn mini" data-sel="fijos">Ver y editar (${l.length})</button></div>
+    ${nRep ? `<div class="fijos-antes fijos-rep">${ic("info")}<p>${nRep === 1 ? "Un fijo está repetido" : `${nRep} fijos están repetidos`} y se cuenta${nRep === 1 ? "" : "n"} dos veces. Ábrelos en «Ver y editar».</p></div>` : ""}
+    <div class="fijos-res">
+      <div><span>Entra cada mes</span><b class="t-ing">${plata(ent)}</b></div>
+      <div><span>Sale cada mes</span><b class="t-gas">${plata(salT)}</b></div>
+      <div><span>${queda >= 0 ? "Te queda" : "Te falta"}</span><b class="${queda < 0 ? "neg" : ""}">${plata(Math.abs(queda))}</b></div>
+    </div>
+    <div class="fijos-barra" role="img" aria-label="${sal.filter(x => x[1]).map(([t, v]) => `${ASC.TIPOS.find(y => y[0] === t)[2]} ${plata(v)}`).join(", ")}${queda > 0 ? `, queda ${plata(queda)}` : ""}">${sal.filter(x => x[1]).map(([t, v]) => `<i class="b-${t}" style="width:${(v / escala * 100).toFixed(2)}%" title="${ASC.TIPOS.find(y => y[0] === t)[2]}: ${plata(v)}"></i>`).join("")}${queda > 0 ? `<i class="libre" style="width:${(queda / escala * 100).toFixed(2)}%" title="Te queda ${plata(queda)}"></i>` : ""}</div>
+    ${top.length ? `<ul class="fijos-top">${top.map(x => `<li><span class="pildora t-${x.t}">${ASC.TIPOS.find(y => y[0] === x.t)[2]}</span><span>${esc(x.n || catDe(x.t, x.c)?.[1] || "")}</span><small>día ${x.dia}</small><b>${plata(Number(x.m))}</b></li>`).join("")}</ul>` : ""}`);
+}
 /** Barras de ingresos y gastos por periodo (a escala, con su valor al pasar). */
 function grafica(filas) {
   const max = Math.max(1, ...filas.flatMap(x => [x.s.ing, x.s.gas + x.s.aho + x.s.inv + x.s.gen]));
@@ -216,10 +262,11 @@ DET["finanzas.b"] = () => {
   return cab(avAsc(), "Ascenso financiero", "Balance general · todos tus años", ojoAsc()) + cuerpo(
     migasAsc([["Balance general", "b"]]) +
     (t.n ? "" : `<div class="aviso">${ic("finanzas")} Empieza por hoy: anota lo que entró y salió. Cada día suma al mes, cada mes al año y cada año a este balance.<button class="btn lleno" data-sel="d:${iso(hoyFecha())}" style="margin-left:auto">Registrar hoy</button></div>`) +
-    cifras(t) + (window.graficaAcceso?.() || "") +
-    hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Año por año</h3><span class="suave" style="font-size:13px">Toca un año para ver sus meses</span></div>${grafica(filas)}${tablaPeriodos(filas, "Año", t)}
+    cifras(t) + `<div class="bal-graficas">${donaDestino(t)}${hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Tus últimos 12 meses</h3><span class="suave" style="font-size:13px">Toca un mes para abrirlo</span></div>${grafica(ultimos12()) || `<p class="suave">Cuando anotes movimientos verás aquí cada mes.</p>`}`)}</div>` +
+    (window.graficaAcceso?.() || "") +
+    hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Año por año</h3><span class="suave" style="font-size:13px">Toca un año para ver sus meses</span></div>${anios.length > 1 ? grafica(filas) : ""}${tablaPeriodos(filas, "Año", t)}
       <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`) +
-    saludResumen("") + deudasResumen() + fijosHoja("") + mochilas(t) + porCategoria(t) + privacidadHoja() + monedaHoja(), "max-width:980px");
+    saludResumen("") + deudasResumen() + fijosResumen() + mochilas(t) + porCategoria(t) + privacidadHoja() + monedaHoja(), "max-width:980px");
 };
 DET["finanzas.a"] = arg => {
   if (window.finBloqueado?.()) return pantallaBloqueo();

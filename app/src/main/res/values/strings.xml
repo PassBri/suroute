@@ -3168,4 +3168,23 @@
     <string name="cu_fijo_rep_quitado">Fijo repetido quitado desde %1$s</string>
     <string name="cu_fijo_repetido">repetido</string>
     <string name="cu_traer_mes">Traer de %1$s</string>
+    <string name="dona_titulo">¿Qué hiciste con lo que entró?</string>
+    <string name="dona_de">De %1$s que entraron</string>
+    <string name="dona_construido">construido</string>
+    <string name="dona_sin_ing">sin ingresos</string>
+    <string name="dona_disponible">Disponible</string>
+    <string name="dona_falto">Te faltaron %1$s: salió más de lo que entró</string>
+    <string name="dona_nota">Construido = ahorro + inversión. La meta del libro Cima financiera es al menos el 20 %.</string>
+    <string name="ult12_titulo">Tus últimos 12 meses</string>
+    <string name="ult12_toca">Toca un mes para abrirlo</string>
+    <string name="fr_entra">Entra cada mes</string>
+    <string name="fr_sale">Sale cada mes</string>
+    <string name="fr_queda">Te queda</string>
+    <string name="fr_falta">Te falta</string>
+    <string name="fr_ver">Ver y editar (%1$d)</string>
+    <string name="fr_ver_solo">Ver</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">Un fijo está repetido y se cuenta dos veces. Ábrelo en «Ver y editar».</item>
+        <item quantity="other">%1$d fijos están repetidos y se cuentan dos veces. Ábrelos en «Ver y editar».</item>
+    </plurals>
 </resources>

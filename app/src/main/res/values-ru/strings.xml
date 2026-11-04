@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">Повторяющийся платёж удалён с %1$s</string>
     <string name="cu_fijo_repetido">повтор</string>
     <string name="cu_traer_mes">Перенести из: %1$s</string>
+    <string name="dona_titulo">Что вы сделали с поступлениями?</string>
+    <string name="dona_de">Из поступивших %1$s</string>
+    <string name="dona_construido">накоплено</string>
+    <string name="dona_sin_ing">нет дохода</string>
+    <string name="dona_disponible">Доступно</string>
+    <string name="dona_falto">Не хватило %1$s: расходы больше поступлений</string>
+    <string name="dona_nota">Накоплено = сбережения + инвестиции. Цель Cima financiera — не меньше 20 %.</string>
+    <string name="ult12_titulo">Последние 12 месяцев</string>
+    <string name="ult12_toca">Нажмите на месяц, чтобы открыть</string>
+    <string name="fr_entra">Приходит каждый месяц</string>
+    <string name="fr_sale">Уходит каждый месяц</string>
+    <string name="fr_queda">Остаётся</string>
+    <string name="fr_falta">Не хватает</string>
+    <string name="fr_ver">Смотреть и менять (%1$d)</string>
+    <string name="fr_ver_solo">Смотреть</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">Постоянный платёж повторяется и считается дважды. Откройте «Смотреть и менять».</item>
+        <item quantity="other">Постоянные платежи (%1$d) повторяются и считаются дважды. Откройте «Смотреть и менять».</item>
+    </plurals>
 </resources>

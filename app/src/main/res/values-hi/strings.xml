@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">दोहराई गई तय मद %1$s से हटाई गई</string>
     <string name="cu_fijo_repetido">दोहराई गई</string>
     <string name="cu_traer_mes">%1$s से लाएँ</string>
+    <string name="dona_titulo">जो पैसा आया, उसका आपने क्या किया?</string>
+    <string name="dona_de">आए %1$s में से</string>
+    <string name="dona_construido">बनाया</string>
+    <string name="dona_sin_ing">कोई आय नहीं</string>
+    <string name="dona_disponible">उपलब्ध</string>
+    <string name="dona_falto">%1$s कम पड़े: आने से ज़्यादा गया</string>
+    <string name="dona_nota">बनाया = बचत + निवेश। Cima financiera का लक्ष्य कम से कम 20 % है।</string>
+    <string name="ult12_titulo">आपके पिछले 12 महीने</string>
+    <string name="ult12_toca">खोलने के लिए महीने पर टैप करें</string>
+    <string name="fr_entra">हर महीने आता है</string>
+    <string name="fr_sale">हर महीने जाता है</string>
+    <string name="fr_queda">बचता है</string>
+    <string name="fr_falta">कम पड़ता है</string>
+    <string name="fr_ver">देखें और बदलें (%1$d)</string>
+    <string name="fr_ver_solo">देखें</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">एक तय मद दोहराई गई है और दो बार गिनी जा रही है। «देखें और बदलें» में खोलें।</item>
+        <item quantity="other">%1$d तय मदें दोहराई गई हैं और दो बार गिनी जा रही हैं। «देखें और बदलें» में खोलें।</item>
+    </plurals>
 </resources>

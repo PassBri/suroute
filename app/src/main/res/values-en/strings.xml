@@ -3159,4 +3159,23 @@
     <string name="cu_fijo_rep_quitado">Repeated fixed item removed from %1$s</string>
     <string name="cu_fijo_repetido">repeated</string>
     <string name="cu_traer_mes">Bring from %1$s</string>
+    <string name="dona_titulo">What did you do with what came in?</string>
+    <string name="dona_de">Out of %1$s that came in</string>
+    <string name="dona_construido">built</string>
+    <string name="dona_sin_ing">no income</string>
+    <string name="dona_disponible">Available</string>
+    <string name="dona_falto">You were short %1$s: more went out than came in</string>
+    <string name="dona_nota">Built = savings + investment. The Cima financiera goal is at least 20 %.</string>
+    <string name="ult12_titulo">Your last 12 months</string>
+    <string name="ult12_toca">Tap a month to open it</string>
+    <string name="fr_entra">Comes in each month</string>
+    <string name="fr_sale">Goes out each month</string>
+    <string name="fr_queda">You keep</string>
+    <string name="fr_falta">You\'re short</string>
+    <string name="fr_ver">View and edit (%1$d)</string>
+    <string name="fr_ver_solo">View</string>
+    <plurals name="fr_repetidos">
+        <item quantity="one">One fixed item is repeated and counted twice. Open it in “View and edit”.</item>
+        <item quantity="other">%1$d fixed items are repeated and counted twice. Open them in “View and edit”.</item>
+    </plurals>
 </resources>
