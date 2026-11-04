@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">选择图标</string>
     <string name="hi_icono_listo">完成</string>
     <string name="hi_icono_n">图标 %1$d</string>
+    <string name="hi_de_tu_ascenso">你攀登路上的里程碑</string>
+    <string name="hi_ver_mis">查看我的里程碑</string>
+    <string name="hi_anios_con">%1$d 年有里程碑</string>
 </resources>

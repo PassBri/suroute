@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">Choose icon</string>
     <string name="hi_icono_listo">Done</string>
     <string name="hi_icono_n">Icon %1$d</string>
+    <string name="hi_de_tu_ascenso">Milestones of your climb</string>
+    <string name="hi_ver_mis">See my milestones</string>
+    <string name="hi_anios_con">%1$d with milestones</string>
 </resources>

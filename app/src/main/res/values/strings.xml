@@ -3255,4 +3255,7 @@
     <string name="hi_icono_elegir">Elegir ícono</string>
     <string name="hi_icono_listo">Listo</string>
     <string name="hi_icono_n">Ícono %1$d</string>
+    <string name="hi_de_tu_ascenso">Hitos de tu ascenso</string>
+    <string name="hi_ver_mis">Ver mis hitos</string>
+    <string name="hi_anios_con">%1$d con hitos</string>
 </resources>

@@ -183,6 +183,28 @@
     } finally { estado.ascOculto = oculto; }
   }
 
+  /* ---------- Fuera de Ascenso financiero: solo para ver, y siempre con el camino de vuelta a «Mis hitos» ----------
+   * Se crean y se editan solo en Ascenso. Afuera aparecen en tres puntos sin repetirse:
+   *  · Mi vida en años: una banderita dorada en los años con hitos logrados.
+   *  · El año (Mi ruta): la lista corta de ese año (lo logrado y lo planeado), con «Mis hitos».
+   *  · Hoy: el recuerdo, solo la semana del aniversario.
+   * Si el Ascenso está bloqueado con PIN, afuera no se ve nada; si se ocultan los montos, no van montos. */
+  const deFuera = () => (window.finBloqueado?.() ? [] : hitosDatos());
+  const irHitos = (txt = "Mis hitos") => `<button class="btn mini" data-ir="finanzas" data-arg="hitos">${ic("bandera")} ${txt}</button>`;
+  /** Los años con hitos logrados: { 2025: ["Compré la casa", …] }. */
+  window.hitosPorAnio = () => deFuera().filter(h => h.ok).reduce((m, h) => { (m[h.f.slice(0, 4)] ||= []).push(h.t); return m; }, {});
+  /** La lista corta de los hitos de un año, para la página del año en Mi ruta. */
+  window.hitosAnioRuta = a => {
+    const l = deFuera().filter(h => h.f.startsWith(String(a))).sort((x, y) => x.f.localeCompare(y.f)); if (!l.length) return "";
+    const monto = v => v ? ` · ${window.plataFuera ? plataFuera(Number(v)) : plata(Number(v))}` : "";
+    return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("bandera")} Hitos de tu ascenso</h3>${irHitos()}</div>
+      <ul class="hitos hitos-fuera">${l.map(h => `<li class="hito${h.ok ? " logrado" : " plan"}"><span class="hito-ic" aria-hidden="true">${icoDe(h)}</span>
+        <span class="hito-txt"><b>${esc(h.t)}</b><small>${h.ok ? `Logrado el ${fechaLarga(h.f)}` : `Planeado para el ${fechaLarga(h.f)} · ${falta(h.f)}`}${monto(h.m)}</small></span></li>`).join("")}</ul>`, "hitos-hoja");
+  };
+  /** En Hoy: el recuerdo del aniversario (solo esa semana). */
+  window.hitosRecuerdoHoy = () => { const r = recuerdosDe(deFuera()); if (!r.length) return "";
+    return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("bandera")} Un recuerdo de tu ascenso</h3>${irHitos("Ver mis hitos")}</div>${r.map(recuerdoHtml).join("")}`, "hitos-hoja"); };
+
   /** La hoja para crear o editar un hito. */
   function formHito(h) {
     const k = h.k || "otro";

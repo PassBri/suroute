@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">اختر أيقونة</string>
     <string name="hi_icono_listo">تم</string>
     <string name="hi_icono_n">أيقونة %1$d</string>
+    <string name="hi_de_tu_ascenso">إنجازات صعودك</string>
+    <string name="hi_ver_mis">عرض إنجازاتي</string>
+    <string name="hi_anios_con">%1$d بها إنجازات</string>
 </resources>

@@ -181,6 +181,8 @@ fun HoyScreen(
         item { RegresoCard(onIrA = onIrA, onSeccion = onAbrirSeccion) }
         // Libro de cumbres: la cápsula del mes lista para abrir y «Hace un año hoy»
         item { com.rutaalacima.app.ui.ruta.TarjetasLibroHoy(onCapsula = { onIrA(Rutas.capsula(it)) }, onPost = { onIrA(Rutas.post(it)) }) }
+        // El recuerdo de un hito del Ascenso financiero, solo la semana de su aniversario
+        item(key = "hito-recuerdo") { com.rutaalacima.app.ui.finanzas.HitosRecuerdoHoy() }
         item { PrimerPasoCard(onIrA = onIrA) }
         item { RevisionCard(onIrA = onIrA) }
         // Diciembre y principios de enero: el resumen del año ya está listo

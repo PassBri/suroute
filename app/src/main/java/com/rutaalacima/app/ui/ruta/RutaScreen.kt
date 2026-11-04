@@ -63,6 +63,7 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -346,6 +347,7 @@ fun RutaScreen(
                             }
                         }
                         item(key = "corazon-${n.anio}") { CorazonAnio(n.anio, vida, vm::guardarVida) }
+                        item(key = "hitos-${n.anio}") { com.rutaalacima.app.ui.finanzas.HitosAnioRuta(n.anio) }
                         // Las cumbres personales del año ya se ven en su Brújula (abajo): no se repiten (igual que la web)
                         // El año es su Brújula: la cumbre del año y sus 8 campamentos con sus sub-metas
                         item(key = "brujula-${n.anio}") {
@@ -555,7 +557,9 @@ private fun androidx.compose.foundation.lazy.LazyListScope.nivelMapa(
                 Text(stringResource(R.string.vida_anios_de, edad, meta), style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Black)
                 Spacer(Modifier.height(12.dp))
-                PuntosVida(anioNac, edad, meta, aniosConRecuerdos, aniosMeta) { ir(Nivel.Anio(it)) }
+                val aniosHito = com.rutaalacima.app.ui.finanzas.aniosConHitos()
+                PuntosVida(anioNac, edad, meta, aniosConRecuerdos, aniosMeta, aniosHito) { ir(Nivel.Anio(it)) }
+                com.rutaalacima.app.ui.finanzas.ChipHitosVida(aniosHito.size)
                 Spacer(Modifier.height(8.dp))
                 // El año de hoy, escrito, junto al punto dorado
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -615,7 +619,7 @@ fun MarcaAnio(modifier: Modifier, color: Color, grosor: Float = 0.06f, punto: Co
 
 /** La vida en puntos: uno por año, 10 por fila; cada punto es el símbolo de SuRoute y el sur se enciende si el año tiene metas. */
 @Composable
-fun PuntosVida(anioNac: Int, edad: Int, meta: Int, aniosConRecuerdos: Set<Int>, aniosMeta: Set<Int>, onAnio: (Int) -> Unit) {
+fun PuntosVida(anioNac: Int, edad: Int, meta: Int, aniosConRecuerdos: Set<Int>, aniosMeta: Set<Int>, aniosHito: Map<Int, Int> = emptyMap(), onAnio: (Int) -> Unit) {
     val vivido = MaterialTheme.colorScheme.primary
     val recuerdo = MaterialTheme.colorScheme.secondary
     val futuro = MaterialTheme.colorScheme.surfaceVariant
@@ -645,12 +649,15 @@ fun PuntosVida(anioNac: Int, edad: Int, meta: Int, aniosConRecuerdos: Set<Int>, 
                 Box(
                     Modifier.weight(1f).aspectRatio(1f).padding(3.dp).clip(CircleShape)
                         .clickable(interactionSource = toque, indication = ripple(), onClickLabel = "$anio") { onAnio(anio) }
-                        .semantics { contentDescription = "$anio · $e" },
+                        .semantics { contentDescription = "$anio · $e" + (aniosHito[anio]?.let { " · ⚑ $it" } ?: "") },
                     contentAlignment = Alignment.Center,
                 ) {
                     MarcaAnio(Modifier.fillMaxSize(0.9f), color, grosor = if (actual) 0.085f else if (pasado) 0.07f else 0.045f,
                         punto = if (anio in aniosMeta) MaterialTheme.colorScheme.secondary else color, puntoGrande = anio in aniosMeta)
                     if (actual) Text("$e", style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold)
+                    // Banderita dorada: ese año tiene hitos logrados del Ascenso financiero
+                    if (anio in aniosHito) Icon(androidx.compose.material.icons.Icons.Filled.Flag, null,
+                        Modifier.align(Alignment.TopEnd).size(11.dp), tint = MaterialTheme.colorScheme.secondary)
                 }
             }
             repeat(10 - fila.size) { Spacer(Modifier.weight(1f)) }

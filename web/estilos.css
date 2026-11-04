@@ -5878,3 +5878,8 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .hito-ico:has(input:focus-visible) { outline: 2px solid var(--burdeos); outline-offset: 2px; }
 @media (hover: hover) and (pointer: fine) { .hito-ico:not(:has(input:checked)):hover { background: var(--hoja-2); } }
 .hito-ico-auto:has(input:checked) { background: var(--oro-suave); color: var(--burdeos); border-color: transparent; font-weight: 500; }
+/* Hitos fuera de Ascenso (Mi ruta y Hoy): solo para ver, con el camino a «Mis hitos» */
+.hitos-hoja .cab-lista-btn .btn { white-space: nowrap; flex: none; }
+.pv-chip-hito { cursor: pointer; font: inherit; color: inherit; }
+.pv-chip-hito svg { width: 14px; height: 14px; fill: var(--oro); }
+@media (hover: hover) and (pointer: fine) { .pv-chip-hito:hover { background: var(--hoja-2); } }

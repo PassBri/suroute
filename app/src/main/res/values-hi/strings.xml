@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">आइकन चुनें</string>
     <string name="hi_icono_listo">हो गया</string>
     <string name="hi_icono_n">आइकन %1$d</string>
+    <string name="hi_de_tu_ascenso">आपकी चढ़ाई के पड़ाव</string>
+    <string name="hi_ver_mis">मेरे पड़ाव देखें</string>
+    <string name="hi_anios_con">%1$d पड़ाव वाले साल</string>
 </resources>

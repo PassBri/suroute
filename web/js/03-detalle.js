@@ -455,11 +455,13 @@ const DET = {
     // Cada fila es una década: a la izquierda, el año en que empieza; el punto dorado es este año
     // Cada fila es una década (edad y año en que empieza); la década que vives se resalta como un contenedor tonal
     let puntos = "", nMetas = 0;
+    const conHitos = window.hitosPorAnio ? hitosPorAnio() : {};
     for (let i = 0; i < metaVida(); i++) {
       const a = nac + i, cls = a < anioHoy ? "vivido" : a === anioHoy ? "actual" : "futuro";
       if (conMetas.has(a)) nMetas++;
       if (i % 10 === 0) puntos += `${i ? "</div>" : ""}<div class="pv-dec${anioHoy >= a && anioHoy < a + 10 ? " esta" : ""}${a + 9 < anioHoy ? " pasada" : ""}"><span class="pv-fila" aria-hidden="true"><b>${i}</b><small>${a}</small></span>`;
-      puntos += `<button class="pv ${cls}${conMetas.has(a) ? " meta" : ""}" data-sel="a:${a}" aria-label="${a}, ${i} años${conMetas.has(a) ? ", con metas" : ""}" title="${a} · ${i} años${conMetas.has(a) ? " · con metas" : ""}">${PUNTO_MARCA}${cls === "actual" ? `<b>${i}</b>` : ""}</button>`;
+      const hs = conHitos[a], tHito = hs ? ` · ${hs.length === 1 ? "hito" : hs.length + " hitos"}: ${hs.join(", ")}` : "";
+      puntos += `<button class="pv ${cls}${conMetas.has(a) ? " meta" : ""}${hs ? " con-hito" : ""}" data-sel="a:${a}" aria-label="${a}, ${i} años${conMetas.has(a) ? ", con metas" : ""}${esc(tHito)}" title="${a} · ${i} años${conMetas.has(a) ? " · con metas" : ""}${esc(tHito)}">${PUNTO_MARCA}${hs ? ic("bandera", "bandera") : ""}${cls === "actual" ? `<b>${i}</b>` : ""}</button>`;
     }
     puntos += "</div>";
     const vividos = Math.max(0, anioHoy - nac), porVivir = Math.max(0, metaVida() - vividos - 1);
@@ -476,7 +478,7 @@ const DET = {
           <span role="listitem" class="pv-chip"><i class="vivido"></i><b>${vividos}</b> vividos</span>
           <span role="listitem" class="pv-chip actual"><i class="actual"></i><b>${anioHoy}</b><span class="pv-edad"> · ${r.edad} años</span></span>
           <span role="listitem" class="pv-chip"><i class="futuro"></i><b>${porVivir}</b> por vivir</span>
-          <span role="listitem" class="pv-chip"><i class="ley-meta"></i><b>${nMetas}</b> con metas</span></div></div>
+          <span role="listitem" class="pv-chip"><i class="ley-meta"></i><b>${nMetas}</b> con metas</span>${Object.keys(conHitos).length ? `<button type="button" role="listitem" class="pv-chip pv-chip-hito" data-ir="finanzas" data-arg="hitos" title="Ver en Mis hitos (Ascenso financiero)">${ic("bandera")}<b>${Object.keys(conHitos).length}</b> con hitos</button>` : ""}</div></div>
         <div class="puntos">${puntos}</div>`, "pv-hoja"));
   },
   "ruta.a"(arg) {
@@ -503,7 +505,7 @@ const DET = {
       // La cinta de años y ‹ año › ya están en la barra de vida (a la derecha)
 
       // Las cumbres personales del año ya se ven en su Brújula (abajo): aquí no se repiten
-      corazonAnio(a) +
+      corazonAnio(a) + (window.hitosAnioRuta ? hitosAnioRuta(a) : "") +
       (window.brujulaDelAnio ? brujulaDelAnio(a) + otrasMetasAnio(a, metas) : hoja(`<div class="cab-lista-btn"><div class="etiqueta">Metas del año</div><button class="btn mini oro" data-acc="nuevaMetaAnio" data-arg="${a}">${ic("mas")} Nueva meta</button></div>
         ${metas.length ? metas.map(m => `<div class="meta-fila"><div class="arriba"><button style="text-align:left" data-ir="metas" data-arg="a:${m.id}"><i class="eje-punto" style="background:${COLOR_EJE[ejeEfectivo("meta_anio", m)] || "#7A4A6B"}" title="${esc(NOMBRE_EJE[ejeEfectivo("meta_anio", m)] || "Confluencia")}"></i> ${esc(m.titulo)}${(() => { const n = c.mensuales.filter(x => x.metaAnualId === m.id).length; return n ? ` <span class="suave" style="font-size:12px">· ${n} ${n === 1 ? "mes" : "meses"}</span>` : ""; })()}</button><span class="pct">${pctTxt(c.nodoAnio(m))}</span></div><div class="barra"><i style="width:${c.nodoAnio(m) * 100}%"></i></div></div>`).join("")
           : `<p class="suave" style="margin:8px 0 0">Todavía no hay metas para ${a}.</p>`}`)) +
@@ -670,6 +672,7 @@ function detDia(fecha) {
     (esHoy ? `<div class="cielo-dia"><div class="cielo" data-cielo="hud"></div>${p.cumbreFrase ? `<button type="button" class="cielo-cumbre" data-ir="ruta" data-arg="vida" aria-label="Tu cumbre: ${esc(p.cumbreFrase)}. Ver tu ruta"><span class="frase-vida">${esc(p.cumbreFrase)}</span></button>` : ""}</div>` : "") +
     `<nav class="dia-indice" aria-label="Secciones del día">${[["plan", "bandera", "Plan"], ["acts", "lista", "Actividades"], ["habitos", "check", "Hábitos"], ["bienestar", "bienestar", "Bienestar"], ["cierre", "tema", "Cierre"]]
       .map(([k, i, n]) => `<button type="button" class="chip" data-acc="irSecDia" data-arg="${k}">${ic(i)}${n}</button>`).join("")}</nav>` +
+    (esHoy && window.hitosRecuerdoHoy ? hitosRecuerdoHoy() : "") +
     (sellada ? `<div class="aviso">${ic("frases")} Tu frase del día te espera sellada. <button class="btn" data-ir="frases" data-arg="f:${fecha}" style="margin-left:auto">Abrir</button></div>` : "") +
     // Dos columnas en pantallas anchas: a la izquierda el plan (las 3 cumbres y las actividades por hora); a la derecha lo demás
     `<div class="dia-cont"><div class="dia-cols"><div class="dia-col dia-izq">` +

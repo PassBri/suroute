@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">アイコンを選ぶ</string>
     <string name="hi_icono_listo">完了</string>
     <string name="hi_icono_n">アイコン %1$d</string>
+    <string name="hi_de_tu_ascenso">あなたの登頂のマイルストーン</string>
+    <string name="hi_ver_mis">マイルストーンを見る</string>
+    <string name="hi_anios_con">マイルストーンのある年 %1$d</string>
 </resources>

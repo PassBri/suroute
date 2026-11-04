@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">아이콘 선택</string>
     <string name="hi_icono_listo">완료</string>
     <string name="hi_icono_n">아이콘 %1$d</string>
+    <string name="hi_de_tu_ascenso">나의 등정 이정표</string>
+    <string name="hi_ver_mis">내 이정표 보기</string>
+    <string name="hi_anios_con">이정표가 있는 해 %1$d</string>
 </resources>

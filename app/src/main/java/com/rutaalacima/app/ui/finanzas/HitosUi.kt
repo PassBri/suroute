@@ -62,6 +62,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -117,7 +118,7 @@ private fun falta(f: String): String {
 
 /** Una fila de hito: el ícono en su sello dorado (punteado si es plan), el título, la fecha y lo que costó. */
 @Composable
-private fun FilaHito(h: Hito, plata: (Double) -> String, onLogrado: () -> Unit, onEditar: () -> Unit) {
+private fun FilaHito(h: Hito, plata: (Double) -> String, onLogrado: () -> Unit, soloVer: Boolean = false, onEditar: () -> Unit) {
     val oro = MaterialTheme.colorScheme.secondaryContainer
     Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(44.dp).clip(CircleShape).then(if (h.ok) Modifier.background(oro) else Modifier.border(2.dp, MaterialTheme.colorScheme.outline, CircleShape)),
@@ -132,11 +133,11 @@ private fun FilaHito(h: Hito, plata: (Double) -> String, onLogrado: () -> Unit, 
                 h.m?.takeIf { it > 0 }?.let { add(plata(it)) }; h.n?.takeIf { it.isNotBlank() }?.let { add(it) }
             }.joinToString(" · ")
             Text(detalle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            if (!h.ok) Button(onClick = onLogrado, modifier = Modifier.padding(top = 6.dp)) {
+            if (!h.ok && !soloVer) Button(onClick = onLogrado, modifier = Modifier.padding(top = 6.dp)) {
                 Icon(Icons.Filled.Flag, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.hi_lo_logre))
             }
         }
-        IconButton(onClick = onEditar) { Icon(Icons.Filled.Edit, stringResource(R.string.hi_editar, h.t)) }
+        if (!soloVer) IconButton(onClick = onEditar) { Icon(Icons.Filled.Edit, stringResource(R.string.hi_editar, h.t)) }
     }
 }
 
@@ -420,4 +421,69 @@ private fun pdfHitos(out: java.io.OutputStream, filas: List<FilaPdf>, cifras: Li
     dibujar(lay(t.pie, tp(8.5f, suave), ancho - 2 * margen), margen, y)
     pagina?.let { doc.finishPage(it) }
     doc.writeTo(out); doc.close()
+}
+
+
+/* ---------------------------------------------------------------- Fuera de Ascenso financiero (igual que la web)
+ * Los hitos se crean y se editan solo en Ascenso. Afuera aparecen en tres puntos, solo para ver y con el camino a «Mis hitos»:
+ * la banderita en los años de Mi vida en años, la lista corta en el año (Mi ruta) y el recuerdo en Hoy la semana del aniversario.
+ * Con el Ascenso bloqueado no se ve nada afuera; con los montos ocultos, no van montos. */
+
+/** Los hitos que se pueden mostrar fuera del Ascenso (ninguno si está bloqueado). */
+@Composable
+private fun hitosDeFuera(): Pair<List<Hito>, Libro> {
+    val vm = com.rutaalacima.app.ui.components.rutaViewModel { CuentasViewModel(it) }
+    val libro by vm.libro.collectAsStateWithLifecycle()
+    val cerrado = libro.bloqueo && System.currentTimeMillis() > vm.abiertoHasta
+    return (if (cerrado) emptyList() else libro.hitos) to libro
+}
+
+/** Los años con hitos logrados y cuántos tiene cada uno (para Mi vida en años). */
+@Composable
+fun aniosConHitos(): Map<Int, Int> = hitosDeFuera().first.filter { it.ok }.groupingBy { it.f.take(4).toIntOrNull() ?: 0 }.eachCount()
+
+/** El chip «N con hitos» bajo Mi vida en años: lleva a «Mis hitos». */
+@Composable
+fun ChipHitosVida(n: Int) {
+    if (n == 0) return
+    val abrir = irACuentas()
+    androidx.compose.material3.AssistChip(onClick = { abrir("hitos") }, label = { Text(stringResource(R.string.hi_anios_con, n)) },
+        leadingIcon = { Icon(Icons.Filled.Flag, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.secondary) })
+}
+
+/** En el año (Mi ruta): sus hitos financieros, solo para ver, con el botón a «Mis hitos». */
+@Composable
+fun HitosAnioRuta(anio: Int) {
+    val (todos, libro) = hitosDeFuera()
+    val l = todos.filter { it.f.startsWith("$anio") }.sortedBy { it.f }
+    if (l.isEmpty()) return
+    val abrir = irACuentas()
+    val plata: (Double) -> String = { if (libro.ocultarFuera || com.rutaalacima.app.seguridad.Discreto.activo) "•••••" else com.rutaalacima.app.domain.model.Cuentas.formato(it, libro.moneda) }
+    RutaCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Flag, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.hi_de_tu_ascenso), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            TextButton(onClick = { abrir("hitos") }) { Text(stringResource(R.string.hi_mis)) }
+        }
+        l.forEach { h -> FilaHito(h, plata, {}, soloVer = true) {} }
+    }
+}
+
+/** En Hoy: el recuerdo del aniversario (solo esa semana), con el camino a «Mis hitos». */
+@Composable
+fun HitosRecuerdoHoy() {
+    val (todos, _) = hitosDeFuera()
+    val d0 = hoy()
+    val r = todos.filter { h -> h.ok && (h.f.take(4).toIntOrNull() ?: d0.year) < d0.year && runCatching {
+        ChronoUnit.DAYS.between(d0, LocalDate.parse(d0.year.toString() + h.f.drop(4))) in 0..6 }.getOrDefault(false) }
+    if (r.isEmpty()) return
+    val abrir = irACuentas()
+    RutaCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Flag, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.hi_recuerdo_t), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            TextButton(onClick = { abrir("hitos") }) { Text(stringResource(R.string.hi_ver_mis)) }
+        }
+        r.forEach { Recuerdo(it) }
+    }
 }

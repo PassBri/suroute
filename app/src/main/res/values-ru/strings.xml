@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">Выбрать значок</string>
     <string name="hi_icono_listo">Готово</string>
     <string name="hi_icono_n">Значок %1$d</string>
+    <string name="hi_de_tu_ascenso">Вехи вашего восхождения</string>
+    <string name="hi_ver_mis">Мои вехи</string>
+    <string name="hi_anios_con">%1$d с вехами</string>
 </resources>

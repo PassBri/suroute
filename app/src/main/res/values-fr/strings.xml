@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">Choisir une icône</string>
     <string name="hi_icono_listo">OK</string>
     <string name="hi_icono_n">Icône %1$d</string>
+    <string name="hi_de_tu_ascenso">Étapes de votre ascension</string>
+    <string name="hi_ver_mis">Voir mes étapes</string>
+    <string name="hi_anios_con">%1$d avec étapes</string>
 </resources>

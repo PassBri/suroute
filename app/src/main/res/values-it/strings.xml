@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">Scegli icona</string>
     <string name="hi_icono_listo">Fatto</string>
     <string name="hi_icono_n">Icona %1$d</string>
+    <string name="hi_de_tu_ascenso">Traguardi della tua salita</string>
+    <string name="hi_ver_mis">Vedi i miei traguardi</string>
+    <string name="hi_anios_con">%1$d con traguardi</string>
 </resources>

@@ -3246,4 +3246,7 @@
     <string name="hi_icono_elegir">Symbol wählen</string>
     <string name="hi_icono_listo">Fertig</string>
     <string name="hi_icono_n">Symbol %1$d</string>
+    <string name="hi_de_tu_ascenso">Meilensteine deines Aufstiegs</string>
+    <string name="hi_ver_mis">Meine Meilensteine</string>
+    <string name="hi_anios_con">%1$d mit Meilensteinen</string>
 </resources>
