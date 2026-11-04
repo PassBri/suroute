@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">達成したこと</string>
     <string name="hi_pdf_pie">SuRoute が家計簿のマイルストーンから作成 · 頂上へのルート メソッド。</string>
     <string name="hi_pdf_ok">マイルストーンを PDF で保存しました</string>
+    <string name="hi_icono_auto">種類に合わせる</string>
+    <string name="hi_icono_propio">選んだアイコン</string>
+    <string name="hi_icono_elegir">アイコンを選ぶ</string>
+    <string name="hi_icono_listo">完了</string>
+    <string name="hi_icono_n">アイコン %1$d</string>
 </resources>

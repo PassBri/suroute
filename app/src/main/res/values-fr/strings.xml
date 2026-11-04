@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">Ce que j’ai accompli</string>
     <string name="hi_pdf_pie">Généré par SuRoute à partir des étapes de votre livre de comptes · méthode Route vers le sommet.</string>
     <string name="hi_pdf_ok">Étapes enregistrées en PDF</string>
+    <string name="hi_icono_auto">Selon le type</string>
+    <string name="hi_icono_propio">Icône choisie par vous</string>
+    <string name="hi_icono_elegir">Choisir une icône</string>
+    <string name="hi_icono_listo">OK</string>
+    <string name="hi_icono_n">Icône %1$d</string>
 </resources>

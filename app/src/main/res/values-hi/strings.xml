@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">मैंने क्या हासिल किया</string>
     <string name="hi_pdf_pie">SuRoute ने आपकी खाता-बही के पड़ावों से बनाया · शिखर का रास्ता पद्धति।</string>
     <string name="hi_pdf_ok">पड़ाव PDF में सहेजे गए</string>
+    <string name="hi_icono_auto">प्रकार के अनुसार</string>
+    <string name="hi_icono_propio">आपका चुना आइकन</string>
+    <string name="hi_icono_elegir">आइकन चुनें</string>
+    <string name="hi_icono_listo">हो गया</string>
+    <string name="hi_icono_n">आइकन %1$d</string>
 </resources>

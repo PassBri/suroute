@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">ما حققته</string>
     <string name="hi_pdf_pie">أنشأه SuRoute من إنجازات دفتر حساباتك · منهج الطريق إلى القمة.</string>
     <string name="hi_pdf_ok">تم حفظ الإنجازات بصيغة PDF</string>
+    <string name="hi_icono_auto">حسب النوع</string>
+    <string name="hi_icono_propio">الأيقونة التي اخترتها</string>
+    <string name="hi_icono_elegir">اختر أيقونة</string>
+    <string name="hi_icono_listo">تم</string>
+    <string name="hi_icono_n">أيقونة %1$d</string>
 </resources>

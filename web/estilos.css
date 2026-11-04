@@ -5861,3 +5861,20 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .hitos-cab-btns { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .hitos-hoja .cab-lista-btn h3 { white-space: nowrap; }
 @media (max-width: 520px) { .hitos-txt-btn { display: none; } }
+/* Hitos: elegir el ícono (Material) */
+.hito-iconos { margin: 10px 0 4px; border: 1px solid var(--linea); border-radius: 12px; }
+.hito-iconos > summary { list-style: none; display: flex; align-items: center; gap: 10px; padding: 6px 8px 6px 6px; cursor: pointer; min-height: 52px; }
+.hito-iconos > summary::-webkit-details-marker { display: none; }
+.hito-iconos > summary > span:nth-child(2) { flex: 1; font-size: 14px; color: var(--tinta-suave); } .hito-iconos > summary b { color: var(--tinta); font-weight: 500; }
+.hito-iconos[open] > summary .btn { visibility: hidden; }
+.hito-ico-actual { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--oro-suave); flex: none; }
+.hito-ico-actual svg { width: 22px; height: 22px; fill: var(--burdeos); }
+.hito-ico-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 4px; padding: 4px 8px 10px; max-height: 236px; overflow-y: auto; overscroll-behavior: contain; }
+.hito-ico { position: relative; display: grid; place-items: center; height: 44px; border-radius: 50%; cursor: pointer; }
+.hito-ico input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hito-ico svg { width: 22px; height: 22px; fill: var(--tinta-suave); }
+.hito-ico-auto { grid-column: 1 / -1; justify-items: start; border-radius: 8px; border: 1px dashed var(--linea); padding: 0 12px; font-size: 13.5px; color: var(--tinta-suave); }
+.hito-ico:has(input:checked) { background: var(--burdeos); color: var(--hoja); } .hito-ico:has(input:checked) svg { fill: var(--hoja); }
+.hito-ico:has(input:focus-visible) { outline: 2px solid var(--burdeos); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .hito-ico:not(:has(input:checked)):hover { background: var(--hoja-2); } }
+.hito-ico-auto:has(input:checked) { background: var(--oro-suave); color: var(--burdeos); border-color: transparent; font-weight: 500; }

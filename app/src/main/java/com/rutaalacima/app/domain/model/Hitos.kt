@@ -14,7 +14,9 @@ object Hitos {
     private val json = Json { ignoreUnknownKeys = true; explicitNulls = false }
 
     @Serializable
-    data class Hito(val id: String, val t: String, val k: String = "otro", val f: String, val ok: Boolean = true, val m: Double? = null, val n: String? = null)
+    data class Hito(val id: String, val t: String, val k: String = "otro", val f: String, val ok: Boolean = true, val m: Double? = null, val n: String? = null,
+        /** Ícono de Material elegido por la persona (clave como "beach_access"); sin él, el del tipo. */
+        val i: String? = null)
 
     /** Tipos de hito (el ícono se elige en la interfaz). */
     val TIPOS = listOf("casa", "viaje", "carro", "estudio", "deuda", "negocio", "ahorro", "familia", "otro")

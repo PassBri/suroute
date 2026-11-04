@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">我的成就</string>
     <string name="hi_pdf_pie">由 SuRoute 根据你账本中的里程碑生成 · 登顶之路方法。</string>
     <string name="hi_pdf_ok">里程碑已保存为 PDF</string>
+    <string name="hi_icono_auto">按类型</string>
+    <string name="hi_icono_propio">你选择的图标</string>
+    <string name="hi_icono_elegir">选择图标</string>
+    <string name="hi_icono_listo">完成</string>
+    <string name="hi_icono_n">图标 %1$d</string>
 </resources>

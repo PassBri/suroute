@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">Ciò che ho raggiunto</string>
     <string name="hi_pdf_pie">Generato da SuRoute con i traguardi del tuo libro dei conti · metodo Rotta verso la vetta.</string>
     <string name="hi_pdf_ok">Traguardi salvati in PDF</string>
+    <string name="hi_icono_auto">In base al tipo</string>
+    <string name="hi_icono_propio">Icona scelta da te</string>
+    <string name="hi_icono_elegir">Scegli icona</string>
+    <string name="hi_icono_listo">Fatto</string>
+    <string name="hi_icono_n">Icona %1$d</string>
 </resources>

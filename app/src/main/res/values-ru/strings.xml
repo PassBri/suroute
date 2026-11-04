@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">Чего я достиг</string>
     <string name="hi_pdf_pie">Создано SuRoute по вехам вашей книги учёта · метод «Путь к вершине».</string>
     <string name="hi_pdf_ok">Вехи сохранены в PDF</string>
+    <string name="hi_icono_auto">По типу</string>
+    <string name="hi_icono_propio">Выбранный вами значок</string>
+    <string name="hi_icono_elegir">Выбрать значок</string>
+    <string name="hi_icono_listo">Готово</string>
+    <string name="hi_icono_n">Значок %1$d</string>
 </resources>

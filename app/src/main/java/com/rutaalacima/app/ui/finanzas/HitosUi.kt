@@ -85,6 +85,9 @@ import java.time.temporal.ChronoUnit
 
 /* Hitos del ascenso financiero (igual que la web, web/js/56-hitos.js). */
 
+/** El ícono que se ve: el que eligió la persona o, si no eligió, el de su tipo. */
+private fun iconoDe(h: Hito): ImageVector = iconoHitoClave(h.i) ?: iconoHito(h.k)
+
 private fun iconoHito(k: String): ImageVector = when (k) {
     "casa" -> Icons.Filled.Home; "viaje" -> Icons.Filled.Flight; "carro" -> Icons.Filled.DirectionsCar; "estudio" -> Icons.Filled.School
     "deuda" -> Icons.Filled.CreditCard; "negocio" -> Icons.Filled.Storefront; "ahorro" -> Icons.Filled.Savings; "familia" -> Icons.Filled.People
@@ -119,7 +122,7 @@ private fun FilaHito(h: Hito, plata: (Double) -> String, onLogrado: () -> Unit, 
     Row(Modifier.fillMaxWidth().padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         Box(Modifier.size(44.dp).clip(CircleShape).then(if (h.ok) Modifier.background(oro) else Modifier.border(2.dp, MaterialTheme.colorScheme.outline, CircleShape)),
             contentAlignment = Alignment.Center) {
-            Icon(iconoHito(h.k), null, Modifier.size(22.dp), tint = if (h.ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+            Icon(iconoDe(h), null, Modifier.size(22.dp), tint = if (h.ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
@@ -220,7 +223,7 @@ private fun Recuerdo(h: Hito) {
     Row(Modifier.fillMaxWidth().padding(top = 12.dp).clip(RoundedCornerShape(16.dp))
         .background(Brush.linearGradient(listOf(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.colorScheme.surfaceContainer))).padding(14.dp),
         verticalAlignment = Alignment.CenterVertically) {
-        Icon(iconoHito(h.k), null, Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary); Spacer(Modifier.width(12.dp))
+        Icon(iconoDe(h), null, Modifier.size(28.dp), tint = MaterialTheme.colorScheme.primary); Spacer(Modifier.width(12.dp))
         Column {
             Text(pluralStringResource(R.plurals.hi_hace_anios, n, n), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Text(h.t, style = MaterialTheme.typography.titleMedium, fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold)
@@ -247,6 +250,8 @@ private fun DialogoHito(h: Hito, nuevo: Boolean, onGuardar: (Hito) -> Unit, onBo
     var f by rememberSaveable { mutableStateOf(h.f) }
     var m by rememberSaveable { mutableStateOf(h.m?.let { if (it % 1.0 == 0.0) it.toLong().toString() else it.toString() } ?: "") }
     var n by rememberSaveable { mutableStateOf(h.n ?: "") }
+    var ico by rememberSaveable { mutableStateOf(h.i) }
+    var eligiendo by rememberSaveable { mutableStateOf(false) }
     val fechaOk = Regex("\\d{4}-\\d{2}-\\d{2}").matches(f) && runCatching { LocalDate.parse(f) }.isSuccess
     AlertDialog(
         onDismissRequest = onCerrar,
@@ -258,6 +263,25 @@ private fun DialogoHito(h: Hito, nuevo: Boolean, onGuardar: (Hito) -> Unit, onBo
                 Spacer(Modifier.height(10.dp))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Hitos.TIPOS.forEach { v -> FilterChip(selected = k == v, onClick = { k = v }, label = { Text(nombreTipoHito(v)) }, leadingIcon = { Icon(iconoHito(v), null, Modifier.size(18.dp)) }) }
+                }
+                // El ícono: por defecto el del tipo; se puede elegir cualquiera de la lista de Material
+                Row(Modifier.fillMaxWidth().padding(top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Box(Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
+                        Icon(iconoHitoClave(ico) ?: iconoHito(k), null, Modifier.size(22.dp), tint = MaterialTheme.colorScheme.onSecondaryContainer) }
+                    Spacer(Modifier.width(10.dp))
+                    Text(stringResource(if (ico == null) R.string.hi_icono_auto else R.string.hi_icono_propio), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                    TextButton(onClick = { eligiendo = !eligiendo }) { Text(stringResource(if (eligiendo) R.string.hi_icono_listo else R.string.hi_icono_elegir)) }
+                }
+                if (eligiendo) FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                    FilterChip(selected = ico == null, onClick = { ico = null; eligiendo = false }, label = { Text(stringResource(R.string.hi_icono_auto)) },
+                        leadingIcon = { Icon(iconoHito(k), null, Modifier.size(18.dp)) }, modifier = Modifier.padding(end = 4.dp))
+                    ICONOS_HITO.forEachIndexed { i, (clave, v) ->
+                        val sel = ico == clave; val desc = stringResource(R.string.hi_icono_n, i + 1)
+                        IconButton(onClick = { ico = clave; eligiendo = false }, modifier = Modifier.size(48.dp)) {
+                            Box(Modifier.size(38.dp).clip(CircleShape).background(if (sel) MaterialTheme.colorScheme.primary else androidx.compose.ui.graphics.Color.Transparent), contentAlignment = Alignment.Center) {
+                                Icon(v, desc, Modifier.size(22.dp), tint = if (sel) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant) }
+                        }
+                    }
                 }
                 Spacer(Modifier.height(8.dp))
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
@@ -275,7 +299,7 @@ private fun DialogoHito(h: Hito, nuevo: Boolean, onGuardar: (Hito) -> Unit, onBo
         },
         confirmButton = {
             TextButton(enabled = t.isNotBlank() && fechaOk, onClick = {
-                onGuardar(h.copy(t = t.trim(), k = k, ok = ok, f = f, m = m.replace(',', '.').toDoubleOrNull()?.takeIf { it > 0 }, n = n.trim().ifBlank { null }))
+                onGuardar(h.copy(t = t.trim(), k = k, ok = ok, f = f, m = m.replace(',', '.').toDoubleOrNull()?.takeIf { it > 0 }, n = n.trim().ifBlank { null }, i = ico))
             }) { Text(stringResource(R.string.guardar)) }
         },
         dismissButton = { TextButton(onClick = onCerrar) { Text(stringResource(R.string.cancelar)) } },

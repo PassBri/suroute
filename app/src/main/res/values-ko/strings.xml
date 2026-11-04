@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">내가 이룬 것</string>
     <string name="hi_pdf_pie">SuRoute가 가계부의 이정표로 생성 · 정상으로 가는 길 방법.</string>
     <string name="hi_pdf_ok">이정표를 PDF로 저장했습니다</string>
+    <string name="hi_icono_auto">유형에 따라</string>
+    <string name="hi_icono_propio">직접 고른 아이콘</string>
+    <string name="hi_icono_elegir">아이콘 선택</string>
+    <string name="hi_icono_listo">완료</string>
+    <string name="hi_icono_n">아이콘 %1$d</string>
 </resources>

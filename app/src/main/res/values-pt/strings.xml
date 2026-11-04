@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">O que conquistei</string>
     <string name="hi_pdf_pie">Gerado pelo SuRoute com os marcos do seu livro de contas · método Rota ao Cume.</string>
     <string name="hi_pdf_ok">Marcos salvos em PDF</string>
+    <string name="hi_icono_auto">Pelo tipo</string>
+    <string name="hi_icono_propio">Ícone escolhido por você</string>
+    <string name="hi_icono_elegir">Escolher ícone</string>
+    <string name="hi_icono_listo">Pronto</string>
+    <string name="hi_icono_n">Ícone %1$d</string>
 </resources>

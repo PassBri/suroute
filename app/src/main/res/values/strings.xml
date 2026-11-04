@@ -3250,4 +3250,9 @@
     <string name="hi_pdf_logre">Lo que logré</string>
     <string name="hi_pdf_pie">Generado por SuRoute con los hitos de tu libro de cuentas · método Ruta a la Cima.</string>
     <string name="hi_pdf_ok">Hitos guardados en PDF</string>
+    <string name="hi_icono_auto">Según el tipo</string>
+    <string name="hi_icono_propio">Ícono elegido por ti</string>
+    <string name="hi_icono_elegir">Elegir ícono</string>
+    <string name="hi_icono_listo">Listo</string>
+    <string name="hi_icono_n">Ícono %1$d</string>
 </resources>

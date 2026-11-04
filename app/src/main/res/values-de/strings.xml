@@ -3241,4 +3241,9 @@
     <string name="hi_pdf_logre">Was ich erreicht habe</string>
     <string name="hi_pdf_pie">Erstellt von SuRoute aus den Meilensteinen deines Kassenbuchs · Methode Weg zum Gipfel.</string>
     <string name="hi_pdf_ok">Meilensteine als PDF gespeichert</string>
+    <string name="hi_icono_auto">Nach Typ</string>
+    <string name="hi_icono_propio">Von dir gewähltes Symbol</string>
+    <string name="hi_icono_elegir">Symbol wählen</string>
+    <string name="hi_icono_listo">Fertig</string>
+    <string name="hi_icono_n">Symbol %1$d</string>
 </resources>
