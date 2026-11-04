@@ -5555,3 +5555,10 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .lc-libro-ic b { position: absolute; top: 2px; right: 0; min-width: 16px; height: 16px; padding: 0 4px; border-radius: 99px; font: 700 10px/16px var(--font-cuerpo, inherit); color: #fff; background: var(--burdeos-fijo, #8E2F1D); }
 @media (hover: hover) and (pointer: fine) { .lc-libro-ic:hover { background: var(--hoja-2); } }
 .lc-libro-ic:focus-visible { outline: 2px solid var(--oro); outline-offset: 2px; }
+/* Coach: el tema de la conversación y los límites de lo que aconseja */
+.coach-temas { display: flex; gap: 6px; overflow-x: auto; padding: 8px 16px; border-bottom: 1px solid var(--linea); scrollbar-width: none; }
+.coach-temas button { flex: none; min-height: 36px; padding: 0 14px; border-radius: 99px; border: 1px solid var(--linea); color: var(--tinta); font-size: 13.5px; touch-action: manipulation; }
+.coach-temas button[aria-checked="true"] { background: var(--oro-suave); border-color: var(--oro); font-weight: 600; }
+.coach-aviso { display: flex; gap: 8px; align-items: flex-start; align-self: stretch; padding: 10px 12px; border-radius: 12px; background: var(--hoja-2); color: var(--tinta-suave); font-size: 13.5px; }
+.coach-aviso svg { width: 18px; height: 18px; flex: none; fill: currentColor; }
+.coach-limites { margin: 4px 0 0; font-size: 12px; color: var(--tinta-suave); text-align: center; }

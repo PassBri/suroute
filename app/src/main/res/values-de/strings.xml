@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">Ohne die Buchseite veröffentlichen</string>
     <string name="lb_texto_capsula">Meine Kapsel von %1$s im Gipfelbuch.</string>
     <string name="lb_texto_anio">Mein %1$d im Gipfelbuch.</string>
+    <string name="coach_tema_general">Allgemein</string>
+    <string name="coach_tema_proposito">Lebenssinn</string>
+    <string name="coach_tema_metas">Ziele &amp; Gewohnheiten</string>
+    <string name="coach_tema_finanzas">Finanzen</string>
+    <string name="coach_sug_proposito5">Was ist mein 5-Jahres-Ziel?</string>
+    <string name="coach_sug_atascada">Mein Ziel steckt fest</string>
+    <string name="coach_sug_mochilas">Wie verteile ich mein Einkommen auf die drei Rucksäcke?</string>
+    <string name="coach_sug_deudas">Wie komme ich aus meinen Schulden?</string>
+    <string name="coach_sug_emergencia">Wie groß sollte mein Notgroschen sein?</string>
+    <string name="coach_sug_revisar_fin">Prüfe meine Finanzen des Monats</string>
+    <string name="coach_aviso_sin_funcion">Der KI-Coach ist noch nicht verbunden: Die Funktion „coach“ muss noch in Supabase veröffentlicht werden. Bis dahin antworte ich mit dem Leitfaden der Methode.</string>
+    <string name="coach_aviso_sin_clave">Der KI-Coach ist noch nicht verbunden: Das Secret ANTHROPIC_API_KEY fehlt in Supabase. Bis dahin antworte ich mit dem Leitfaden der Methode.</string>
+    <string name="coach_aviso_error">Der KI-Coach hat nicht geantwortet (%1$s). Bis dahin antworte ich mit dem Leitfaden der Methode.</string>
+    <string name="coach_limites_general">Der Coach begleitet Sie mit der Methode Ruta a la Cima. Er ersetzt keine Fachperson für Gesundheit, Recht oder Finanzen.</string>
+    <string name="coach_limites_finanzas">Finanzbildung mit der Methode Ascenso financiero, keine professionelle Beratung: keine Empfehlung bestimmter Anlagen oder Produkte.</string>
 </resources>

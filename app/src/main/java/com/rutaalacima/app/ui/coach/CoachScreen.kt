@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Terrain
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.DeleteSweep
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -67,6 +68,10 @@ class CoachViewModel(private val c: AppContainer) : ViewModel() {
     val conIA: Boolean get() = c.coach.conIA
     /** Llegó al límite diario del plan gratuito: se ofrece conocer el Plan Cumbre. */
     val limite = c.coach.limiteAlcanzado
+    /** Los controles: de qué se habla (propósito, metas o finanzas) y por qué la IA no respondió. */
+    val tema = c.coach.tema
+    val aviso = c.coach.aviso
+    fun elegirTema(t: String) = c.coach.elegirTema(t)
 
     fun enviar(t: String = texto) {
         if (t.isBlank() || pensando) return
@@ -110,10 +115,17 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
     val mensajes by vm.mensajes.collectAsStateWithLifecycle()
     val lista = rememberLazyListState()
     LaunchedEffect(mensajes.size, vm.pensando) { if (mensajes.isNotEmpty()) lista.animateScrollToItem(mensajes.size) }
-    val sugerencias = listOf(
-        R.string.coach_sug_cumbre, R.string.coach_sug_dividir, R.string.coach_sug_motivacion,
-        R.string.coach_sug_semana, R.string.coach_sug_eje, R.string.coach_sug_habito,
-    ).map { stringResource(it) }
+    val tema by vm.tema.collectAsStateWithLifecycle()
+    val aviso by vm.aviso.collectAsStateWithLifecycle()
+    val sugerencias = when (tema) {
+        "proposito" -> listOf(R.string.coach_sug_cumbre, R.string.coach_sug_proposito5, R.string.coach_sug_eje)
+        "metas" -> listOf(R.string.coach_sug_dividir, R.string.coach_sug_semana, R.string.coach_sug_motivacion, R.string.coach_sug_atascada, R.string.coach_sug_habito)
+        "finanzas" -> listOf(R.string.coach_sug_mochilas, R.string.coach_sug_deudas, R.string.coach_sug_emergencia, R.string.coach_sug_revisar_fin)
+        else -> listOf(R.string.coach_sug_cumbre, R.string.coach_sug_dividir, R.string.coach_sug_motivacion,
+            R.string.coach_sug_semana, R.string.coach_sug_eje, R.string.coach_sug_habito)
+    }.map { stringResource(it) }
+    val temas = listOf("" to R.string.coach_tema_general, "proposito" to R.string.coach_tema_proposito,
+        "metas" to R.string.coach_tema_metas, "finanzas" to R.string.coach_tema_finanzas)
 
     Scaffold(
         modifier = Modifier.fondoPapel(),
@@ -147,6 +159,12 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
                         Spacer(Modifier.size(6.dp))
                         Text(stringResource(R.string.coach_limite_plan))
                     }
+                    Text(
+                        stringResource(if (tema == "finanzas") R.string.coach_limites_finanzas else R.string.coach_limites_general),
+                        style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 6.dp),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    )
                     LazyRow(contentPadding = PaddingValues(horizontal = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         items(sugerencias) { s -> AssistChip(onClick = { vm.enviar(s) }, label = { Text(s, maxLines = 1) }) }
                     }
@@ -169,6 +187,14 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
             contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = padding.calculateTopPadding() + 8.dp, bottom = padding.calculateBottomPadding() + 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
+            item {
+                // Los controles: el tema decide qué aconseja el coach (y si ve las finanzas)
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(bottom = 4.dp)) {
+                    items(temas) { (k, n) ->
+                        androidx.compose.material3.FilterChip(selected = tema == k, onClick = { vm.elegirTema(k) }, label = { Text(stringResource(n)) })
+                    }
+                }
+            }
             item { Burbuja(stringResource(R.string.coach_bienvenida), deCoach = true) }
             if (mensajes.isEmpty()) item {
                 androidx.compose.material3.TextButton(onClick = onCoachVida) {
@@ -184,6 +210,13 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
                     if (accion != null) AccionPropuesta(accion, creada = m.id.toString() in vm.creadas, onCrear = { vm.crear(m.id, accion) })
                 } else Burbuja(m.texto, deCoach = false)
             }
+            aviso?.let { a -> item {
+                Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.Top) {
+                    Icon(Icons.Outlined.Info, null, Modifier.size(18.dp).padding(top = 2.dp), tint = MaterialTheme.colorScheme.secondary)
+                    Spacer(Modifier.size(8.dp))
+                    Text(a, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } }
             if (vm.pensando) item { Box(Modifier.padding(8.dp)) { CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp) } }
         }
     }

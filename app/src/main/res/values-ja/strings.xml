@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">本のページなしで投稿</string>
     <string name="lb_texto_capsula">頂上の本に入れた %1$s のカプセル。</string>
     <string name="lb_texto_anio">頂上の本に入れたわたしの %1$d 年。</string>
+    <string name="coach_tema_general">全般</string>
+    <string name="coach_tema_proposito">人生の目的</string>
+    <string name="coach_tema_metas">目標と習慣</string>
+    <string name="coach_tema_finanzas">お金</string>
+    <string name="coach_sug_proposito5">私の5年後の目的は？</string>
+    <string name="coach_sug_atascada">目標が行き詰まっています</string>
+    <string name="coach_sug_mochilas">収入を3つのリュックにどう分ける？</string>
+    <string name="coach_sug_deudas">借金からどう抜け出す？</string>
+    <string name="coach_sug_emergencia">緊急資金はいくら必要？</string>
+    <string name="coach_sug_revisar_fin">今月の家計を見直して</string>
+    <string name="coach_aviso_sin_funcion">AIコーチはまだ接続されていません：Supabaseで「coach」関数を公開する必要があります。それまでは方法ガイドでお答えします。</string>
+    <string name="coach_aviso_sin_clave">AIコーチはまだ接続されていません：SupabaseのシークレットにANTHROPIC_API_KEYがありません。それまでは方法ガイドでお答えします。</string>
+    <string name="coach_aviso_error">AIコーチが応答しませんでした（%1$s）。それまでは方法ガイドでお答えします。</string>
+    <string name="coach_limites_general">コーチは Ruta a la Cima の方法で導きます。医療・法律・金融の専門家の代わりにはなりません。</string>
+    <string name="coach_limites_finanzas">Ascenso financiero の方法による金融教育であり、専門的な助言ではありません。特定の投資や商品は勧めません。</string>
 </resources>

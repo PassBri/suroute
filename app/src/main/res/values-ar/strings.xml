@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">انشر بدون صفحة الكتاب</string>
     <string name="lb_texto_capsula">كبسولتي لشهر %1$s في كتاب القمم.</string>
     <string name="lb_texto_anio">سنتي %1$d في كتاب القمم.</string>
+    <string name="coach_tema_general">عام</string>
+    <string name="coach_tema_proposito">الغاية</string>
+    <string name="coach_tema_metas">الأهداف والعادات</string>
+    <string name="coach_tema_finanzas">المال</string>
+    <string name="coach_sug_proposito5">ما غايتي خلال 5 سنوات؟</string>
+    <string name="coach_sug_atascada">هدفي متعثّر</string>
+    <string name="coach_sug_mochilas">كيف أوزّع دخلي على الحقائب الثلاث؟</string>
+    <string name="coach_sug_deudas">كيف أتخلّص من ديوني؟</string>
+    <string name="coach_sug_emergencia">كم يجب أن يكون صندوق الطوارئ؟</string>
+    <string name="coach_sug_revisar_fin">راجع أموالي لهذا الشهر</string>
+    <string name="coach_aviso_sin_funcion">مدرّب الذكاء الاصطناعي غير متصل بعد: يجب نشر الدالة «coach» في Supabase. إلى ذلك الحين أجيبك بدليل المنهج.</string>
+    <string name="coach_aviso_sin_clave">مدرّب الذكاء الاصطناعي غير متصل بعد: ينقص السر ANTHROPIC_API_KEY في Supabase. إلى ذلك الحين أجيبك بدليل المنهج.</string>
+    <string name="coach_aviso_error">لم يستجب مدرّب الذكاء الاصطناعي (%1$s). إلى ذلك الحين أجيبك بدليل المنهج.</string>
+    <string name="coach_limites_general">يرشدك المدرّب بمنهج Ruta a la Cima، ولا يحلّ محلّ مختص صحي أو قانوني أو مالي.</string>
+    <string name="coach_limites_finanzas">تثقيف مالي بمنهج Ascenso financiero وليس استشارة مهنية: لا يوصي باستثمارات أو منتجات محددة.</string>
 </resources>

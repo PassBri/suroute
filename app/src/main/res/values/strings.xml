@@ -3128,4 +3128,19 @@
     <string name="lb_sin_pagina">Publicar sin la página del libro</string>
     <string name="lb_texto_capsula">Mi cápsula de %1$s en el Libro de cumbres.</string>
     <string name="lb_texto_anio">Mi %1$d en el Libro de cumbres.</string>
+    <string name="coach_tema_general">General</string>
+    <string name="coach_tema_proposito">Propósito</string>
+    <string name="coach_tema_metas">Metas y hábitos</string>
+    <string name="coach_tema_finanzas">Finanzas</string>
+    <string name="coach_sug_proposito5">¿Cuál es mi propósito a 5 años?</string>
+    <string name="coach_sug_atascada">Mi meta está atascada</string>
+    <string name="coach_sug_mochilas">¿Cómo repartir mi ingreso en las tres mochilas?</string>
+    <string name="coach_sug_deudas">¿Cómo salgo de mis deudas?</string>
+    <string name="coach_sug_emergencia">¿Cuánto debe tener mi fondo de emergencia?</string>
+    <string name="coach_sug_revisar_fin">Revisa mis finanzas del mes</string>
+    <string name="coach_aviso_sin_funcion">El coach con IA todavía no está conectado: falta publicar la función «coach» en Supabase. Mientras tanto te respondo con la guía del método.</string>
+    <string name="coach_aviso_sin_clave">El coach con IA todavía no está conectado: falta la clave ANTHROPIC_API_KEY en los secretos de Supabase. Mientras tanto te respondo con la guía del método.</string>
+    <string name="coach_aviso_error">El coach con IA no respondió (%1$s). Mientras tanto te respondo con la guía del método.</string>
+    <string name="coach_limites_general">El coach orienta con el método Ruta a la Cima. No reemplaza a un profesional de la salud, legal ni financiero.</string>
+    <string name="coach_limites_finanzas">Educación financiera con el método Ascenso financiero, no asesoría profesional: no recomienda inversiones ni productos concretos.</string>
 </resources>

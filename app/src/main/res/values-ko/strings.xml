@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">책 페이지 없이 게시</string>
     <string name="lb_texto_capsula">정상의 책 속 나의 %1$s 캡슐.</string>
     <string name="lb_texto_anio">정상의 책 속 나의 %1$d년.</string>
+    <string name="coach_tema_general">전체</string>
+    <string name="coach_tema_proposito">삶의 목적</string>
+    <string name="coach_tema_metas">목표와 습관</string>
+    <string name="coach_tema_finanzas">재정</string>
+    <string name="coach_sug_proposito5">나의 5년 목적은 무엇일까요?</string>
+    <string name="coach_sug_atascada">목표가 막혔어요</string>
+    <string name="coach_sug_mochilas">수입을 세 개의 배낭에 어떻게 나눌까요?</string>
+    <string name="coach_sug_deudas">빚에서 어떻게 벗어날까요?</string>
+    <string name="coach_sug_emergencia">비상금은 얼마나 있어야 할까요?</string>
+    <string name="coach_sug_revisar_fin">이번 달 재정을 검토해 주세요</string>
+    <string name="coach_aviso_sin_funcion">AI 코치가 아직 연결되지 않았습니다: Supabase에 «coach» 함수를 게시해야 합니다. 그동안 방법 가이드로 답해 드릴게요.</string>
+    <string name="coach_aviso_sin_clave">AI 코치가 아직 연결되지 않았습니다: Supabase 비밀에 ANTHROPIC_API_KEY가 없습니다. 그동안 방법 가이드로 답해 드릴게요.</string>
+    <string name="coach_aviso_error">AI 코치가 응답하지 않았습니다(%1$s). 그동안 방법 가이드로 답해 드릴게요.</string>
+    <string name="coach_limites_general">코치는 Ruta a la Cima 방법으로 안내합니다. 의료·법률·재정 전문가를 대신하지 않습니다.</string>
+    <string name="coach_limites_finanzas">Ascenso financiero 방법에 따른 금융 교육이며 전문 자문이 아닙니다. 특정 투자나 상품을 추천하지 않습니다.</string>
 </resources>

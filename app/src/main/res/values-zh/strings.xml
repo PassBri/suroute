@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">不带书页发布</string>
     <string name="lb_texto_capsula">我在顶峰之书里的 %1$s 胶囊。</string>
     <string name="lb_texto_anio">我在顶峰之书里的 %1$d 年。</string>
+    <string name="coach_tema_general">综合</string>
+    <string name="coach_tema_proposito">人生目标</string>
+    <string name="coach_tema_metas">目标与习惯</string>
+    <string name="coach_tema_finanzas">财务</string>
+    <string name="coach_sug_proposito5">我的五年目标是什么？</string>
+    <string name="coach_sug_atascada">我的目标卡住了</string>
+    <string name="coach_sug_mochilas">如何把收入分到三个背包？</string>
+    <string name="coach_sug_deudas">我该如何摆脱债务？</string>
+    <string name="coach_sug_emergencia">我的应急基金应该有多少？</string>
+    <string name="coach_sug_revisar_fin">检查我本月的财务</string>
+    <string name="coach_aviso_sin_funcion">AI 教练尚未连接：还需要在 Supabase 发布“coach”函数。在此期间，我会用方法指南回答。</string>
+    <string name="coach_aviso_sin_clave">AI 教练尚未连接：Supabase 中缺少 ANTHROPIC_API_KEY 密钥。在此期间，我会用方法指南回答。</string>
+    <string name="coach_aviso_error">AI 教练没有回应（%1$s）。在此期间，我会用方法指南回答。</string>
+    <string name="coach_limites_general">教练按照 Ruta a la Cima 方法提供指导，不能替代医疗、法律或财务专业人士。</string>
+    <string name="coach_limites_finanzas">基于 Ascenso financiero 方法的财务教育，并非专业建议：不推荐具体的投资或产品。</string>
 </resources>

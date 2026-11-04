@@ -8,7 +8,10 @@ import com.rutaalacima.app.data.local.RutaDatabase
 import com.rutaalacima.app.data.local.avance
 import com.rutaalacima.app.data.local.puntajes
 import com.rutaalacima.app.data.remote.SupabaseClient
+import com.rutaalacima.app.domain.model.Cuentas
+import com.rutaalacima.app.domain.model.Deudas
 import com.rutaalacima.app.domain.model.Eje
+import com.rutaalacima.app.domain.model.MetasFin
 import com.rutaalacima.app.domain.model.Fase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -39,10 +42,26 @@ class CoachRepository(
 
     suspend fun borrar() = db.coachDao().borrarTodo()
 
+    // ---------- Los controles: el tema de la conversación (propósito, metas o finanzas)
+    private val prefs = context.getSharedPreferences("coach", Context.MODE_PRIVATE)
+    /** "" (general), "proposito", "metas" o "finanzas". Decide qué aconseja el coach y si viajan las finanzas. */
+    val tema = kotlinx.coroutines.flow.MutableStateFlow(prefs.getString("tema", "").orEmpty())
+    fun elegirTema(t: String) { tema.value = t; prefs.edit().putString("tema", t).apply() }
+
+    /** Por qué el coach con IA no respondió (null si respondió): la pantalla lo dice en lugar de disfrazar la guía. */
+    val aviso = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
+
     /** Envía un mensaje al coach, guarda la conversación y devuelve la respuesta. */
     suspend fun enviar(texto: String): String {
         db.coachDao().insert(CoachMensajeEntity(rol = "user", texto = texto.trim()))
-        val respuesta = runCatching { if (supa.configurado) remoto() else null }.getOrNull() ?: local(texto)
+        val respuesta = (if (supa.configurado) runCatching { remoto() }.onSuccess { aviso.value = null }.onFailure { e ->
+            val m = e.message.orEmpty()
+            aviso.value = when {
+                e is com.rutaalacima.app.data.remote.SupabaseException && e.codigo == 404 -> context.getString(R.string.coach_aviso_sin_funcion)
+                "ANTHROPIC_API_KEY" in m -> context.getString(R.string.coach_aviso_sin_clave)
+                else -> context.getString(R.string.coach_aviso_error, m.take(120).ifBlank { "?" })
+            }
+        }.getOrNull() else null) ?: local(texto)
         db.coachDao().insert(CoachMensajeEntity(rol = "assistant", texto = respuesta))
         return respuesta
     }
@@ -63,6 +82,7 @@ class CoachRepository(
         val r = supa.funcion("coach", buildJsonObject {
             put("contexto", contexto())
             put("idioma", Locale.getDefault().language)
+            put("tema", tema.value)
             put("mensajes", buildJsonArray {
                 historial.forEach { m -> add(buildJsonObject { put("role", m.rol); put("content", m.texto) }) }
             })
@@ -107,8 +127,31 @@ class CoachRepository(
                 val q = when (r.clave.substringAfterLast("#q")) { "1" -> "Funcionó"; "2" -> "Lo frenó"; else -> "Paso clave" }
                 "$q: ${r.valor.take(200)}"
             })
+            // Las finanzas solo viajan cuando la persona elige hablar de finanzas (sus cifras son privadas)
+            if (tema.value == "finanzas") appendLine(contextoFinanciero())
         }
     }
+
+    /** Los últimos 3 meses de Ascenso financiero, deudas y metas financieras (igual que la web). */
+    private suspend fun contextoFinanciero(): String = runCatching {
+        val fin = db.respuestaDao().getWorkbook(com.rutaalacima.app.domain.model.Cuentas.WB).associate { it.clave to it.valor }
+        val propias = Cuentas.leerPropias(fin["fin#cats"])
+        val hoy = LocalDate.now()
+        val l = mutableListOf("Finanzas (moneda ${Cuentas.moneda(fin[Cuentas.CLAVE_MONEDA])}):")
+        (0L..2L).map { java.time.YearMonth.from(hoy).minusMonths(it).toString() }.forEach { ym ->
+            val movs = fin.filterKeys { it.startsWith(Cuentas.PREFIJO + ym) }.values.flatMap { Cuentas.leer(it) }
+            if (movs.isEmpty()) return@forEach
+            val s = Cuentas.sumar(movs, propias)
+            val mo = if (s.gas > 0) " · mochilas verde ${((s.mochilas[Cuentas.Mochila.VERDE] ?: 0.0) / s.gas * 100).toInt()}%, amarilla ${((s.mochilas[Cuentas.Mochila.AMARILLA] ?: 0.0) / s.gas * 100).toInt()}%" else ""
+            l += "- $ym: ingresos ${s.ing.toLong()}, gastos ${s.gas.toLong()}, ahorro ${s.aho.toLong()}, inversión ${s.inv.toLong()}, dar ${s.gen.toLong()}, disponible ${s.disponible.toLong()}" +
+                (s.tasa?.let { ", tasa de ahorro e inversión ${(it * 100).toInt()}%" } ?: "") + mo
+        }
+        val d = Deudas.leer(fin[Deudas.CLAVE])
+        if (d.lista.isNotEmpty()) l += "- Deudas: " + d.lista.joinToString("; ") { "${it.nombre.ifBlank { "deuda" }} saldo ${it.saldo.toLong()}" + (if (it.tasa > 0) " al ${it.tasa}%" else "") } + " (método ${d.metodo})"
+        val metas = MetasFin.leer(fin[MetasFin.CLAVE])
+        if (metas.isNotEmpty()) l += "- Metas financieras: " + metas.joinToString("; ") { "${it.nombre} objetivo ${it.objetivo.toLong()}" + (if (it.fecha.isNotBlank()) " para ${it.fecha}" else "") }
+        if (l.size > 1) l.joinToString("\n") else "Finanzas: todavía no ha registrado movimientos en Ascenso financiero."
+    }.getOrDefault("")
 
     // ------------------------------------------------------------------ Coach sin servidor
 

@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">किताब के पन्ने के बिना पोस्ट करें</string>
     <string name="lb_texto_capsula">शिखरों की किताब में मेरा %1$s का कैप्सूल।</string>
     <string name="lb_texto_anio">शिखरों की किताब में मेरा %1$d।</string>
+    <string name="coach_tema_general">सामान्य</string>
+    <string name="coach_tema_proposito">उद्देश्य</string>
+    <string name="coach_tema_metas">लक्ष्य और आदतें</string>
+    <string name="coach_tema_finanzas">वित्त</string>
+    <string name="coach_sug_proposito5">मेरा 5 साल का उद्देश्य क्या है?</string>
+    <string name="coach_sug_atascada">मेरा लक्ष्य अटक गया है</string>
+    <string name="coach_sug_mochilas">अपनी आय को तीन बैग में कैसे बाँटूँ?</string>
+    <string name="coach_sug_deudas">कर्ज़ से कैसे निकलूँ?</string>
+    <string name="coach_sug_emergencia">मेरे आपातकालीन कोष में कितना होना चाहिए?</string>
+    <string name="coach_sug_revisar_fin">इस महीने के मेरे वित्त की समीक्षा करें</string>
+    <string name="coach_aviso_sin_funcion">AI कोच अभी जुड़ा नहीं है: Supabase में «coach» फ़ंक्शन प्रकाशित करना बाकी है। तब तक मैं पद्धति की गाइड से जवाब दूँगा।</string>
+    <string name="coach_aviso_sin_clave">AI कोच अभी जुड़ा नहीं है: Supabase के सीक्रेट में ANTHROPIC_API_KEY नहीं है। तब तक मैं पद्धति की गाइड से जवाब दूँगा।</string>
+    <string name="coach_aviso_error">AI कोच ने जवाब नहीं दिया (%1$s)। तब तक मैं पद्धति की गाइड से जवाब दूँगा।</string>
+    <string name="coach_limites_general">कोच Ruta a la Cima पद्धति से मार्गदर्शन करता है। यह स्वास्थ्य, कानूनी या वित्तीय विशेषज्ञ का विकल्प नहीं है।</string>
+    <string name="coach_limites_finanzas">Ascenso financiero पद्धति से वित्तीय शिक्षा, पेशेवर सलाह नहीं: यह किसी विशेष निवेश या उत्पाद की सिफ़ारिश नहीं करता।</string>
 </resources>

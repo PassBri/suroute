@@ -7,7 +7,7 @@
 //   COACH_DAILY_LIMIT   opcional, mensajes por usuario y día (por defecto 30)
 // Despliegue:  supabase functions deploy coach
 //
-// Entrada (POST JSON): { mensajes: [{role, content}], contexto: string, idioma: "es" }
+// Entrada (POST JSON): { mensajes: [{role, content}], contexto: string, idioma: "es", tema?: "proposito"|"metas"|"finanzas" }
 // Salida: { texto: string }
 
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -23,7 +23,28 @@ const IDIOMAS: Record<string, string> = {
   zh: "中文", ja: "日本語", ko: "한국어", ar: "العربية", hi: "हिन्दी", ru: "русский",
 };
 
-function sistema(contexto: string, idioma: string): string {
+/** Lo que el coach puede aconsejar en cada tema (los «controles» que pidió Brian). */
+const TEMAS: Record<string, string> = {
+  proposito: `TEMA ELEGIDO: PROPÓSITO Y CUMBRE PERSONAL
+- Ayuda a escribir la cumbre en una frase y a encontrar el propósito con preguntas (Voluntad, Maestría, Voz, Valor, Evolución, Trascendencia).
+- Conecta el propósito con propósitos a 5 años y con la Brújula (8 campamentos y 64 pasos). No decidas por la persona: pregunta y refleja.`,
+  metas: `TEMA ELEGIDO: METAS Y HÁBITOS
+- Convierte lo que la persona quiere en metas ORSE dentro de la cascada (5 años → año → mes → hoy) y en pasos de la Brújula.
+- Si una meta está atascada, usa la matriz (continuar, acelerar, pausar o eliminar) y los protocolos de rescate. Un solo paso para hoy.`,
+  finanzas: `TEMA ELEGIDO: FINANZAS PERSONALES (ASCENSO FINANCIERO)
+- Enseña y orienta con los módulos de Ascenso financiero: Base financiera (presupuesto, registrar ingresos y gastos), las tres
+  mochilas (verde lo esencial ~50 %, amarilla lo variable ~30 %, roja ahorro e inversión ≥ 20 %), Camino financiero (generar
+  ingresos), Cargas financieras (salir de deudas: método avalancha o bola de nieve, nunca pagar una deuda con otra más cara),
+  Supervivencia financiera (fondo de emergencia de 3 a 6 meses de gastos esenciales, seguros básicos), Cima financiera
+  (indicadores: tasa de ahorro, deuda/ingreso) y la generosidad (dar con un límite que no comprometa lo esencial).
+- Usa SOLO las cifras del contexto; si faltan, pide que las registre en Ascenso financiero. Muestra las cuentas simples.
+- LÍMITES: es educación financiera, no asesoría profesional. NO recomiendes acciones, criptomonedas, fondos, bancos ni
+  productos concretos; NO prometas rentabilidades; NO aconsejes préstamos para invertir, apuestas, esquemas de "dinero rápido"
+  ni pirámides; NO des consejos tributarios o legales específicos. Para inversiones, impuestos, créditos grandes o vivienda,
+  sugiere consultar a un asesor financiero certificado o a la entidad oficial de su país.`,
+};
+
+function sistema(contexto: string, idioma: string, tema = ""): string {
   return `Eres el coach de SuRoute, una app para lograr metas personales con el método "Ruta a la Cima".
 
 EL MÉTODO
@@ -53,6 +74,17 @@ CÓMO RESPONDES
 - Recuerda lo que la persona te ha contado en la conversación y en sus revisiones; no le pidas lo que ya sabes.
 - No eres terapeuta ni médico. Si la persona menciona crisis, autolesión o riesgo, responde con calidez, invítala a
   buscar ayuda profesional o una línea de crisis local de inmediato y no continúes con coaching de metas.
+
+CONTROLES (lo que nunca haces)
+- Solo hablas de propósito, cumbre, metas, hábitos, constancia y finanzas personales con el método Ruta a la Cima. Si te
+  piden otra cosa (tareas escolares, código, política, noticias, diagnósticos), dilo con amabilidad y vuelve a su camino.
+- Nada de diagnósticos de salud física o mental, dietas extremas, medicamentos ni consejos legales.
+- No inventes datos del usuario ni cifras: si no están en el contexto, pregunta.
+- Metas sanas: nada que dañe a la persona o a otros, ni metas que dependan de controlar a otra persona.
+- Sin culpa ni presión: las caídas son parte del camino; propone volver con un paso pequeño.
+- No prometas resultados ni garantices éxito. No te presentes como humano.
+
+${TEMAS[tema] ?? ""}
 
 CONTEXTO DEL USUARIO
 ${contexto || "(sin datos todavía)"}`;
@@ -95,7 +127,7 @@ Deno.serve(async (req) => {
     // limite: la app muestra el Plan Cumbre a quien no lo tiene
     if (!puede) return json({ texto: "Llegaste al límite de mensajes de hoy. Mañana seguimos: mientras tanto, da un paso pequeño hacia tu cumbre.", limite: true, cumbre: !!cumbre });
 
-    const { mensajes = [], contexto = "", idioma = "es" } = await req.json();
+    const { mensajes = [], contexto = "", idioma = "es", tema = "" } = await req.json();
     const limpios = (mensajes as { role: string; content: string }[])
       .filter((m) => (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim())
       .slice(-16)
@@ -107,7 +139,7 @@ Deno.serve(async (req) => {
     const r = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: { "x-api-key": clave, "anthropic-version": "2023-06-01", "content-type": "application/json" },
-      body: JSON.stringify({ model: MODELO, max_tokens: 700, system: sistema(String(contexto).slice(0, 4000), idioma), messages: limpios }),
+      body: JSON.stringify({ model: MODELO, max_tokens: 700, system: sistema(String(contexto).slice(0, 6000), idioma, String(tema)), messages: limpios }),
     });
     const datos = await r.json();
     if (!r.ok) return json({ error: datos?.error?.message ?? "Error de la IA" }, 502);

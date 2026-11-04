@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">Publier sans la page du livre</string>
     <string name="lb_texto_capsula">Ma capsule de %1$s dans le Livre des sommets.</string>
     <string name="lb_texto_anio">Mon %1$d dans le Livre des sommets.</string>
+    <string name="coach_tema_general">Général</string>
+    <string name="coach_tema_proposito">Raison d’être</string>
+    <string name="coach_tema_metas">Objectifs et habitudes</string>
+    <string name="coach_tema_finanzas">Finances</string>
+    <string name="coach_sug_proposito5">Quelle est ma raison d’être à 5 ans ?</string>
+    <string name="coach_sug_atascada">Mon objectif est bloqué</string>
+    <string name="coach_sug_mochilas">Comment répartir mes revenus dans les trois sacs ?</string>
+    <string name="coach_sug_deudas">Comment sortir de mes dettes ?</string>
+    <string name="coach_sug_emergencia">Combien doit contenir mon fonds d’urgence ?</string>
+    <string name="coach_sug_revisar_fin">Analyse mes finances du mois</string>
+    <string name="coach_aviso_sin_funcion">Le coach IA n’est pas encore connecté : la fonction « coach » doit être publiée dans Supabase. En attendant, je réponds avec le guide de la méthode.</string>
+    <string name="coach_aviso_sin_clave">Le coach IA n’est pas encore connecté : il manque le secret ANTHROPIC_API_KEY dans Supabase. En attendant, je réponds avec le guide de la méthode.</string>
+    <string name="coach_aviso_error">Le coach IA n’a pas répondu (%1$s). En attendant, je réponds avec le guide de la méthode.</string>
+    <string name="coach_limites_general">Le coach vous guide avec la méthode Ruta a la Cima. Il ne remplace pas un professionnel de santé, juridique ou financier.</string>
+    <string name="coach_limites_finanzas">Éducation financière avec la méthode Ascenso financiero, pas un conseil professionnel : il ne recommande ni investissements ni produits précis.</string>
 </resources>

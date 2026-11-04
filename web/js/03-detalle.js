@@ -949,7 +949,28 @@ function contextoCoach() {
   if (c.props.length) l.push("Propósitos a 5 años: " + c.props.map(x => `${x.titulo} (${Math.round(c.nodoProp(x) * 100)}%)`).join("; "));
   const an = c.anuales.filter(x => x.anio === anio); if (an.length) l.push(`Metas ${anio}: ` + an.map(x => `${x.titulo} (${Math.round(c.nodoAnio(x) * 100)}%)`).join("; "));
   const me = metasDelMes(anio, hoy.getMonth() + 1); if (me.length) l.push("Metas de este mes: " + me.map(x => `${x.texto} (${Math.round(avanceMetaMes(x) * 100)}%)`).join("; "));
+  // Las finanzas solo viajan cuando la persona elige hablar de finanzas (sus cifras son privadas)
+  if (coachTema() === "finanzas") { const f = contextoFinanciero(); if (f) l.push(f); }
   return l.join("\n");
+}
+/* El tema de la conversación: los «controles» de lo que el coach aconseja (propósito, metas o finanzas). */
+const TEMAS_COACH = [["", "General"], ["proposito", "Propósito"], ["metas", "Metas y hábitos"], ["finanzas", "Finanzas"]];
+const coachTema = () => { try { return localStorage.getItem("suroute-coach-tema") || ""; } catch { return ""; } };
+// ACC se define en 04-acciones.js: la acción se registra cuando todo cargó
+document.addEventListener("DOMContentLoaded", () => { ACC.coachTema = (el, t) => { try { localStorage.setItem("suroute-coach-tema", t); } catch {} pintarDetalle(); }; });
+/** Resumen de los últimos 3 meses de Ascenso financiero, para que el coach aconseje con cifras reales. */
+function contextoFinanciero() {
+  if (typeof totalesDe !== "function") return "";
+  try {
+    const hoy = hoyFecha(), meses = [0, 1, 2].map(k => { const d = new Date(hoy.getFullYear(), hoy.getMonth() - k, 1); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`; });
+    const l = [`Finanzas (moneda ${ascMoneda()}):`];
+    meses.forEach(ym => { const t = totalesDe(ym); if (!t.n) return;
+      const mo = t.gas > 0 ? ` · mochilas verde ${Math.round(t.mochila.verde / t.gas * 100)}%, amarilla ${Math.round(t.mochila.amarilla / t.gas * 100)}%` : "";
+      l.push(`- ${ym}: ingresos ${Math.round(t.ing)}, gastos ${Math.round(t.gas)}, ahorro ${Math.round(t.aho)}, inversión ${Math.round(t.inv)}, dar ${Math.round(t.gen)}, disponible ${Math.round(t.disp)}${t.tasa != null ? `, tasa de ahorro e inversión ${Math.round(t.tasa * 100)}%` : ""}${mo}`); });
+    if (window.deudasDatos) { const d = deudasDatos(); if (d.lista.length) l.push(`- Deudas: ${d.lista.map(x => `${x.nombre || "deuda"} saldo ${Math.round(Number(x.saldo) || 0)}${x.tasa ? ` al ${x.tasa}%` : ""}`).join("; ")} (método ${d.metodo})`); }
+    if (window.metasFinDatos) { const m = metasFinDatos(); if (m.length) l.push(`- Metas financieras: ${m.map(x => `${x.nombre} objetivo ${Math.round(Number(x.objetivo) || 0)}${x.fecha ? ` para ${x.fecha}` : ""}`).join("; ")}`); }
+    return l.length > 1 ? l.join("\n") : "Finanzas: todavía no ha registrado movimientos en Ascenso financiero.";
+  } catch { return ""; }
 }
 function respuestaGuia(t) {
   t = t.toLowerCase(); const tiene = (...p) => p.some(x => t.includes(x));
@@ -961,7 +982,7 @@ function respuestaGuia(t) {
   const [cod, nom, k] = EJES.reduce((m, x) => (e[x[2]] < e[m[2]] ? x : m));
   return `Tu eje más débil hoy es ${nom} (${e[k]}/10). Elige una acción pequeña para fortalecerlo esta semana y conviértela en una meta del mes en Metas → Nueva meta.`;
 }
-let coachLimite = false;
+let coachLimite = false, coachAviso = "";
 async function preguntar(texto) {
   if (estado.sec !== "coach") { estado.sec = "coach"; pintarRiel(); }
   estado.sel = "coach"; $("app").classList.add("con-detalle");
@@ -971,9 +992,16 @@ async function preguntar(texto) {
   if (Store.nube) {
     try {
       const hist = mensajesCoach().slice(-16).map(m => ({ role: m.rol, content: m.texto }));
-      const { data, error } = await Store.nube.sb.functions.invoke("coach", { body: { contexto: contextoCoach(), idioma: "es", mensajes: hist } });
-      if (error) throw error;
-      r = data?.texto || null;
+      const { data, error } = await Store.nube.sb.functions.invoke("coach", { body: { contexto: contextoCoach(), idioma: "es", mensajes: hist, tema: coachTema() } });
+      if (error) {
+        // Decir la verdad: si el coach con IA no está conectado, no se disfraza la guía como si fuera la IA
+        let m = ""; const st = error.context?.status; try { m = (await error.context?.json())?.error || ""; } catch {}
+        coachAviso = st === 404 ? "El coach con IA todavía no está conectado: falta publicar la función «coach» en Supabase. Mientras tanto te respondo con la guía del método."
+          : /ANTHROPIC_API_KEY/.test(m) ? "El coach con IA todavía no está conectado: falta la clave ANTHROPIC_API_KEY en los secretos de Supabase. Mientras tanto te respondo con la guía del método."
+          : `El coach con IA no respondió${m ? ` (${m})` : ""}. Mientras tanto te respondo con la guía del método.`;
+        throw error;
+      }
+      coachAviso = ""; r = data?.texto || null;
       // Límite diario del plan gratuito: se ofrece conocer el Plan Cumbre
       coachLimite = !!data?.limite && !data?.cumbre;
     } catch (e) { console.warn("coach sin servidor", e); }
@@ -983,11 +1011,16 @@ async function preguntar(texto) {
 }
 DET.coach = () => {
   const ms = mensajesCoach();
-  const sugs = ["Ayúdame a definir mi cumbre", "Divide mi meta anual en pasos", "Perdí la motivación", "Planea mi semana", "¿Qué eje debo trabajar?"];
+  const tema = coachTema();
+  const sugs = { proposito: ["Ayúdame a definir mi cumbre", "¿Cuál es mi propósito a 5 años?", "¿Qué eje debo trabajar?"],
+    metas: ["Divide mi meta anual en pasos", "Planea mi semana", "Perdí la motivación", "Mi meta está atascada"],
+    finanzas: ["¿Cómo repartir mi ingreso en las tres mochilas?", "¿Cómo salgo de mis deudas?", "¿Cuánto debe tener mi fondo de emergencia?", "Revisa mis finanzas del mes"] }[tema]
+    || ["Ayúdame a definir mi cumbre", "Divide mi meta anual en pasos", "Perdí la motivación", "Planea mi semana", "¿Qué eje debo trabajar?"];
   let ultimoDia = "";
   return cab(av(ic("coach"), "var(--burdeos)"), "Coach SuRoute", coachEscribiendo ? "escribiendo…" : "Conoce tus metas, tus ejes y tu avance",
     ms.length ? `<button class="btn mini" data-acc="borrarCoach">Nueva conversación</button>` : "") +
-    `<div class="det-cuerpo abajo"><div class="chat">
+    `<div class="coach-temas" role="radiogroup" aria-label="Tema de la conversación">${TEMAS_COACH.map(([k, n]) => `<button role="radio" aria-checked="${tema === k}" data-acc="coachTema" data-arg="${k}">${n}</button>`).join("")}</div>
+    <div class="det-cuerpo abajo"><div class="chat">
       <div class="burbuja el">¡Hola! Soy tu coach de SuRoute. Conozco tus metas, tus ejes y tu avance. Cuéntame qué quieres lograr o en qué te sientes atascado y te ayudo a dar el siguiente paso.</div>
       ${ms.map(m => { const d = new Date(m.creadoEn).toLocaleDateString("es", { day: "numeric", month: "long" }); const sep = d !== ultimoDia ? `<span class="fecha-sep">${d}</span>` : ""; ultimoDia = d;
         if (m.rol === "user") return sep + `<div class="burbuja yo">${esc(m.texto)}<span class="h">${horaDe(m.creadoEn)}</span></div>`;
@@ -995,9 +1028,11 @@ DET.coach = () => {
         return sep + `<div class="burbuja el">${esc(texto)}<span class="h">${horaDe(m.creadoEn)}</span></div>` + (accion ? `<div class="accion-coach">
           <div class="etiqueta">${accion.tipo === "meta_mes" ? "Meta del mes propuesta" : "Meta del año propuesta"}</div><p>${esc(accion.texto)}</p>
           ${creada ? `<span class="suave">✓ Meta creada</span>` : `<button class="btn mini lleno" data-acc="crearMetaCoach" data-arg="${esc(String(m.id))}">Crear esta meta</button>`}</div>` : ""); }).join("")}
+      ${coachAviso ? `<div class="coach-aviso" role="status">${ic("info")} ${esc(coachAviso)}</div>` : ""}
       ${coachEscribiendo ? `<div class="burbuja el escribiendo">escribiendo…</div>` : ""}
       ${coachLimite ? `<button class="btn mini oro coach-plan" data-ir="perfil" data-arg="plan">${ic("cima")} ¿Quieres conversar más? Conoce el Plan Cumbre</button>` : ""}</div>
-      ${ms.length < 2 ? `<div class="sugerencias">${sugs.map(s => `<button data-pregunta="${esc(s)}">${esc(s)}</button>`).join("")}</div>` : ""}</div>
+      <p class="coach-limites">${tema === "finanzas" ? "Educación financiera con el método Ascenso financiero, no asesoría profesional: no recomienda inversiones ni productos concretos." : "El coach orienta con el método Ruta a la Cima. No reemplaza a un profesional de la salud, legal ni financiero."}</p>
+      ${ms.length < 2 || tema ? `<div class="sugerencias">${sugs.map(s => `<button data-pregunta="${esc(s)}">${esc(s)}</button>`).join("")}</div>` : ""}</div>
     <form class="escribir" data-form="coach"><input name="texto" placeholder="Escribe un mensaje" aria-label="Mensaje" autocomplete="off"><button class="enviar" aria-label="Enviar">${ic("enviar")}</button></form>`;
 };
 

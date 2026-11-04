@@ -3119,4 +3119,19 @@
     <string name="lb_sin_pagina">Опубликовать без страницы книги</string>
     <string name="lb_texto_capsula">Моя капсула «%1$s» в Книге вершин.</string>
     <string name="lb_texto_anio">Мой %1$d год в Книге вершин.</string>
+    <string name="coach_tema_general">Общее</string>
+    <string name="coach_tema_proposito">Предназначение</string>
+    <string name="coach_tema_metas">Цели и привычки</string>
+    <string name="coach_tema_finanzas">Финансы</string>
+    <string name="coach_sug_proposito5">Каково моё предназначение на 5 лет?</string>
+    <string name="coach_sug_atascada">Моя цель застряла</string>
+    <string name="coach_sug_mochilas">Как распределить доход по трём рюкзакам?</string>
+    <string name="coach_sug_deudas">Как выбраться из долгов?</string>
+    <string name="coach_sug_emergencia">Сколько должно быть в резервном фонде?</string>
+    <string name="coach_sug_revisar_fin">Проверь мои финансы за месяц</string>
+    <string name="coach_aviso_sin_funcion">ИИ-коуч ещё не подключён: нужно опубликовать функцию «coach» в Supabase. Пока отвечу по руководству метода.</string>
+    <string name="coach_aviso_sin_clave">ИИ-коуч ещё не подключён: в секретах Supabase нет ключа ANTHROPIC_API_KEY. Пока отвечу по руководству метода.</string>
+    <string name="coach_aviso_error">ИИ-коуч не ответил (%1$s). Пока отвечу по руководству метода.</string>
+    <string name="coach_limites_general">Коуч направляет по методу Ruta a la Cima. Он не заменяет специалиста в области здоровья, права или финансов.</string>
+    <string name="coach_limites_finanzas">Финансовое образование по методу Ascenso financiero, а не профессиональная консультация: не рекомендует конкретные инвестиции или продукты.</string>
 </resources>
