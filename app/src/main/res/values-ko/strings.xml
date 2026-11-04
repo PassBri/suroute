@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">나의 이정표</string>
     <string name="hi_recuerdo_t">오르막의 추억</string>
+    <string name="hi_imprimir">인쇄 또는 PDF로 저장</string>
+    <string name="hi_pdf_titulo">나의 등정 기록</string>
+    <string name="hi_pdf_sub">내 돈으로 이룬 것과 앞으로의 계획</string>
+    <string name="hi_pdf_logrados">달성한 이정표</string>
+    <string name="hi_pdf_camino">진행 중</string>
+    <string name="hi_pdf_puesto">이룬 일에 쓴 금액</string>
+    <string name="hi_pdf_por_venir">앞으로를 위한 금액</string>
+    <string name="hi_pdf_logre">내가 이룬 것</string>
+    <string name="hi_pdf_pie">SuRoute가 가계부의 이정표로 생성 · 정상으로 가는 길 방법.</string>
+    <string name="hi_pdf_ok">이정표를 PDF로 저장했습니다</string>
 </resources>

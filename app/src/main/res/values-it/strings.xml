@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">I miei traguardi</string>
     <string name="hi_recuerdo_t">Un ricordo della tua salita</string>
+    <string name="hi_imprimir">Stampa o salva in PDF</string>
+    <string name="hi_pdf_titulo">Le vette della mia salita</string>
+    <string name="hi_pdf_sub">Ciò che il mio denaro ha reso possibile e ciò che verrà</string>
+    <string name="hi_pdf_logrados">traguardi raggiunti</string>
+    <string name="hi_pdf_camino">in cammino</string>
+    <string name="hi_pdf_puesto">investito in ciò che ho raggiunto</string>
+    <string name="hi_pdf_por_venir">per ciò che verrà</string>
+    <string name="hi_pdf_logre">Ciò che ho raggiunto</string>
+    <string name="hi_pdf_pie">Generato da SuRoute con i traguardi del tuo libro dei conti · metodo Rotta verso la vetta.</string>
+    <string name="hi_pdf_ok">Traguardi salvati in PDF</string>
 </resources>

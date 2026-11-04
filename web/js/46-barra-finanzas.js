@@ -276,7 +276,7 @@ ACC.fbPlegar = () => { estado.fbAbierta = !estado.fbAbierta; fbRepintar(); };
 
 /* Mis cuentas fijas, a un toque desde la barra */
 /** Mis hitos: las cumbres que el dinero hace posibles, con su recuerdo, lo que viene y lo logrado año por año. */
-DET["finanzas.hitos"] = () => (window.finBloqueado?.() ? pantallaBloqueo() : cab(avAsc(), "Mis hitos", "Las cumbres que tu dinero hace posibles", ojoAsc()) +
+DET["finanzas.hitos"] = () => (window.finBloqueado?.() ? pantallaBloqueo() : cab(avAsc(), "Mis hitos", "Las cumbres que tu dinero hace posibles", (window.hitosDatos?.().length ? `<button class="rb" data-acc="hitosImprimir" aria-label="Imprimir mis hitos o guardarlos en PDF" title="Imprimir o guardar en PDF">${ic("imprimir")}</button>` : "") + ojoAsc()) +
   cuerpo(window.hitosBalance ? hitosBalance() : "", "max-width:980px"));
 DET["finanzas.fijos"] = () => cab(avAsc(), "Mis cuentas fijas", "Lo que se repite cada mes: arriendo, salario, internet…", ojoAsc()) +
   cuerpo((window.fijosHoja ? fijosHoja("") : hoja(`<p class="suave">Aún no hay cuentas fijas.</p>`)), "max-width:980px");

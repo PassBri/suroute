@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">Мои вехи</string>
     <string name="hi_recuerdo_t">Воспоминание о вашем восхождении</string>
+    <string name="hi_imprimir">Печать или сохранение в PDF</string>
+    <string name="hi_pdf_titulo">Вершины моего восхождения</string>
+    <string name="hi_pdf_sub">Что стало возможным благодаря моим деньгам и что впереди</string>
+    <string name="hi_pdf_logrados">достигнутые вехи</string>
+    <string name="hi_pdf_camino">в пути</string>
+    <string name="hi_pdf_puesto">вложено в достигнутое</string>
+    <string name="hi_pdf_por_venir">на то, что впереди</string>
+    <string name="hi_pdf_logre">Чего я достиг</string>
+    <string name="hi_pdf_pie">Создано SuRoute по вехам вашей книги учёта · метод «Путь к вершине».</string>
+    <string name="hi_pdf_ok">Вехи сохранены в PDF</string>
 </resources>

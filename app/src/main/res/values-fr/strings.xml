@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">Mes jalons</string>
     <string name="hi_recuerdo_t">Un souvenir de votre ascension</string>
+    <string name="hi_imprimir">Imprimer ou enregistrer en PDF</string>
+    <string name="hi_pdf_titulo">Les sommets de mon ascension</string>
+    <string name="hi_pdf_sub">Ce que mon argent a rendu possible et ce qui vient</string>
+    <string name="hi_pdf_logrados">étapes atteintes</string>
+    <string name="hi_pdf_camino">en chemin</string>
+    <string name="hi_pdf_puesto">investi dans mes réussites</string>
+    <string name="hi_pdf_por_venir">pour ce qui vient</string>
+    <string name="hi_pdf_logre">Ce que j’ai accompli</string>
+    <string name="hi_pdf_pie">Généré par SuRoute à partir des étapes de votre livre de comptes · méthode Route vers le sommet.</string>
+    <string name="hi_pdf_ok">Étapes enregistrées en PDF</string>
 </resources>

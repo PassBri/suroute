@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">Meine Meilensteine</string>
     <string name="hi_recuerdo_t">Eine Erinnerung an Ihren Aufstieg</string>
+    <string name="hi_imprimir">Drucken oder als PDF speichern</string>
+    <string name="hi_pdf_titulo">Die Gipfel meines Aufstiegs</string>
+    <string name="hi_pdf_sub">Was mein Geld möglich gemacht hat und was noch kommt</string>
+    <string name="hi_pdf_logrados">erreichte Meilensteine</string>
+    <string name="hi_pdf_camino">unterwegs</string>
+    <string name="hi_pdf_puesto">in Erreichtes gesteckt</string>
+    <string name="hi_pdf_por_venir">für das, was kommt</string>
+    <string name="hi_pdf_logre">Was ich erreicht habe</string>
+    <string name="hi_pdf_pie">Erstellt von SuRoute aus den Meilensteinen deines Kassenbuchs · Methode Weg zum Gipfel.</string>
+    <string name="hi_pdf_ok">Meilensteine als PDF gespeichert</string>
 </resources>

@@ -1,5 +1,14 @@
 package com.rutaalacima.app.ui.finanzas
 
+import android.graphics.DashPathEffect
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.pdf.PdfDocument
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +38,7 @@ import androidx.compose.material.icons.filled.Flight
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Hiking
 import androidx.compose.material.icons.filled.People
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Savings
 import androidx.compose.material.icons.filled.Storefront
@@ -163,6 +173,7 @@ fun HitosBalance(libro: Libro, plata: (Double) -> String, vm: CuentasViewModel) 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.Flag, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
             Text(stringResource(R.string.hi_tus), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            if (l.isNotEmpty()) BotonImprimirHitos(libro, plata)
             Button(onClick = { editando = "nuevo:" }) { Icon(Icons.Filled.Add, null, Modifier.size(18.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.hi_nuevo)) }
         }
         if (l.isEmpty()) Text(stringResource(R.string.hi_vacio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
@@ -269,4 +280,113 @@ private fun DialogoHito(h: Hito, nuevo: Boolean, onGuardar: (Hito) -> Unit, onBo
         },
         dismissButton = { TextButton(onClick = onCerrar) { Text(stringResource(R.string.cancelar)) } },
     )
+}
+
+
+/* ---------------------------------------------------------------- Imprimir: «Mis hitos» en PDF (como el documento de la web) */
+
+private class FilaPdf(val f: String, val ok: Boolean, val t: String, val meta: String, val nota: String?)
+private class TextosHitosPdf(val titulo: String, val sub: String, val marca: String, val fecha: String, val logrados: String, val camino: String,
+    val puesto: String, val porVenir: String, val viene: String, val logre: String, val pie: String)
+
+/** El botón de imprimir: guarda «Mis hitos» como PDF (A4) para imprimirlo o compartirlo. */
+@Composable
+private fun BotonImprimirHitos(libro: Libro, plata: (Double) -> String) {
+    val ctx = LocalContext.current
+    val l = libro.hitos
+    // Los textos se arman aquí (necesitan recursos y plurales); el PDF se dibuja fuera de la composición
+    val filas = l.sortedBy { it.f }.map { h ->
+        val partes = buildList {
+            add(nombreTipoHito(h.k))
+            add(if (h.ok) stringResource(R.string.hi_logrado_el, fechaLarga(h.f)) else stringResource(R.string.hi_planeado_para, fechaLarga(h.f)) + " · " + falta(h.f))
+            h.m?.takeIf { it > 0 }?.let { add(plata(it)) }
+        }
+        FilaPdf(h.f, h.ok, h.t, partes.joinToString(" · "), h.n?.takeIf { it.isNotBlank() })
+    }
+    val textos = TextosHitosPdf(stringResource(R.string.hi_pdf_titulo), stringResource(R.string.hi_pdf_sub), stringResource(R.string.hi_mis),
+        fechaLarga(hoy().toString()), stringResource(R.string.hi_pdf_logrados), stringResource(R.string.hi_pdf_camino), stringResource(R.string.hi_pdf_puesto),
+        stringResource(R.string.hi_pdf_por_venir), stringResource(R.string.hi_viene), stringResource(R.string.hi_pdf_logre), stringResource(R.string.hi_pdf_pie))
+    val invertido = l.filter { it.ok }.sumOf { it.m ?: 0.0 }; val porVenir = l.filter { !it.ok }.sumOf { it.m ?: 0.0 }
+    val cifras = buildList {
+        add(l.count { it.ok }.toString() to textos.logrados)
+        l.count { !it.ok }.takeIf { it > 0 }?.let { add(it.toString() to textos.camino) }
+        if (invertido > 0) add(plata(invertido) to textos.puesto)
+        if (porVenir > 0) add(plata(porVenir) to textos.porVenir)
+    }
+    val guardar = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/pdf")) { uri ->
+        if (uri != null) runCatching { ctx.contentResolver.openOutputStream(uri)?.use { pdfHitos(it, filas, cifras, textos) } }
+            .onSuccess { com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(ctx.getString(R.string.hi_pdf_ok)) }
+    }
+    IconButton(onClick = { guardar.launch("mis-hitos-${hoy()}.pdf") }) { Icon(Icons.Filled.Print, stringResource(R.string.hi_imprimir)) }
+}
+
+/** Dibuja el PDF: la banda burdeos con la marca, el título, las cifras y la línea de tiempo (lo que viene y lo logrado por año). */
+private fun pdfHitos(out: java.io.OutputStream, filas: List<FilaPdf>, cifras: List<Pair<String, String>>, t: TextosHitosPdf) {
+    val doc = PdfDocument(); val ancho = 595; val alto = 842; val margen = 44f
+    val burdeos = 0xFF6B2A1A.toInt(); val oro = 0xFF86683A.toInt(); val tinta = 0xFF1D2427.toInt(); val suave = 0xFF5A666B.toInt(); val linea = 0xFFE4D9C3.toInt()
+    val serif = Typeface.create(Typeface.SERIF, Typeface.BOLD)
+    fun tp(tam: Float, color: Int, tf: Typeface? = null) = TextPaint().apply { isAntiAlias = true; textSize = tam; this.color = color; tf?.let { typeface = it } }
+    val tituloP = tp(24f, tinta, serif); val subP = tp(11f, suave); val secP = tp(15f, burdeos, serif); val anioP = tp(16f, oro, serif)
+    val hitoP = tp(12.5f, tinta, serif); val metaP = tp(9.5f, suave); val notaP = tp(10.5f, 0xFF3D4A4F.toInt(), Typeface.create(Typeface.SERIF, Typeface.ITALIC))
+    val diaP = tp(15f, tinta, serif).apply { textAlign = Paint.Align.RIGHT }; val mesP = tp(7.5f, suave).apply { textAlign = Paint.Align.RIGHT; letterSpacing = .1f }
+    var n = 0; var pagina: PdfDocument.Page? = null; var y = 0f
+    fun cv() = pagina!!.canvas
+    fun nueva() { pagina?.let { doc.finishPage(it) }; n++; pagina = doc.startPage(PdfDocument.PageInfo.Builder(ancho, alto, n).create()); y = margen }
+    fun lay(s: String, p: TextPaint, w: Float) = StaticLayout.Builder.obtain(s, 0, s.length, p, w.toInt()).setAlignment(Layout.Alignment.ALIGN_NORMAL).build()
+    fun espacio(h: Float) { if (pagina == null || y + h > alto - margen) nueva() }
+    fun dibujar(l: StaticLayout, x: Float, yy: Float) { cv().save(); cv().translate(x, yy); l.draw(cv()); cv().restore() }
+
+    // Portada: la banda con la marca
+    nueva()
+    cv().drawRect(0f, 0f, ancho.toFloat(), 72f, Paint().apply { color = burdeos })
+    cv().drawText("SUROUTE", margen, 42f, tp(17f, 0xFFF3EDE0.toInt()).apply { letterSpacing = .12f })
+    cv().drawText("SUMMIT ROUTE", margen, 55f, tp(6.5f, 0xFFF3EDE0.toInt()).apply { letterSpacing = .2f })
+    val der = tp(8f, 0xFFF3EDE0.toInt()).apply { textAlign = Paint.Align.RIGHT; letterSpacing = .08f }
+    cv().drawText(t.marca.uppercase(), ancho - margen, 34f, der); cv().drawText(t.fecha.uppercase(), ancho - margen, 46f, der)
+    y = 108f
+    val lt = lay(t.titulo, tituloP, ancho - 2 * margen); dibujar(lt, margen, y); y += lt.height + 4f
+    val ls = lay(t.sub, subP, ancho - 2 * margen); dibujar(ls, margen, y); y += ls.height + 14f
+    // Las cifras en pastillas de papel
+    var x = margen; val cifraP = tp(14f, burdeos, serif); val etqP = tp(8.5f, suave)
+    cifras.forEach { (v, e) ->
+        val w = maxOf(cifraP.measureText(v), etqP.measureText(e)) + 20f
+        if (x + w > ancho - margen) { x = margen; y += 48f }
+        cv().drawRoundRect(x, y, x + w, y + 40f, 7f, 7f, Paint().apply { isAntiAlias = true; color = 0xFFF7F3EA.toInt() })
+        cv().drawText(v, x + 10f, y + 18f, cifraP); cv().drawText(e, x + 10f, y + 31f, etqP); x += w + 8f
+    }
+    y += 52f
+    cv().drawLine(0f, y, ancho.toFloat(), y, Paint().apply { color = 0xFFDCE2E4.toInt() }); y += 10f
+
+    val xTxt = margen + 92f; val wTxt = ancho - margen - xTxt; val cx = margen + 68f
+    val mesF = DateTimeFormatter.ofPattern("MMM")
+    fun item(h: FilaPdf) {
+        val l1 = lay(h.t, hitoP, wTxt); val l2 = lay(h.meta, metaP, wTxt); val l3 = h.nota?.let { lay("«$it»", notaP, wTxt) }
+        val alto1 = maxOf(40f, l1.height + 2f + l2.height + (l3?.let { it.height + 5f } ?: 0f)) + 12f
+        espacio(alto1)
+        val d = runCatching { LocalDate.parse(h.f) }.getOrNull()
+        if (d != null) { cv().drawText("${d.dayOfMonth}", margen + 40f, y + 17f, diaP); cv().drawText(d.format(mesF).uppercase().trimEnd('.'), margen + 40f, y + 28f, mesP) }
+        val circ = Paint().apply { isAntiAlias = true; color = oro }
+        if (h.ok) { cv().drawCircle(cx, y + 15f, 13f, circ); cv().drawCircle(cx, y + 15f, 4.5f, Paint().apply { isAntiAlias = true; color = 0xFFFFFFFF.toInt() }) }
+        else cv().drawCircle(cx, y + 15f, 12f, circ.apply { style = Paint.Style.STROKE; strokeWidth = 1.6f; pathEffect = DashPathEffect(floatArrayOf(3.5f, 2.5f), 0f) })
+        var yy = y + 3f; dibujar(l1, xTxt, yy); yy += l1.height + 2f; dibujar(l2, xTxt, yy); yy += l2.height + 5f; l3?.let { dibujar(it, xTxt, yy) }
+        y += alto1
+    }
+    fun seccion(s: String) { espacio(70f); y += 14f; dibujar(lay(s, secP, ancho - 2 * margen), margen, y); y += 26f }
+    val planes = filas.filter { !it.ok }; val logros = filas.filter { it.ok }.sortedByDescending { it.f }
+    if (planes.isNotEmpty()) { seccion(t.viene); planes.forEach(::item) }
+    if (logros.isNotEmpty()) {
+        seccion(t.logre)
+        logros.groupBy { it.f.take(4) }.forEach { (anio, hs) ->
+            espacio(64f); y += 6f
+            cv().drawText(anio, margen, y + 14f, anioP)
+            val fin = margen + anioP.measureText(anio) + 10f
+            cv().drawLine(fin, y + 9f, ancho - margen, y + 9f, Paint().apply { color = linea; strokeWidth = 1f }); y += 26f
+            hs.forEach(::item)
+        }
+    }
+    espacio(30f); y += 12f
+    cv().drawLine(margen, y, ancho - margen, y, Paint().apply { color = 0xFFDCE2E4.toInt() }); y += 8f
+    dibujar(lay(t.pie, tp(8.5f, suave), ancho - 2 * margen), margen, y)
+    pagina?.let { doc.finishPage(it) }
+    doc.writeTo(out); doc.close()
 }

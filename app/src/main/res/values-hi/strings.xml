@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">मेरे पड़ाव</string>
     <string name="hi_recuerdo_t">आपकी चढ़ाई की एक याद</string>
+    <string name="hi_imprimir">प्रिंट करें या PDF में सहेजें</string>
+    <string name="hi_pdf_titulo">मेरी चढ़ाई के शिखर</string>
+    <string name="hi_pdf_sub">मेरे पैसे ने क्या संभव किया और आगे क्या है</string>
+    <string name="hi_pdf_logrados">हासिल किए पड़ाव</string>
+    <string name="hi_pdf_camino">रास्ते में</string>
+    <string name="hi_pdf_puesto">हासिल पड़ावों में लगाया</string>
+    <string name="hi_pdf_por_venir">आगे के लिए</string>
+    <string name="hi_pdf_logre">मैंने क्या हासिल किया</string>
+    <string name="hi_pdf_pie">SuRoute ने आपकी खाता-बही के पड़ावों से बनाया · शिखर का रास्ता पद्धति।</string>
+    <string name="hi_pdf_ok">पड़ाव PDF में सहेजे गए</string>
 </resources>

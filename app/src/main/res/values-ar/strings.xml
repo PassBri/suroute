@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">محطاتي</string>
     <string name="hi_recuerdo_t">ذكرى من صعودك</string>
+    <string name="hi_imprimir">اطبع أو احفظ بصيغة PDF</string>
+    <string name="hi_pdf_titulo">قمم صعودي</string>
+    <string name="hi_pdf_sub">ما جعله مالي ممكنًا وما هو قادم</string>
+    <string name="hi_pdf_logrados">إنجازات تحققت</string>
+    <string name="hi_pdf_camino">في الطريق</string>
+    <string name="hi_pdf_puesto">ما أُنفق على ما تحقق</string>
+    <string name="hi_pdf_por_venir">لما هو قادم</string>
+    <string name="hi_pdf_logre">ما حققته</string>
+    <string name="hi_pdf_pie">أنشأه SuRoute من إنجازات دفتر حساباتك · منهج الطريق إلى القمة.</string>
+    <string name="hi_pdf_ok">تم حفظ الإنجازات بصيغة PDF</string>
 </resources>

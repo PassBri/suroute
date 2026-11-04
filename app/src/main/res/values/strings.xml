@@ -3240,4 +3240,14 @@
     </plurals>
     <string name="hi_mis">Mis hitos</string>
     <string name="hi_recuerdo_t">Un recuerdo de tu ascenso</string>
+    <string name="hi_imprimir">Imprimir o guardar en PDF</string>
+    <string name="hi_pdf_titulo">Las cumbres de mi ascenso</string>
+    <string name="hi_pdf_sub">Lo que mi dinero hizo posible y lo que viene</string>
+    <string name="hi_pdf_logrados">hitos logrados</string>
+    <string name="hi_pdf_camino">en el camino</string>
+    <string name="hi_pdf_puesto">puesto en lo logrado</string>
+    <string name="hi_pdf_por_venir">para lo que viene</string>
+    <string name="hi_pdf_logre">Lo que logré</string>
+    <string name="hi_pdf_pie">Generado por SuRoute con los hitos de tu libro de cuentas · método Ruta a la Cima.</string>
+    <string name="hi_pdf_ok">Hitos guardados en PDF</string>
 </resources>

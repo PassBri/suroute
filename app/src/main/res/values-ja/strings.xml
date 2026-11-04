@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">私のマイルストーン</string>
     <string name="hi_recuerdo_t">登りの思い出</string>
+    <string name="hi_imprimir">印刷または PDF で保存</string>
+    <string name="hi_pdf_titulo">わたしの登頂の記録</string>
+    <string name="hi_pdf_sub">お金で実現できたこと、これからのこと</string>
+    <string name="hi_pdf_logrados">達成したマイルストーン</string>
+    <string name="hi_pdf_camino">進行中</string>
+    <string name="hi_pdf_puesto">達成に使った金額</string>
+    <string name="hi_pdf_por_venir">これからのための金額</string>
+    <string name="hi_pdf_logre">達成したこと</string>
+    <string name="hi_pdf_pie">SuRoute が家計簿のマイルストーンから作成 · 頂上へのルート メソッド。</string>
+    <string name="hi_pdf_ok">マイルストーンを PDF で保存しました</string>
 </resources>

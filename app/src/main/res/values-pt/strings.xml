@@ -3231,4 +3231,14 @@
     </plurals>
     <string name="hi_mis">Meus marcos</string>
     <string name="hi_recuerdo_t">Uma lembrança da sua subida</string>
+    <string name="hi_imprimir">Imprimir ou salvar em PDF</string>
+    <string name="hi_pdf_titulo">Os cumes da minha subida</string>
+    <string name="hi_pdf_sub">O que meu dinheiro tornou possível e o que vem pela frente</string>
+    <string name="hi_pdf_logrados">marcos alcançados</string>
+    <string name="hi_pdf_camino">a caminho</string>
+    <string name="hi_pdf_puesto">investido no que alcancei</string>
+    <string name="hi_pdf_por_venir">para o que vem</string>
+    <string name="hi_pdf_logre">O que conquistei</string>
+    <string name="hi_pdf_pie">Gerado pelo SuRoute com os marcos do seu livro de contas · método Rota ao Cume.</string>
+    <string name="hi_pdf_ok">Marcos salvos em PDF</string>
 </resources>
