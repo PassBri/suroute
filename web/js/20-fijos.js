@@ -79,7 +79,14 @@ function fijosHoja(ym) {
 }
 /** Fijos que no aparecen en [ym] porque empiezan después o se saltaron ese mes: se pueden traer
  *  para registrar ese mes con la misma base (por ejemplo, octubre con los fijos creados en noviembre). */
-const fijosAusentes = ym => fijosDatos().filter(x => (!x.hasta || x.hasta >= ym) && (x.desde > ym || (x.saltar || []).includes(ym)));
+const fijosAusentes = ym => {
+  const l = fijosDatos(), clave = x => `${x.t}|${(x.n || x.c || "").trim().toLowerCase()}`;
+  const yaEstan = new Set(l.filter(x => activoEn(x, ym)).map(clave)), vistos = new Set();
+  // Un fijo que ya se paró o se reemplazó (tiene «hasta») no se trae hacia atrás; tampoco uno igual a otro que ya está ese mes
+  return l.filter(x => (x.desde > ym ? !x.hasta : (x.saltar || []).includes(ym) && (!x.hasta || x.hasta >= ym)))
+    .sort((a, b) => b.desde.localeCompare(a.desde))
+    .filter(x => { const k = clave(x); if (yaEstan.has(k) || vistos.has(k)) return false; vistos.add(k); return true; });
+};
 window.fijosAusentes = fijosAusentes;
 /** Aviso con el botón para aplicar los fijos en [ym] (solo en meses que ya llegaron). */
 window.avisoFijosAntes = ym => {

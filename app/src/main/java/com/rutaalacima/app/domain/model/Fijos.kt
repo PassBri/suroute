@@ -93,8 +93,14 @@ object Fijos {
     }
 
     /** Fijos que no aparecen en [ym] porque empiezan después o se saltaron ese mes (igual que la web). */
-    fun ausentes(l: List<Fijo>, ym: String): List<Fijo> =
-        l.filter { (it.hasta.isEmpty() || it.hasta >= ym) && (it.desde > ym || ym in it.saltar) }
+    fun ausentes(l: List<Fijo>, ym: String): List<Fijo> {
+        fun clave(x: Fijo) = "${x.t}|${x.n.ifBlank { x.c }.trim().lowercase()}"
+        val yaEstan = l.filter { activoEn(it, ym) }.map(::clave).toSet()
+        // Un fijo que ya se paró o se reemplazó (tiene «hasta») no se trae hacia atrás; tampoco uno igual a otro que ya está ese mes
+        return l.filter { if (it.desde > ym) it.hasta.isEmpty() else ym in it.saltar && (it.hasta.isEmpty() || it.hasta >= ym) }
+            .sortedByDescending { it.desde }
+            .distinctBy(::clave).filter { clave(it) !in yaEstan }
+    }
 
     /** Trae esos fijos a [ym]: solo ese mes; los meses intermedios quedan saltados, sin cambios. */
     fun traerA(l: List<Fijo>, ym: YearMonth): List<Fijo> {
