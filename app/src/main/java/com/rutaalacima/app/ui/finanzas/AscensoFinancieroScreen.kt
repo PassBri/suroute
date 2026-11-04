@@ -148,6 +148,8 @@ data class Libro(val dias: Map<String, List<Mov>> = emptyMap(), val moneda: Stri
     val metasDatos: List<com.rutaalacima.app.domain.model.MetasFin.Meta> by lazy { com.rutaalacima.app.domain.model.MetasFin.leer(respuestas[com.rutaalacima.app.domain.model.MetasFin.CLAVE]) }
     val metas: List<com.rutaalacima.app.domain.model.MetasFin.Hoy> by lazy { com.rutaalacima.app.domain.model.MetasFin.hoy(metasDatos, dias, hoy()) }
     val activos: List<com.rutaalacima.app.domain.model.Patrimonio.Activo> by lazy { com.rutaalacima.app.domain.model.Patrimonio.leer(respuestas[com.rutaalacima.app.domain.model.Patrimonio.CLAVE]) }
+    /** Los hitos del ascenso (planeados y logrados). */
+    val hitos: List<com.rutaalacima.app.domain.model.Hitos.Hito> by lazy { com.rutaalacima.app.domain.model.Hitos.leer(respuestas[com.rutaalacima.app.domain.model.Hitos.CLAVE]) }
     /** El orden de las tarjetas del balance que eligió la persona (vacío: el de siempre). */
     val ordenBalance: List<String> by lazy { runCatching { kotlinx.serialization.json.Json.decodeFromString(kotlinx.serialization.serializer<List<String>>(), respuestas["fin#orden-balance"].orEmpty()) }.getOrDefault(emptyList()) }
     val fijos: List<com.rutaalacima.app.domain.model.Fijos.Fijo> by lazy { com.rutaalacima.app.domain.model.Fijos.leer(respuestas[com.rutaalacima.app.domain.model.Fijos.CLAVE]) }
@@ -364,6 +366,11 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
 
     fun elegirMoneda(m: String) = viewModelScope.launch { escribir(Cuentas.CLAVE_MONEDA, m) }
     private fun poner(clave: String, v: String) = viewModelScope.launch { escribir(clave, v) }
+    /** Hitos: crear o editar, borrar y marcar como logrado (hoy). */
+    fun hitoGuardar(h: com.rutaalacima.app.domain.model.Hitos.Hito) = poner(com.rutaalacima.app.domain.model.Hitos.CLAVE,
+        com.rutaalacima.app.domain.model.Hitos.escribir(com.rutaalacima.app.domain.model.Hitos.guardar(libro.value.hitos, h)))
+    fun hitoBorrar(id: String) = poner(com.rutaalacima.app.domain.model.Hitos.CLAVE, com.rutaalacima.app.domain.model.Hitos.escribir(libro.value.hitos.filter { it.id != id }))
+    fun hitoLogrado(id: String) = libro.value.hitos.firstOrNull { it.id == id }?.let { hitoGuardar(it.copy(ok = true, f = hoy().toString())) }
     /** Guarda el orden de las tarjetas del balance (lista vacía: vuelve al de siempre). */
     fun ordenBalance(l: List<String>) = poner("fin#orden-balance", if (l.isEmpty()) "" else kotlinx.serialization.json.Json.encodeToString(kotlinx.serialization.serializer<List<String>>(), l))
 
@@ -708,7 +715,7 @@ fun AscensoFinancieroScreen(inicial: String?, onBack: () -> Unit, onAprende: () 
                 ) {
                     when (n) {
                         NivelCuentas.Balance -> balance(libro, plata, ir, vm, onAprende)
-                        is NivelCuentas.Anio -> anio(n.a, libro, plata, ir)
+                        is NivelCuentas.Anio -> anio(n.a, libro, plata, ir, vm)
                         is NivelCuentas.Mes -> mes(n.ym, libro, plata, ir, vm)
                         is NivelCuentas.Dia -> dia(n.f, libro, plata, ir, vm, avisos)
                         NivelCuentas.DeudasN -> deudasNivel(libro, plata, vm, avisos)
@@ -1049,6 +1056,7 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
     }
     sec("metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
     sec("deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
+    sec("hitos") { HitosBalance(libro, plata, vm) }
     sec("fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }
     sec("mochilas") { MochilasCard(t, plata) }
     sec("categorias") { CategoriasCard(t, plata) }
@@ -1073,7 +1081,7 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
     }
 }
 
-private fun LazyListScope.anio(a: Int, libro: Libro, plata: (Double) -> String, ir: (NivelCuentas) -> Unit) {
+private fun LazyListScope.anio(a: Int, libro: Libro, plata: (Double) -> String, ir: (NivelCuentas) -> Unit, vm: CuentasViewModel) {
     val actual = YearMonth.from(hoy())
     val filas = (1..12).map { m -> val ym = YearMonth.of(a, m)
         FilaPeriodo(nombreMes(m), nombreMes(m).take(3), libro.suma("$ym-"), NivelCuentas.Mes(ym), ym == actual) }
@@ -1089,6 +1097,7 @@ private fun LazyListScope.anio(a: Int, libro: Libro, plata: (Double) -> String, 
             TablaPeriodos(filas, stringResource(R.string.cu_col_mes), t, plata, ir)
         }
     }
+    if (libro.hitos.any { it.f.startsWith("$a") }) item(key = "hitos-$a") { HitosCard(libro, "$a", stringResource(R.string.hi_de, "$a"), plata, vm) }
     item(key = "salud-$a") { SaludAcceso(libro.salud(a), a) { ir(NivelCuentas.SaludN(a)) } }
     item(key = "mochilas") { MochilasCard(t, plata) }
     item(key = "cats") { CategoriasCard(t, plata) }
@@ -1164,6 +1173,7 @@ private fun LazyListScope.mes(ym: YearMonth, libro: Libro, plata: (Double) -> St
             }
         }
     }
+    if (libro.hitos.any { it.f.startsWith("$ym") }) item(key = "hitos-$ym") { HitosCard(libro, "$ym", stringResource(R.string.hi_de, mesFrase(ym.monthValue)), plata, vm) }
     item(key = "fijos") { FijosCard(libro, ym, plata, vm) }
     item(key = "mochilas") { MochilasCard(t, plata) }
     item(key = "cats") { CategoriasCard(t, plata) }
@@ -1195,6 +1205,10 @@ private fun LazyListScope.dia(f: LocalDate, libro: Libro, plata: (Double) -> Str
     if (movs.isEmpty() && !ym.isAfter(YearMonth.from(hoy())) && com.rutaalacima.app.domain.model.Fijos.ausentes(libro.fijos, ym.toString()).isNotEmpty())
         item(key = "fijos-antes") { AvisoFijosAntes(ym, libro, vm) }
     items(movs, key = { "mov-${it.id}" }) { x -> FilaMovimiento(x, fs, plata, vm, avisos) }
+    item(key = "hitos-dia") {
+        if (libro.hitos.any { it.f == fs }) HitosCard(libro, fs, stringResource(R.string.hi_dia), plata, vm)
+        else MarcarHito(fs, vm)
+    }
     if (movs.isNotEmpty()) item(key = "disp") {
         Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceContainer).padding(14.dp)) {
             Text(stringResource(R.string.cu_disp_dia), Modifier.weight(1f), fontWeight = FontWeight.SemiBold)

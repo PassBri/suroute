@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">Sono usciti %1$s tra spese, risparmio, investimento e dono</string>
     <string name="cat_salio">uscito</string>
     <string name="pin_puntos">PIN: %1$d cifre inserite</string>
+    <string name="hi_tus">I tuoi traguardi</string>
+    <string name="hi_nuevo">Nuovo traguardo</string>
+    <string name="hi_hito">Traguardo</string>
+    <string name="hi_de">Traguardi di %1$s</string>
+    <string name="hi_dia">Traguardi di questo giorno</string>
+    <string name="hi_marcar_dia">Segna un traguardo in questo giorno</string>
+    <string name="hi_vacio">Le vette che il tuo denaro rende possibili: comprare casa, il viaggio sognato, pagare l’ultima rata. Pianificali con una data e segnali quando li raggiungi; resteranno qui come ricordo.</string>
+    <string name="hi_viene">In arrivo</string>
+    <string name="hi_lograste">Ciò che hai raggiunto</string>
+    <string name="hi_lo_logre">Ce l’ho fatta!</string>
+    <string name="hi_lo_logre_s">Raggiunto</string>
+    <string name="hi_lo_planeo">Lo pianifico</string>
+    <string name="hi_logrado_el">Raggiunto il %1$s</string>
+    <string name="hi_planeado_para">Pianificato per il %1$s</string>
+    <string name="hi_es_hoy">è oggi</string>
+    <string name="hi_atrasado">la data è passata</string>
+    <string name="hi_editar">Modifica «%1$s»</string>
+    <string name="hi_editar_t">Modifica traguardo</string>
+    <string name="hi_que">Cosa hai raggiunto o pianifichi?</string>
+    <string name="hi_fecha">Data</string>
+    <string name="hi_monto">Importo (facoltativo)</string>
+    <string name="hi_nota">Nota (facoltativa)</string>
+    <string name="hi_t_casa">Casa</string>
+    <string name="hi_t_viaje">Viaggio</string>
+    <string name="hi_t_carro">Veicolo</string>
+    <string name="hi_t_estudio">Studio</string>
+    <string name="hi_t_deuda">Debito saldato</string>
+    <string name="hi_t_negocio">Attività</string>
+    <string name="hi_t_ahorro">Risparmio</string>
+    <string name="hi_t_familia">Famiglia</string>
+    <string name="hi_t_otro">Altro</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">manca 1 giorno</item>
+        <item quantity="other">mancano %1$d giorni</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">manca 1 mese</item>
+        <item quantity="other">mancano %1$d mesi</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">Questa settimana, 1 anno fa</item>
+        <item quantity="other">Questa settimana, %1$d anni fa</item>
+    </plurals>
 </resources>

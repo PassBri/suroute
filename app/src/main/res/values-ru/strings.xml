@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">Ушло %1$s на расходы, сбережения, инвестиции и помощь</string>
     <string name="cat_salio">ушло</string>
     <string name="pin_puntos">PIN: введено цифр: %1$d</string>
+    <string name="hi_tus">Ваши вехи</string>
+    <string name="hi_nuevo">Новая веха</string>
+    <string name="hi_hito">Веха</string>
+    <string name="hi_de">Вехи: %1$s</string>
+    <string name="hi_dia">Вехи этого дня</string>
+    <string name="hi_marcar_dia">Отметить веху в этот день</string>
+    <string name="hi_vacio">Вершины, которые делают возможными ваши деньги: покупка дома, путешествие мечты, последний платёж. Планируйте их с датой и отмечайте, когда достигнете; они останутся здесь как память.</string>
+    <string name="hi_viene">Впереди</string>
+    <string name="hi_lograste">Чего вы достигли</string>
+    <string name="hi_lo_logre">Получилось!</string>
+    <string name="hi_lo_logre_s">Достигнуто</string>
+    <string name="hi_lo_planeo">Планирую</string>
+    <string name="hi_logrado_el">Достигнуто %1$s</string>
+    <string name="hi_planeado_para">Запланировано на %1$s</string>
+    <string name="hi_es_hoy">сегодня</string>
+    <string name="hi_atrasado">дата прошла</string>
+    <string name="hi_editar">Изменить «%1$s»</string>
+    <string name="hi_editar_t">Изменить веху</string>
+    <string name="hi_que">Чего вы достигли или что планируете?</string>
+    <string name="hi_fecha">Дата</string>
+    <string name="hi_monto">Сумма (необязательно)</string>
+    <string name="hi_nota">Заметка (необязательно)</string>
+    <string name="hi_t_casa">Дом</string>
+    <string name="hi_t_viaje">Путешествие</string>
+    <string name="hi_t_carro">Транспорт</string>
+    <string name="hi_t_estudio">Учёба</string>
+    <string name="hi_t_deuda">Долг погашен</string>
+    <string name="hi_t_negocio">Бизнес</string>
+    <string name="hi_t_ahorro">Сбережения</string>
+    <string name="hi_t_familia">Семья</string>
+    <string name="hi_t_otro">Другое</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">остался 1 день</item>
+        <item quantity="other">осталось дней: %1$d</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">остался 1 месяц</item>
+        <item quantity="other">осталось месяцев: %1$d</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">На этой неделе, 1 год назад</item>
+        <item quantity="other">На этой неделе, лет назад: %1$d</item>
+    </plurals>
 </resources>

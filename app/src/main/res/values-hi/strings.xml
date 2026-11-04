@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">खर्च, बचत, निवेश और दान में %1$s गए</string>
     <string name="cat_salio">गया</string>
     <string name="pin_puntos">PIN: %1$d अंक लिखे गए</string>
+    <string name="hi_tus">आपके पड़ाव</string>
+    <string name="hi_nuevo">नया पड़ाव</string>
+    <string name="hi_hito">पड़ाव</string>
+    <string name="hi_de">%1$s के पड़ाव</string>
+    <string name="hi_dia">इस दिन के पड़ाव</string>
+    <string name="hi_marcar_dia">इस दिन पड़ाव दर्ज करें</string>
+    <string name="hi_vacio">वे शिखर जो आपका पैसा संभव बनाता है: घर खरीदना, सपनों की यात्रा, आखिरी किस्त चुकाना। तारीख के साथ योजना बनाएँ और पूरा होने पर दर्ज करें; वे यादों के रूप में यहाँ रहेंगे।</string>
+    <string name="hi_viene">आगे क्या है</string>
+    <string name="hi_lograste">आपने क्या पाया</string>
+    <string name="hi_lo_logre">मैंने कर दिखाया!</string>
+    <string name="hi_lo_logre_s">पाया</string>
+    <string name="hi_lo_planeo">योजना</string>
+    <string name="hi_logrado_el">%1$s को पाया</string>
+    <string name="hi_planeado_para">%1$s के लिए योजना</string>
+    <string name="hi_es_hoy">आज है</string>
+    <string name="hi_atrasado">तारीख निकल गई</string>
+    <string name="hi_editar">«%1$s» बदलें</string>
+    <string name="hi_editar_t">पड़ाव बदलें</string>
+    <string name="hi_que">आपने क्या पाया या क्या योजना है?</string>
+    <string name="hi_fecha">तारीख</string>
+    <string name="hi_monto">राशि (वैकल्पिक)</string>
+    <string name="hi_nota">नोट (वैकल्पिक)</string>
+    <string name="hi_t_casa">घर</string>
+    <string name="hi_t_viaje">यात्रा</string>
+    <string name="hi_t_carro">वाहन</string>
+    <string name="hi_t_estudio">पढ़ाई</string>
+    <string name="hi_t_deuda">कर्ज़ चुकाया</string>
+    <string name="hi_t_negocio">व्यापार</string>
+    <string name="hi_t_ahorro">बचत</string>
+    <string name="hi_t_familia">परिवार</string>
+    <string name="hi_t_otro">अन्य</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">1 दिन बाकी</item>
+        <item quantity="other">%1$d दिन बाकी</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">1 महीना बाकी</item>
+        <item quantity="other">%1$d महीने बाकी</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">इस हफ़्ते, 1 साल पहले</item>
+        <item quantity="other">इस हफ़्ते, %1$d साल पहले</item>
+    </plurals>
 </resources>

@@ -3195,4 +3195,47 @@
     <string name="cat_salieron">Salieron %1$s entre gastos, ahorro, inversión y dar</string>
     <string name="cat_salio">salió</string>
     <string name="pin_puntos">PIN: %1$d números escritos</string>
+    <string name="hi_tus">Tus hitos</string>
+    <string name="hi_nuevo">Nuevo hito</string>
+    <string name="hi_hito">Hito</string>
+    <string name="hi_de">Hitos de %1$s</string>
+    <string name="hi_dia">Hitos de este día</string>
+    <string name="hi_marcar_dia">Marcar un hito este día</string>
+    <string name="hi_vacio">Las cumbres que tu dinero hace posibles: comprar tu casa, el viaje que soñaste, pagar la última cuota. Planéalas con fecha y márcalas cuando las logres; quedarán aquí como recuerdo.</string>
+    <string name="hi_viene">Lo que viene</string>
+    <string name="hi_lograste">Lo que lograste</string>
+    <string name="hi_lo_logre">¡Lo logré!</string>
+    <string name="hi_lo_logre_s">Lo logré</string>
+    <string name="hi_lo_planeo">Lo planeo</string>
+    <string name="hi_logrado_el">Logrado el %1$s</string>
+    <string name="hi_planeado_para">Planeado para el %1$s</string>
+    <string name="hi_es_hoy">es hoy</string>
+    <string name="hi_atrasado">la fecha ya pasó</string>
+    <string name="hi_editar">Editar «%1$s»</string>
+    <string name="hi_editar_t">Editar hito</string>
+    <string name="hi_que">¿Qué lograste o qué planeas?</string>
+    <string name="hi_fecha">Fecha</string>
+    <string name="hi_monto">Monto (opcional)</string>
+    <string name="hi_nota">Nota (opcional)</string>
+    <string name="hi_t_casa">Casa</string>
+    <string name="hi_t_viaje">Viaje</string>
+    <string name="hi_t_carro">Vehículo</string>
+    <string name="hi_t_estudio">Estudio</string>
+    <string name="hi_t_deuda">Deuda pagada</string>
+    <string name="hi_t_negocio">Negocio</string>
+    <string name="hi_t_ahorro">Ahorro</string>
+    <string name="hi_t_familia">Familia</string>
+    <string name="hi_t_otro">Otro logro</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">falta 1 día</item>
+        <item quantity="other">faltan %1$d días</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">falta 1 mes</item>
+        <item quantity="other">faltan %1$d meses</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">Esta semana, hace 1 año</item>
+        <item quantity="other">Esta semana, hace %1$d años</item>
+    </plurals>
 </resources>

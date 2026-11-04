@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">Saíram %1$s entre gastos, poupança, investimento e doações</string>
     <string name="cat_salio">saiu</string>
     <string name="pin_puntos">PIN: %1$d números digitados</string>
+    <string name="hi_tus">Seus marcos</string>
+    <string name="hi_nuevo">Novo marco</string>
+    <string name="hi_hito">Marco</string>
+    <string name="hi_de">Marcos de %1$s</string>
+    <string name="hi_dia">Marcos deste dia</string>
+    <string name="hi_marcar_dia">Marcar um marco neste dia</string>
+    <string name="hi_vacio">Os cumes que seu dinheiro torna possíveis: comprar sua casa, a viagem dos sonhos, pagar a última parcela. Planeje-os com data e marque quando conseguir; ficam aqui como lembrança.</string>
+    <string name="hi_viene">O que vem</string>
+    <string name="hi_lograste">O que você conquistou</string>
+    <string name="hi_lo_logre">Consegui!</string>
+    <string name="hi_lo_logre_s">Consegui</string>
+    <string name="hi_lo_planeo">Planejo</string>
+    <string name="hi_logrado_el">Conquistado em %1$s</string>
+    <string name="hi_planeado_para">Planejado para %1$s</string>
+    <string name="hi_es_hoy">é hoje</string>
+    <string name="hi_atrasado">a data já passou</string>
+    <string name="hi_editar">Editar «%1$s»</string>
+    <string name="hi_editar_t">Editar marco</string>
+    <string name="hi_que">O que você conquistou ou planeja?</string>
+    <string name="hi_fecha">Data</string>
+    <string name="hi_monto">Valor (opcional)</string>
+    <string name="hi_nota">Nota (opcional)</string>
+    <string name="hi_t_casa">Casa</string>
+    <string name="hi_t_viaje">Viagem</string>
+    <string name="hi_t_carro">Veículo</string>
+    <string name="hi_t_estudio">Estudo</string>
+    <string name="hi_t_deuda">Dívida paga</string>
+    <string name="hi_t_negocio">Negócio</string>
+    <string name="hi_t_ahorro">Poupança</string>
+    <string name="hi_t_familia">Família</string>
+    <string name="hi_t_otro">Outra conquista</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">falta 1 dia</item>
+        <item quantity="other">faltam %1$d dias</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">falta 1 mês</item>
+        <item quantity="other">faltam %1$d meses</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">Nesta semana, há 1 ano</item>
+        <item quantity="other">Nesta semana, há %1$d anos</item>
+    </plurals>
 </resources>

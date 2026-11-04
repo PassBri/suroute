@@ -334,6 +334,7 @@ DET["finanzas.b"] = () => {
       <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`)],
       ["salud", "Salud financiera", saludResumen("")],
       ["deudas", "Salir de deudas", deudasResumen()],
+      ["hitos", "Tus hitos", window.hitosBalance?.() || ""],
       ["fijos", "Fijos de cada mes", fijosResumen()],
       ["mochilas", "Tus tres mochilas", mochilas(t)],
       ["categorias", "¿A dónde fue tu dinero?", porCategoria(t)],
@@ -349,7 +350,7 @@ DET["finanzas.a"] = arg => {
   return cab(avAsc(), String(a), "Ascenso financiero · el año mes a mes", navPeriodo("a:" + (a - 1), "a:" + (a + 1), String(a)) + ojoAsc()) + cuerpo(
     migasAsc([["Balance general", "b"], [String(a), ""]]) + cifras(t) +
     hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Mes a mes</h3><span class="suave" style="font-size:13px">Toca un mes para ver sus días</span></div>${grafica(filas)}${tablaPeriodos(filas, "Mes", t)}`) +
-    saludResumen(a + "-") + mochilas(t) + porCategoria(t), "max-width:980px");
+    (window.hitosHoja?.(String(a), `Hitos de ${a}`) || "") + saludResumen(a + "-") + mochilas(t) + porCategoria(t), "max-width:980px");
 };
 DET["finanzas.m"] = arg => {
   if (window.finBloqueado?.()) return pantallaBloqueo();
@@ -365,7 +366,7 @@ DET["finanzas.m"] = arg => {
       ${uso != null ? `<div class="fin-pres"><div class="barra"><i style="width:${Math.min(100, uso * 100)}%;${uso > 1 ? "background:var(--peligro, #B3261E)" : ""}"></i></div><span class="suave">Gastaste ${plata(t.gas)} de ${plata(pres)}${uso > 1 ? " · te pasaste " + plata(t.gas - pres) : " · te quedan " + plata(pres - t.gas)}</span></div>` : ""}`) +
     hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Día a día</h3><span class="botones-mini">${movsPropiosMes(ant).length ? `<button class="btn mini" data-acc="ascTraerMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[(m + 10) % 12]} al mismo día de ${MESES[m - 1]}; los fijos ya se repiten solos">${ic("copiar")} Traer de ${MESES[(m + 10) % 12]}</button>` : ""}${movsPropiosMes(ym).length ? `<button class="btn mini" data-acc="ascDuplicarMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[m - 1]} al mismo día de ${MESES[m % 12]}; los fijos ya se repiten solos">${ic("copiar")} Duplicar al mes siguiente</button>` : ""}<button class="btn mini lleno" data-sel="d:${hoyI.startsWith(ym) ? hoyI : ym + "-01"}">${ic("mas")} Registrar</button></span></div>
       ${filas.length ? grafica(filas) + tablaPeriodos(filas, "Día", t) : `<p class="suave">Aún no hay movimientos en ${MESES[m - 1]}.</p>`}`) +
-    fijosHoja(ym) + mochilas(t) + porCategoria(t), "max-width:980px");
+    (window.hitosHoja?.(ym, `Hitos de ${MESES[m - 1]}`) || "") + fijosHoja(ym) + mochilas(t) + porCategoria(t), "max-width:980px");
 };
 DET["finanzas.d"] = f => {
   if (window.finBloqueado?.()) return pantallaBloqueo();
@@ -392,6 +393,7 @@ DET["finanzas.d"] = f => {
           <td class="acc-mov">${x.ag ? "" : `<button class="rb${x.r?.length ? " con" : ""}" data-acc="ascRecibos" data-arg="${f}|${x.id}" aria-label="Recibos (${x.r?.length || 0})" title="Recibos">${ic("adjunto")}${x.r?.length ? `<small>${x.r.length}</small>` : ""}</button>`}${`<button class="rb" data-acc="ascDuplicar" data-arg="${f}|${x.id}" aria-label="Duplicar al mes siguiente" title="Duplicar al mes siguiente">${ic("copiar")}</button>`}<button class="rb" data-acc="ascBorrar" data-arg="${f}|${x.id}" aria-label="Quitar este movimiento">${ic("borrar")}</button></td></tr>`).join("")
           : `<tr><td colspan="7" class="suave" style="padding:14px">Aún no hay movimientos este día. Anota el primero arriba: el monto y su categoría bastan.${window.avisoFijosAntes ? avisoFijosAntes(ym) : ""}</td></tr>`}
       </tbody>${movs.length ? `<tfoot><tr><th colspan="4" scope="row">Disponible del día</th><td class="num ${s.disp < 0 ? "neg" : ""}">${plata(s.disp)}</td><td></td><td></td></tr></tfoot>` : ""}</table></div>`) +
+    (window.hitosHoja?.(f, "Hitos de este día") || window.hitoBoton?.(f) || "") +
     cifras(s) +
     `<button class="hoja asc-sube" data-sel="m:${ym}"><span>Así va ${MESES[m - 1]}</span><b class="${mes.disp < 0 ? "neg" : ""}">${plata(mes.disp)} disponible</b><small>Entró ${plata(mes.ing)} · salió ${plata(mes.gas + mes.aho + mes.inv + mes.gen)}</small>${ic("der")}</button>`, "max-width:980px");
 };

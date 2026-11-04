@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">%1$s sont sortis entre dépenses, épargne, investissement et dons</string>
     <string name="cat_salio">sorti</string>
     <string name="pin_puntos">PIN : %1$d chiffres saisis</string>
+    <string name="hi_tus">Vos jalons</string>
+    <string name="hi_nuevo">Nouveau jalon</string>
+    <string name="hi_hito">Jalon</string>
+    <string name="hi_de">Jalons de %1$s</string>
+    <string name="hi_dia">Jalons de ce jour</string>
+    <string name="hi_marcar_dia">Marquer un jalon ce jour</string>
+    <string name="hi_vacio">Les sommets que votre argent rend possibles : acheter votre maison, le voyage rêvé, payer la dernière échéance. Planifiez-les avec une date et marquez-les une fois atteints ; ils restent ici en souvenir.</string>
+    <string name="hi_viene">À venir</string>
+    <string name="hi_lograste">Ce que vous avez accompli</string>
+    <string name="hi_lo_logre">J’y suis arrivé !</string>
+    <string name="hi_lo_logre_s">Accompli</string>
+    <string name="hi_lo_planeo">Prévu</string>
+    <string name="hi_logrado_el">Accompli le %1$s</string>
+    <string name="hi_planeado_para">Prévu pour le %1$s</string>
+    <string name="hi_es_hoy">c’est aujourd’hui</string>
+    <string name="hi_atrasado">la date est passée</string>
+    <string name="hi_editar">Modifier « %1$s »</string>
+    <string name="hi_editar_t">Modifier le jalon</string>
+    <string name="hi_que">Qu’avez-vous accompli ou prévu ?</string>
+    <string name="hi_fecha">Date</string>
+    <string name="hi_monto">Montant (facultatif)</string>
+    <string name="hi_nota">Note (facultatif)</string>
+    <string name="hi_t_casa">Maison</string>
+    <string name="hi_t_viaje">Voyage</string>
+    <string name="hi_t_carro">Véhicule</string>
+    <string name="hi_t_estudio">Études</string>
+    <string name="hi_t_deuda">Dette remboursée</string>
+    <string name="hi_t_negocio">Entreprise</string>
+    <string name="hi_t_ahorro">Épargne</string>
+    <string name="hi_t_familia">Famille</string>
+    <string name="hi_t_otro">Autre</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">plus que 1 jour</item>
+        <item quantity="other">plus que %1$d jours</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">plus que 1 mois</item>
+        <item quantity="other">plus que %1$d mois</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">Cette semaine, il y a 1 an</item>
+        <item quantity="other">Cette semaine, il y a %1$d ans</item>
+    </plurals>
 </resources>

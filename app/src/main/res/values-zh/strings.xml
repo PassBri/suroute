@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">支出、储蓄、投资和给予共流出 %1$s</string>
     <string name="cat_salio">流出</string>
     <string name="pin_puntos">PIN：已输入 %1$d 位</string>
+    <string name="hi_tus">你的里程碑</string>
+    <string name="hi_nuevo">新里程碑</string>
+    <string name="hi_hito">里程碑</string>
+    <string name="hi_de">%1$s的里程碑</string>
+    <string name="hi_dia">这一天的里程碑</string>
+    <string name="hi_marcar_dia">在这一天标记里程碑</string>
+    <string name="hi_vacio">你的钱让这些高峰成为可能：买房、梦想中的旅行、还清最后一笔。为它们定下日期，实现时标记；它们会留在这里作为回忆。</string>
+    <string name="hi_viene">即将到来</string>
+    <string name="hi_lograste">你已实现</string>
+    <string name="hi_lo_logre">我做到了！</string>
+    <string name="hi_lo_logre_s">已实现</string>
+    <string name="hi_lo_planeo">计划中</string>
+    <string name="hi_logrado_el">于 %1$s 实现</string>
+    <string name="hi_planeado_para">计划于 %1$s</string>
+    <string name="hi_es_hoy">就是今天</string>
+    <string name="hi_atrasado">日期已过</string>
+    <string name="hi_editar">编辑“%1$s”</string>
+    <string name="hi_editar_t">编辑里程碑</string>
+    <string name="hi_que">你实现或计划了什么？</string>
+    <string name="hi_fecha">日期</string>
+    <string name="hi_monto">金额（可选）</string>
+    <string name="hi_nota">备注（可选）</string>
+    <string name="hi_t_casa">房子</string>
+    <string name="hi_t_viaje">旅行</string>
+    <string name="hi_t_carro">车辆</string>
+    <string name="hi_t_estudio">学业</string>
+    <string name="hi_t_deuda">还清债务</string>
+    <string name="hi_t_negocio">生意</string>
+    <string name="hi_t_ahorro">储蓄</string>
+    <string name="hi_t_familia">家庭</string>
+    <string name="hi_t_otro">其他</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">还剩 1 天</item>
+        <item quantity="other">还剩 %1$d 天</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">还剩 1 个月</item>
+        <item quantity="other">还剩 %1$d 个月</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">这周，1 年前</item>
+        <item quantity="other">这周，%1$d 年前</item>
+    </plurals>
 </resources>

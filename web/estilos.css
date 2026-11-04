@@ -5821,3 +5821,39 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
   .pin-teclado { grid-template-columns: repeat(3, 60px); gap: 8px 22px; } .pin-teclado button { width: 60px; height: 60px; font-size: 23px; }
 }
 @media (max-width: 700px) { .det-cuerpo.bloqueo-escena { padding-top: 38px; } .pin-teclado { gap: 6px 22px; } .pin-teclado button { width: 58px; height: 58px; } .pin-teclado { grid-template-columns: repeat(3, 58px); } .pin-hoja { padding-bottom: 10px; } }
+
+/* ---------- Hitos del ascenso financiero ---------- */
+.hitos { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 2px; }
+.hito { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--linea); }
+.hito:last-child { border-bottom: 0; }
+.hito-ic { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--oro-suave); }
+.hito-ic svg { width: 22px; height: 22px; fill: var(--burdeos); }
+.hito.plan .hito-ic { background: transparent; border: 2px dashed color-mix(in srgb, var(--oro) 70%, transparent); }
+.hito.plan .hito-ic svg { fill: var(--tinta-suave); }
+.hito-txt { display: grid; gap: 2px; min-width: 0; } .hito-txt b { font-weight: 600; } .hito-txt small { color: var(--tinta-suave); font-size: 13px; }
+.hito-acc { display: inline-flex; gap: 4px; align-items: center; }
+.hito-acc .btn svg { width: 16px; height: 16px; fill: currentColor; }
+@media (max-width: 520px) { .hito { grid-template-columns: 40px 1fr; } .hito-acc { grid-column: 2; justify-self: start; } .hito-ic { width: 40px; height: 40px; } }
+.hitos-sub { margin: 16px 0 0; font-size: 13px; font-weight: 600; color: var(--tinta-suave); text-transform: none; }
+.hitos-anio { display: grid; grid-template-columns: 52px 1fr; gap: 6px; align-items: start; margin-top: 6px; }
+.hitos-anio-n { font: 600 15px/44px var(--font-titulo, serif); color: var(--burdeos); border-right: 2px solid var(--oro-suave); padding-right: 8px; text-align: right; font-variant-numeric: tabular-nums; }
+.hito-recuerdo { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; margin: 12px 0 4px; padding: 12px 14px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--oro-suave), color-mix(in srgb, var(--oro-suave) 40%, var(--hoja))); }
+.hito-recuerdo svg { width: 28px; height: 28px; fill: var(--burdeos); }
+.hito-recuerdo p { margin: 0; display: grid; } .hito-recuerdo small { color: var(--tinta-suave); } .hito-recuerdo b { font: 600 17px/1.3 var(--font-titulo, serif); }
+.hito-marcar { display: inline-flex; gap: 8px; align-items: center; justify-self: start; background: none; border: 0; color: var(--burdeos); font-weight: 500; min-height: 44px; cursor: pointer; padding: 0 4px; }
+.hito-marcar svg { width: 18px; height: 18px; fill: currentColor; }
+.hito-form { display: grid; gap: 12px; }
+.hito-tipos { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.hito-tipos legend { font-size: 13px; color: var(--tinta-suave); margin-bottom: 6px; padding: 0; }
+.hito-tipo { position: relative; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border: 1px solid var(--m3-borde-fuerte, var(--linea)); border-radius: 8px; cursor: pointer; font-size: 14px; }
+.hito-tipo input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hito-tipo svg { width: 18px; height: 18px; fill: var(--tinta-suave); }
+.hito-tipo:has(input:checked) { background: var(--oro-suave); border-color: transparent; color: var(--burdeos); font-weight: 500; } .hito-tipo:has(input:checked) svg { fill: var(--burdeos); }
+.hito-tipo:has(input:focus-visible) { outline: 2px solid var(--burdeos); outline-offset: 2px; }
+.hito-estado { display: grid; grid-template-columns: 1fr 1fr; }
+.hito-estado .seg-b { position: relative; display: grid; place-items: center; min-height: 40px; cursor: pointer; }
+.hito-estado .seg-b input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.hito-estado .seg-b:has(input:checked) { background: var(--oro-suave); color: var(--burdeos); font-weight: 600; }
+.hito-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 520px) { .hito.logrado { grid-template-columns: 40px 1fr auto; } .hito.logrado .hito-acc { grid-column: auto; } .hitos-anio { grid-template-columns: 44px 1fr; } }

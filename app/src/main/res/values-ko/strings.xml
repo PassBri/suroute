@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">지출, 저축, 투자, 나눔으로 %1$s가 나갔습니다</string>
     <string name="cat_salio">나감</string>
     <string name="pin_puntos">PIN: %1$d자리 입력됨</string>
+    <string name="hi_tus">나의 이정표</string>
+    <string name="hi_nuevo">새 이정표</string>
+    <string name="hi_hito">이정표</string>
+    <string name="hi_de">%1$s의 이정표</string>
+    <string name="hi_dia">이날의 이정표</string>
+    <string name="hi_marcar_dia">이날 이정표 표시</string>
+    <string name="hi_vacio">돈이 가능하게 하는 정상들: 집 장만, 꿈꾸던 여행, 마지막 할부 상환. 날짜를 정해 계획하고 이루면 표시하세요. 추억으로 이곳에 남습니다.</string>
+    <string name="hi_viene">다가오는 것</string>
+    <string name="hi_lograste">이룬 것</string>
+    <string name="hi_lo_logre">해냈다!</string>
+    <string name="hi_lo_logre_s">이룸</string>
+    <string name="hi_lo_planeo">계획</string>
+    <string name="hi_logrado_el">%1$s에 이룸</string>
+    <string name="hi_planeado_para">%1$s 예정</string>
+    <string name="hi_es_hoy">오늘입니다</string>
+    <string name="hi_atrasado">날짜가 지났습니다</string>
+    <string name="hi_editar">«%1$s» 편집</string>
+    <string name="hi_editar_t">이정표 편집</string>
+    <string name="hi_que">무엇을 이루었거나 계획하나요?</string>
+    <string name="hi_fecha">날짜</string>
+    <string name="hi_monto">금액(선택)</string>
+    <string name="hi_nota">메모(선택)</string>
+    <string name="hi_t_casa">집</string>
+    <string name="hi_t_viaje">여행</string>
+    <string name="hi_t_carro">차량</string>
+    <string name="hi_t_estudio">학업</string>
+    <string name="hi_t_deuda">빚 청산</string>
+    <string name="hi_t_negocio">사업</string>
+    <string name="hi_t_ahorro">저축</string>
+    <string name="hi_t_familia">가족</string>
+    <string name="hi_t_otro">기타</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">1일 남음</item>
+        <item quantity="other">%1$d일 남음</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">1개월 남음</item>
+        <item quantity="other">%1$d개월 남음</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">이번 주, 1년 전</item>
+        <item quantity="other">이번 주, %1$d년 전</item>
+    </plurals>
 </resources>

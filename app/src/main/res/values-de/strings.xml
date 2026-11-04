@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">%1$s gingen hinaus für Ausgaben, Sparen, Investieren und Geben</string>
     <string name="cat_salio">hinaus</string>
     <string name="pin_puntos">PIN: %1$d Ziffern eingegeben</string>
+    <string name="hi_tus">Ihre Meilensteine</string>
+    <string name="hi_nuevo">Neuer Meilenstein</string>
+    <string name="hi_hito">Meilenstein</string>
+    <string name="hi_de">Meilensteine im %1$s</string>
+    <string name="hi_dia">Meilensteine dieses Tages</string>
+    <string name="hi_marcar_dia">Meilenstein an diesem Tag markieren</string>
+    <string name="hi_vacio">Die Gipfel, die Ihr Geld möglich macht: das Eigenheim, die Traumreise, die letzte Rate. Planen Sie sie mit Datum und markieren Sie sie, wenn Sie sie erreichen; sie bleiben hier als Erinnerung.</string>
+    <string name="hi_viene">Was kommt</string>
+    <string name="hi_lograste">Was Sie erreicht haben</string>
+    <string name="hi_lo_logre">Geschafft!</string>
+    <string name="hi_lo_logre_s">Geschafft</string>
+    <string name="hi_lo_planeo">Geplant</string>
+    <string name="hi_logrado_el">Erreicht am %1$s</string>
+    <string name="hi_planeado_para">Geplant für %1$s</string>
+    <string name="hi_es_hoy">ist heute</string>
+    <string name="hi_atrasado">Datum ist vorbei</string>
+    <string name="hi_editar">„%1$s“ bearbeiten</string>
+    <string name="hi_editar_t">Meilenstein bearbeiten</string>
+    <string name="hi_que">Was haben Sie erreicht oder geplant?</string>
+    <string name="hi_fecha">Datum</string>
+    <string name="hi_monto">Betrag (optional)</string>
+    <string name="hi_nota">Notiz (optional)</string>
+    <string name="hi_t_casa">Haus</string>
+    <string name="hi_t_viaje">Reise</string>
+    <string name="hi_t_carro">Fahrzeug</string>
+    <string name="hi_t_estudio">Studium</string>
+    <string name="hi_t_deuda">Schuld getilgt</string>
+    <string name="hi_t_negocio">Geschäft</string>
+    <string name="hi_t_ahorro">Sparen</string>
+    <string name="hi_t_familia">Familie</string>
+    <string name="hi_t_otro">Anderes</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">noch 1 Tag</item>
+        <item quantity="other">noch %1$d Tage</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">noch 1 Monat</item>
+        <item quantity="other">noch %1$d Monate</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">Diese Woche, vor 1 Jahr</item>
+        <item quantity="other">Diese Woche, vor %1$d Jahren</item>
+    </plurals>
 </resources>

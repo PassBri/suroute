@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">支出・貯蓄・投資・寄付で %1$s が出ていきました</string>
     <string name="cat_salio">出金</string>
     <string name="pin_puntos">PIN：%1$d 桁入力済み</string>
+    <string name="hi_tus">あなたのマイルストーン</string>
+    <string name="hi_nuevo">新しいマイルストーン</string>
+    <string name="hi_hito">マイルストーン</string>
+    <string name="hi_de">%1$sのマイルストーン</string>
+    <string name="hi_dia">この日のマイルストーン</string>
+    <string name="hi_marcar_dia">この日にマイルストーンを記録</string>
+    <string name="hi_vacio">お金が可能にする頂：家の購入、夢の旅行、最後の返済。日付を決めて計画し、達成したら記録しましょう。思い出としてここに残ります。</string>
+    <string name="hi_viene">これから</string>
+    <string name="hi_lograste">達成したこと</string>
+    <string name="hi_lo_logre">達成！</string>
+    <string name="hi_lo_logre_s">達成</string>
+    <string name="hi_lo_planeo">計画中</string>
+    <string name="hi_logrado_el">%1$sに達成</string>
+    <string name="hi_planeado_para">%1$sに予定</string>
+    <string name="hi_es_hoy">今日です</string>
+    <string name="hi_atrasado">日付が過ぎました</string>
+    <string name="hi_editar">「%1$s」を編集</string>
+    <string name="hi_editar_t">マイルストーンを編集</string>
+    <string name="hi_que">何を達成、または計画しますか？</string>
+    <string name="hi_fecha">日付</string>
+    <string name="hi_monto">金額（任意）</string>
+    <string name="hi_nota">メモ（任意）</string>
+    <string name="hi_t_casa">家</string>
+    <string name="hi_t_viaje">旅行</string>
+    <string name="hi_t_carro">車</string>
+    <string name="hi_t_estudio">学び</string>
+    <string name="hi_t_deuda">借金完済</string>
+    <string name="hi_t_negocio">事業</string>
+    <string name="hi_t_ahorro">貯蓄</string>
+    <string name="hi_t_familia">家族</string>
+    <string name="hi_t_otro">その他</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">あと 1 日</item>
+        <item quantity="other">あと %1$d 日</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">あと 1 か月</item>
+        <item quantity="other">あと %1$d か月</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">今週、1 年前</item>
+        <item quantity="other">今週、%1$d 年前</item>
+    </plurals>
 </resources>

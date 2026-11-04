@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">%1$s went out across spending, saving, investing and giving</string>
     <string name="cat_salio">went out</string>
     <string name="pin_puntos">PIN: %1$d digits entered</string>
+    <string name="hi_tus">Your milestones</string>
+    <string name="hi_nuevo">New milestone</string>
+    <string name="hi_hito">Milestone</string>
+    <string name="hi_de">Milestones of %1$s</string>
+    <string name="hi_dia">Milestones this day</string>
+    <string name="hi_marcar_dia">Mark a milestone this day</string>
+    <string name="hi_vacio">The summits your money makes possible: buying your home, the trip you dreamed of, paying the last installment. Plan them with a date and mark them when you reach them; they stay here as a memory.</string>
+    <string name="hi_viene">Coming up</string>
+    <string name="hi_lograste">What you achieved</string>
+    <string name="hi_lo_logre">I did it!</string>
+    <string name="hi_lo_logre_s">I did it</string>
+    <string name="hi_lo_planeo">I plan it</string>
+    <string name="hi_logrado_el">Achieved on %1$s</string>
+    <string name="hi_planeado_para">Planned for %1$s</string>
+    <string name="hi_es_hoy">it\'s today</string>
+    <string name="hi_atrasado">the date has passed</string>
+    <string name="hi_editar">Edit “%1$s”</string>
+    <string name="hi_editar_t">Edit milestone</string>
+    <string name="hi_que">What did you achieve or plan?</string>
+    <string name="hi_fecha">Date</string>
+    <string name="hi_monto">Amount (optional)</string>
+    <string name="hi_nota">Note (optional)</string>
+    <string name="hi_t_casa">Home</string>
+    <string name="hi_t_viaje">Trip</string>
+    <string name="hi_t_carro">Vehicle</string>
+    <string name="hi_t_estudio">Studies</string>
+    <string name="hi_t_deuda">Debt paid off</string>
+    <string name="hi_t_negocio">Business</string>
+    <string name="hi_t_ahorro">Savings</string>
+    <string name="hi_t_familia">Family</string>
+    <string name="hi_t_otro">Other</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">1 day left</item>
+        <item quantity="other">%1$d days left</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">1 month left</item>
+        <item quantity="other">%1$d months left</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">This week, 1 year ago</item>
+        <item quantity="other">This week, %1$d years ago</item>
+    </plurals>
 </resources>

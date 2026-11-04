@@ -3186,4 +3186,47 @@
     <string name="cat_salieron">خرج %1$s بين المصاريف والادخار والاستثمار والعطاء</string>
     <string name="cat_salio">خرج</string>
     <string name="pin_puntos">رمز PIN: أُدخل %1$d أرقام</string>
+    <string name="hi_tus">محطاتك</string>
+    <string name="hi_nuevo">محطة جديدة</string>
+    <string name="hi_hito">محطة</string>
+    <string name="hi_de">محطات %1$s</string>
+    <string name="hi_dia">محطات هذا اليوم</string>
+    <string name="hi_marcar_dia">سجّل محطة في هذا اليوم</string>
+    <string name="hi_vacio">القمم التي يجعلها مالك ممكنة: شراء بيتك، الرحلة التي حلمت بها، سداد آخر قسط. خطط لها بتاريخ وسجّلها عندما تحققها؛ ستبقى هنا كذكرى.</string>
+    <string name="hi_viene">ما هو قادم</string>
+    <string name="hi_lograste">ما حققته</string>
+    <string name="hi_lo_logre">حققتها!</string>
+    <string name="hi_lo_logre_s">حققتها</string>
+    <string name="hi_lo_planeo">أخطط لها</string>
+    <string name="hi_logrado_el">تحققت في %1$s</string>
+    <string name="hi_planeado_para">مخطط لها في %1$s</string>
+    <string name="hi_es_hoy">اليوم</string>
+    <string name="hi_atrasado">مضى التاريخ</string>
+    <string name="hi_editar">تعديل «%1$s»</string>
+    <string name="hi_editar_t">تعديل المحطة</string>
+    <string name="hi_que">ماذا حققت أو تخطط؟</string>
+    <string name="hi_fecha">التاريخ</string>
+    <string name="hi_monto">المبلغ (اختياري)</string>
+    <string name="hi_nota">ملاحظة (اختياري)</string>
+    <string name="hi_t_casa">منزل</string>
+    <string name="hi_t_viaje">سفر</string>
+    <string name="hi_t_carro">مركبة</string>
+    <string name="hi_t_estudio">دراسة</string>
+    <string name="hi_t_deuda">سداد دين</string>
+    <string name="hi_t_negocio">عمل</string>
+    <string name="hi_t_ahorro">ادخار</string>
+    <string name="hi_t_familia">عائلة</string>
+    <string name="hi_t_otro">أخرى</string>
+    <plurals name="hi_faltan_dias">
+        <item quantity="one">بقي يوم واحد</item>
+        <item quantity="other">بقي %1$d يومًا</item>
+    </plurals>
+    <plurals name="hi_faltan_meses">
+        <item quantity="one">بقي شهر واحد</item>
+        <item quantity="other">بقي %1$d شهرًا</item>
+    </plurals>
+    <plurals name="hi_hace_anios">
+        <item quantity="one">هذا الأسبوع، قبل سنة</item>
+        <item quantity="other">هذا الأسبوع، قبل %1$d سنوات</item>
+    </plurals>
 </resources>

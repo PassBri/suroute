@@ -188,7 +188,7 @@ fun coloresCategorias(): List<Color> = if (MaterialTheme.colorScheme.background.
 private fun nombreSeccion(k: String): String = stringResource(when (k) {
     "salud" -> R.string.cu_salud; "cifras" -> R.string.org_cifras; "dona" -> R.string.dona_titulo; "meses" -> R.string.ult12_titulo
     "grafica" -> R.string.gr_titulo; "anios" -> R.string.cu_anio_por_anio; "metasfin" -> R.string.mf_titulo; "deudas" -> R.string.cu_deudas
-    "fijos" -> R.string.cu_fijos_titulo; "mochilas" -> R.string.cu_mochilas; "categorias" -> R.string.cu_a_donde
+    "fijos" -> R.string.cu_fijos_titulo; "hitos" -> R.string.hi_tus; "mochilas" -> R.string.cu_mochilas; "categorias" -> R.string.cu_a_donde
     "privacidad" -> R.string.cu_privacidad; "moneda" -> R.string.cu_moneda; else -> R.string.org_cifras
 })
 
