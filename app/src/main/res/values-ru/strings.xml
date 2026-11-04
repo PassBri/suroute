@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">ИИ-коуч не ответил (%1$s). Пока отвечу по руководству метода.</string>
     <string name="coach_limites_general">Коуч направляет по методу Ruta a la Cima. Он не заменяет специалиста в области здоровья, права или финансов.</string>
     <string name="coach_limites_finanzas">Финансовое образование по методу Ascenso financiero, а не профессиональная консультация: не рекомендует конкретные инвестиции или продукты.</string>
+    <string name="coach_rep_titulo">Пожаловаться на ответ</string>
+    <string name="coach_rep_hecho">Вы уже пожаловались на этот ответ</string>
+    <string name="coach_rep_explica">Модератор проверит его, чтобы улучшить защитные механизмы коуча. Отправляются этот ответ и ваше предыдущее сообщение.</string>
+    <string name="coach_rep_ofensiva">Оскорбительный или неуважительный</string>
+    <string name="coach_rep_peligrosa">Опасный или вредный</string>
+    <string name="coach_rep_equivocada">Неверный или вводящий в заблуждение</string>
+    <string name="coach_rep_otra">Другая причина</string>
+    <string name="coach_rep_detalle">Подробности (необязательно)</string>
+    <string name="coach_rep_enviar">Отправить жалобу</string>
+    <string name="coach_rep_gracias">Спасибо. Модерация проверит этот ответ.</string>
+    <string name="coach_rep_error">Не удалось отправить жалобу. Проверьте подключение.</string>
 </resources>

@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">لم يستجب مدرّب الذكاء الاصطناعي (%1$s). إلى ذلك الحين أجيبك بدليل المنهج.</string>
     <string name="coach_limites_general">يرشدك المدرّب بمنهج Ruta a la Cima، ولا يحلّ محلّ مختص صحي أو قانوني أو مالي.</string>
     <string name="coach_limites_finanzas">تثقيف مالي بمنهج Ascenso financiero وليس استشارة مهنية: لا يوصي باستثمارات أو منتجات محددة.</string>
+    <string name="coach_rep_titulo">الإبلاغ عن هذا الرد</string>
+    <string name="coach_rep_hecho">لقد أبلغت عن هذا الرد بالفعل</string>
+    <string name="coach_rep_explica">يراجعه شخص من فريق الإشراف لتحسين ضوابط المدرّب. يُرسل هذا الرد ورسالتك السابقة.</string>
+    <string name="coach_rep_ofensiva">مسيء أو غير محترم</string>
+    <string name="coach_rep_peligrosa">خطير أو ضار</string>
+    <string name="coach_rep_equivocada">خاطئ أو مضلل</string>
+    <string name="coach_rep_otra">سبب آخر</string>
+    <string name="coach_rep_detalle">التفاصيل (اختياري)</string>
+    <string name="coach_rep_enviar">إرسال البلاغ</string>
+    <string name="coach_rep_gracias">شكرًا. سيراجع فريق الإشراف هذا الرد.</string>
+    <string name="coach_rep_error">تعذّر إرسال البلاغ. تحقق من اتصالك.</string>
 </resources>

@@ -66,6 +66,30 @@ class CoachRepository(
         return respuesta
     }
 
+    // ---------- Reportar una respuesta (política de IA generativa de Google Play)
+    private val reportadas = context.getSharedPreferences("coach_reportes", Context.MODE_PRIVATE)
+    val idsReportados = kotlinx.coroutines.flow.MutableStateFlow(reportadas.getStringSet("ids", emptySet()).orEmpty())
+
+    /** Envía a moderación la respuesta del coach y el mensaje que la provocó. Sin cuenta, solo se marca aquí. */
+    suspend fun reportar(id: Long, motivo: String, detalle: String): Boolean {
+        val todos = db.coachDao().ultimos(200).sortedBy { it.id }
+        val i = todos.indexOfFirst { it.id == id }; if (i < 0) return false
+        val pregunta = todos.take(i).lastOrNull { it.rol == "user" }?.texto.orEmpty()
+        val yo = supa.sesion.value?.userId
+        if (supa.configurado && yo != null) {
+            val ok = runCatching {
+                supa.insert("coach_reportes", buildJsonObject {
+                    put("quien", yo); put("motivo", motivo); put("detalle", detalle.take(1000))
+                    put("pregunta", pregunta.take(2000)); put("respuesta", todos[i].texto.take(8000)); put("tema", tema.value)
+                }, devolver = false)
+            }.isSuccess
+            if (!ok) return false
+        }
+        idsReportados.value = idsReportados.value + id.toString()
+        reportadas.edit().putStringSet("ids", idsReportados.value).apply()
+        return true
+    }
+
     /** Pregunta puntual sin guardar en la conversación (p. ej. "mejorar esta meta"). */
     suspend fun consultar(instruccion: String): String? = runCatching {
         if (!supa.configurado) return null

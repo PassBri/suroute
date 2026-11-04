@@ -24,7 +24,9 @@ async function comprobarModeracion() {
 async function cargarModeracion() {
   if (cargarModeracion.activo) return; cargarModeracion.activo = true;
   try {
-    const [p, h, e, m, pl, mp] = await Promise.all(["moderacion_pendientes", "moderacion_historial", "errores_recientes", "metricas_comunidad", "planes_vigentes", "metricas_plan"].map(f => Store.nube.sb.rpc(f)));
+    const [p, h, e, m, pl, mp, cr] = await Promise.all([...["moderacion_pendientes", "moderacion_historial", "errores_recientes", "metricas_comunidad", "planes_vigentes", "metricas_plan"].map(f => Store.nube.sb.rpc(f)),
+      Store.nube.sb.from("coach_reportes").select("*").order("creado", { ascending: false }).limit(100)]);
+    MOD.coach = cr.error ? null : (cr.data || []);
     if (p.error) throw p.error;
     MOD.casos = p.data || []; MOD.hist = h.data || []; MOD.errores = e.data || []; MOD.metricas = m.data || null;
     MOD.planes = pl.data || []; MOD.metricasPlan = mp.data || null; MOD.error = false;
@@ -131,6 +133,19 @@ function vistaMetricas() {
     <p class="suave" style="font-size:12px;margin-bottom:0">Solo totales, calculados con lo que ya está en el servidor. La ruta de cada persona (tramos, milímetros, Brújula) vive en su teléfono y no se mide.</p>`);
 }
 
+/** Respuestas del coach de IA que alguien reportó (política de IA generativa de Google Play). */
+const MOTIVO_COACH_MOD = { ofensiva: "Ofensiva", peligrosa: "Peligrosa", equivocada: "Equivocada", otra: "Otra" };
+function vistaCoachMod() {
+  if (MOD.coach === null) return hoja(`<p class="vacio-mini">Falta ejecutar <code>supabase/2026-11-03-coach-reportes.sql</code> en Supabase.</p>`);
+  const rs = MOD.coach || [];
+  if (!rs.length) return hoja(`<p class="vacio-mini">Nadie ha reportado respuestas del coach.</p>`);
+  return rs.map(r => hoja(`<div class="mod-cab"><span class="etiqueta">${MOTIVO_COACH_MOD[r.motivo] || r.motivo}</span>${r.tema ? `<span class="suave">Tema: ${esc(r.tema)}</span>` : ""}<span class="suave" style="margin-left:auto">${fechaMod(r.creado)}</span></div>
+    ${r.detalle ? `<p style="margin:6px 0">${esc(r.detalle)}</p>` : ""}
+    ${r.pregunta ? `<p class="suave" style="margin:6px 0"><b>Le preguntaron:</b> ${esc(r.pregunta)}</p>` : ""}
+    <details><summary>Respuesta del coach</summary><p style="white-space:pre-wrap">${esc(r.respuesta)}</p></details>
+    <div class="botones" style="margin-top:8px">${r.revisado ? `<span class="suave">✓ Revisado</span>` : `<button class="btn mini" data-acc="coachRevisado" data-arg="${r.id}">Marcar revisado</button>`}</div>`, "mod-caso")).join("");
+}
+
 function vistaErrores() {
   const es = MOD.errores || [];
   if (!es.length) return hoja(`<p class="vacio-mini">Sin errores en los últimos 30 días.</p>`);
@@ -145,7 +160,7 @@ DET["perfil.moderacion"] = () => {
   if (MOD.casos === null) cargarModeracion();
   const n = MOD.casos?.length || 0, pest = MOD.pestana;
   const tab = (k, t) => `<button role="tab" aria-selected="${pest === k}" data-acc="pestanaMod" data-arg="${k}">${t}</button>`;
-  const tabs = `<div class="mod-tabs" role="tablist">${tab("pendientes", `Pendientes (${n})`)}${tab("historial", "Historial")}${tab("metricas", "Métricas")}${tab("errores", `Errores${MOD.errores?.length ? ` (${MOD.errores.length})` : ""}`)}${tab("planes", "Planes")}
+  const tabs = `<div class="mod-tabs" role="tablist">${tab("pendientes", `Pendientes (${n})`)}${tab("historial", "Historial")}${tab("metricas", "Métricas")}${tab("errores", `Errores${MOD.errores?.length ? ` (${MOD.errores.length})` : ""}`)}${tab("planes", "Planes")}${tab("coach", `Coach IA${MOD.coach?.filter(x => !x.revisado).length ? ` (${MOD.coach.filter(x => !x.revisado).length})` : ""}`)}
     <button class="btn mini" data-acc="recargarMod" style="margin-left:auto">Actualizar</button></div>`;
   let h;
   if (MOD.casos === null) h = `<p class="vacio-mini cargando-marca">Cargando…</p>`;
@@ -153,6 +168,7 @@ DET["perfil.moderacion"] = () => {
   else if (pest === "metricas") h = vistaMetricas();
   else if (pest === "errores") h = vistaErrores();
   else if (pest === "planes") h = vistaPlanes();
+  else if (pest === "coach") h = vistaCoachMod();
   else h = (MOD.hist || []).length ? hoja(MOD.hist.map(d => `<div class="mod-hist"><div>@${esc(d.moderador || "—")} · ${ACCION_MOD[d.accion] || d.accion}${!["suspender", "levantar"].includes(d.accion) && TIPO_MOD[d.tipo] ? ` · ${TIPO_MOD[d.tipo].toLowerCase()}` : ""}${d.usuario ? ` · @${esc(d.usuario)}` : ""}</div>
       ${d.nota ? `<div class="suave">${esc(d.nota)}</div>` : ""}<div class="suave" style="font-size:12px">${fechaMod(d.creado)}</div></div>`).join(""))
     : hoja(`<p class="vacio-mini">Todavía no hay decisiones.</p>`);
@@ -163,6 +179,10 @@ DET["perfil.moderacion"] = () => {
 Object.assign(ACC, {
   pestanaMod(el, p) { MOD.pestana = p; pintarDetalle(); },
   recargarMod() { cargarModeracion(); },
+  async coachRevisado(el, id) {
+    const { error } = await Store.nube.sb.from("coach_reportes").update({ revisado: true }).eq("id", id);
+    toast(error ? "No se pudo marcar. Revisa tu conexión." : "Marcado como revisado"); await cargarModeracion();
+  },
   async quitarPlan(el, usuario) {
     if (!el.dataset.seguro) { el.dataset.seguro = "1"; el.textContent = "¿Quitar el plan?"; return; }
     const { error } = await Store.nube.sb.rpc("dar_plan", { p_usuario: usuario, p_dias: 0, p_origen: "regalo", p_nota: "" });

@@ -958,6 +958,28 @@ const TEMAS_COACH = [["", "General"], ["proposito", "Propósito"], ["metas", "Me
 const coachTema = () => { try { return localStorage.getItem("suroute-coach-tema") || ""; } catch { return ""; } };
 // ACC se define en 04-acciones.js: la acción se registra cuando todo cargó
 document.addEventListener("DOMContentLoaded", () => { ACC.coachTema = (el, t) => { try { localStorage.setItem("suroute-coach-tema", t); } catch {} pintarDetalle(); }; });
+/* Reportar una respuesta del coach (ofensiva, peligrosa o equivocada): la revisa moderación. */
+const MOTIVOS_COACH = [["ofensiva", "Ofensiva o irrespetuosa"], ["peligrosa", "Peligrosa o dañina"], ["equivocada", "Equivocada o engañosa"], ["otra", "Otra razón"]];
+document.addEventListener("DOMContentLoaded", () => {
+  ACC.reportarCoach = (el, id) => abrirHoja(`<div class="hoja-cab"><h3>Reportar esta respuesta</h3></div>
+    <p class="suave" style="margin:0 0 10px">La revisa una persona de moderación para mejorar los controles del coach. Se envían esta respuesta y tu mensaje anterior.</p>
+    <form class="form" data-form="coachReporte" data-arg="${esc(String(id))}"><fieldset class="coach-motivos"><legend class="oculto">Motivo</legend>
+      ${MOTIVOS_COACH.map(([k, t], i) => `<label class="opcion"><input type="radio" name="motivo" value="${k}" ${i ? "" : "checked"}> ${t}</label>`).join("")}</fieldset>
+      <label class="campo"><span>Detalle (opcional)</span><textarea name="texto" maxlength="1000" placeholder="¿Qué estuvo mal?"></textarea></label>
+      <div class="botones"><button type="button" class="btn" data-cerrar-hoja>Cancelar</button><button class="btn lleno">Enviar reporte</button></div></form>`);
+});
+window.FORMULARIOS = Object.assign(window.FORMULARIOS || {}, {
+  async coachReporte(f, datos, texto) {
+    const id = f.dataset.arg, ms = mensajesCoach(), i = ms.findIndex(x => String(x.id) === id); if (i < 0) return;
+    const pregunta = [...ms.slice(0, i)].reverse().find(x => x.rol === "user")?.texto || "";
+    if (Store.nube) {
+      const { error } = await Store.nube.sb.from("coach_reportes").insert({ quien: Store.nube.dueno, motivo: String(datos.get("motivo") || "otra"), detalle: texto.slice(0, 1000),
+        pregunta: pregunta.slice(0, 2000), respuesta: String(ms[i].texto).slice(0, 8000), tema: coachTema() });
+      if (error) { toast("No se pudo enviar el reporte." + (typeof detalleError === "function" ? detalleError(error) : "")); return; }
+    }
+    ocultarLocal("coach-reportadas", id); cerrarHoja(); toast(Store.nube ? "Gracias. Moderación revisará esta respuesta." : "Gracias. Sin cuenta, el reporte queda solo en este navegador."); pintarDetalle();
+  },
+});
 /** Resumen de los últimos 3 meses de Ascenso financiero, para que el coach aconseje con cifras reales. */
 function contextoFinanciero() {
   if (typeof totalesDe !== "function") return "";
@@ -1025,7 +1047,8 @@ DET.coach = () => {
       ${ms.map(m => { const d = new Date(m.creadoEn).toLocaleDateString("es", { day: "numeric", month: "long" }); const sep = d !== ultimoDia ? `<span class="fecha-sep">${d}</span>` : ""; ultimoDia = d;
         if (m.rol === "user") return sep + `<div class="burbuja yo">${esc(m.texto)}<span class="h">${horaDe(m.creadoEn)}</span></div>`;
         const [texto, accion] = separarAccion(m.texto), creada = listaLocal("coach-creadas").has(String(m.id));
-        return sep + `<div class="burbuja el">${esc(texto)}<span class="h">${horaDe(m.creadoEn)}</span></div>` + (accion ? `<div class="accion-coach">
+        const rep = listaLocal("coach-reportadas").has(String(m.id));
+        return sep + `<div class="burbuja el">${esc(texto)}<span class="h">${rep ? `<span class="coach-rep hecho" title="Reportaste esta respuesta">${ic("bandera")}</span>` : `<button class="coach-rep" data-acc="reportarCoach" data-arg="${esc(String(m.id))}" aria-label="Reportar esta respuesta" title="Reportar esta respuesta">${ic("bandera")}</button>`}${horaDe(m.creadoEn)}</span></div>` + (accion ? `<div class="accion-coach">
           <div class="etiqueta">${accion.tipo === "meta_mes" ? "Meta del mes propuesta" : "Meta del año propuesta"}</div><p>${esc(accion.texto)}</p>
           ${creada ? `<span class="suave">✓ Meta creada</span>` : `<button class="btn mini lleno" data-acc="crearMetaCoach" data-arg="${esc(String(m.id))}">Crear esta meta</button>`}</div>` : ""); }).join("")}
       ${coachAviso ? `<div class="coach-aviso" role="status">${ic("info")} ${esc(coachAviso)}</div>` : ""}

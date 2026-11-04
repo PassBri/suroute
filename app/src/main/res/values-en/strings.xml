@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">The AI coach didn\'t respond (%1$s). Meanwhile I\'ll answer with the method guide.</string>
     <string name="coach_limites_general">The coach guides you with the Ruta a la Cima method. It does not replace a health, legal or financial professional.</string>
     <string name="coach_limites_finanzas">Financial education with the Ascenso financiero method, not professional advice: it does not recommend specific investments or products.</string>
+    <string name="coach_rep_titulo">Report this response</string>
+    <string name="coach_rep_hecho">You already reported this response</string>
+    <string name="coach_rep_explica">A moderator reviews it to improve the coach\'s safeguards. This response and your previous message are sent.</string>
+    <string name="coach_rep_ofensiva">Offensive or disrespectful</string>
+    <string name="coach_rep_peligrosa">Dangerous or harmful</string>
+    <string name="coach_rep_equivocada">Wrong or misleading</string>
+    <string name="coach_rep_otra">Other reason</string>
+    <string name="coach_rep_detalle">Details (optional)</string>
+    <string name="coach_rep_enviar">Send report</string>
+    <string name="coach_rep_gracias">Thanks. Moderation will review this response.</string>
+    <string name="coach_rep_error">The report couldn\'t be sent. Check your connection.</string>
 </resources>

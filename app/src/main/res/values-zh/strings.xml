@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">AI 教练没有回应（%1$s）。在此期间，我会用方法指南回答。</string>
     <string name="coach_limites_general">教练按照 Ruta a la Cima 方法提供指导，不能替代医疗、法律或财务专业人士。</string>
     <string name="coach_limites_finanzas">基于 Ascenso financiero 方法的财务教育，并非专业建议：不推荐具体的投资或产品。</string>
+    <string name="coach_rep_titulo">举报此回复</string>
+    <string name="coach_rep_hecho">你已举报过此回复</string>
+    <string name="coach_rep_explica">审核人员会查看它，以改进教练的安全控制。将发送此回复和你上一条消息。</string>
+    <string name="coach_rep_ofensiva">冒犯或不尊重</string>
+    <string name="coach_rep_peligrosa">危险或有害</string>
+    <string name="coach_rep_equivocada">错误或误导</string>
+    <string name="coach_rep_otra">其他原因</string>
+    <string name="coach_rep_detalle">详情（可选）</string>
+    <string name="coach_rep_enviar">发送举报</string>
+    <string name="coach_rep_gracias">谢谢。审核人员会查看此回复。</string>
+    <string name="coach_rep_error">无法发送举报。请检查网络连接。</string>
 </resources>

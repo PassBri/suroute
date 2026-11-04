@@ -11,6 +11,9 @@ Guía para llenar Play Console con respuestas que coinciden con lo que la app ha
 - [ ] Al menos una cuenta en la tabla `moderadores`.
 - [ ] En Supabase › Authentication › URL Configuration: *Site URL* `https://suroute.com/`.
 - [ ] Firma de publicación configurada (secretos del repositorio) y el `.aab` de la versión de publicación.
+- [x] `targetSdk` 36 (Android 16): Play lo exige a apps nuevas y actualizaciones desde el 31 de agosto de 2026.
+- [ ] `supabase/2026-11-03-coach-reportes.sql` ejecutado (reportes de respuestas del coach de IA).
+- [ ] Función `coach` publicada en Supabase con el secreto `ANTHROPIC_API_KEY`.
 - [ ] Cuenta de desarrollador personal nueva: Google exige una **prueba cerrada con al menos 12 personas
       durante 14 días** antes de pedir el acceso a producción (revisa el número vigente en Play Console).
 
@@ -27,7 +30,9 @@ Guía para llenar Play Console con respuestas que coinciden con lo que la app ha
 | Apps de salud | No es una app de salud: es desarrollo personal. Si el formulario pregunta, marca que no ofrece funciones médicas |
 | Servicio en primer plano | `mediaPlayback`: reproducir los audiolibros con la pantalla apagada. Adjunta un video corto que muestre el reproductor y la notificación |
 | Eliminación de cuenta | Sí, en la app (Perfil › Ajustes › Cuenta › Eliminar mi cuenta) y en la web. URL: `https://suroute.com/privacidad.html#eliminar-cuenta` |
-| Contenido generado por usuarios | Hay reportes y bloqueo en la app, ocultamiento automático con 3 reportes, panel de moderación con suspensiones y [normas de la comunidad](https://suroute.com/normas.html) que se aceptan al crear la cuenta |
+| Contenido generado por usuarios | Hay reportes y bloqueo en la app, ocultamiento automático con 3 reportes, panel de moderación con suspensiones y [normas de la comunidad](https://suroute.com/normas.html) que se aceptan al crear la cuenta. Las Fogatas en vivo tienen botón de reportar y moderación puede cortarlas |
+| Contenido generado por IA | El coach de IA responde con controles por tema (no recomienda productos financieros ni promete rendimientos, no da asesoría médica, legal ni tributaria). Cada respuesta tiene una bandera para **reportarla** (ofensiva, peligrosa, equivocada u otra); los reportes llegan a Moderación › Coach IA |
+| Funciones financieras (declaración) | Marca **solo** «Otra» o la opción de herramientas de presupuesto o registro de finanzas personales. La app **no** ofrece préstamos, pagos, transferencias, inversiones, criptomonedas, seguros ni conexión con bancos: la persona anota sus propias cifras |
 
 ## 3. Seguridad de los datos (Data safety)
 
@@ -38,7 +43,7 @@ Guía para llenar Play Console con respuestas que coinciden con lo que la app ha
 | ¿Recopila o comparte datos de usuario? | Sí |
 | ¿Todos los datos están cifrados en tránsito? | Sí (HTTPS) |
 | ¿Ofrece una forma de pedir que se borren los datos? | Sí (en la app, en la web y por correo) |
-| ¿Se comparten datos con terceros? | **No**. Supabase, Anthropic y GitHub actúan como proveedores de servicio por cuenta de SuRoute, lo que Google no considera "compartir" |
+| ¿Se comparten datos con terceros? | **No**. Supabase, Anthropic, LiveKit y GitHub actúan como proveedores de servicio por cuenta de SuRoute, lo que Google no considera "compartir" |
 
 **Datos recopilados.** Todo es *opcional* (la app funciona completa sin cuenta), salvo donde se indica.
 
@@ -47,15 +52,31 @@ Guía para llenar Play Console con respuestas que coinciden con lo que la app ha
 | Información personal › Correo electrónico | Sí | Obligatorio para crear cuenta | Funcionalidad de la app, Administración de la cuenta | Iniciar sesión |
 | Información personal › Nombre | Sí | Opcional | Funcionalidad de la app | Nombre visible en la comunidad |
 | Información personal › ID de usuario | Sí | Obligatorio para crear cuenta | Funcionalidad de la app, Administración de la cuenta | Usuario (@) y su identificador |
-| Fotos y videos › Fotos | Sí | Opcional | Funcionalidad de la app | Fotos que la persona publica o usa en su vision board en la nube |
+| Información personal › Número de teléfono | Sí | Opcional | Funcionalidad de la app | Solo si activa «Que mis contactos me encuentren»: se guarda una huella SHA-256 del número, nunca el número |
+| Fotos y videos › Fotos | Sí | Opcional | Funcionalidad de la app | Fotos que la persona publica, usa en su vision board en la nube o adjunta como recibo de un movimiento (depósito privado) |
+| Fotos y videos › Videos | Sí, **procesado de forma efímera** | Opcional | Funcionalidad de la app | La imagen de la cámara en una Fogata en vivo, transmitida en tiempo real por LiveKit. No se graba ni se guarda |
+| Audio › Voz o grabaciones de sonido | Sí, **procesado de forma efímera** | Opcional | Funcionalidad de la app | La voz en una Fogata en vivo, en tiempo real. No se graba ni se guarda |
+| Archivos y documentos | Sí | Opcional | Funcionalidad de la app | PDF de recibos o documentos de una deuda o un activo (depósito privado, solo la persona) |
+| Contactos | Sí, **procesado de forma efímera** | Opcional | Funcionalidad de la app | «Agregar contactos»: el teléfono envía huellas SHA-256 de números y correos para compararlas; la agenda no se guarda |
 | Mensajes › Otros mensajes en la app | Sí | Opcional | Funcionalidad de la app | Mensajes 1 a 1 y notas de cordada |
 | Actividad en la app › Otro contenido generado por el usuario | Sí | Opcional | Funcionalidad de la app | Publicaciones, comentarios, impulsos y la ruta si vincula la web |
 | Actividad en la app › Interacciones con la app | No | — | — | No hay analítica ni rastreo |
 | Salud y actividad física › Información de salud | Sí | Opcional | Funcionalidad de la app | Solo si la persona escribe sobre su salud en su ruta y la sincroniza o se la cuenta al coach IA (dato sensible, con autorización expresa) |
-| Información financiera | No | — | — | Sin pagos |
-| Ubicación, contactos, calendario, audio | No | — | — | — |
+| Información financiera › Otra información financiera | Sí | Opcional | Funcionalidad de la app | Ascenso financiero: ingresos, gastos, ahorro, inversión, deudas, activos y metas que la persona anota. Viaja al servidor para sincronizar con la web y, solo con el tema *Finanzas*, un resumen de 3 meses al coach de IA |
+| Información financiera › Información de pago / historial de compras / crédito | No | — | — | Sin pagos ni conexión con bancos |
+| Ubicación, calendario, SMS, historial web | No | — | — | — |
 | Información y rendimiento de la app › Registros de fallas | Sí | Opcional (se puede apagar en Ajustes) | Análisis (corregir fallas) | Anónimos: versión, sistema, modelo y líneas de código, sin cuenta ni mensajes |
 | Identificadores del dispositivo | No | — | — | No se usa el ID de publicidad |
+
+### Permisos que pide la app (deben coincidir con la política, sección «Permisos del teléfono»)
+
+| Permiso | Para qué |
+|---|---|
+| `CAMERA` | Fotos de publicaciones, vision board y recibos; leer el QR para vincular la web; imagen en la Fogata en vivo |
+| `RECORD_AUDIO`, `MODIFY_AUDIO_SETTINGS` | Voz en la Fogata en vivo |
+| `READ_CONTACTS` | «Agregar contactos» (huellas, la agenda no se sube) |
+| `POST_NOTIFICATIONS` | Recordatorios y avisos que la persona activa |
+| `FOREGROUND_SERVICE_MEDIA_PLAYBACK` | Audiolibros con la pantalla apagada |
 
 ## 4. Ficha de la tienda (español)
 

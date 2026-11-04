@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">AI 코치가 응답하지 않았습니다(%1$s). 그동안 방법 가이드로 답해 드릴게요.</string>
     <string name="coach_limites_general">코치는 Ruta a la Cima 방법으로 안내합니다. 의료·법률·재정 전문가를 대신하지 않습니다.</string>
     <string name="coach_limites_finanzas">Ascenso financiero 방법에 따른 금융 교육이며 전문 자문이 아닙니다. 특정 투자나 상품을 추천하지 않습니다.</string>
+    <string name="coach_rep_titulo">이 답변 신고</string>
+    <string name="coach_rep_hecho">이미 이 답변을 신고했습니다</string>
+    <string name="coach_rep_explica">코치의 안전 장치를 개선하기 위해 운영자가 검토합니다. 이 답변과 이전 메시지가 전송됩니다.</string>
+    <string name="coach_rep_ofensiva">불쾌하거나 무례함</string>
+    <string name="coach_rep_peligrosa">위험하거나 해로움</string>
+    <string name="coach_rep_equivocada">틀리거나 오해의 소지</string>
+    <string name="coach_rep_otra">기타 사유</string>
+    <string name="coach_rep_detalle">자세한 내용(선택)</string>
+    <string name="coach_rep_enviar">신고 보내기</string>
+    <string name="coach_rep_gracias">감사합니다. 운영자가 이 답변을 검토합니다.</string>
+    <string name="coach_rep_error">신고를 보낼 수 없습니다. 연결을 확인하세요.</string>
 </resources>

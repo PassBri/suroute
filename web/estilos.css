@@ -5656,3 +5656,12 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 #detalle .det-cab .asc-nav-cab { margin-inline-start: auto; }
 #detalle .det-cab:has(.asc-nav-cab) { flex-wrap: nowrap; }
 #detalle .det-cab:has(.asc-nav-cab) .txt { min-width: 0; flex: 1 1 auto; }
+/* Reportar una respuesta del coach: una banderita discreta junto a la hora */
+.burbuja .h .coach-rep { display: inline-grid; place-items: center; width: 40px; height: 40px; margin: -12px 0 -12px -10px; vertical-align: middle; border-radius: 50%; color: var(--tinta-suave); opacity: .6; }
+.burbuja .h .coach-rep svg { width: 15px; height: 15px; fill: currentColor; }
+.burbuja .h .coach-rep.hecho { color: var(--burdeos); opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .burbuja .h button.coach-rep:hover { opacity: 1; background: var(--burdeos-suave); color: var(--burdeos); } }
+.burbuja .h button.coach-rep:focus-visible { opacity: 1; outline: 2px solid var(--burdeos); }
+.coach-motivos { border: 0; padding: 0; margin: 0 0 10px; display: grid; gap: 2px; }
+.coach-motivos .opcion { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; }
+.coach-motivos input { width: 18px; height: 18px; accent-color: var(--burdeos); }

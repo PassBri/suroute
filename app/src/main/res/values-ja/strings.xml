@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">AIコーチが応答しませんでした（%1$s）。それまでは方法ガイドでお答えします。</string>
     <string name="coach_limites_general">コーチは Ruta a la Cima の方法で導きます。医療・法律・金融の専門家の代わりにはなりません。</string>
     <string name="coach_limites_finanzas">Ascenso financiero の方法による金融教育であり、専門的な助言ではありません。特定の投資や商品は勧めません。</string>
+    <string name="coach_rep_titulo">この回答を報告</string>
+    <string name="coach_rep_hecho">この回答はすでに報告済みです</string>
+    <string name="coach_rep_explica">コーチの安全対策を改善するため、モデレーターが確認します。この回答と直前のあなたのメッセージが送信されます。</string>
+    <string name="coach_rep_ofensiva">不快・失礼</string>
+    <string name="coach_rep_peligrosa">危険・有害</string>
+    <string name="coach_rep_equivocada">誤り・誤解を招く</string>
+    <string name="coach_rep_otra">その他</string>
+    <string name="coach_rep_detalle">詳細（任意）</string>
+    <string name="coach_rep_enviar">報告を送信</string>
+    <string name="coach_rep_gracias">ありがとうございます。モデレーターがこの回答を確認します。</string>
+    <string name="coach_rep_error">報告を送信できませんでした。接続を確認してください。</string>
 </resources>

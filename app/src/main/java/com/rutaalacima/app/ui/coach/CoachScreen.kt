@@ -28,6 +28,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.DeleteSweep
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +47,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -72,6 +75,8 @@ class CoachViewModel(private val c: AppContainer) : ViewModel() {
     val tema = c.coach.tema
     val aviso = c.coach.aviso
     fun elegirTema(t: String) = c.coach.elegirTema(t)
+    val reportados = c.coach.idsReportados
+    fun reportar(id: Long, motivo: String, detalle: String, listo: (Boolean) -> Unit) = viewModelScope.launch { listo(c.coach.reportar(id, motivo, detalle)) }
 
     fun enviar(t: String = texto) {
         if (t.isBlank() || pensando) return
@@ -116,6 +121,17 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
     val lista = rememberLazyListState()
     LaunchedEffect(mensajes.size, vm.pensando) { if (mensajes.isNotEmpty()) lista.animateScrollToItem(mensajes.size) }
     val tema by vm.tema.collectAsStateWithLifecycle()
+    val reportados by vm.reportados.collectAsStateWithLifecycle()
+    var reportando by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf<Long?>(null) }
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    reportando?.let { id ->
+        DialogoReporteCoach(onCerrar = { reportando = null }) { motivo, detalle ->
+            vm.reportar(id, motivo, detalle) { ok ->
+                com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(ctx.getString(if (ok) R.string.coach_rep_gracias else R.string.coach_rep_error))
+            }
+            reportando = null
+        }
+    }
     val aviso by vm.aviso.collectAsStateWithLifecycle()
     val sugerencias = when (tema) {
         "proposito" -> listOf(R.string.coach_sug_cumbre, R.string.coach_sug_proposito5, R.string.coach_sug_eje)
@@ -207,6 +223,11 @@ fun CoachScreen(onBack: () -> Unit, onCoachVida: () -> Unit = {}, onPlan: () -> 
                 if (m.rol == "assistant") {
                     val (texto, accion) = remember(m.texto) { com.rutaalacima.app.domain.model.AccionCoach.separar(m.texto) }
                     Burbuja(texto, deCoach = true)
+                    val ya = m.id.toString() in reportados
+                    androidx.compose.material3.IconButton(onClick = { if (!ya) reportando = m.id }, enabled = !ya, modifier = Modifier.padding(start = 2.dp).size(40.dp)) {
+                        Icon(Icons.Outlined.Flag, stringResource(if (ya) R.string.coach_rep_hecho else R.string.coach_rep_titulo), Modifier.size(18.dp),
+                            tint = if (ya) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f))
+                    }
                     if (accion != null) AccionPropuesta(accion, creada = m.id.toString() in vm.creadas, onCrear = { vm.crear(m.id, accion) })
                 } else Burbuja(m.texto, deCoach = false)
             }
@@ -258,3 +279,36 @@ private fun AccionPropuesta(a: com.rutaalacima.app.domain.model.AccionCoach, cre
         }
     }
 }
+
+
+/** Reportar una respuesta del coach: motivo y un detalle opcional. La revisa moderación. */
+@Composable
+private fun DialogoReporteCoach(onCerrar: () -> Unit, onEnviar: (String, String) -> Unit) {
+    val motivos = listOf("ofensiva" to R.string.coach_rep_ofensiva, "peligrosa" to R.string.coach_rep_peligrosa,
+        "equivocada" to R.string.coach_rep_equivocada, "otra" to R.string.coach_rep_otra)
+    var motivo by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("ofensiva") }
+    var detalle by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = onCerrar,
+        icon = { Icon(Icons.Outlined.Flag, null) },
+        title = { Text(stringResource(R.string.coach_rep_titulo)) },
+        text = {
+            Column(Modifier.selectableGroup()) {
+                Text(stringResource(R.string.coach_rep_explica), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Spacer(Modifier.size(8.dp))
+                motivos.forEach { (k, r) ->
+                    Row(Modifier.fillMaxWidth().selectable(selected = motivo == k, onClick = { motivo = k }, role = androidx.compose.ui.semantics.Role.RadioButton).padding(vertical = 2.dp), verticalAlignment = Alignment.CenterVertically) {
+                        androidx.compose.material3.RadioButton(motivo == k, null)
+                        Spacer(Modifier.size(8.dp))
+                        Text(stringResource(r))
+                    }
+                }
+                OutlinedTextField(detalle, { detalle = it.take(1000) }, label = { Text(stringResource(R.string.coach_rep_detalle)) },
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp), maxLines = 4)
+            }
+        },
+        confirmButton = { androidx.compose.material3.TextButton(onClick = { onEnviar(motivo, detalle.trim()) }) { Text(stringResource(R.string.coach_rep_enviar)) } },
+        dismissButton = { androidx.compose.material3.TextButton(onClick = onCerrar) { Text(stringResource(R.string.cancelar)) } },
+    )
+}
+

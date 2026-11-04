@@ -45,7 +45,7 @@ import kotlinx.serialization.json.buildJsonObject
  */
 object Legal {
     /** Sube este número cuando cambien los documentos de forma sustancial: se vuelve a pedir la autorización. */
-    const val VERSION = "1.0"
+    const val VERSION = "1.1"
 
     enum class Doc(val archivo: String, @StringRes val titulo: Int) {
         CENTRO("legal.html", R.string.legal_centro),

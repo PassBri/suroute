@@ -1,6 +1,6 @@
 /* SuRoute Web · Cuenta con correo y contraseña (sin teléfono Android, por ejemplo en iPhone),
    recuperar la contraseña y la autorización de tratamiento de datos (Ley 1581 de 2012). */
-const LEGAL_VERSION = "1.0"; // igual a Legal.VERSION de la app
+const LEGAL_VERSION = "1.1"; // igual a Legal.VERSION de la app
 const BASE_LEGAL = /github\.io$|(^|\.)suroute\.com$|^localhost|^127\./.test(location.hostname) ? "" : "https://suroute.com/";
 const enlaceLegal = (archivo, texto) => `<a href="${BASE_LEGAL}${archivo}" target="_blank" rel="noopener">${texto}</a>`;
 

@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">Le coach IA n’a pas répondu (%1$s). En attendant, je réponds avec le guide de la méthode.</string>
     <string name="coach_limites_general">Le coach vous guide avec la méthode Ruta a la Cima. Il ne remplace pas un professionnel de santé, juridique ou financier.</string>
     <string name="coach_limites_finanzas">Éducation financière avec la méthode Ascenso financiero, pas un conseil professionnel : il ne recommande ni investissements ni produits précis.</string>
+    <string name="coach_rep_titulo">Signaler cette réponse</string>
+    <string name="coach_rep_hecho">Vous avez déjà signalé cette réponse</string>
+    <string name="coach_rep_explica">Une personne de la modération l’examine pour améliorer les garde-fous du coach. Cette réponse et votre message précédent sont envoyés.</string>
+    <string name="coach_rep_ofensiva">Offensante ou irrespectueuse</string>
+    <string name="coach_rep_peligrosa">Dangereuse ou nuisible</string>
+    <string name="coach_rep_equivocada">Erronée ou trompeuse</string>
+    <string name="coach_rep_otra">Autre raison</string>
+    <string name="coach_rep_detalle">Détail (facultatif)</string>
+    <string name="coach_rep_enviar">Envoyer le signalement</string>
+    <string name="coach_rep_gracias">Merci. La modération examinera cette réponse.</string>
+    <string name="coach_rep_error">Le signalement n’a pas pu être envoyé. Vérifiez votre connexion.</string>
 </resources>

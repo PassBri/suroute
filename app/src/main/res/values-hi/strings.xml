@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">AI कोच ने जवाब नहीं दिया (%1$s)। तब तक मैं पद्धति की गाइड से जवाब दूँगा।</string>
     <string name="coach_limites_general">कोच Ruta a la Cima पद्धति से मार्गदर्शन करता है। यह स्वास्थ्य, कानूनी या वित्तीय विशेषज्ञ का विकल्प नहीं है।</string>
     <string name="coach_limites_finanzas">Ascenso financiero पद्धति से वित्तीय शिक्षा, पेशेवर सलाह नहीं: यह किसी विशेष निवेश या उत्पाद की सिफ़ारिश नहीं करता।</string>
+    <string name="coach_rep_titulo">इस जवाब की रिपोर्ट करें</string>
+    <string name="coach_rep_hecho">आप इस जवाब की रिपोर्ट पहले ही कर चुके हैं</string>
+    <string name="coach_rep_explica">कोच की सुरक्षा व्यवस्था सुधारने के लिए मॉडरेशन टीम इसे देखती है। यह जवाब और आपका पिछला संदेश भेजा जाता है।</string>
+    <string name="coach_rep_ofensiva">अपमानजनक या असम्मानजनक</string>
+    <string name="coach_rep_peligrosa">खतरनाक या हानिकारक</string>
+    <string name="coach_rep_equivocada">गलत या भ्रामक</string>
+    <string name="coach_rep_otra">अन्य कारण</string>
+    <string name="coach_rep_detalle">विवरण (वैकल्पिक)</string>
+    <string name="coach_rep_enviar">रिपोर्ट भेजें</string>
+    <string name="coach_rep_gracias">धन्यवाद। मॉडरेशन इस जवाब की समीक्षा करेगा।</string>
+    <string name="coach_rep_error">रिपोर्ट नहीं भेजी जा सकी। अपना कनेक्शन जाँचें।</string>
 </resources>

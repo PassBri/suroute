@@ -3134,4 +3134,15 @@
     <string name="coach_aviso_error">Der KI-Coach hat nicht geantwortet (%1$s). Bis dahin antworte ich mit dem Leitfaden der Methode.</string>
     <string name="coach_limites_general">Der Coach begleitet Sie mit der Methode Ruta a la Cima. Er ersetzt keine Fachperson für Gesundheit, Recht oder Finanzen.</string>
     <string name="coach_limites_finanzas">Finanzbildung mit der Methode Ascenso financiero, keine professionelle Beratung: keine Empfehlung bestimmter Anlagen oder Produkte.</string>
+    <string name="coach_rep_titulo">Diese Antwort melden</string>
+    <string name="coach_rep_hecho">Sie haben diese Antwort bereits gemeldet</string>
+    <string name="coach_rep_explica">Eine Person aus der Moderation prüft sie, um die Schutzmechanismen des Coachs zu verbessern. Diese Antwort und Ihre vorherige Nachricht werden gesendet.</string>
+    <string name="coach_rep_ofensiva">Beleidigend oder respektlos</string>
+    <string name="coach_rep_peligrosa">Gefährlich oder schädlich</string>
+    <string name="coach_rep_equivocada">Falsch oder irreführend</string>
+    <string name="coach_rep_otra">Anderer Grund</string>
+    <string name="coach_rep_detalle">Details (optional)</string>
+    <string name="coach_rep_enviar">Meldung senden</string>
+    <string name="coach_rep_gracias">Danke. Die Moderation prüft diese Antwort.</string>
+    <string name="coach_rep_error">Die Meldung konnte nicht gesendet werden. Prüfen Sie Ihre Verbindung.</string>
 </resources>
