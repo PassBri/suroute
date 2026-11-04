@@ -335,8 +335,15 @@ function movsPropiosMes(ym) {
 const copiaMov = x => ({ id: "m" + nuevoId(), t: x.t, m: x.m, c: x.c, n: x.n || "" });
 /** Copia un movimiento al mismo día del mes siguiente. Un fijo no se duplica: su fila del mes siguiente
  *  queda igual a la de este mes (monto, categoría y concepto). Devuelve [fecha, "nuevo" | "igual"]. */
-function duplicarUno(f, x) {
+function duplicarUno(f, x, masivo = false) {
   const fijo = x.fx && fijosDatos().find(y => y.id === x.fx), ym2 = ymMas(f.slice(0, 7), 1);
+  if (masivo) {
+    // Al copiar un mes entero: un fijo que ya terminó (se paró o se reemplazó) no revive como movimiento suelto,
+    // y no se copia algo que el mes siguiente ya tiene con el mismo concepto (por ejemplo, el sueldo de su fijo nuevo)
+    if (x.fx && !(fijo && ym2 >= fijo.desde && (!fijo.hasta || ym2 <= fijo.hasta))) return [diaMesSiguiente(f), "omitido"];
+    const concepto = (x.n || "").trim().toLowerCase();
+    if (!x.fx && concepto && movsPropiosMes(ym2).some(([, y]) => y.t === x.t && (y.n || "").trim().toLowerCase() === concepto)) return [diaMesSiguiente(f), "igual"];
+  }
   if (fijo && ym2 >= fijo.desde && (!fijo.hasta || ym2 <= fijo.hasta)) {
     const g = fechaFijo(fijo, ym2), ya = movsDe(g).find(y => y.fx === x.fx);
     if (ya && mismoMov(ya, x)) return [g, "igual"];
@@ -390,7 +397,7 @@ Object.assign(ACC, {
   },
   ascDuplicarMes(_, ym) {
     const antes = respuestas2(); let nuevos = 0, iguales = 0;
-    movsPropiosMes(ym).forEach(([f, x]) => { const [, r] = duplicarUno(f, x); if (r === "nuevo") nuevos++; else iguales++; });
+    movsPropiosMes(ym).forEach(([f, x]) => { const [, r] = duplicarUno(f, x, true); if (r === "nuevo") nuevos++; else if (r === "igual") iguales++; });
     const m2 = MESES[Number(ym.slice(5, 7)) % 12];
     if (!nuevos) { toast(`Todo ya estaba igual en ${m2}`); return; }
     toast(`Copiados a ${m2}: ${nuevos} ${nuevos === 1 ? "movimiento" : "movimientos"}${iguales ? ` (${iguales} ya estaban)` : ""}`, { accion: "Deshacer", alHacer: () => restaurar2(antes) });

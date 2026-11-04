@@ -243,10 +243,18 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
     }
     /** Copia un movimiento al mismo día del mes siguiente (sin recibos). Un fijo no se duplica: su fila del mes
      *  siguiente queda igual a la de este mes. Devuelve la fecha de la copia y si ya estaba igual. */
-    private suspend fun duplicarUno(f: String, x: Mov): Pair<String, Boolean> {
+    private suspend fun duplicarUno(f: String, x: Mov, masivo: Boolean = false): Pair<String, Boolean> {
         val igual = { a: Mov, b: Mov -> a.t == b.t && a.m == b.m && a.c == b.c && a.n == b.n }
         val ym2 = YearMonth.from(LocalDate.parse(f)).plusMonths(1); val ym2s = ym2.toString()
         val fijo = x.fx?.let { id -> libro.value.fijos.firstOrNull { it.id == id } }
+        if (masivo) {
+            // Al copiar un mes entero: un fijo que ya terminó no revive como movimiento suelto, y no se copia
+            // algo que el mes siguiente ya tiene con el mismo concepto (por ejemplo, el sueldo de su fijo nuevo)
+            if (x.fx != null && !(fijo != null && ym2s >= fijo.desde && (fijo.hasta.isEmpty() || ym2s <= fijo.hasta))) return mesSiguiente(f) to true
+            val concepto = x.n.trim().lowercase()
+            if (x.fx == null && concepto.isNotEmpty() && (1..ym2.lengthOfMonth()).any { d ->
+                    libro.value.movs(ym2.atDay(d).toString()).any { it.t == x.t && it.n.trim().lowercase() == concepto } }) return mesSiguiente(f) to true
+        }
         if (fijo != null && ym2s >= fijo.desde && (fijo.hasta.isEmpty() || ym2s <= fijo.hasta)) {
             val g = com.rutaalacima.app.domain.model.Fijos.fecha(fijo, ym2).toString()
             val ya = libro.value.movs(g).firstOrNull { it.fx == fijo.id }
@@ -268,7 +276,7 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
      *  Lo que ya está igual en el mes siguiente no se copia otra vez. */
     fun duplicarMes(ym: YearMonth, listo: (Int) -> Unit) = viewModelScope.launch {
         var n = 0
-        (1..ym.lengthOfMonth()).forEach { d -> val f = ym.atDay(d).toString(); libro.value.movs(f).forEach { x -> if (!duplicarUno(f, x).second) n++ } }
+        (1..ym.lengthOfMonth()).forEach { d -> val f = ym.atDay(d).toString(); libro.value.movs(f).forEach { x -> if (!duplicarUno(f, x, masivo = true).second) n++ } }
         listo(n)
     }
 
