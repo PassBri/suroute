@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">%1$s에 고정 항목 사용</string>
     <string name="cu_fijos_traidos">완료: 고정 항목이 이제 %1$s에 반영됩니다. 해당되지 않는 항목은 그날에서 삭제하세요.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">고정 항목 하나가 %2$s에 중복되어 두 번 계산됩니다. 남는 항목을 휴지통으로 삭제하세요. %2$s부터 계산되지 않으며 이전 달은 바뀌지 않습니다.</item>
+        <item quantity="other">고정 항목 %1$d개가 %2$s에 중복되어 두 번 계산됩니다. 남는 항목을 휴지통으로 삭제하세요. %2$s부터 계산되지 않으며 이전 달은 바뀌지 않습니다.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">이 중복 고정 항목을 %1$s부터 삭제</string>
+    <string name="cu_fijo_rep_quitado">중복 고정 항목을 %1$s부터 삭제했습니다</string>
+    <string name="cu_fijo_repetido">중복</string>
 </resources>

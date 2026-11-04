@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Utiliser mes fixes en %1$s</string>
     <string name="cu_fijos_traidos">C’est fait : vos fixes comptent maintenant en %1$s. Si l’un ne s’appliquait pas, retirez-le à son jour.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Un élément fixe est en double en %2$s et compté deux fois. Retirez celui en trop avec la corbeille : il ne compte plus à partir de %2$s ; les mois précédents ne changent pas.</item>
+        <item quantity="other">%1$d éléments fixes sont en double en %2$s et comptés deux fois. Retirez ceux en trop avec la corbeille : ils ne comptent plus à partir de %2$s ; les mois précédents ne changent pas.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Retirer ce fixe en double à partir de %1$s</string>
+    <string name="cu_fijo_rep_quitado">Fixe en double retiré à partir de %1$s</string>
+    <string name="cu_fijo_repetido">en double</string>
 </resources>

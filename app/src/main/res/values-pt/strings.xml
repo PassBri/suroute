@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Usar meus fixos em %1$s</string>
     <string name="cu_fijos_traidos">Pronto: seus fixos já contam em %1$s. Se algum não valia, remova-o no dia dele.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Um fixo está repetido em %2$s e conta duas vezes. Remova o que sobra com a lixeira: deixa de contar a partir de %2$s; os meses anteriores não mudam.</item>
+        <item quantity="other">%1$d fixos estão repetidos em %2$s e contam duas vezes. Remova os que sobram com a lixeira: deixam de contar a partir de %2$s; os meses anteriores não mudam.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Remover este fixo repetido a partir de %1$s</string>
+    <string name="cu_fijo_rep_quitado">Fixo repetido removido a partir de %1$s</string>
+    <string name="cu_fijo_repetido">repetido</string>
 </resources>

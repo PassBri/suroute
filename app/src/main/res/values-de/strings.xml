@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Fixposten im %1$s verwenden</string>
     <string name="cu_fijos_traidos">Fertig: Ihre Fixposten zählen jetzt im %1$s. Falls einer nicht galt, entfernen Sie ihn an seinem Tag.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Ein Fixposten ist im %2$s doppelt und wird zweimal gezählt. Entfernen Sie den überzähligen mit dem Papierkorb: Er zählt ab %2$s nicht mehr, frühere Monate bleiben gleich.</item>
+        <item quantity="other">%1$d Fixposten sind im %2$s doppelt und werden zweimal gezählt. Entfernen Sie die überzähligen mit dem Papierkorb: Sie zählen ab %2$s nicht mehr, frühere Monate bleiben gleich.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Diesen doppelten Fixposten ab %1$s entfernen</string>
+    <string name="cu_fijo_rep_quitado">Doppelter Fixposten ab %1$s entfernt</string>
+    <string name="cu_fijo_repetido">doppelt</string>
 </resources>

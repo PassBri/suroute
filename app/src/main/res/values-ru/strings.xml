@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Учесть постоянные платежи в %1$s</string>
     <string name="cu_fijos_traidos">Готово: постоянные платежи теперь учтены в %1$s. Если какой-то не действовал, удалите его в его день.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Постоянный платёж повторяется в %2$s и считается дважды. Удалите лишний корзиной: он перестанет учитываться с %2$s, прошлые месяцы не изменятся.</item>
+        <item quantity="other">Постоянные платежи (%1$d) повторяются в %2$s и считаются дважды. Удалите лишние корзиной: они перестанут учитываться с %2$s, прошлые месяцы не изменятся.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Удалить этот повтор с %1$s</string>
+    <string name="cu_fijo_rep_quitado">Повторяющийся платёж удалён с %1$s</string>
+    <string name="cu_fijo_repetido">повтор</string>
 </resources>

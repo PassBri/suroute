@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">%1$s में मेरी तय मदें इस्तेमाल करें</string>
     <string name="cu_fijos_traidos">हो गया: आपकी तय मदें अब %1$s में गिनी जाती हैं। जो लागू नहीं थी, उसे उसके दिन हटा दें।</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">एक तय मद %2$s में दोहराई गई है और दो बार गिनी जा रही है। अतिरिक्त को कूड़ेदान से हटाएँ: %2$s से गिनती बंद होगी, पिछले महीने नहीं बदलेंगे।</item>
+        <item quantity="other">%1$d तय मदें %2$s में दोहराई गई हैं और दो बार गिनी जा रही हैं। अतिरिक्त को कूड़ेदान से हटाएँ: %2$s से गिनती बंद होगी, पिछले महीने नहीं बदलेंगे।</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">इस दोहराई गई तय मद को %1$s से हटाएँ</string>
+    <string name="cu_fijo_rep_quitado">दोहराई गई तय मद %1$s से हटाई गई</string>
+    <string name="cu_fijo_repetido">दोहराई गई</string>
 </resources>

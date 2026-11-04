@@ -3160,4 +3160,11 @@
     </plurals>
     <string name="cu_fijos_traer">Usar mis fijos en %1$s</string>
     <string name="cu_fijos_traidos">Listo: tus fijos ya cuentan en %1$s. Si alguno no aplicaba, quítalo en su día.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Un fijo está repetido en %2$s y se cuenta dos veces. Quita el que sobra con el bote: deja de contar desde %2$s, los meses anteriores no cambian.</item>
+        <item quantity="other">%1$d fijos están repetidos en %2$s y se cuentan dos veces. Quita los que sobran con el bote: dejan de contar desde %2$s, los meses anteriores no cambian.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Quitar este fijo repetido desde %1$s</string>
+    <string name="cu_fijo_rep_quitado">Fijo repetido quitado desde %1$s</string>
+    <string name="cu_fijo_repetido">repetido</string>
 </resources>

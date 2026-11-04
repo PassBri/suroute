@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">在%1$s使用我的固定项</string>
     <string name="cu_fijos_traidos">完成：你的固定项已计入%1$s。如果某项不适用，请在当天删除。</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">有一个固定项在%2$s重复，被计算了两次。用垃圾桶删除多余的：从%2$s起不再计入，之前的月份不变。</item>
+        <item quantity="other">有 %1$d 个固定项在%2$s重复，被计算了两次。用垃圾桶删除多余的：从%2$s起不再计入，之前的月份不变。</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">从%1$s起删除这个重复的固定项</string>
+    <string name="cu_fijo_rep_quitado">已从%1$s起删除重复的固定项</string>
+    <string name="cu_fijo_repetido">重复</string>
 </resources>

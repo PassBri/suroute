@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">%1$sに固定項目を使う</string>
     <string name="cu_fijos_traidos">完了：固定項目が%1$sに反映されました。該当しないものはその日に削除してください。</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">固定項目が%2$sで重複し、2回数えられています。余分なものをゴミ箱で削除してください。%2$sから数えなくなり、それ以前の月は変わりません。</item>
+        <item quantity="other">%1$d 件の固定項目が%2$sで重複し、2回数えられています。余分なものをゴミ箱で削除してください。%2$sから数えなくなり、それ以前の月は変わりません。</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">この重複した固定項目を%1$sから削除</string>
+    <string name="cu_fijo_rep_quitado">重複した固定項目を%1$sから削除しました</string>
+    <string name="cu_fijo_repetido">重複</string>
 </resources>

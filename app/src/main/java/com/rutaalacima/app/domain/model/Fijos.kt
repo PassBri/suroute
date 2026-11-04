@@ -114,6 +114,16 @@ object Fijos {
         }
     }
 
+    /** Los fijos activos en [ym] que repiten concepto (el mismo sueldo dos veces se contaría doble). */
+    fun repetidos(l: List<Fijo>, ym: String): Set<String> {
+        fun clave(x: Fijo) = "${x.t}|${x.n.ifBlank { x.c }.trim().lowercase()}"
+        return l.filter { activoEn(it, ym) }.groupBy(::clave).values.filter { it.size > 1 }.flatten().map { it.id }.toSet()
+    }
+
+    /** Quitar un fijo repetido desde [ym]: si nació ese mes o después, desaparece; si no, termina el mes anterior. */
+    fun quitarDesde(l: List<Fijo>, id: String, ym: YearMonth): List<Fijo> =
+        l.mapNotNull { if (it.id != id) it else if (it.desde >= ym.toString()) null else it.copy(hasta = ym.minusMonths(1).toString()) }
+
     fun saltar(l: List<Fijo>, id: String, ym: String, si: Boolean): List<Fijo> =
         l.map { if (it.id != id) it else it.copy(saltar = if (si) (it.saltar + ym).distinct() else it.saltar - ym) }
 }

@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">استخدم بنودي الثابتة في %1$s</string>
     <string name="cu_fijos_traidos">تم: بنودك الثابتة تُحتسب الآن في %1$s. إن لم ينطبق أحدها فاحذفه في يومه.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">بند ثابت مكرر في %2$s ويُحتسب مرتين. احذف الزائد بسلة المهملات: يتوقف احتسابه من %2$s ولا تتغير الأشهر السابقة.</item>
+        <item quantity="other">%1$d بنود ثابتة مكررة في %2$s وتُحتسب مرتين. احذف الزائدة بسلة المهملات: يتوقف احتسابها من %2$s ولا تتغير الأشهر السابقة.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">احذف هذا البند المكرر من %1$s</string>
+    <string name="cu_fijo_rep_quitado">حُذف البند الثابت المكرر من %1$s</string>
+    <string name="cu_fijo_repetido">مكرر</string>
 </resources>

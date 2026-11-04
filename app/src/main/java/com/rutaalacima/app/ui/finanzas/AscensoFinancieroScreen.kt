@@ -316,6 +316,7 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
     }
     /** Trae a [ym] los fijos que no aparecían ese mes (empezaban después o se habían saltado). */
     fun fijosTraer(ym: YearMonth) = fijos { com.rutaalacima.app.domain.model.Fijos.traerA(it, ym) }
+    fun fijoQuitarDesde(id: String, ym: YearMonth) = fijos { com.rutaalacima.app.domain.model.Fijos.quitarDesde(it, id, ym) }
     fun fijoParar(id: String) = fijos { com.rutaalacima.app.domain.model.Fijos.parar(it, id, hoy()) }
     fun fijoRestaurar(x: com.rutaalacima.app.domain.model.Fijos.Fijo) = fijos { l -> l.filter { it.id != x.id } + x }
 

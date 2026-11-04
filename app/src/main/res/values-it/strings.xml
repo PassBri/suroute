@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Usa le mie voci fisse a %1$s</string>
     <string name="cu_fijos_traidos">Fatto: le tue voci fisse ora contano a %1$s. Se una non valeva, rimuovila nel suo giorno.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">Una voce fissa è ripetuta a %2$s e conta due volte. Rimuovi quella in più con il cestino: smette di contare da %2$s, i mesi precedenti non cambiano.</item>
+        <item quantity="other">%1$d voci fisse sono ripetute a %2$s e contano due volte. Rimuovi quelle in più con il cestino: smettono di contare da %2$s, i mesi precedenti non cambiano.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Rimuovi questa voce ripetuta da %1$s</string>
+    <string name="cu_fijo_rep_quitado">Voce fissa ripetuta rimossa da %1$s</string>
+    <string name="cu_fijo_repetido">ripetuta</string>
 </resources>

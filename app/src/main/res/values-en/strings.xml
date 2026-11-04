@@ -3151,4 +3151,11 @@
     </plurals>
     <string name="cu_fijos_traer">Use my fixed items in %1$s</string>
     <string name="cu_fijos_traidos">Done: your fixed items now count in %1$s. If one didn\'t apply, remove it on its day.</string>
+    <plurals name="cu_fijos_repetidos">
+        <item quantity="one">One fixed item is repeated in %2$s and counted twice. Remove the extra one with the bin: it stops counting from %2$s; earlier months don\'t change.</item>
+        <item quantity="other">%1$d fixed items are repeated in %2$s and counted twice. Remove the extra ones with the bin: they stop counting from %2$s; earlier months don\'t change.</item>
+    </plurals>
+    <string name="cu_fijo_rep_quitar">Remove this repeated fixed item from %1$s</string>
+    <string name="cu_fijo_rep_quitado">Repeated fixed item removed from %1$s</string>
+    <string name="cu_fijo_repetido">repeated</string>
 </resources>

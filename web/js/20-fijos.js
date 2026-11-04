@@ -65,14 +65,19 @@ function fijosHoja(ym) {
   const hoyYm = iso(hoyFecha()).slice(0, 7), base = ym || hoyYm;
   const l = fijosDatos().filter(x => (!x.hasta || x.hasta >= base) && x.desde <= (ym ? ym : "9999-12"));
   const totalT = t => l.filter(x => x.t === t).reduce((a, x) => a + Number(x.m), 0);
+  // Fijos repetidos: el mismo concepto dos veces en el mes (por ejemplo, el sueldo) se cuenta doble
+  const clave = x => `${x.t}|${(x.n || x.c || "").trim().toLowerCase()}`, activos = l.filter(x => activoEn(x, base));
+  const veces = activos.reduce((m, x) => m.set(clave(x), (m.get(clave(x)) || 0) + 1), new Map()), repetido = x => activoEn(x, base) && veces.get(clave(x)) > 1;
+  const nRep = [...veces.values()].filter(v => v > 1).length, mesN = MESES[Number(base.slice(5)) - 1];
   return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("repetir")} Fijos de cada mes</h3><span class="suave" style="font-size:13px">Aparecen solos cada mes en su día</span></div>
     ${ym ? avisoFijosAntes(ym) : ""}
+    ${nRep ? `<div class="fijos-antes fijos-rep">${ic("info")}<p>${nRep === 1 ? "Un fijo está repetido" : `${nRep} fijos están repetidos`} en ${mesN} y se ${nRep === 1 ? "cuenta" : "cuentan"} dos veces. Quita el que sobra con ${ic("borrar")}: deja de contar desde ${mesN}, los meses anteriores no cambian.</p></div>` : ""}
     ${l.length ? `<div class="asc-tabla"><table class="asc-movs asc-fijos"><thead><tr><th>Tipo</th><th>Concepto</th><th>Día</th><th class="num">Monto</th><th><span class="oculto">Dejar de repetir</span></th></tr></thead><tbody>
       ${l.map(x => `<tr class="t-${x.t}"><td><span class="pildora t-${x.t}">${ASC.TIPOS.find(y => y[0] === x.t)[2]}</span></td>
-        <td><input value="${esc(x.n || catDe(x.t, x.c)?.[1] || "")}" data-acc-change="fijoNota" data-arg="${x.id}" maxlength="120" aria-label="Concepto"><small class="suave">${esc(catDe(x.t, x.c)?.[1] || "")} · desde ${mesCorto(x.desde)}</small></td>
+        <td><input value="${esc(x.n || catDe(x.t, x.c)?.[1] || "")}" data-acc-change="fijoNota" data-arg="${x.id}" maxlength="120" aria-label="Concepto"><small class="suave">${esc(catDe(x.t, x.c)?.[1] || "")} · desde ${mesCorto(x.desde)}${x.hasta ? ` hasta ${mesCorto(x.hasta)}` : ""}${repetido(x) ? ` · <b class="rep-marca">repetido</b>` : ""}</small></td>
         <td><input class="num" type="number" min="1" max="31" value="${x.dia}" data-acc-change="fijoDia" data-arg="${x.id}" aria-label="Día del mes" style="width:64px"></td>
         <td class="num"><input class="num" inputmode="decimal" value="${esc(numAsc(Number(x.m)))}" data-acc-change="fijoMonto" data-arg="${x.id}" aria-label="Monto (rige desde este mes)"></td>
-        <td class="acc-mov"><button class="rb" data-acc="fijoParar" data-arg="${x.id}" aria-label="Dejar de repetir" title="Dejar de repetir">${ic("cerrar")}</button></td></tr>`).join("")}
+        <td class="acc-mov">${repetido(x) ? `<button class="rb rep-quitar" data-acc="fijoQuitarDesde" data-arg="${x.id}|${base}" aria-label="Quitar este fijo repetido desde ${mesN}" title="Repetido: quitarlo desde ${mesN}">${ic("borrar")}</button>` : ""}<button class="rb" data-acc="fijoParar" data-arg="${x.id}" aria-label="Dejar de repetir" title="Dejar de repetir">${ic("cerrar")}</button></td></tr>`).join("")}
       </tbody><tfoot><tr><th colspan="3" scope="row">Cada mes</th><td class="num">${["ing", "gas", "aho", "inv", "gen"].filter(t => totalT(t)).map(t => `<span class="pildora t-${t}">${plata(totalT(t))}</span>`).join(" ")}</td><td></td></tr></tfoot></table></div>
       <p class="suave" style="margin:8px 0 0;font-size:13px">Si cambias el monto, rige desde este mes. Para cambiar solo un mes, edítalo en su día.</p>`
     : `<p class="suave" style="margin:6px 0 0">¿Pagas arriendo, internet o recibes un salario fijo? Al anotarlo en un día marca <b>Se repite cada mes</b> y aparecerá solo cada mes, sin volver a escribirlo.</p>`}`);
@@ -121,6 +126,14 @@ Object.assign(ACC, {
       if (xs.some(y => y.fx === x.id)) guardarMovs(f, xs.map(y => y.fx === x.id ? { ...y, fx: nuevo.id } : y));
     }
     guardarFijos(l); toast(`Desde ${MESES[Number(hoyYm.slice(5)) - 1]}: ${plata(v)} cada mes`);
+  },
+  /** Quita un fijo repetido desde [ym]: si nació ese mes o después, desaparece; si no, termina el mes anterior. */
+  fijoQuitarDesde(_, arg) {
+    const [id, ym] = arg.split("|"), l = fijosDatos(), x = l.find(y => y.id === id); if (!x) return;
+    const antes = JSON.stringify(l);
+    if (x.desde >= ym) l.splice(l.indexOf(x), 1); else x.hasta = ymMas(ym, -1);
+    guardarFijos(l); pintarDetalle();
+    toast(`Fijo repetido quitado desde ${MESES[Number(ym.slice(5)) - 1]}`, { accion: "Deshacer", alHacer: () => { guardarFijos(JSON.parse(antes)); pintarDetalle(); } });
   },
   fijoParar(_, id) {
     const l = fijosDatos(), x = l.find(y => y.id === id); if (!x) return;

@@ -15,6 +15,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Repeat
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -55,6 +57,8 @@ fun FijosCard(libro: Libro, ym: YearMonth?, plata: (Double) -> String, vm: Cuent
     val base = (ym ?: YearMonth.from(hoy())).toString()
     val l = libro.fijos.filter { (it.hasta.isEmpty() || it.hasta >= base) && it.desde <= (ym?.toString() ?: "9999-12") }
     var editando by remember { mutableStateOf<Fijos.Fijo?>(null) }
+    val rep = Fijos.repetidos(l, base); val ymBase = YearMonth.parse(base)
+    val nRep = l.filter { it.id in rep }.map { "${it.t}|${it.n.ifBlank { it.c }.trim().lowercase()}" }.distinct().size
     val ctx = LocalContext.current
     RutaCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -64,6 +68,13 @@ fun FijosCard(libro: Libro, ym: YearMonth?, plata: (Double) -> String, vm: Cuent
                 Text(stringResource(R.string.cu_fijos_titulo), style = MaterialTheme.typography.titleMedium)
                 Text(stringResource(R.string.cu_fijos_sub), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+        }
+        if (nRep > 0) Row(Modifier.fillMaxWidth().padding(top = 10.dp).clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.errorContainer).padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.Info, null, tint = MaterialTheme.colorScheme.onErrorContainer)
+            Spacer(Modifier.width(10.dp))
+            Text(androidx.compose.ui.res.pluralStringResource(R.plurals.cu_fijos_repetidos, nRep, nRep, nombreMes(ymBase.monthValue)),
+                style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onErrorContainer)
         }
         if (l.isEmpty()) Text(stringResource(R.string.cu_fijos_vacio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
         else {
@@ -78,10 +89,16 @@ fun FijosCard(libro: Libro, ym: YearMonth?, plata: (Double) -> String, vm: Cuent
                         Spacer(Modifier.width(10.dp))
                         Column(Modifier.weight(1f)) {
                             Text(x.n.ifBlank { nombreCategoria(t, x.c) }, style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(stringResource(R.string.cu_fijo_dia, x.dia) + " · " + stringResource(R.string.cu_fijo_desde, mesCorto(x.desde)),
+                            Text(stringResource(R.string.cu_fijo_dia, x.dia) + " · " + stringResource(R.string.cu_fijo_desde, mesCorto(x.desde)) + (if (x.id in rep) " · " + stringResource(R.string.cu_fijo_repetido) else ""),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Text(plata(x.m), style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                        if (x.id in rep) {
+                            val quitado = stringResource(R.string.cu_fijo_rep_quitado, nombreMes(ymBase.monthValue))
+                            IconButton(onClick = { vm.fijoQuitarDesde(x.id, ymBase); com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(quitado) }) {
+                                Icon(Icons.Filled.Delete, stringResource(R.string.cu_fijo_rep_quitar, nombreMes(ymBase.monthValue)), tint = MaterialTheme.colorScheme.error)
+                            }
+                        }
                         val parado = stringResource(R.string.cu_fijo_parado)
                         IconButton(onClick = { vm.fijoParar(x.id); com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(parado) }) {
                             Icon(Icons.Filled.Close, stringResource(R.string.cu_fijo_parar), tint = MaterialTheme.colorScheme.onSurfaceVariant)
