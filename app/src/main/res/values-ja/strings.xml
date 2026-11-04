@@ -3185,4 +3185,5 @@
     <string name="cat_otras">その他（%1$d）</string>
     <string name="cat_salieron">支出・貯蓄・投資・寄付で %1$s が出ていきました</string>
     <string name="cat_salio">出金</string>
+    <string name="pin_puntos">PIN：%1$d 桁入力済み</string>
 </resources>

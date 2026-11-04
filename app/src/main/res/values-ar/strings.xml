@@ -3185,4 +3185,5 @@
     <string name="cat_otras">أخرى (%1$d)</string>
     <string name="cat_salieron">خرج %1$s بين المصاريف والادخار والاستثمار والعطاء</string>
     <string name="cat_salio">خرج</string>
+    <string name="pin_puntos">رمز PIN: أُدخل %1$d أرقام</string>
 </resources>

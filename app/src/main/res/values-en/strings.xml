@@ -3185,4 +3185,5 @@
     <string name="cat_otras">Others (%1$d)</string>
     <string name="cat_salieron">%1$s went out across spending, saving, investing and giving</string>
     <string name="cat_salio">went out</string>
+    <string name="pin_puntos">PIN: %1$d digits entered</string>
 </resources>

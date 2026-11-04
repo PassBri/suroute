@@ -3185,4 +3185,5 @@
     <string name="cat_otras">기타 (%1$d)</string>
     <string name="cat_salieron">지출, 저축, 투자, 나눔으로 %1$s가 나갔습니다</string>
     <string name="cat_salio">나감</string>
+    <string name="pin_puntos">PIN: %1$d자리 입력됨</string>
 </resources>

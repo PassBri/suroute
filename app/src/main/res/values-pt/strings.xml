@@ -3185,4 +3185,5 @@
     <string name="cat_otras">Outras (%1$d)</string>
     <string name="cat_salieron">Saíram %1$s entre gastos, poupança, investimento e doações</string>
     <string name="cat_salio">saiu</string>
+    <string name="pin_puntos">PIN: %1$d números digitados</string>
 </resources>

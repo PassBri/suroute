@@ -3185,4 +3185,5 @@
     <string name="cat_otras">Другие (%1$d)</string>
     <string name="cat_salieron">Ушло %1$s на расходы, сбережения, инвестиции и помощь</string>
     <string name="cat_salio">ушло</string>
+    <string name="pin_puntos">PIN: введено цифр: %1$d</string>
 </resources>

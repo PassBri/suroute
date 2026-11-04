@@ -3185,4 +3185,5 @@
     <string name="cat_otras">Weitere (%1$d)</string>
     <string name="cat_salieron">%1$s gingen hinaus für Ausgaben, Sparen, Investieren und Geben</string>
     <string name="cat_salio">hinaus</string>
+    <string name="pin_puntos">PIN: %1$d Ziffern eingegeben</string>
 </resources>

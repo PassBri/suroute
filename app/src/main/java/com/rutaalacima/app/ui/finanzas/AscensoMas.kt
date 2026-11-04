@@ -99,6 +99,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.draw.shadow
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.automirrored.filled.Backspace
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
 import com.rutaalacima.app.R
 import com.rutaalacima.app.domain.model.Cuentas
 import com.rutaalacima.app.domain.model.Cuentas.Mov
@@ -118,7 +125,10 @@ import java.util.Locale
 
 // ====================================================================== Bloqueo
 
-/** El módulo cerrado: se abre con huella, rostro o el PIN del teléfono (o la clave propia de la app). */
+/**
+ * El módulo cerrado (igual que la web): el libro de cuentas sellado sobre un mapa de orientación con curvas de nivel.
+ * Se abre con huella, rostro o el PIN del teléfono, o con la clave propia de la app en su teclado numérico.
+ */
 @Composable
 fun PantallaBloqueo(modifier: Modifier = Modifier, onAbrir: () -> Unit) {
     val ctx = LocalContext.current
@@ -130,27 +140,69 @@ fun PantallaBloqueo(modifier: Modifier = Modifier, onAbrir: () -> Unit) {
     val abrirBio = {
         Bloqueo.actividad(ctx)?.let { a -> Bloqueo.pedirBiometria(a, titulo, sub, onExito = onAbrir, onError = { error = it }) } ?: onAbrir()
     }
+    val mal = stringResource(R.string.cu_clave_mal)
+    val probar = {
+        if (Bloqueo.verificarClave(ctx, pin)) onAbrir()
+        else { error = if (Bloqueo.esperaRestante(ctx) > 0) ctx.getString(R.string.clave_espera, ((Bloqueo.esperaRestante(ctx) + 999) / 1000).toInt()) else mal; pin = "" }
+    }
+    val haptico = androidx.compose.ui.platform.LocalHapticFeedback.current
     LaunchedEffect(Unit) { if (bio) abrirBio() }
-    Column(modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Icon(Icons.Filled.Lock, null, Modifier.size(56.dp), tint = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(12.dp))
-        Text(titulo, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)
-        Text(sub, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp))
-        Spacer(Modifier.height(20.dp))
-        when {
-            bio -> Button(onClick = abrirBio) { Icon(Icons.Filled.Fingerprint, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.cu_abrir_huella)) }
-            clave -> {
-                OutlinedTextField(pin, { pin = it.filter(Char::isDigit).take(6) }, label = { Text(stringResource(R.string.cu_clave)) }, singleLine = true,
-                    visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword))
-                val mal = stringResource(R.string.cu_clave_mal)
-                Button(onClick = { if (Bloqueo.verificarClave(ctx, pin)) onAbrir() else { error = if (Bloqueo.esperaRestante(ctx) > 0) ctx.getString(R.string.clave_espera, ((Bloqueo.esperaRestante(ctx) + 999) / 1000).toInt()) else mal; pin = "" } }, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.cu_abrir)) }
-            }
-            else -> {
-                Text(stringResource(R.string.cu_sin_bloqueo_tel), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-                Button(onClick = onAbrir, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.cu_abrir)) }
+    Box(modifier.fillMaxSize()) {
+        com.rutaalacima.app.ui.components.MapaOrientacion(Modifier.matchParentSize())
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 40.dp),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            Box(contentAlignment = Alignment.TopCenter) {
+                Surface(Modifier.padding(top = 32.dp).widthIn(max = 380.dp).fillMaxWidth(), shape = RoundedCornerShape(28.dp),
+                    color = MaterialTheme.colorScheme.surface, tonalElevation = 1.dp, shadowElevation = 12.dp) {
+                    Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 44.dp, bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(titulo, style = MaterialTheme.typography.titleLarge, fontFamily = androidx.compose.ui.text.font.FontFamily.Serif, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center)
+                        Text(sub, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp))
+                        Spacer(Modifier.height(16.dp))
+                        if (bio) {
+                            Button(onClick = abrirBio) { Icon(Icons.Filled.Fingerprint, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.cu_abrir_huella)) }
+                            if (clave) Spacer(Modifier.height(16.dp))
+                        }
+                        if (clave) {
+                            // Los puntos del PIN y el teclado numérico
+                            Row(Modifier.semantics { contentDescription = ctx.getString(R.string.pin_puntos, pin.length) }, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                                repeat(maxOf(4, minOf(6, pin.length + 1))) { i ->
+                                    val lleno = i < pin.length
+                                    Box(Modifier.size(16.dp).clip(CircleShape).background(if (lleno) MaterialTheme.colorScheme.primary else Color.Transparent)
+                                        .border(2.dp, if (lleno) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, CircleShape))
+                                }
+                            }
+                            Spacer(Modifier.height(16.dp))
+                            val teclas = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "borrar", "0", "ok")
+                            teclas.chunked(3).forEach { fila ->
+                                Row(horizontalArrangement = Arrangement.spacedBy(20.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+                                    fila.forEach { k ->
+                                        when (k) {
+                                            "ok" -> FilledIconButton(onClick = probar, enabled = pin.length >= 4, modifier = Modifier.size(64.dp)) { Icon(Icons.Filled.Check, stringResource(R.string.cu_abrir)) }
+                                            "borrar" -> IconButton(onClick = { pin = pin.dropLast(1) }, modifier = Modifier.size(64.dp)) { Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.borrar)) }
+                                            else -> FilledTonalButton(onClick = { if (pin.length < 6) { pin += k; error = ""; haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove) } },
+                                                modifier = Modifier.size(64.dp), shape = CircleShape, contentPadding = PaddingValues(0.dp)) {
+                                                Text(k, style = MaterialTheme.typography.headlineSmall)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (!bio && !clave) {
+                            Text(stringResource(R.string.cu_sin_bloqueo_tel), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+                            Button(onClick = onAbrir, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.cu_abrir)) }
+                        }
+                        if (error.isNotBlank()) Text(error, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 10.dp))
+                    }
+                }
+                // El sello de cera con el candado
+                Box(Modifier.size(68.dp).shadow(8.dp, CircleShape).clip(CircleShape)
+                    .background(androidx.compose.ui.graphics.Brush.radialGradient(listOf(Color(0xFFA2412F), Color(0xFF6B2A1A), Color(0xFF4E1810))))
+                    .border(3.dp, MaterialTheme.colorScheme.surface, CircleShape), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Filled.Lock, null, Modifier.size(30.dp), tint = Color(0xFFF6E7C8))
+                }
             }
         }
-        if (error.isNotBlank()) Text(error, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
     }
 }
 

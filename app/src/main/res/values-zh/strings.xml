@@ -3185,4 +3185,5 @@
     <string name="cat_otras">其他（%1$d）</string>
     <string name="cat_salieron">支出、储蓄、投资和给予共流出 %1$s</string>
     <string name="cat_salio">流出</string>
+    <string name="pin_puntos">PIN：已输入 %1$d 位</string>
 </resources>

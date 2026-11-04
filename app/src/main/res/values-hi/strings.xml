@@ -3185,4 +3185,5 @@
     <string name="cat_otras">अन्य (%1$d)</string>
     <string name="cat_salieron">खर्च, बचत, निवेश और दान में %1$s गए</string>
     <string name="cat_salio">गया</string>
+    <string name="pin_puntos">PIN: %1$d अंक लिखे गए</string>
 </resources>

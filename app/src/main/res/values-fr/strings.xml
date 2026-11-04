@@ -3185,4 +3185,5 @@
     <string name="cat_otras">Autres (%1$d)</string>
     <string name="cat_salieron">%1$s sont sortis entre dépenses, épargne, investissement et dons</string>
     <string name="cat_salio">sorti</string>
+    <string name="pin_puntos">PIN : %1$d chiffres saisis</string>
 </resources>

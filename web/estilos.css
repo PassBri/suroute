@@ -5753,3 +5753,71 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .bal-reset { text-align: center; margin: 4px 0 0; font-size: 13px; }
 @media (prefers-reduced-motion: no-preference) { .bal-sec:not(.arrastrando) { transition: transform .18s cubic-bezier(.2,0,0,1); } }
 .bal-lista { grid-template-columns: minmax(0, 1fr); } .bal-sec { min-width: 0; }
+
+/* ---------- Mapa de orientación (curvas de nivel) ---------- */
+.mapa-orientacion { display: block; width: 100%; height: 100%; }
+.mapa-orientacion .om-fondo { fill: #FBF8EF; }
+.mapa-orientacion .om-abierto { fill: #F6DE9B; opacity: .75; }
+.mapa-orientacion .om-veg { fill: #C9E3B4; opacity: .85; }
+.mapa-orientacion .om-agua { fill: #A9D7EF; stroke: #2D7FB8; stroke-width: 2.4; }
+.mapa-orientacion .om-curva { fill: none; stroke: #C0742F; stroke-width: 1.3; opacity: .75; stroke-linecap: round; }
+.mapa-orientacion .om-indice { stroke-width: 2.6; opacity: .85; }
+.mapa-orientacion .om-ruta { fill: none; stroke: #B5307E; stroke-width: 3.4; opacity: .85; }
+.mapa-orientacion .om-ruta text { fill: #B5307E; stroke: none; font: 600 30px/1 var(--font-ui, system-ui); }
+:root[data-theme="dark"] .mapa-orientacion .om-fondo { fill: #14191C; }
+:root[data-theme="dark"] .mapa-orientacion .om-abierto { fill: #4A3F22; opacity: .5; }
+:root[data-theme="dark"] .mapa-orientacion .om-veg { fill: #23402A; opacity: .6; }
+:root[data-theme="dark"] .mapa-orientacion .om-agua { fill: #173A50; stroke: #4F9DCC; }
+:root[data-theme="dark"] .mapa-orientacion .om-curva { stroke: #B9773F; opacity: .5; }
+:root[data-theme="dark"] .mapa-orientacion .om-ruta { stroke: #E07AB8; opacity: .75; }
+:root[data-theme="dark"] .mapa-orientacion .om-ruta text { fill: #E07AB8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mapa-orientacion .om-fondo { fill: #14191C; }
+  :root:not([data-theme="light"]) .mapa-orientacion .om-abierto { fill: #4A3F22; opacity: .5; } :root:not([data-theme="light"]) .mapa-orientacion .om-veg { fill: #23402A; opacity: .6; }
+  :root:not([data-theme="light"]) .mapa-orientacion .om-agua { fill: #173A50; stroke: #4F9DCC; } :root:not([data-theme="light"]) .mapa-orientacion .om-curva { stroke: #B9773F; opacity: .5; }
+  :root:not([data-theme="light"]) .mapa-orientacion .om-ruta { stroke: #E07AB8; opacity: .75; } :root:not([data-theme="light"]) .mapa-orientacion .om-ruta text { fill: #E07AB8; } }
+
+/* ---------- Ascenso financiero bloqueado: el libro sellado sobre el mapa ---------- */
+.det-cuerpo.bloqueo-escena { position: relative; display: grid; place-items: center; padding: 28px 16px; min-height: 100%; overflow: auto; }
+.bloqueo-mapa { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.bloqueo-mapa::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, color-mix(in srgb, var(--fondo) 55%, transparent) 0, transparent 70%); }
+.pin-hoja { position: relative; width: min(380px, 100%); background: var(--hoja); border-radius: 28px; padding: 28px 24px 20px; text-align: center; display: grid; gap: 10px; justify-items: center;
+  box-shadow: 0 1px 2px rgb(24 38 48 / .12), 0 18px 48px rgb(24 38 48 / .22); border: 1px solid var(--linea); }
+.pin-sello { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 30%, #9A3A2A, var(--burdeos) 60%, #4E1810);
+  box-shadow: inset 0 -3px 6px rgb(0 0 0 / .3), 0 6px 14px rgb(107 42 26 / .35); margin-top: -64px; border: 3px solid var(--hoja); }
+.pin-sello svg { width: 32px; height: 32px; fill: #F6E7C8; }
+.pin-hoja h2 { margin: 6px 0 0; font: 600 22px/1.25 var(--font-titulo, serif); color: var(--tinta); }
+.pin-hoja > p { margin: 0; font-size: 14px; max-width: 30ch; }
+.pin-huella { display: inline-flex; gap: 8px; align-items: center; margin-top: 6px; }
+.pin-form { display: grid; gap: 18px; justify-items: center; width: 100%; margin-top: 8px; }
+.pin-puntos { position: relative; display: flex; gap: 14px; justify-content: center; min-height: 44px; align-items: center; cursor: text; padding: 0 10px; border-radius: 22px; }
+.pin-puntos input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; font-size: 16px; caret-color: transparent; }
+.pin-puntos:focus-within { outline: 2px solid color-mix(in srgb, var(--burdeos) 45%, transparent); outline-offset: 2px; }
+.pin-puntos i { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--tinta-suave); transition: background .12s, border-color .12s, transform .12s; }
+.pin-puntos i.opc { display: none; } .pin-puntos i.opc.ver { display: block; }
+.pin-puntos i.lleno { background: var(--burdeos); border-color: var(--burdeos); transform: scale(1.08); }
+.pin-teclado { display: grid; grid-template-columns: repeat(3, 72px); gap: 12px 22px; justify-content: center; }
+.pin-teclado button { width: 72px; height: 72px; border-radius: 50%; border: 0; display: grid; place-items: center; font: 500 26px/1 var(--font-ui, system-ui); color: var(--tinta);
+  background: var(--hoja-2); cursor: pointer; transition: background .12s, transform .1s; touch-action: manipulation; user-select: none; -webkit-user-select: none; font-variant-numeric: tabular-nums; }
+.pin-teclado button:active { transform: scale(.94); background: color-mix(in srgb, var(--burdeos) 14%, var(--hoja-2)); }
+@media (hover: hover) and (pointer: fine) { .pin-teclado button:hover { background: color-mix(in srgb, var(--burdeos) 9%, var(--hoja-2)); } }
+.pin-teclado .pin-borrar { background: transparent; } .pin-teclado .pin-borrar svg { width: 26px; height: 26px; fill: var(--tinta-suave); }
+.pin-teclado .pin-ok { background: var(--burdeos); } .pin-teclado .pin-ok svg { width: 30px; height: 30px; fill: #fff; }
+.pin-teclado button:focus-visible { outline: 2px solid var(--burdeos); outline-offset: 3px; }
+.pin-teclado button:disabled { opacity: .4; cursor: not-allowed; }
+.pin-espera { margin: 0; color: #B3261E; font-size: 14px; }
+.pin-tel { display: inline-flex; gap: 8px; align-items: center; background: none; border: 0; color: var(--burdeos); font-weight: 500; min-height: 44px; cursor: pointer; }
+.pin-tel svg { width: 20px; height: 20px; fill: currentColor; }
+@media (max-width: 420px) { .pin-teclado { grid-template-columns: repeat(3, 64px); gap: 10px 20px; } .pin-teclado button { width: 64px; height: 64px; font-size: 24px; } }
+.pin-sello { background: radial-gradient(circle at 35% 30%, #A2412F, #6B2A1A 60%, #4E1810); }
+.pin-teclado .pin-ok svg { fill: var(--hoja); }
+.det-cuerpo.bloqueo-escena { display: flex; flex-direction: column; align-items: center; padding-top: 48px; }
+.pin-hoja { margin-block: auto; }
+@media (max-width: 700px) {
+  .det-cuerpo.bloqueo-escena { padding: 44px 12px 16px; }
+  .pin-hoja { padding: 22px 18px 14px; gap: 8px; border-radius: 24px; }
+  .pin-sello { width: 60px; height: 60px; margin-top: -52px; } .pin-sello svg { width: 26px; height: 26px; }
+  .pin-hoja h2 { font-size: 19px; } .pin-hoja > p { font-size: 13px; }
+  .pin-form { gap: 12px; }
+  .pin-teclado { grid-template-columns: repeat(3, 60px); gap: 8px 22px; } .pin-teclado button { width: 60px; height: 60px; font-size: 23px; }
+}
+@media (max-width: 700px) { .det-cuerpo.bloqueo-escena { padding-top: 38px; } .pin-teclado { gap: 6px 22px; } .pin-teclado button { width: 58px; height: 58px; } .pin-teclado { grid-template-columns: repeat(3, 58px); } .pin-hoja { padding-bottom: 10px; } }
