@@ -5647,3 +5647,12 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
   #detalle[data-sec="finanzas"] .asc-movs tfoot th, #detalle[data-sec="finanzas"] .asc-movs tfoot td { background: none; padding: 0; }
   #detalle[data-sec="finanzas"] .asc-movs tfoot td:not(.num) { display: none; }
 }
+/* ‹ › del periodo en la cabecera de Ascenso financiero (antes ocupaban una fila entera) */
+.asc-nav-cab { display: inline-flex; gap: 2px; margin-inline-start: 4px; flex: none; }
+.asc-nav-cab .rb { width: 40px; height: 40px; }
+.asc-nav-cab .rb svg { width: 24px; height: 24px; }
+#detalle.con-fin .det-cab .asc-nav-cab .rb { display: grid; place-items: center; }
+#detalle .det-cab .asc-nav-cab { order: 0; }
+#detalle .det-cab .asc-nav-cab { margin-inline-start: auto; }
+#detalle .det-cab:has(.asc-nav-cab) { flex-wrap: nowrap; }
+#detalle .det-cab:has(.asc-nav-cab) .txt { min-width: 0; flex: 1 1 auto; }

@@ -727,12 +727,25 @@ private fun Migas(n: NivelCuentas, ir: (NivelCuentas) -> Unit) {
             else -> {}
         }
     }
-    Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-        partes.forEachIndexed { i, (t, destino) ->
-            if (i < partes.lastIndex) {
-                TextButton(onClick = { ir(destino) }) { Text(t) }
-                Text("›", color = MaterialTheme.colorScheme.onSurfaceVariant)
-            } else Text(t, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 12.dp))
+    // ‹ › del periodo al final de las migas: ya no gastan una fila entera
+    val vecinos: Pair<NivelCuentas, NivelCuentas>? = when (n) {
+        is NivelCuentas.Anio -> NivelCuentas.Anio(n.a - 1) to NivelCuentas.Anio(n.a + 1)
+        is NivelCuentas.Mes -> NivelCuentas.Mes(n.ym.minusMonths(1)) to NivelCuentas.Mes(n.ym.plusMonths(1))
+        is NivelCuentas.Dia -> NivelCuentas.Dia(n.f.minusDays(1)) to NivelCuentas.Dia(n.f.plusDays(1))
+        else -> null
+    }
+    Row(Modifier.fillMaxWidth().padding(start = 8.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.weight(1f).horizontalScroll(rememberScrollState()), verticalAlignment = Alignment.CenterVertically) {
+            partes.forEachIndexed { i, (t, destino) ->
+                if (i < partes.lastIndex) {
+                    TextButton(onClick = { ir(destino) }) { Text(t) }
+                    Text("›", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                } else Text(t, style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 12.dp).semantics { heading() })
+            }
+        }
+        if (vecinos != null) {
+            IconButton(onClick = { ir(vecinos.first) }) { Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, stringResource(R.string.cu_anterior)) }
+            IconButton(onClick = { ir(vecinos.second) }) { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, stringResource(R.string.siguiente)) }
         }
     }
 }
@@ -1018,7 +1031,6 @@ private fun LazyListScope.anio(a: Int, libro: Libro, plata: (Double) -> String, 
     val filas = (1..12).map { m -> val ym = YearMonth.of(a, m)
         FilaPeriodo(nombreMes(m), nombreMes(m).take(3), libro.suma("$ym-"), NivelCuentas.Mes(ym), ym == actual) }
     val t = libro.suma("$a-")
-    item(key = "nav") { NavPeriodo("$a", { ir(NivelCuentas.Anio(a - 1)) }, { ir(NivelCuentas.Anio(a + 1)) }) }
     item(key = "cifras") { CifrasCuentas(t, plata) }
     item(key = "tabla") {
         RutaCard {
@@ -1041,7 +1053,6 @@ private fun LazyListScope.mes(ym: YearMonth, libro: Libro, plata: (Double) -> St
     val filas = fechas.map { f -> val d = LocalDate.parse(f)
         FilaPeriodo("${d.dayOfMonth} · ${d.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.getDefault())}", "${d.dayOfMonth}", Cuentas.sumar(libro.movs(f)), NivelCuentas.Dia(d), d == hoyF) }
     val t = libro.suma("$ym-")
-    item(key = "nav") { NavPeriodo("${nombreMes(ym.monthValue)} ${ym.year}", { ir(NivelCuentas.Mes(ym.minusMonths(1))) }, { ir(NivelCuentas.Mes(ym.plusMonths(1))) }) }
     item(key = "cifras") { CifrasCuentas(t, plata) }
     item(key = "pres") {
         val guardado = libro.presupuesto(ym)
@@ -1101,7 +1112,6 @@ private fun LazyListScope.mes(ym: YearMonth, libro: Libro, plata: (Double) -> St
 @OptIn(ExperimentalMaterial3Api::class)
 private fun LazyListScope.dia(f: LocalDate, libro: Libro, plata: (Double) -> String, ir: (NivelCuentas) -> Unit, vm: CuentasViewModel, avisos: SnackbarHostState) {
     val fs = f.toString(); val movs = libro.movs(fs); val s = Cuentas.sumar(movs); val ym = YearMonth.from(f); val mesS = libro.suma("$ym-")
-    item(key = "nav") { NavPeriodo("${f.dayOfMonth} ${nombreMes(f.monthValue)} ${f.year}", { ir(NivelCuentas.Dia(f.minusDays(1))) }, { ir(NivelCuentas.Dia(f.plusDays(1))) }) }
     item(key = "nuevo") { NuevoMovimiento(plata, f.dayOfMonth) { t, m, c, n, rep -> vm.agregar(fs, t, m, c, n, rep) } }
     // Frecuentes: lo que más anotas, a un toque (como los «Pagos rápidos» de la banca)
     item(key = "frecuentes") {

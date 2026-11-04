@@ -160,7 +160,8 @@ function grafica(filas) {
 function migasAsc(partes) {
   return `<nav class="migas" aria-label="Dónde estás">${partes.map(([t, sel], i) => i < partes.length - 1 ? `<button data-sel="${sel}">${esc(t)}</button> › ` : `<span>${esc(t)}</span>`).join("")}</nav>`;
 }
-const navPeriodo = (antes, despues, etq) => `<div class="asc-nav"><button class="rb" data-sel="${antes}" aria-label="Anterior">${ic("izq")}</button><b>${esc(etq)}</b><button class="rb" data-sel="${despues}" aria-label="Siguiente">${ic("der")}</button></div>`;
+/** ‹ › del periodo: van en la cabecera, junto al título (que ya dice la fecha), para no gastar una fila entera. */
+const navPeriodo = (antes, despues, etq) => `<span class="asc-nav-cab" role="group" aria-label="Cambiar de periodo · ${esc(etq)}"><button class="rb" data-sel="${antes}" aria-label="Anterior" title="Anterior">${ic("izq")}</button><button class="rb" data-sel="${despues}" aria-label="Siguiente" title="Siguiente">${ic("der")}</button></span>`;
 const avAsc = () => av(ic("finanzas"), "var(--ok)");
 const ymDe = (a, m) => `${a}-${String(m).padStart(2, "0")}`;
 
@@ -225,8 +226,8 @@ DET["finanzas.a"] = arg => {
   const a = Number(arg) || new Date().getFullYear(), hoy = hoyFecha();
   const filas = [...Array(12).keys()].map(i => ({ etq: mayus(MESES[i]), corto: MES_C[i], sel: "m:" + ymDe(a, i + 1), s: totalesDe(ymDe(a, i + 1) + "-"), actual: a === hoy.getFullYear() && i === hoy.getMonth() }));
   const t = totalesDe(a + "-");
-  return cab(avAsc(), String(a), "Ascenso financiero · el año mes a mes", ojoAsc()) + cuerpo(
-    migasAsc([["Balance general", "b"], [String(a), ""]]) + navPeriodo("a:" + (a - 1), "a:" + (a + 1), String(a)) + cifras(t) +
+  return cab(avAsc(), String(a), "Ascenso financiero · el año mes a mes", navPeriodo("a:" + (a - 1), "a:" + (a + 1), String(a)) + ojoAsc()) + cuerpo(
+    migasAsc([["Balance general", "b"], [String(a), ""]]) + cifras(t) +
     hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Mes a mes</h3><span class="suave" style="font-size:13px">Toca un mes para ver sus días</span></div>${grafica(filas)}${tablaPeriodos(filas, "Mes", t)}`) +
     saludResumen(a + "-") + mochilas(t) + porCategoria(t), "max-width:980px");
 };
@@ -238,8 +239,8 @@ DET["finanzas.m"] = arg => {
   const filas = [...dias].sort().map(f => { const d = deIso(f); return { etq: `${d.getDate()} · ${d.toLocaleDateString("es", { weekday: "short" })}`, corto: String(d.getDate()), sel: "d:" + f, s: sumar(movsDe(f)), actual: f === hoyI }; });
   const t = totalesDe(ym + "-"), pres = Math.abs(montoFin(respuesta(claveFinPresupuesto(ym)))), uso = pres ? t.gas / pres : null;
   const ant = m === 1 ? ymDe(a - 1, 12) : ymDe(a, m - 1), sig = m === 12 ? ymDe(a + 1, 1) : ymDe(a, m + 1);
-  return cab(avAsc(), `${mayus(MESES[m - 1])} ${a}`, "Ascenso financiero · el mes día a día", ojoAsc()) + cuerpo(
-    migasAsc([["Balance general", "b"], [String(a), "a:" + a], [mayus(MESES[m - 1]), ""]]) + navPeriodo("m:" + ant, "m:" + sig, `${mayus(MESES[m - 1])} ${a}`) + cifras(t) +
+  return cab(avAsc(), `${mayus(MESES[m - 1])} ${a}`, "Ascenso financiero · el mes día a día", navPeriodo("m:" + ant, "m:" + sig, `${mayus(MESES[m - 1])} ${a}`) + ojoAsc()) + cuerpo(
+    migasAsc([["Balance general", "b"], [String(a), "a:" + a], [mayus(MESES[m - 1]), ""]]) + cifras(t) +
     hoja(`<h3 style="margin:0 0 8px">Presupuesto de gastos</h3>${campo("Lo máximo que quieres gastar este mes", `<input type="text" inputmode="decimal" data-resp="${FIN_WB}|${claveFinPresupuesto(ym)}" value="${esc(respuesta(claveFinPresupuesto(ym)))}" placeholder="Ej. ${plata(1500000)}">`)}
       ${uso != null ? `<div class="fin-pres"><div class="barra"><i style="width:${Math.min(100, uso * 100)}%;${uso > 1 ? "background:var(--peligro, #B3261E)" : ""}"></i></div><span class="suave">Gastaste ${plata(t.gas)} de ${plata(pres)}${uso > 1 ? " · te pasaste " + plata(t.gas - pres) : " · te quedan " + plata(pres - t.gas)}</span></div>` : ""}`) +
     hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Día a día</h3><span class="botones-mini">${movsPropiosMes(ym).length ? `<button class="btn mini" data-acc="ascDuplicarMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[m - 1]} al mismo día de ${MESES[m % 12]}; los fijos ya se repiten solos">${ic("copiar")} Duplicar al mes siguiente</button>` : ""}<button class="btn mini lleno" data-sel="d:${hoyI.startsWith(ym) ? hoyI : ym + "-01"}">${ic("mas")} Registrar</button></span></div>
@@ -251,9 +252,8 @@ DET["finanzas.d"] = f => {
   const d = deIso(f), a = d.getFullYear(), m = d.getMonth() + 1, ym = ymDe(a, m), movs = movsDe(f), s = sumar(movs), mes = totalesDe(ym + "-");
   const tipo = estado.ascTipo || "gas", deudasLista = window.deudasDatos ? deudasDatos().lista : [], metasLista = window.metasFinDatos ? metasFinDatos() : [];
   const opc = t => categorias(t).map(([c, n]) => `<option value="${c}" ${c === estado.ascCatNueva ? "selected" : ""}>${esc(n)}</option>`).join("");
-  return cab(avAsc(), `${d.getDate()} de ${MESES[m - 1]}`, mayus(d.toLocaleDateString("es", { weekday: "long" })) + ` · ${a}`, ojoAsc()) + cuerpo(
+  return cab(avAsc(), `${d.getDate()} de ${MESES[m - 1]}`, mayus(d.toLocaleDateString("es", { weekday: "long" })) + ` · ${a}`, navPeriodo("d:" + sumarDias(f, -1), "d:" + sumarDias(f, 1), `${d.getDate()} ${MES_C[m - 1]} ${a}`) + ojoAsc()) + cuerpo(
     migasAsc([["Balance general", "b"], [String(a), "a:" + a], [mayus(MESES[m - 1]), "m:" + ym], [String(d.getDate()), ""]]) +
-    navPeriodo("d:" + sumarDias(f, -1), "d:" + sumarDias(f, 1), `${d.getDate()} ${MES_C[m - 1]} ${a}`) +
     hoja(`<form class="asc-nuevo asc-compacto" data-form="ascMov" data-arg="${f}">
         <div class="seg" role="radiogroup" aria-label="Tipo de movimiento">${ASC.TIPOS.map(([k, , u]) => `<button type="button" role="radio" aria-checked="${tipo === k}" class="seg-b t-${k}" data-acc="ascTipo" data-arg="${k}"><i class="pt" aria-hidden="true"></i>${u}</button>`).join("")}</div>
         <div class="asc-fila-nueva">
