@@ -210,7 +210,7 @@ function fbBarra() {
       ${btn(`data-acc="ascRehacer" ${HIST.adelante.length ? "" : "disabled"}`, "rehacer", "Rehacer (Ctrl+Shift+Z)")}
       ${btn('data-acc="ascOjo"', estado.ascOculto ? "ojoNo" : "ojo", estado.ascOculto ? "Mostrar montos" : "Ocultar montos")}
       ${candado}
-      ${btn('data-acc="ascInforme"', "descargar", "Descargar el análisis completo")}
+      ${estado.sel === "hitos" ? btn('data-acc="hitosImprimir"', "imprimir", "Imprimir mis hitos o guardarlos en PDF") : btn('data-acc="ascInforme"', "descargar", "Descargar el análisis completo")}
       <button class="fb-r tam-cab" type="button" data-tam="${amplia ? "normal" : "amplia"}" aria-label="${amplia ? "Volver al tamaño normal" : "Ampliar la pantalla"}">${ic(amplia ? "salirPantalla" : "pantallaCompleta")}</button>
     </div>`;
   const cal = `<div class="rv-paso"><button class="rv-flecha" data-acc="fbAnio" data-arg="-1" aria-label="Año anterior">${ic("izq")}</button>

@@ -292,6 +292,13 @@ private class TextosHitosPdf(val titulo: String, val sub: String, val marca: Str
 /** El botón de imprimir: guarda «Mis hitos» como PDF (A4) para imprimirlo o compartirlo. */
 @Composable
 private fun BotonImprimirHitos(libro: Libro, plata: (Double) -> String) {
+    val imprimir = rememberImprimirHitos(libro, plata)
+    IconButton(onClick = imprimir) { Icon(Icons.Filled.Print, stringResource(R.string.hi_imprimir)) }
+}
+
+/** La acción de imprimir «Mis hitos» (abre el selector para guardar el PDF); la usan la tarjeta y la barra lateral. */
+@Composable
+fun rememberImprimirHitos(libro: Libro, plata: (Double) -> String): () -> Unit {
     val ctx = LocalContext.current
     val l = libro.hitos
     // Los textos se arman aquí (necesitan recursos y plurales); el PDF se dibuja fuera de la composición
@@ -317,7 +324,7 @@ private fun BotonImprimirHitos(libro: Libro, plata: (Double) -> String) {
         if (uri != null) runCatching { ctx.contentResolver.openOutputStream(uri)?.use { pdfHitos(it, filas, cifras, textos) } }
             .onSuccess { com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(ctx.getString(R.string.hi_pdf_ok)) }
     }
-    IconButton(onClick = { guardar.launch("mis-hitos-${hoy()}.pdf") }) { Icon(Icons.Filled.Print, stringResource(R.string.hi_imprimir)) }
+    return { guardar.launch("mis-hitos-${hoy()}.pdf") }
 }
 
 /** Dibuja el PDF: la banda burdeos con la marca, el título, las cifras y la línea de tiempo (lo que viene y lo logrado por año). */

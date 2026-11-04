@@ -45,6 +45,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Print
 import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.ContentCopy
@@ -705,7 +706,11 @@ fun AscensoFinancieroScreen(inicial: String?, onBack: () -> Unit, onAprende: () 
                         else { vm.bloqueo(true); vm.abiertoHasta = System.currentTimeMillis() + libro.minutosCierre * 60_000L }
                     }) { Text(stringResource(R.string.cu_activar_bloqueo)) } },
                     dismissButton = { androidx.compose.material3.TextButton(onClick = { proteger = false }) { Text(stringResource(R.string.cancelar)) } })
-                BotonRiel(Icons.Filled.Download, stringResource(R.string.cu_informe), false, verdeR) {
+                // En «Mis hitos» la barra imprime los hitos (ícono de impresora); en lo demás, descarga el análisis
+                val imprimirHitos = rememberImprimirHitos(libro, plata)
+                if (nivel == NivelCuentas.HitosN && libro.hitos.isNotEmpty())
+                    BotonRiel(Icons.Filled.Print, stringResource(R.string.hi_imprimir), false, verdeR) { imprimirHitos() }
+                else BotonRiel(Icons.Filled.Download, stringResource(R.string.cu_informe), false, verdeR) {
                     InformeFinanciero.imprimir(ctxB, libro); com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(listoB) }
             }
             Migas(nivel, ir)
