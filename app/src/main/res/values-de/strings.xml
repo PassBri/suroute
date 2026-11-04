@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">Diesen doppelten Fixposten ab %1$s entfernen</string>
     <string name="cu_fijo_rep_quitado">Doppelter Fixposten ab %1$s entfernt</string>
     <string name="cu_fijo_repetido">doppelt</string>
+    <string name="cu_traer_mes">Aus %1$s übernehmen</string>
 </resources>

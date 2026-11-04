@@ -1089,6 +1089,17 @@ private fun LazyListScope.mes(ym: YearMonth, libro: Libro, plata: (Double) -> St
                     Icon(Icons.Filled.Add, null, Modifier.size(18.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.cu_registrar))
                 }
             }
+            // Traer el mes anterior: sus movimientos, cada uno en su mismo día de este mes
+            val ant = ym.minusMonths(1)
+            if ((libro.dias.keys + libro.programados.keys).any { it.startsWith(ant.toString()) }) {
+                val ctxT = androidx.compose.ui.platform.LocalContext.current
+                val este = mesFrase(ym.monthValue); val anterior = mesFrase(ant.monthValue)
+                TextButton(onClick = { vm.duplicarMes(ant) { n ->
+                    com.rutaalacima.app.ui.theme.AvisoGlobal.mostrar(if (n > 0) ctxT.getString(R.string.cu_duplicados_mes, n, este) else ctxT.getString(R.string.cu_duplicar_nada, este))
+                } }, modifier = Modifier.padding(top = 4.dp)) {
+                    Icon(Icons.Filled.ContentCopy, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.cu_traer_mes, anterior))
+                }
+            }
             // Duplicar el mes al siguiente: los movimientos que no son fijos, cada uno en su mismo día
             val propios = (libro.dias.keys + libro.programados.keys).count { it.startsWith(ym.toString()) }
             if (propios > 0) {

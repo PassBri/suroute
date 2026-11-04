@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">この重複した固定項目を%1$sから削除</string>
     <string name="cu_fijo_rep_quitado">重複した固定項目を%1$sから削除しました</string>
     <string name="cu_fijo_repetido">重複</string>
+    <string name="cu_traer_mes">%1$sから取り込む</string>
 </resources>

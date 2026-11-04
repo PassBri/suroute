@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">Удалить этот повтор с %1$s</string>
     <string name="cu_fijo_rep_quitado">Повторяющийся платёж удалён с %1$s</string>
     <string name="cu_fijo_repetido">повтор</string>
+    <string name="cu_traer_mes">Перенести из: %1$s</string>
 </resources>

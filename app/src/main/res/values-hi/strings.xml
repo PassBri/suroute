@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">इस दोहराई गई तय मद को %1$s से हटाएँ</string>
     <string name="cu_fijo_rep_quitado">दोहराई गई तय मद %1$s से हटाई गई</string>
     <string name="cu_fijo_repetido">दोहराई गई</string>
+    <string name="cu_traer_mes">%1$s से लाएँ</string>
 </resources>

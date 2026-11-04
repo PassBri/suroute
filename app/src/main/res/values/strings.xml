@@ -3167,4 +3167,5 @@
     <string name="cu_fijo_rep_quitar">Quitar este fijo repetido desde %1$s</string>
     <string name="cu_fijo_rep_quitado">Fijo repetido quitado desde %1$s</string>
     <string name="cu_fijo_repetido">repetido</string>
+    <string name="cu_traer_mes">Traer de %1$s</string>
 </resources>

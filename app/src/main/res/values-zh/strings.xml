@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">从%1$s起删除这个重复的固定项</string>
     <string name="cu_fijo_rep_quitado">已从%1$s起删除重复的固定项</string>
     <string name="cu_fijo_repetido">重复</string>
+    <string name="cu_traer_mes">从%1$s带入</string>
 </resources>

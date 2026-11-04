@@ -243,7 +243,7 @@ DET["finanzas.m"] = arg => {
     migasAsc([["Balance general", "b"], [String(a), "a:" + a], [mayus(MESES[m - 1]), ""]]) + cifras(t) +
     hoja(`<h3 style="margin:0 0 8px">Presupuesto de gastos</h3>${campo("Lo máximo que quieres gastar este mes", `<input type="text" inputmode="decimal" data-resp="${FIN_WB}|${claveFinPresupuesto(ym)}" value="${esc(respuesta(claveFinPresupuesto(ym)))}" placeholder="Ej. ${plata(1500000)}">`)}
       ${uso != null ? `<div class="fin-pres"><div class="barra"><i style="width:${Math.min(100, uso * 100)}%;${uso > 1 ? "background:var(--peligro, #B3261E)" : ""}"></i></div><span class="suave">Gastaste ${plata(t.gas)} de ${plata(pres)}${uso > 1 ? " · te pasaste " + plata(t.gas - pres) : " · te quedan " + plata(pres - t.gas)}</span></div>` : ""}`) +
-    hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Día a día</h3><span class="botones-mini">${movsPropiosMes(ym).length ? `<button class="btn mini" data-acc="ascDuplicarMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[m - 1]} al mismo día de ${MESES[m % 12]}; los fijos ya se repiten solos">${ic("copiar")} Duplicar al mes siguiente</button>` : ""}<button class="btn mini lleno" data-sel="d:${hoyI.startsWith(ym) ? hoyI : ym + "-01"}">${ic("mas")} Registrar</button></span></div>
+    hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Día a día</h3><span class="botones-mini">${movsPropiosMes(ant).length ? `<button class="btn mini" data-acc="ascTraerMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[(m + 10) % 12]} al mismo día de ${MESES[m - 1]}; los fijos ya se repiten solos">${ic("copiar")} Traer de ${MESES[(m + 10) % 12]}</button>` : ""}${movsPropiosMes(ym).length ? `<button class="btn mini" data-acc="ascDuplicarMes" data-arg="${ym}" title="Copia los movimientos de ${MESES[m - 1]} al mismo día de ${MESES[m % 12]}; los fijos ya se repiten solos">${ic("copiar")} Duplicar al mes siguiente</button>` : ""}<button class="btn mini lleno" data-sel="d:${hoyI.startsWith(ym) ? hoyI : ym + "-01"}">${ic("mas")} Registrar</button></span></div>
       ${filas.length ? grafica(filas) + tablaPeriodos(filas, "Día", t) : `<p class="suave">Aún no hay movimientos en ${MESES[m - 1]}.</p>`}`) +
     fijosHoja(ym) + mochilas(t) + porCategoria(t), "max-width:980px");
 };
@@ -396,6 +396,8 @@ Object.assign(ACC, {
     toast(`Copiados a ${m2}: ${nuevos} ${nuevos === 1 ? "movimiento" : "movimientos"}${iguales ? ` (${iguales} ya estaban)` : ""}`, { accion: "Deshacer", alHacer: () => restaurar2(antes) });
     pintarDetalle();
   },
+  /** Trae a [ym] los movimientos del mes anterior, cada uno en su mismo día (igual que «Duplicar al mes siguiente» desde ese mes). */
+  ascTraerMes(el, ym) { ACC.ascDuplicarMes(el, ymMas(ym, -1)); },
   ascMonedaElegir(el) { responder(ASC.WB, "fin#moneda", el.value); toast(`Tus cuentas quedan en ${nombreMoneda(el.value)}`); },
 });
 window.FORMULARIOS = Object.assign(window.FORMULARIOS || {}, {

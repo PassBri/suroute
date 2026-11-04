@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">Remove this repeated fixed item from %1$s</string>
     <string name="cu_fijo_rep_quitado">Repeated fixed item removed from %1$s</string>
     <string name="cu_fijo_repetido">repeated</string>
+    <string name="cu_traer_mes">Bring from %1$s</string>
 </resources>

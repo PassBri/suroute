@@ -3158,4 +3158,5 @@
     <string name="cu_fijo_rep_quitar">احذف هذا البند المكرر من %1$s</string>
     <string name="cu_fijo_rep_quitado">حُذف البند الثابت المكرر من %1$s</string>
     <string name="cu_fijo_repetido">مكرر</string>
+    <string name="cu_traer_mes">جلب من %1$s</string>
 </resources>
