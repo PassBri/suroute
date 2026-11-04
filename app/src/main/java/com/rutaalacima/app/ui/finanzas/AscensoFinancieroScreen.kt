@@ -1168,14 +1168,19 @@ private fun NuevoMovimiento(plata: (Double) -> String, dia: Int, onAgregar: (Tip
         }
     }
     RutaCard {
-        SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
-            Tipo.entries.forEachIndexed { i, t ->
-                SegmentedButton(selected = tipo == t, onClick = { tipo = t }, shape = SegmentedButtonDefaults.itemShape(i, Tipo.entries.size),
-                    colors = SegmentedButtonDefaults.colors(activeContainerColor = colorTipo(t).copy(alpha = 0.16f), activeContentColor = colorTipo(t)),
-                    icon = {}) { Text(nombreTipo(t, plural = false), maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelMedium) }
+        // Tipo: chips con su punto de color, en una fila que se desliza si no cabe
+        Row(Modifier.fillMaxWidth().horizontalScroll(androidx.compose.foundation.rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Tipo.entries.forEach { t ->
+                androidx.compose.material3.FilterChip(
+                    selected = tipo == t, onClick = { tipo = t },
+                    label = { Text(nombreTipo(t, plural = false), maxLines = 1) },
+                    leadingIcon = { Box(Modifier.size(8.dp).clip(CircleShape).background(colorTipo(t))) },
+                    colors = androidx.compose.material3.FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = colorTipo(t).copy(alpha = 0.16f), selectedLabelColor = colorTipo(t), selectedLeadingIconColor = colorTipo(t)),
+                )
             }
         }
-        Spacer(Modifier.height(12.dp))
+        Spacer(Modifier.height(6.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             OutlinedTextField(monto, { monto = it; error = false }, label = { Text(stringResource(R.string.cu_monto)) }, singleLine = true, isError = error,
                 supportingText = if (error) { { Text(stringResource(R.string.cu_escribe_monto)) } } else null,
@@ -1184,20 +1189,22 @@ private fun NuevoMovimiento(plata: (Double) -> String, dia: Int, onAgregar: (Tip
                 modifier = Modifier.weight(1f))
             SelectorCategoria(tipo, cat, Modifier.weight(1.2f)) { cat = it }
         }
-        OutlinedTextField(nota, { nota = it.take(120) }, label = { Text(stringResource(R.string.cu_concepto)) }, singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done), keyboardActions = KeyboardActions(onDone = { agregar() }),
-            modifier = Modifier.fillMaxWidth().padding(top = 6.dp))
-        Row(Modifier.fillMaxWidth().padding(top = 4.dp).clip(RoundedCornerShape(8.dp))
-            .toggleable(repite, role = androidx.compose.ui.semantics.Role.Checkbox) { repite = it }.padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            androidx.compose.material3.Checkbox(repite, null)
-            Icon(Icons.Filled.Repeat, null, Modifier.size(18.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            Spacer(Modifier.width(6.dp))
-            Column {
-                Text(stringResource(R.string.cu_repite_dia, dia), style = MaterialTheme.typography.bodyMedium)
-                Text(stringResource(R.string.cu_repite_ej), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        // Concepto · Cada mes · Agregar, en una sola fila
+        val repiteDesc = stringResource(R.string.cu_repite_dia, dia)
+        Row(Modifier.fillMaxWidth().padding(top = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            OutlinedTextField(nota, { nota = it.take(120) }, label = { Text(stringResource(R.string.cu_concepto)) }, singleLine = true,
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done), keyboardActions = KeyboardActions(onDone = { agregar() }),
+                modifier = Modifier.weight(1f))
+            androidx.compose.material3.FilledTonalIconToggleButton(checked = repite, onCheckedChange = { repite = it },
+                modifier = Modifier.padding(top = 6.dp).size(48.dp).semantics { contentDescription = repiteDesc }) {
+                Icon(Icons.Filled.Repeat, null)
+            }
+            androidx.compose.material3.FilledIconButton(onClick = agregar, modifier = Modifier.padding(top = 6.dp).size(52.dp)) {
+                Icon(Icons.Filled.Add, stringResource(R.string.cu_agregar))
             }
         }
-        Button(onClick = agregar, modifier = Modifier.fillMaxWidth().padding(top = 6.dp)) { Text(stringResource(R.string.cu_agregar)) }
+        if (repite) Text(stringResource(R.string.cu_repite_dia, dia) + " · " + stringResource(R.string.cu_repite_ej),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp, start = 4.dp))
     }
 }
 
@@ -1234,7 +1241,7 @@ private fun FilaMovimiento(x: Mov, fecha: String, plata: (Double) -> String, vm:
     val nota = x.n.ifBlank { if (x.agenda != null) stringResource(R.string.cu_registro_dia) else "" }
     Row(
         Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceContainerLowest)
-            .clickable(onClickLabel = stringResource(R.string.cu_editar_mov)) { editar = true }.padding(start = 12.dp, top = 8.dp, bottom = 8.dp),
+            .clickable(onClickLabel = stringResource(R.string.cu_editar_mov)) { editar = true }.padding(start = 8.dp, top = 4.dp, bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         // Asa para ordenar: se arrastra arriba o abajo; con lector de pantalla, acciones Subir y Bajar
@@ -1269,7 +1276,10 @@ private fun FilaMovimiento(x: Mov, fecha: String, plata: (Double) -> String, vm:
         if (x.agenda == null) {
             val dia = fecha.takeLast(2).toInt()
             val etiqueta = stringResource(R.string.cu_repite_dia, dia) + if (x.prog) " · " + stringResource(R.string.cu_fijo_programado) else ""
-            androidx.compose.material3.Checkbox(x.fx != null, { vm.repetir(fecha, x, it) }, Modifier.semantics { contentDescription = etiqueta })
+            androidx.compose.material3.IconToggleButton(x.fx != null, { vm.repetir(fecha, x, it) }, Modifier.size(40.dp).semantics { contentDescription = etiqueta }) {
+                Icon(Icons.Filled.Repeat, null, Modifier.size(20.dp),
+                    tint = if (x.fx != null) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f))
+            }
         }
         IconButton(onClick = {
             vm.borrar(fecha, x)

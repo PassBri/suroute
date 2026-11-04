@@ -5562,3 +5562,88 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .coach-aviso { display: flex; gap: 8px; align-items: flex-start; align-self: stretch; padding: 10px 12px; border-radius: 12px; background: var(--hoja-2); color: var(--tinta-suave); font-size: 13.5px; }
 .coach-aviso svg { width: 18px; height: 18px; flex: none; fill: currentColor; }
 .coach-limites { margin: 4px 0 0; font-size: 12px; color: var(--tinta-suave); text-align: center; }
+
+/* ---------- Ascenso financiero · registro del día compacto (M3): menos alto, todo a la mano ---------- */
+#detalle[data-sec="finanzas"] .asc-compacto { gap: 10px; }
+/* Tipo: chips de filtro con su punto de color, en una sola fila */
+#detalle[data-sec="finanzas"] .asc-compacto .seg { display: flex; flex-wrap: nowrap; gap: 6px; border: 0; border-radius: 0; overflow-x: auto; scrollbar-width: none; padding: 2px 0; }
+#detalle[data-sec="finanzas"] .asc-compacto .seg::-webkit-scrollbar { display: none; }
+#detalle[data-sec="finanzas"] .asc-compacto .seg-b, #detalle[data-sec="finanzas"] .asc-compacto .seg-b + .seg-b {
+  flex: 1 0 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 0 12px;
+  border: 1px solid var(--m3-borde-fuerte); border-radius: 8px; font-size: 13.5px; overflow: visible; }
+#detalle[data-sec="finanzas"] .asc-compacto .seg-b[aria-checked="true"] { border-color: transparent; }
+#detalle[data-sec="finanzas"] .asc-compacto .seg-b[aria-checked="true"]::before { content: none; }
+.asc-compacto .pt { width: 8px; height: 8px; border-radius: 50%; flex: none; background: currentColor; opacity: .55; }
+.asc-compacto .t-ing .pt { background: var(--c-ing); opacity: 1; } .asc-compacto .t-gas .pt { background: var(--c-gas); opacity: 1; }
+.asc-compacto .t-aho .pt { background: var(--c-aho); opacity: 1; } .asc-compacto .t-inv .pt { background: var(--c-inv); opacity: 1; }
+.asc-compacto .t-gen .pt { background: var(--c-gen); opacity: 1; }
+/* Monto · Categoría · Concepto · Cada mes · Agregar, en una fila */
+.asc-compacto .asc-fila-nueva { grid-template-columns: minmax(120px, 1fr) minmax(140px, 1.1fr) minmax(150px, 2fr) auto auto; gap: 8px; align-items: end; }
+.asc-compacto .asc-fila-nueva .campo { gap: 2px; margin: 0; }
+.asc-compacto .asc-fila-nueva .campo > span { font-size: 12px; min-height: 18px; display: flex; align-items: center; gap: 8px; }
+#detalle[data-sec="finanzas"] .asc-compacto input, #detalle[data-sec="finanzas"] .asc-compacto select { min-height: 44px; padding-top: 8px; padding-bottom: 8px; }
+.asc-compacto .asc-agregar { min-height: 44px; display: inline-flex; align-items: center; gap: 6px; padding: 0 18px 0 14px; }
+.asc-compacto .asc-agregar svg { width: 20px; height: 20px; fill: currentColor; }
+/* Interruptor «Cada mes»: un ícono que se enciende (el checkbox sigue ahí para el teclado y el lector) */
+.rep-tog { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; min-width: 44px; padding: 0 12px;
+  border: 1px solid var(--m3-borde-fuerte, var(--linea)); border-radius: 8px; cursor: pointer; color: var(--tinta-suave); font-size: 13.5px; white-space: nowrap;
+  transition: background .15s, color .15s, border-color .15s; user-select: none; -webkit-user-select: none; }
+.rep-tog input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.rep-tog svg { width: 18px; height: 18px; fill: currentColor; flex: none; }
+.rep-tog:has(input:checked) { background: var(--oro-suave); border-color: transparent; color: var(--burdeos); font-weight: 500; }
+.rep-tog:has(input:focus-visible) { outline: 2px solid var(--burdeos); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .rep-tog:hover { border-color: var(--burdeos); } }
+.asc-compacto .asc-repite { font-size: 13.5px; }
+.asc-compacto .asc-repite input { width: 100%; height: 100%; }
+
+/* La tabla del día: filas bajas, acciones discretas hasta pasar el puntero */
+#detalle[data-sec="finanzas"] .asc-movs th, #detalle[data-sec="finanzas"] .asc-movs td { padding: 4px 8px; }
+#detalle[data-sec="finanzas"] .asc-movs input, #detalle[data-sec="finanzas"] .asc-movs select { min-height: 34px; padding: 4px 8px; }
+#detalle[data-sec="finanzas"] .asc-movs .pildora { font-size: 12px; padding: 2px 8px; }
+#detalle[data-sec="finanzas"] .asc-movs td.num { width: 140px; }
+#detalle[data-sec="finanzas"] .asc-movs td:nth-child(4) { width: auto; }
+#detalle[data-sec="finanzas"] .asc-movs td.acc-mov { width: 116px; white-space: nowrap; }
+.asc-movs .acc-mov { display: table-cell; }
+.asc-movs .acc-mov .rb { width: 36px; height: 36px; display: inline-grid; vertical-align: middle; }
+.asc-movs .acc-mov .rb svg { width: 20px; height: 20px; }
+.asc-movs td.cada-mes .rep-tog { min-height: 36px; min-width: 36px; padding: 0; border-color: transparent; }
+.asc-movs td.cada-mes .rep-tog input { width: 100%; height: 100%; }
+.asc-movs td.cada-mes .rep-tog:has(input:not(:checked)) { color: color-mix(in srgb, var(--tinta-suave) 60%, transparent); }
+@media (hover: hover) and (pointer: fine) {
+  .asc-movs tbody tr .acc-mov .rb:not(.con) { opacity: .4; transition: opacity .15s; }
+  .asc-movs tbody tr:hover .acc-mov .rb, .asc-movs tbody tr:focus-within .acc-mov .rb { opacity: 1; }
+  .asc-movs tbody tr:hover { background: color-mix(in srgb, var(--tinta) 3%, transparent); }
+}
+
+/* Teléfono: el formulario en dos filas y cada movimiento en dos líneas, sin desplazarse de lado */
+@media (max-width: 700px) {
+  .asc-compacto .asc-fila-nueva { grid-template-columns: minmax(0, 1fr) minmax(0, .5fr) 48px 48px; }
+  .asc-compacto .asc-fila-nueva label:nth-child(2) { grid-column: 2 / -1; }
+  .asc-compacto .asc-fila-nueva label:nth-child(3) { grid-column: 1 / 3; }
+  .asc-compacto .asc-fila-nueva .campo > span { white-space: nowrap; }
+  .asc-compacto .asc-fila-nueva .btn { grid-column: auto; }
+  .asc-compacto .rep-txt, .asc-compacto .asc-agregar span { display: none; }
+  .asc-compacto .asc-agregar { width: 48px; min-height: 48px; padding: 0; justify-content: center; border-radius: 50%; }
+  .asc-compacto .asc-agregar svg { width: 24px; height: 24px; }
+  .asc-compacto .asc-repite { min-height: 48px; min-width: 48px; padding: 0; }
+  #detalle[data-sec="finanzas"] .asc-compacto .seg-b, #detalle[data-sec="finanzas"] .asc-compacto .seg-b + .seg-b { flex: 0 0 auto; }
+}
+@media (max-width: 640px) {
+  #detalle[data-sec="finanzas"] .asc-tabla { border: 0; border-radius: 0; margin-top: 4px; overflow: visible; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody tr { display: grid; grid-template-columns: 24px auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "asa tipo cat cat monto" "asa nota nota rep acc"; align-items: center; gap: 2px 4px; padding: 6px 0; border-bottom: 1px solid var(--linea); }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td { padding: 0; border: 0; width: auto; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(1) { grid-area: asa; } #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(2) { grid-area: tipo; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(3) { grid-area: cat; min-width: 0; } #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(4) { grid-area: nota; min-width: 0; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(5) { grid-area: monto; width: 108px; } #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(6) { grid-area: rep; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td:nth-child(7) { grid-area: acc; width: auto; }
+  #detalle[data-sec="finanzas"] .asc-movs tbody td[colspan] { grid-column: 1 / -1; grid-area: auto; }
+  #detalle[data-sec="finanzas"] .asc-movs td select { min-width: 0; }
+  #detalle[data-sec="finanzas"] .asc-movs .asa-col { width: 24px; padding: 0; }
+  #detalle[data-sec="finanzas"] .asc-asa { width: 24px; }
+  #detalle[data-sec="finanzas"] .asc-movs input.num { font-weight: 600; }
+  .asc-movs .acc-mov .rb, .asc-movs td.cada-mes .rep-tog { width: 40px; height: 40px; min-height: 40px; }
+  #detalle[data-sec="finanzas"] .asc-movs tfoot tr { display: grid; grid-template-columns: 1fr auto; padding: 8px 0; }
+  #detalle[data-sec="finanzas"] .asc-movs tfoot th, #detalle[data-sec="finanzas"] .asc-movs tfoot td { background: none; padding: 0; }
+  #detalle[data-sec="finanzas"] .asc-movs tfoot td:not(.num) { display: none; }
+}
