@@ -3178,4 +3178,11 @@
         <item quantity="one">Un élément fixe est en double et compté deux fois. Ouvrez « Voir et modifier ».</item>
         <item quantity="other">%1$d éléments fixes sont en double et comptés deux fois. Ouvrez « Voir et modifier ».</item>
     </plurals>
+    <string name="org_titulo">Organiser le bilan</string>
+    <string name="org_ayuda">Montez ou descendez chaque carte à votre goût. L’ordre s’applique aussi à SuRoute Web.</string>
+    <string name="org_original">Ordre d’origine</string>
+    <string name="org_cifras">Les chiffres</string>
+    <string name="cat_otras">Autres (%1$d)</string>
+    <string name="cat_salieron">%1$s sont sortis entre dépenses, épargne, investissement et dons</string>
+    <string name="cat_salio">sorti</string>
 </resources>

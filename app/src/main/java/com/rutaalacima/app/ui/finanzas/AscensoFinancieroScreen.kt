@@ -29,6 +29,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
@@ -147,6 +148,8 @@ data class Libro(val dias: Map<String, List<Mov>> = emptyMap(), val moneda: Stri
     val metasDatos: List<com.rutaalacima.app.domain.model.MetasFin.Meta> by lazy { com.rutaalacima.app.domain.model.MetasFin.leer(respuestas[com.rutaalacima.app.domain.model.MetasFin.CLAVE]) }
     val metas: List<com.rutaalacima.app.domain.model.MetasFin.Hoy> by lazy { com.rutaalacima.app.domain.model.MetasFin.hoy(metasDatos, dias, hoy()) }
     val activos: List<com.rutaalacima.app.domain.model.Patrimonio.Activo> by lazy { com.rutaalacima.app.domain.model.Patrimonio.leer(respuestas[com.rutaalacima.app.domain.model.Patrimonio.CLAVE]) }
+    /** El orden de las tarjetas del balance que eligió la persona (vacío: el de siempre). */
+    val ordenBalance: List<String> by lazy { runCatching { kotlinx.serialization.json.Json.decodeFromString(kotlinx.serialization.serializer<List<String>>(), respuestas["fin#orden-balance"].orEmpty()) }.getOrDefault(emptyList()) }
     val fijos: List<com.rutaalacima.app.domain.model.Fijos.Fijo> by lazy { com.rutaalacima.app.domain.model.Fijos.leer(respuestas[com.rutaalacima.app.domain.model.Fijos.CLAVE]) }
     val publica get() = respuestas["fin#visibilidad"] == "publica"
     val bloqueo get() = respuestas["fin#bloqueo"] == "1"
@@ -361,6 +364,8 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
 
     fun elegirMoneda(m: String) = viewModelScope.launch { escribir(Cuentas.CLAVE_MONEDA, m) }
     private fun poner(clave: String, v: String) = viewModelScope.launch { escribir(clave, v) }
+    /** Guarda el orden de las tarjetas del balance (lista vacía: vuelve al de siempre). */
+    fun ordenBalance(l: List<String>) = poner("fin#orden-balance", if (l.isEmpty()) "" else kotlinx.serialization.json.Json.encodeToString(kotlinx.serialization.serializer<List<String>>(), l))
 
     // ---------------------------------------------------------------- Categorías propias
     fun crearCategoria(t: Tipo, nombre: String, verde: Boolean): String? {
@@ -940,19 +945,32 @@ fun CategoriasCard(s: Cuentas.Suma, plata: (Double) -> String) {
         }
         return
     }
-    val max = l.first().value
+    // Una dona: hasta 7 categorías con color propio y el resto en «Otras» (igual que la web)
+    val todas = s.categorias.filterKeys { it.first != Tipo.ING }.entries.filter { it.value > 0 }.sortedByDescending { it.value }
+    val colores = coloresCategorias()
+    val partes = todas.take(7).mapIndexed { i, (k, v) -> Triple(nombreCategoria(k.first, k.second), v, colores[i]) } +
+        (if (todas.size > 7) listOf(Triple(stringResource(R.string.cat_otras, todas.size - 7), todas.drop(7).sumOf { it.value }, colores[7])) else emptyList())
+    val tipos = todas.take(7).map { it.key.first } + if (todas.size > 7) listOf<Tipo?>(null) else emptyList()
+    val total = partes.sumOf { it.second }
     RutaCard {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(stringResource(R.string.cu_a_donde), style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
             BotonCrearCategoria()
         }
-        l.forEach { (k, v) ->
-            Row(Modifier.padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text(nombreCategoria(k.first, k.second), Modifier.width(130.dp), style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Box(Modifier.weight(1f).height(8.dp).clip(RoundedCornerShape(4.dp)).background(MaterialTheme.colorScheme.surfaceVariant)) {
-                    Box(Modifier.fillMaxWidth((v / max).toFloat()).fillMaxHeight().background(colorTipo(k.first)))
-                }
-                Text(plata(v), Modifier.width(104.dp), style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.End, maxLines = 1)
+        Text(stringResource(R.string.cat_salieron, plata(total)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        DonaGrafica(partes, total, partes.joinToString(", ") { "${it.first} ${Math.round(it.second / total * 100)} %" }, plata(total), stringResource(R.string.cat_salio))
+        partes.forEachIndexed { i, (n, v, c) ->
+            if (i > 0) androidx.compose.material3.HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+            Row(Modifier.fillMaxWidth().padding(vertical = 7.dp), verticalAlignment = Alignment.CenterVertically) {
+                Box(Modifier.size(10.dp).clip(RoundedCornerShape(3.dp)).background(c))
+                Spacer(Modifier.width(10.dp))
+                Text(n, Modifier.weight(1f, fill = false), style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                val t = tipos[i]
+                if (t != null && t != Tipo.GAS) Text(nombreTipo(t, plural = false), Modifier.padding(start = 6.dp).clip(RoundedCornerShape(50)).background(colorTipo(t).copy(alpha = 0.14f)).padding(horizontal = 6.dp, vertical = 1.dp),
+                    style = MaterialTheme.typography.labelSmall, color = colorTipo(t))
+                Spacer(Modifier.weight(1f).widthIn(min = 8.dp))
+                Text(plata(v), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+                Text("${Math.round(v / total * 100)} %", Modifier.width(48.dp), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.End)
             }
         }
     }
@@ -999,10 +1017,13 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
             FilledTonalButton(onClick = { ir(NivelCuentas.Mes(YearMonth.from(hoy()))) }, Modifier.weight(1f)) { Text(nombreMes(hoy().monthValue), maxLines = 1) }
         }
     }
-    item(key = "salud") { SaludAcceso(libro.salud(null), null) { ir(NivelCuentas.SaludN(null)) } }
-    item(key = "cifras") { CifrasCuentas(t, plata) }
-    item(key = "dona") { DonaDestino(t, plata) }
-    if (t.n > 0) item(key = "ult12") {
+    // Las tarjetas del balance, en el orden que eligió la persona (igual que la web: "fin#orden-balance")
+    val secciones = mutableListOf<Pair<String, @Composable () -> Unit>>()
+    fun sec(k: String, c: @Composable () -> Unit) { secciones += k to c }
+    sec("salud") { SaludAcceso(libro.salud(null), null) { ir(NivelCuentas.SaludN(null)) } }
+    sec("cifras") { CifrasCuentas(t, plata) }
+    sec("dona") { DonaDestino(t, plata) }
+    if (t.n > 0) sec("meses") {
         val hoyYm = YearMonth.from(hoy())
         val filas12 = (11 downTo 0).map { k -> val ym = hoyYm.minusMonths(k.toLong())
             FilaPeriodo("${nombreMes(ym.monthValue)} ${ym.year}", nombreMes(ym.monthValue).take(3), libro.suma("$ym-"), NivelCuentas.Mes(ym), ym == hoyYm) }
@@ -1013,8 +1034,8 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
             GraficaPeriodos(filas12, plata, ir)
         }
     }
-    if (libro.dias.isNotEmpty()) item(key = "grafica") { GraficaAcceso { ir(NivelCuentas.GraficaN) } }
-    item(key = "tabla") {
+    if (libro.dias.isNotEmpty()) sec("grafica") { GraficaAcceso { ir(NivelCuentas.GraficaN) } }
+    sec("anios") {
         RutaCard {
             Text(stringResource(R.string.cu_anio_por_anio), style = MaterialTheme.typography.titleMedium)
             Text(stringResource(R.string.cu_toca_anio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -1026,13 +1047,17 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
-    item(key = "metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
-    item(key = "deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
-    item(key = "fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }
-    item(key = "mochilas") { MochilasCard(t, plata) }
-    item(key = "cats") { CategoriasCard(t, plata) }
-    item(key = "privacidad") { PrivacidadCard(libro, vm) }
-    item(key = "moneda") { MonedaCard(libro.moneda) { vm.elegirMoneda(it) } }
+    sec("metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
+    sec("deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
+    sec("fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }
+    sec("mochilas") { MochilasCard(t, plata) }
+    sec("categorias") { CategoriasCard(t, plata) }
+    sec("privacidad") { PrivacidadCard(libro, vm) }
+    sec("moneda") { MonedaCard(libro.moneda) { vm.elegirMoneda(it) } }
+    val orden = libro.ordenBalance
+    val pos = { k: String -> orden.indexOf(k).let { if (it < 0) 1000 + secciones.indexOfFirst { s -> s.first == k } else it } }
+    secciones.sortedBy { pos(it.first) }.forEach { (k, c) -> item(key = "bal-$k") { c() } }
+    item(key = "organizar") { OrganizarBalance(secciones.map { it.first }.sortedBy(pos), orden.isNotEmpty()) { vm.ordenBalance(it) } }
     item(key = "aprende") {
         RutaCard(onClick = onAprende) {
             Row(verticalAlignment = Alignment.CenterVertically) {

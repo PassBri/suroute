@@ -3178,4 +3178,11 @@
         <item quantity="one">One fixed item is repeated and counted twice. Open it in “View and edit”.</item>
         <item quantity="other">%1$d fixed items are repeated and counted twice. Open them in “View and edit”.</item>
     </plurals>
+    <string name="org_titulo">Arrange the balance</string>
+    <string name="org_ayuda">Move each card up or down as you like. The order is also used on SuRoute Web.</string>
+    <string name="org_original">Original order</string>
+    <string name="org_cifras">The figures</string>
+    <string name="cat_otras">Others (%1$d)</string>
+    <string name="cat_salieron">%1$s went out across spending, saving, investing and giving</string>
+    <string name="cat_salio">went out</string>
 </resources>

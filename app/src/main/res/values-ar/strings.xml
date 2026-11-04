@@ -3178,4 +3178,11 @@
         <item quantity="one">بند ثابت مكرر ويُحتسب مرتين. افتحه في «عرض وتعديل».</item>
         <item quantity="other">%1$d بنود ثابتة مكررة وتُحتسب مرتين. افتحها في «عرض وتعديل».</item>
     </plurals>
+    <string name="org_titulo">ترتيب الميزانية</string>
+    <string name="org_ayuda">انقل كل بطاقة لأعلى أو لأسفل كما تشاء. يُستخدم الترتيب أيضًا في SuRoute على الويب.</string>
+    <string name="org_original">الترتيب الأصلي</string>
+    <string name="org_cifras">الأرقام</string>
+    <string name="cat_otras">أخرى (%1$d)</string>
+    <string name="cat_salieron">خرج %1$s بين المصاريف والادخار والاستثمار والعطاء</string>
+    <string name="cat_salio">خرج</string>
 </resources>

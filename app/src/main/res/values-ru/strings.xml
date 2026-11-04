@@ -3178,4 +3178,11 @@
         <item quantity="one">Постоянный платёж повторяется и считается дважды. Откройте «Смотреть и менять».</item>
         <item quantity="other">Постоянные платежи (%1$d) повторяются и считаются дважды. Откройте «Смотреть и менять».</item>
     </plurals>
+    <string name="org_titulo">Упорядочить баланс</string>
+    <string name="org_ayuda">Перемещайте карточки вверх и вниз как удобно. Порядок действует и в SuRoute Web.</string>
+    <string name="org_original">Исходный порядок</string>
+    <string name="org_cifras">Цифры</string>
+    <string name="cat_otras">Другие (%1$d)</string>
+    <string name="cat_salieron">Ушло %1$s на расходы, сбережения, инвестиции и помощь</string>
+    <string name="cat_salio">ушло</string>
 </resources>

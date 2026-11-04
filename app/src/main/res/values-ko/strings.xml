@@ -3178,4 +3178,11 @@
         <item quantity="one">고정 항목 하나가 중복되어 두 번 계산됩니다. «보기 및 편집»에서 여세요.</item>
         <item quantity="other">고정 항목 %1$d개가 중복되어 두 번 계산됩니다. «보기 및 편집»에서 여세요.</item>
     </plurals>
+    <string name="org_titulo">잔액 정리</string>
+    <string name="org_ayuda">각 카드를 원하는 대로 위아래로 옮기세요. 순서는 SuRoute 웹에도 적용됩니다.</string>
+    <string name="org_original">원래 순서</string>
+    <string name="org_cifras">숫자</string>
+    <string name="cat_otras">기타 (%1$d)</string>
+    <string name="cat_salieron">지출, 저축, 투자, 나눔으로 %1$s가 나갔습니다</string>
+    <string name="cat_salio">나감</string>
 </resources>

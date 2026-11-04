@@ -3178,4 +3178,11 @@
         <item quantity="one">Ein Fixposten ist doppelt und wird zweimal gezählt. Öffnen Sie „Ansehen und bearbeiten“.</item>
         <item quantity="other">%1$d Fixposten sind doppelt und werden zweimal gezählt. Öffnen Sie „Ansehen und bearbeiten“.</item>
     </plurals>
+    <string name="org_titulo">Bilanz anordnen</string>
+    <string name="org_ayuda">Verschieben Sie jede Karte nach oben oder unten. Die Reihenfolge gilt auch in SuRoute Web.</string>
+    <string name="org_original">Ursprüngliche Reihenfolge</string>
+    <string name="org_cifras">Die Zahlen</string>
+    <string name="cat_otras">Weitere (%1$d)</string>
+    <string name="cat_salieron">%1$s gingen hinaus für Ausgaben, Sparen, Investieren und Geben</string>
+    <string name="cat_salio">hinaus</string>
 </resources>

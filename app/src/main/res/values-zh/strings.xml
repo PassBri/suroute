@@ -3178,4 +3178,11 @@
         <item quantity="one">有 1 个固定项重复，被计算了两次。请在“查看和编辑”中打开。</item>
         <item quantity="other">有 %1$d 个固定项重复，被计算了两次。请在“查看和编辑”中打开。</item>
     </plurals>
+    <string name="org_titulo">整理总览</string>
+    <string name="org_ayuda">按你的喜好上下移动每张卡片。此顺序也适用于 SuRoute 网页版。</string>
+    <string name="org_original">原始顺序</string>
+    <string name="org_cifras">数字</string>
+    <string name="cat_otras">其他（%1$d）</string>
+    <string name="cat_salieron">支出、储蓄、投资和给予共流出 %1$s</string>
+    <string name="cat_salio">流出</string>
 </resources>

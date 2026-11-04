@@ -3178,4 +3178,11 @@
         <item quantity="one">एक तय मद दोहराई गई है और दो बार गिनी जा रही है। «देखें और बदलें» में खोलें।</item>
         <item quantity="other">%1$d तय मदें दोहराई गई हैं और दो बार गिनी जा रही हैं। «देखें और बदलें» में खोलें।</item>
     </plurals>
+    <string name="org_titulo">बैलेंस व्यवस्थित करें</string>
+    <string name="org_ayuda">हर कार्ड को अपनी पसंद से ऊपर या नीचे करें। यही क्रम SuRoute वेब पर भी लागू होता है।</string>
+    <string name="org_original">मूल क्रम</string>
+    <string name="org_cifras">आँकड़े</string>
+    <string name="cat_otras">अन्य (%1$d)</string>
+    <string name="cat_salieron">खर्च, बचत, निवेश और दान में %1$s गए</string>
+    <string name="cat_salio">गया</string>
 </resources>

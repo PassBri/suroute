@@ -3187,4 +3187,11 @@
         <item quantity="one">Un fijo está repetido y se cuenta dos veces. Ábrelo en «Ver y editar».</item>
         <item quantity="other">%1$d fijos están repetidos y se cuentan dos veces. Ábrelos en «Ver y editar».</item>
     </plurals>
+    <string name="org_titulo">Organizar el balance</string>
+    <string name="org_ayuda">Sube o baja cada tarjeta a tu gusto. El orden también se usa en SuRoute Web.</string>
+    <string name="org_original">Orden original</string>
+    <string name="org_cifras">Las cifras</string>
+    <string name="cat_otras">Otras (%1$d)</string>
+    <string name="cat_salieron">Salieron %1$s entre gastos, ahorro, inversión y dar</string>
+    <string name="cat_salio">salió</string>
 </resources>

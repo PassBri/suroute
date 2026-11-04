@@ -3178,4 +3178,11 @@
         <item quantity="one">Um fixo está repetido e conta duas vezes. Abra em «Ver e editar».</item>
         <item quantity="other">%1$d fixos estão repetidos e contam duas vezes. Abra em «Ver e editar».</item>
     </plurals>
+    <string name="org_titulo">Organizar o balanço</string>
+    <string name="org_ayuda">Suba ou desça cada cartão como preferir. A ordem também vale no SuRoute Web.</string>
+    <string name="org_original">Ordem original</string>
+    <string name="org_cifras">Os números</string>
+    <string name="cat_otras">Outras (%1$d)</string>
+    <string name="cat_salieron">Saíram %1$s entre gastos, poupança, investimento e doações</string>
+    <string name="cat_salio">saiu</string>
 </resources>

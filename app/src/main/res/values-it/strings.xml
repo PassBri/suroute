@@ -3178,4 +3178,11 @@
         <item quantity="one">Una voce fissa è ripetuta e conta due volte. Aprila in «Vedi e modifica».</item>
         <item quantity="other">%1$d voci fisse sono ripetute e contano due volte. Aprile in «Vedi e modifica».</item>
     </plurals>
+    <string name="org_titulo">Organizza il bilancio</string>
+    <string name="org_ayuda">Sposta ogni scheda su o giù come preferisci. L’ordine vale anche su SuRoute Web.</string>
+    <string name="org_original">Ordine originale</string>
+    <string name="org_cifras">Le cifre</string>
+    <string name="cat_otras">Altre (%1$d)</string>
+    <string name="cat_salieron">Sono usciti %1$s tra spese, risparmio, investimento e dono</string>
+    <string name="cat_salio">uscito</string>
 </resources>

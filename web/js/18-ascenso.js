@@ -141,11 +141,24 @@ function mochilas(s) {
 }
 /** En qué se fue el dinero: categorías de mayor a menor, con barras a escala. */
 function porCategoria(s) {
-  const l = Object.entries(s.cat).filter(([k]) => !k.startsWith("ing:")).sort((a, b) => b[1] - a[1]).slice(0, 8);
-  if (!l.length) return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">¿A dónde fue tu dinero?</h3><button class="btn mini" data-acc="ascCrearCat" data-arg="gas">${ic("mas")} Crear categoría</button></div><p class="suave" style="margin:8px 0 0">Cuando anotes gastos verás aquí en qué se van. Crea tus propias categorías: Mascotas, Gimnasio, Regalos…</p>`);
-  const max = l[0][1];
-  return hoja(`<div class="cab-lista-btn" style="margin-bottom:10px"><h3 style="margin:0">¿A dónde fue tu dinero?</h3><button class="btn mini" data-acc="ascCrearCat" data-arg="gas">${ic("mas")} Crear categoría</button></div><div class="asc-cats">${l.map(([k, v]) => { const [t, c] = k.split(":"), cat = catDe(t, c);
-    return `<div class="asc-cat"><span>${esc(cat?.[1] || c)}</span><span class="barra-c"><i class="b-${t}" style="width:${(v / max * 100).toFixed(1)}%"></i></span><span class="num">${plata(v)}</span></div>`; }).join("")}</div>`);
+  const l = Object.entries(s.cat).filter(([k, v]) => !k.startsWith("ing:") && v > 0).sort((a, b) => b[1] - a[1]);
+  const cab = `<div class="cab-lista-btn"><h3 style="margin:0">¿A dónde fue tu dinero?</h3><button class="btn mini" data-acc="ascCrearCat" data-arg="gas">${ic("mas")} Crear categoría</button></div>`;
+  if (!l.length) return hoja(cab + `<p class="suave" style="margin:8px 0 0">Cuando anotes gastos verás aquí en qué se van. Crea tus propias categorías: Mascotas, Gimnasio, Regalos…</p>`);
+  // Hasta 7 categorías con color propio (siempre en el mismo orden de colores); el resto suma en «Otras»
+  const top = l.slice(0, 7).map(([k, v], i) => { const [t, c] = k.split(":"); return [`c${i + 1}`, catDe(t, c)?.[1] || c, v, t]; });
+  const resto = l.slice(7).reduce((a, x) => a + x[1], 0); if (resto > 0) top.push(["c8", `Otras (${l.length - 7})`, resto, ""]);
+  const total = top.reduce((a, x) => a + x[2], 0);
+  return hoja(`<div class="dona-marco">${cab}<p class="suave" style="margin:2px 0 0;font-size:13px">Salieron ${plata(total)} entre gastos, ahorro, inversión y dar</p>
+    ${donaSvg(top.map(([k, n, v]) => [k, n, v]), total, `<b class="dona-monto">${plata(total)}</b><span>salió</span>`)}
+    <ul class="dona-ley">${top.map(([k, n, v, t]) => `<li><i class="d-${k}"></i><span>${esc(n)}${t && t !== "gas" ? ` <small class="pildora t-${t}">${ASC.TIPOS.find(y => y[0] === t)?.[2] || ""}</small>` : ""}</span><b>${plata(v)}</b><small>${Math.round(v / total * 100)} %</small></li>`).join("")}</ul></div></div>`);
+}
+/** La dona (SVG): porciones [clase, nombre, valor] sobre [total], con el texto del centro. Abre .dona-caja; quien la usa pone la leyenda y cierra. */
+function donaSvg(partes, total, centro) {
+  const R = 46, C = 2 * Math.PI * R, vis = partes.filter(x => x[2] > 0), hueco = vis.length > 1 ? 1.2 : 0; let ac = 0;
+  const arcos = vis.map(([k, n, v]) => { const largo = v / total * C, d = `<circle class="dona-p d-${k}" cx="60" cy="60" r="${R}" stroke-dasharray="${Math.max(0.1, largo - hueco).toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-ac).toFixed(2)}"><title>${esc(n)}: ${plata(v)} (${Math.round(v / total * 100)} %)</title></circle>`; ac += largo; return d; }).join("");
+  return `<div class="dona-caja"><figure class="dona" role="img" aria-label="${esc(vis.map(([, n, v]) => `${n} ${Math.round(v / total * 100)} %`).join(", "))}">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="dona-fondo" cx="60" cy="60" r="${R}"></circle><g transform="rotate(-90 60 60)">${arcos}</g></svg>
+      <figcaption>${centro}</figcaption></figure>`;
 }
 /* ---------- Balance general en gráficas ----------
  * Una dona responde «¿qué hiciste con lo que entró?» (gastos, ahorro, inversión, dar y lo que queda),
@@ -166,6 +179,56 @@ function donaDestino(t, titulo = "¿Qué hiciste con lo que entró?") {
         ${t.disp < 0 ? `<li class="falta"><i></i><span>Te faltó</span><b>${plata(-t.disp)}</b><small>salió más de lo que entró</small></li>` : ""}</ul></div>
     <p class="asc-pie">Construido = ahorro + inversión. La meta del libro Cima financiera es al menos el 20 %.</p></div>`);
 }
+/* ---------- Ordenar las tarjetas del balance a gusto ----------
+ * Cada tarjeta lleva un asa arriba al centro: se arrastra (ratón o dedo) o, con el teclado, se mueve con las flechas.
+ * El orden se guarda en "fin#orden-balance" del libro de finanzas, así viaja igual a la app y se puede deshacer. */
+const CLAVE_ORDEN_BAL = "fin#orden-balance";
+const ordenBalance = () => { try { const v = JSON.parse(respuesta(CLAVE_ORDEN_BAL) || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } };
+function seccionesBalance(l) {
+  const orden = ordenBalance(), pos = k => { const i = orden.indexOf(k); return i < 0 ? 1000 + l.findIndex(x => x[0] === k) : i; };
+  const vis = l.filter(x => x[2]).sort((a, b) => pos(a[0]) - pos(b[0]));
+  return `<div class="bal-lista">${vis.map(([k, n, html]) => `<section class="bal-sec" data-bal="${k}">
+      <button type="button" class="bal-asa" data-bal-asa="${k}" aria-label="Mover «${esc(n)}»: arrástrala o usa las flechas arriba y abajo" title="Arrastra para cambiar el orden"><span></span></button>${html}</section>`).join("")}</div>
+    ${orden.length ? `<p class="bal-reset"><button class="enlace" data-acc="balOrdenReset">Volver al orden original</button></p>` : ""}`;
+}
+const guardarOrdenBalance = () => { const ks = [...document.querySelectorAll(".bal-lista > .bal-sec")].map(x => x.dataset.bal); responder(ASC.WB, CLAVE_ORDEN_BAL, JSON.stringify(ks)); };
+ACC.balOrdenReset = () => { responder(ASC.WB, CLAVE_ORDEN_BAL, ""); toast("Orden original del balance"); pintarDetalle(); };
+document.addEventListener("pointerdown", e => {
+  const asa = e.target.closest?.("[data-bal-asa]"); if (!asa || e.button > 0) return;
+  const sec = asa.closest(".bal-sec"), lista = sec.parentElement, caja = sec.closest(".det-cuerpo"); e.preventDefault();
+  const y0 = e.clientY, top0 = sec.getBoundingClientRect().top; let tr = 0, movido = false, yAhora = y0, auto = 0;
+  sec.classList.add("arrastrando");
+  const ubicar = () => {
+    // Cambia de lugar al cruzar la mitad de la tarjeta vecina, y la tarjeta sigue al dedo
+    const prev = sec.previousElementSibling, next = sec.nextElementSibling;
+    if (next) { const r = next.getBoundingClientRect(); if (yAhora > r.top + r.height / 2) lista.insertBefore(next, sec); }
+    if (prev) { const r = prev.getBoundingClientRect(); if (yAhora < r.top + r.height / 2) lista.insertBefore(sec, prev); }
+    const base = sec.getBoundingClientRect().top - tr; tr = top0 + (yAhora - y0) - base; sec.style.transform = `translateY(${tr}px)`;
+  };
+  const rodar = () => {   // cerca del borde, la página se desplaza sola
+    const r = caja?.getBoundingClientRect(); if (!r) return;
+    const v = yAhora < r.top + 70 ? -14 : yAhora > r.bottom - 70 ? 14 : 0;
+    if (v) { caja.scrollTop += v; ubicar(); } auto = requestAnimationFrame(rodar);
+  };
+  auto = requestAnimationFrame(rodar);
+  const mover = ev => { yAhora = ev.clientY; if (Math.abs(yAhora - y0) > 4) movido = true; ubicar(); };
+  const soltar = () => {
+    cancelAnimationFrame(auto);
+    removeEventListener("pointermove", mover); removeEventListener("pointerup", soltar); removeEventListener("pointercancel", soltar);
+    sec.classList.remove("arrastrando"); sec.style.transform = "";
+    if (movido) { guardarOrdenBalance(); toast("Orden del balance guardado"); }
+  };
+  // En la ventana (no en el asa): al mover la tarjeta en la página el navegador suelta la captura del puntero
+  addEventListener("pointermove", mover); addEventListener("pointerup", soltar); addEventListener("pointercancel", soltar);
+});
+document.addEventListener("keydown", e => {
+  const asa = e.target.closest?.("[data-bal-asa]"); if (!asa || !["ArrowUp", "ArrowDown"].includes(e.key)) return;
+  e.preventDefault(); const sec = asa.closest(".bal-sec"), lista = sec.parentElement;
+  if (e.key === "ArrowUp" && sec.previousElementSibling) lista.insertBefore(sec, sec.previousElementSibling);
+  else if (e.key === "ArrowDown" && sec.nextElementSibling) lista.insertBefore(sec.nextElementSibling, sec);
+  else return;
+  asa.focus(); guardarOrdenBalance();
+});
 /** Los últimos 12 meses en barras (entró y salió), cada mes se abre con un toque. */
 function ultimos12() {
   const hoyYm = iso(hoyFecha()).slice(0, 7);
@@ -182,7 +245,7 @@ function fijosResumen() {
   const salT = sal.reduce((a, x) => a + x[1], 0), queda = ent - salT, escala = Math.max(ent, salT) || 1;
   const clave = x => `${x.t}|${(x.n || x.c || "").trim().toLowerCase()}`, veces = l.reduce((m, x) => m.set(clave(x), (m.get(clave(x)) || 0) + 1), new Map());
   const nRep = [...veces.values()].filter(v => v > 1).length;
-  const top = l.filter(x => x.t !== "ing").sort((a, b) => b.m - a.m).slice(0, 4);
+  const orden = ["ing", "gas", "aho", "inv", "gen"], top = [...l].sort((a, b) => orden.indexOf(a.t) - orden.indexOf(b.t) || b.m - a.m);   // todos: primero lo que entra, luego lo más pesado
   return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("repetir")} Fijos de cada mes</h3><button class="btn mini" data-sel="fijos">Ver y editar (${l.length})</button></div>
     ${nRep ? `<div class="fijos-antes fijos-rep">${ic("info")}<p>${nRep === 1 ? "Un fijo está repetido" : `${nRep} fijos están repetidos`} y se cuenta${nRep === 1 ? "" : "n"} dos veces. Ábrelos en «Ver y editar».</p></div>` : ""}
     <div class="fijos-res">
@@ -262,11 +325,21 @@ DET["finanzas.b"] = () => {
   return cab(avAsc(), "Ascenso financiero", "Balance general · todos tus años", ojoAsc()) + cuerpo(
     migasAsc([["Balance general", "b"]]) +
     (t.n ? "" : `<div class="aviso">${ic("finanzas")} Empieza por hoy: anota lo que entró y salió. Cada día suma al mes, cada mes al año y cada año a este balance.<button class="btn lleno" data-sel="d:${iso(hoyFecha())}" style="margin-left:auto">Registrar hoy</button></div>`) +
-    cifras(t) + `<div class="bal-graficas">${donaDestino(t)}${hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Tus últimos 12 meses</h3><span class="suave" style="font-size:13px">Toca un mes para abrirlo</span></div>${grafica(ultimos12()) || `<p class="suave">Cuando anotes movimientos verás aquí cada mes.</p>`}`)}</div>` +
-    (window.graficaAcceso?.() || "") +
-    hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Año por año</h3><span class="suave" style="font-size:13px">Toca un año para ver sus meses</span></div>${anios.length > 1 ? grafica(filas) : ""}${tablaPeriodos(filas, "Año", t)}
-      <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`) +
-    saludResumen("") + deudasResumen() + fijosResumen() + mochilas(t) + porCategoria(t) + privacidadHoja() + monedaHoja(), "max-width:980px");
+    seccionesBalance([
+      ["cifras", "Las cifras", cifras(t)],
+      ["dona", "¿Qué hiciste con lo que entró?", donaDestino(t)],
+      ["meses", "Tus últimos 12 meses", hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Tus últimos 12 meses</h3><span class="suave" style="font-size:13px">Toca un mes para abrirlo</span></div>${grafica(ultimos12()) || `<p class="suave">Cuando anotes movimientos verás aquí cada mes.</p>`}`)],
+      ["grafica", "Gráfica del ascenso", window.graficaAcceso?.() || ""],
+      ["anios", "Año por año", hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Año por año</h3><span class="suave" style="font-size:13px">Toca un año para ver sus meses</span></div>${anios.length > 1 ? grafica(filas) : ""}${tablaPeriodos(filas, "Año", t)}
+      <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`)],
+      ["salud", "Salud financiera", saludResumen("")],
+      ["deudas", "Salir de deudas", deudasResumen()],
+      ["fijos", "Fijos de cada mes", fijosResumen()],
+      ["mochilas", "Tus tres mochilas", mochilas(t)],
+      ["categorias", "¿A dónde fue tu dinero?", porCategoria(t)],
+      ["privacidad", "Privacidad", privacidadHoja()],
+      ["moneda", "Moneda", monedaHoja()],
+    ]), "max-width:980px");
 };
 DET["finanzas.a"] = arg => {
   if (window.finBloqueado?.()) return pantallaBloqueo();

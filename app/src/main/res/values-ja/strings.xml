@@ -3178,4 +3178,11 @@
         <item quantity="one">固定項目が重複し、2回数えられています。「表示と編集」で開いてください。</item>
         <item quantity="other">%1$d 件の固定項目が重複し、2回数えられています。「表示と編集」で開いてください。</item>
     </plurals>
+    <string name="org_titulo">収支の並べ替え</string>
+    <string name="org_ayuda">カードを好きな順に上下へ動かせます。この順番は SuRoute Web にも反映されます。</string>
+    <string name="org_original">元の順番</string>
+    <string name="org_cifras">数字</string>
+    <string name="cat_otras">その他（%1$d）</string>
+    <string name="cat_salieron">支出・貯蓄・投資・寄付で %1$s が出ていきました</string>
+    <string name="cat_salio">出金</string>
 </resources>
