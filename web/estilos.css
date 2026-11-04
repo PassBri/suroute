@@ -5718,3 +5718,13 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .fijos-top span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .fijos-top small { color: var(--tinta-suave); } .fijos-top b { font-variant-numeric: tabular-nums; font-weight: 600; }
 .bal-graficas .asc-graf { height: 220px; }
+/* La dona, más grande: ocupa todo el ancho y su leyenda va al lado */
+.bal-graficas { grid-template-columns: 1fr; }
+.dona { width: min(260px, 72vw); height: min(260px, 72vw); }
+.dona circle { stroke-width: 13; }
+@media (hover: hover) and (pointer: fine) { .dona .dona-p:hover { stroke-width: 16; } }
+.dona figcaption b { font-size: clamp(30px, 9vw, 42px); }
+.dona figcaption span { font-size: 13px; }
+@container (min-width: 460px) { .dona-caja { grid-template-columns: 260px 1fr; gap: 36px; } }
+.dona-ley li { font-size: 15px; min-height: 40px; }
+.dona-ley b { font-size: 16px; }

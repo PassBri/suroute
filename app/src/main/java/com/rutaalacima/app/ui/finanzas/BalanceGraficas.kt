@@ -68,8 +68,8 @@ fun DonaDestino(t: Cuentas.Suma, plata: (Double) -> String) {
         Text(stringResource(R.string.dona_titulo), style = MaterialTheme.typography.titleMedium)
         Text(stringResource(R.string.dona_de, plata(t.ing)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Box(Modifier.fillMaxWidth().padding(vertical = 14.dp), contentAlignment = Alignment.Center) {
-            Canvas(Modifier.size(168.dp).semantics { contentDescription = desc }) {
-                val grosor = 15.dp.toPx(); val r = (size.minDimension - grosor) / 2
+            Canvas(Modifier.size(232.dp).semantics { contentDescription = desc }) {
+                val grosor = 22.dp.toPx(); val r = (size.minDimension - grosor) / 2
                 val tl = Offset(center.x - r, center.y - r); val sz = Size(r * 2, r * 2)
                 drawArc(fondo, 0f, 360f, false, tl, sz, style = Stroke(grosor))
                 val visibles = partes.filter { it.second > 0 }
@@ -82,7 +82,7 @@ fun DonaDestino(t: Cuentas.Suma, plata: (Double) -> String) {
                 }
             }
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(if (t.ing > 0) "${Math.round(t.construido / t.ing * 100)} %" else "—", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.SemiBold)
+                Text(if (t.ing > 0) "${Math.round(t.construido / t.ing * 100)} %" else "—", style = MaterialTheme.typography.displaySmall, fontWeight = FontWeight.SemiBold)
                 Text(stringResource(if (t.ing > 0) R.string.dona_construido else R.string.dona_sin_ing), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
