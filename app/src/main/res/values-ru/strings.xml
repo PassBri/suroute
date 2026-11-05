@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">Вехи вашего восхождения</string>
     <string name="hi_ver_mis">Мои вехи</string>
     <string name="hi_anios_con">%1$d с вехами</string>
+    <string name="pap_un_momento">Момент</string>
+    <string name="pap_titulo">Шаг за шагом</string>
+    <string name="pap_ayuda">Расскажите весь путь к цели, которой вы достигли: откуда начали, каждый шаг и вершину. Тому, кто только начинает, путь полезнее фото с вершины.</string>
+    <string name="pap_que_lograste">Чего вы достигли?</string>
+    <string name="pap_que_lograste_ej">Пробежать свой первый полумарафон…</string>
+    <string name="pap_traer">Взять шаги из цели</string>
+    <string name="pap_paso_n">Шаг %1$d</string>
+    <string name="pap_paso_ej">Что вы сделали</string>
+    <string name="pap_mes">Месяц</string>
+    <string name="pap_detalle">Подробности (необязательно)</string>
+    <string name="pap_agregar">Добавить шаг</string>
+    <string name="pap_quitar">Удалить шаг %1$d</string>
+    <string name="pap_subir">Поднять шаг %1$d</string>
+    <string name="pap_salida">Старт</string>
+    <string name="pap_cumbre">Вершина: %1$s</string>
+    <string name="pap_cumbre_sola">Вершина</string>
+    <string name="pap_ver_todos">Все шаги: %1$d</string>
+    <string name="pap_ver_su">Смотреть шаг за шагом</string>
+    <string name="pap_consejo">Что бы вы сказали тому, кто начинает</string>
+    <string name="pap_de">Шаг за шагом: %1$s</string>
+    <string name="pap_como">Как я этого добился</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d шаг</item>
+        <item quantity="other">Шагов: %d</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">Взят %1$d шаг из «%2$s»</item>
+        <item quantity="other">Шагов взято из «%2$s»: %1$d</item>
+    </plurals>
 </resources>

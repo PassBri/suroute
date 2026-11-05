@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">나의 등정 이정표</string>
     <string name="hi_ver_mis">내 이정표 보기</string>
     <string name="hi_anios_con">이정표가 있는 해 %1$d</string>
+    <string name="pap_un_momento">한 순간</string>
+    <string name="pap_titulo">한 걸음씩</string>
+    <string name="pap_ayuda">이룬 목표나 소망의 전체 여정을 들려주세요. 어디서 출발했는지, 각 걸음, 그리고 정상까지. 이제 막 시작한 사람에게는 정상 사진보다 길이 더 도움이 됩니다.</string>
+    <string name="pap_que_lograste">무엇을 이루었나요?</string>
+    <string name="pap_que_lograste_ej">첫 하프 마라톤 완주…</string>
+    <string name="pap_traer">목표에서 단계 가져오기</string>
+    <string name="pap_paso_n">%1$d단계</string>
+    <string name="pap_paso_ej">한 일</string>
+    <string name="pap_mes">월</string>
+    <string name="pap_detalle">세부 내용(선택)</string>
+    <string name="pap_agregar">단계 추가</string>
+    <string name="pap_quitar">%1$d단계 삭제</string>
+    <string name="pap_subir">%1$d단계 위로</string>
+    <string name="pap_salida">출발</string>
+    <string name="pap_cumbre">정상: %1$s</string>
+    <string name="pap_cumbre_sola">정상</string>
+    <string name="pap_ver_todos">%1$d단계 모두 보기</string>
+    <string name="pap_ver_su">한 걸음씩 보기</string>
+    <string name="pap_consejo">이제 시작하는 사람에게 해 주고 싶은 말</string>
+    <string name="pap_de">%1$s님의 한 걸음씩</string>
+    <string name="pap_como">이렇게 이뤘어요</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d단계</item>
+        <item quantity="other">%d단계</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">「%2$s」에서 %1$d단계를 가져왔어요</item>
+        <item quantity="other">「%2$s」에서 %1$d단계를 가져왔어요</item>
+    </plurals>
 </resources>

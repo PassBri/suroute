@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">あなたの登頂のマイルストーン</string>
     <string name="hi_ver_mis">マイルストーンを見る</string>
     <string name="hi_anios_con">マイルストーンのある年 %1$d</string>
+    <string name="pap_un_momento">ひとこま</string>
+    <string name="pap_titulo">ステップ・バイ・ステップ</string>
+    <string name="pap_ayuda">達成した目標や志の道のりをすべて伝えましょう。出発点、一歩一歩、そして頂上。これから始める人には、頂上の写真より道のりが役立ちます。</string>
+    <string name="pap_que_lograste">何を達成しましたか？</string>
+    <string name="pap_que_lograste_ej">初めてのハーフマラソンを走る…</string>
+    <string name="pap_traer">目標からステップを取り込む</string>
+    <string name="pap_paso_n">ステップ %1$d</string>
+    <string name="pap_paso_ej">したこと</string>
+    <string name="pap_mes">月</string>
+    <string name="pap_detalle">詳細（任意）</string>
+    <string name="pap_agregar">ステップを追加</string>
+    <string name="pap_quitar">ステップ %1$d を削除</string>
+    <string name="pap_subir">ステップ %1$d を上へ</string>
+    <string name="pap_salida">スタート</string>
+    <string name="pap_cumbre">頂上：%1$s</string>
+    <string name="pap_cumbre_sola">頂上</string>
+    <string name="pap_ver_todos">%1$d ステップをすべて見る</string>
+    <string name="pap_ver_su">ステップ・バイ・ステップを見る</string>
+    <string name="pap_consejo">これから始める人に伝えたいこと</string>
+    <string name="pap_de">%1$s のステップ・バイ・ステップ</string>
+    <string name="pap_como">達成までの道のり</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d ステップ</item>
+        <item quantity="other">%d ステップ</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">「%2$s」から %1$d ステップを取り込みました</item>
+        <item quantity="other">「%2$s」から %1$d ステップを取り込みました</item>
+    </plurals>
 </resources>

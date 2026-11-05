@@ -5883,3 +5883,59 @@ html.con-fogata, html.con-fogata body { overflow: hidden; }
 .pv-chip-hito { cursor: pointer; font: inherit; color: inherit; }
 .pv-chip-hito svg { width: 14px; height: 14px; fill: var(--oro); }
 @media (hover: hover) and (pointer: fine) { .pv-chip-hito:hover { background: var(--hoja-2); } }
+
+/* =====================================================================
+ * Paso a paso (57-paso-a-paso.js): el recorrido de una meta lograda, como la hoja de controles
+ * de una carrera de orientación: salida (triángulo), controles numerados y la meta (doble círculo), en magenta.
+ * ===================================================================== */
+:root { --pap: #B5307E; --pap-suave: rgb(181 48 126 / .10); }
+:root[data-theme="dark"] { --pap: #E07AB8; --pap-suave: rgb(224 122 184 / .14); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --pap: #E07AB8; --pap-suave: rgb(224 122 184 / .14); } }
+.pap { border: 1px solid var(--linea); border-radius: 16px; background: var(--hoja); padding: 14px 16px 10px; }
+.pap-cab { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+.pap-cab > svg { width: 22px; height: 22px; fill: var(--pap); flex: none; }
+.pap-cab b { flex: 1; min-width: 0; font: 600 17px/1.3 var(--font-titulo); color: var(--tinta); }
+.pap-n { flex: none; font-size: 12.5px; color: var(--tinta-suave); font-variant-numeric: tabular-nums; }
+.pap-lista { list-style: none; margin: 0; padding: 0; position: relative; }
+.pap-lista > li { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start; padding: 6px 0; }
+/* La línea del recorrido entre controles */
+.pap-lista > li:not(:last-child)::after { content: ""; position: absolute; left: 16px; top: 34px; bottom: -6px; width: 2px; background: var(--pap); opacity: .55; }
+.pap-ctrl { width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid var(--pap); display: grid; place-items: center; font: 600 14px/1 var(--font-ui, system-ui); color: var(--pap); background: var(--hoja); position: relative; z-index: 1; font-variant-numeric: tabular-nums; }
+.pap-tri { width: 34px; height: 30px; position: relative; z-index: 1; background: var(--pap); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.pap-tri::after { content: ""; position: absolute; inset: 4px 5px 2.5px; background: var(--hoja); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.pap-meta { width: 34px; height: 34px; border-radius: 50%; border: 2.5px solid var(--pap); position: relative; background: var(--hoja); z-index: 1; }
+.pap-meta::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; border: 2.5px solid var(--pap); }
+.pap-etq { align-self: center; font-size: 13px; letter-spacing: .02em; color: var(--tinta-suave); }
+.pap-cumbre .pap-etq { color: var(--tinta); font-weight: 600; }
+.pap-txt { padding-top: 6px; min-width: 0; }
+.pap-txt b { display: block; font-weight: 500; line-height: 1.35; color: var(--tinta); overflow-wrap: anywhere; }
+.pap-txt small { display: block; margin-top: 2px; color: var(--tinta-suave); font-size: 13px; line-height: 1.4; }
+.pap-mas { grid-template-columns: 34px 1fr; } .pap-mas::before { content: ""; } .pap-mas .btn { justify-self: start; color: var(--pap); }
+.pap-consejo { margin: 12px 0 0; font: italic 400 16px/1.5 var(--font-titulo); color: var(--tinta); }
+/* En Cimas: el recorrido sobre el mapa de orientación */
+.pap-fondo { position: absolute; inset: 0; opacity: .9; } .pap-fondo .mapa-orientacion { width: 100%; height: 100%; display: block; }
+.pap-cima { position: relative; width: min(400px, calc(100% - 96px)); margin: 0 76px 40px 20px; padding: 12px 14px 6px; box-shadow: 0 18px 40px -18px rgb(0 0 0 / .45); background: color-mix(in srgb, var(--hoja) 95%, transparent); }
+.pap-cima .pap-cab b { font-size: 16px; } .pap-cima .pap-lista > li { padding: 4px 0; grid-template-columns: 28px 1fr; }
+.pap-cima .pap-ctrl, .pap-cima .pap-meta { width: 28px; height: 28px; font-size: 12.5px; } .pap-cima .pap-tri { width: 28px; height: 25px; }
+.pap-cima .pap-lista > li:not(:last-child)::after { left: 13px; top: 28px; } .pap-cima .pap-txt { padding-top: 4px; } .pap-cima .pap-txt b { font-size: 15px; }
+.pap-cima .pap-mas { grid-template-columns: 28px 1fr; }
+@media (max-width: 700px) { .cima-fondo:has(> .pap-cima) { align-items: start; } .pap-cima { width: calc(100% - 96px); margin: 124px 80px 0 16px; } .pap-cima .pap-cumbre, .pap-cima .pap-paso:nth-child(4), .pap-cima .pap-mas::after { display: none; } .pap-cima .pap-txt b { font-size: 14.5px; } }
+/* El editor en «Publicar» */
+.pap-modo { grid-template-columns: 1fr 1fr; margin-bottom: 6px; }
+.pap-modo .seg-b { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.pap-modo .seg-b svg { width: 18px; height: 18px; fill: currentColor; }
+.pap-modo .seg-b[aria-checked="true"] { background: var(--oro-suave); color: var(--burdeos); }
+form:not(.pap-on) > .pap-editor { display: none; }
+.pap-editor { display: grid; gap: 10px; padding: 12px 14px; border: 1px solid var(--linea); border-radius: 14px; background: var(--hoja-2); }
+.pap-ayuda { margin: 0; font-size: 13.5px; }
+.pap-ed-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.pap-ed-paso { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: start; }
+.pap-ed-paso .pap-ctrl { margin-top: 6px; }
+.pap-ed-campos { display: grid; gap: 6px; min-width: 0; }
+.pap-ed-campos input { width: 100%; min-width: 0; font-size: 16px; padding: 10px 12px; border: 1px solid var(--linea); border-radius: 10px; background: var(--hoja); color: var(--tinta); }
+.pap-ed-sub { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 6px; }
+.pap-ed-sub input { font-size: 14px; padding: 8px 10px; }
+@media (pointer: coarse) { .pap-ed-sub input { font-size: 16px; } }
+.pap-ed-acc { display: flex; flex-direction: column; gap: 2px; }
+.pap-editor > .btn.texto { justify-self: start; }
+@media (max-width: 520px) { .pap-ed-sub { grid-template-columns: 128px minmax(0, 1fr); } .pap-ed-paso { grid-template-columns: 28px 1fr auto; gap: 8px; } .pap-ed-paso .pap-ctrl { width: 28px; height: 28px; font-size: 12.5px; } }

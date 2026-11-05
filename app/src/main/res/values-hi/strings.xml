@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">आपकी चढ़ाई के पड़ाव</string>
     <string name="hi_ver_mis">मेरे पड़ाव देखें</string>
     <string name="hi_anios_con">%1$d पड़ाव वाले साल</string>
+    <string name="pap_un_momento">एक पल</string>
+    <string name="pap_titulo">कदम दर कदम</string>
+    <string name="pap_ayuda">अपने हासिल किए लक्ष्य या उद्देश्य का पूरा सफ़र बताइए: कहाँ से शुरू किया, हर कदम और शिखर। शुरुआत करने वाले को शिखर की फ़ोटो से ज़्यादा रास्ता काम आता है।</string>
+    <string name="pap_que_lograste">आपने क्या हासिल किया?</string>
+    <string name="pap_que_lograste_ej">अपनी पहली हाफ़ मैराथन दौड़ना…</string>
+    <string name="pap_traer">किसी लक्ष्य के कदम लाएँ</string>
+    <string name="pap_paso_n">कदम %1$d</string>
+    <string name="pap_paso_ej">आपने क्या किया</string>
+    <string name="pap_mes">महीना</string>
+    <string name="pap_detalle">विवरण (वैकल्पिक)</string>
+    <string name="pap_agregar">कदम जोड़ें</string>
+    <string name="pap_quitar">कदम %1$d हटाएँ</string>
+    <string name="pap_subir">कदम %1$d ऊपर करें</string>
+    <string name="pap_salida">शुरुआत</string>
+    <string name="pap_cumbre">शिखर: %1$s</string>
+    <string name="pap_cumbre_sola">शिखर</string>
+    <string name="pap_ver_todos">सभी %1$d कदम देखें</string>
+    <string name="pap_ver_su">उनके कदम दर कदम देखें</string>
+    <string name="pap_consejo">शुरुआत करने वाले से आप क्या कहेंगे</string>
+    <string name="pap_de">%1$s के कदम दर कदम</string>
+    <string name="pap_como">मैंने यह कैसे किया</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d कदम</item>
+        <item quantity="other">%d कदम</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">«%2$s» से %1$d कदम लाया गया</item>
+        <item quantity="other">«%2$s» से %1$d कदम लाए गए</item>
+    </plurals>
 </resources>

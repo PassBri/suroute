@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">Traguardi della tua salita</string>
     <string name="hi_ver_mis">Vedi i miei traguardi</string>
     <string name="hi_anios_con">%1$d con traguardi</string>
+    <string name="pap_un_momento">Un momento</string>
+    <string name="pap_titulo">Passo dopo passo</string>
+    <string name="pap_ayuda">Racconta tutto il percorso di un obiettivo raggiunto: da dove sei partito, ogni passo e la vetta. A chi inizia serve più un cammino che una foto dalla vetta.</string>
+    <string name="pap_que_lograste">Che cosa hai raggiunto?</string>
+    <string name="pap_que_lograste_ej">Correre la mia prima mezza maratona…</string>
+    <string name="pap_traer">Porta i passi di un obiettivo</string>
+    <string name="pap_paso_n">Passo %1$d</string>
+    <string name="pap_paso_ej">Cosa hai fatto</string>
+    <string name="pap_mes">Mese</string>
+    <string name="pap_detalle">Dettaglio (facoltativo)</string>
+    <string name="pap_agregar">Aggiungi passo</string>
+    <string name="pap_quitar">Rimuovi il passo %1$d</string>
+    <string name="pap_subir">Sposta su il passo %1$d</string>
+    <string name="pap_salida">Partenza</string>
+    <string name="pap_cumbre">Vetta: %1$s</string>
+    <string name="pap_cumbre_sola">Vetta</string>
+    <string name="pap_ver_todos">Vedi tutti i %1$d passi</string>
+    <string name="pap_ver_su">Vedi il suo passo dopo passo</string>
+    <string name="pap_consejo">Cosa diresti a chi inizia</string>
+    <string name="pap_de">Passo dopo passo di %1$s</string>
+    <string name="pap_como">Come ci sono riuscito</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d passo</item>
+        <item quantity="other">%d passi</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">%1$d passo preso da «%2$s»</item>
+        <item quantity="other">%1$d passi presi da «%2$s»</item>
+    </plurals>
 </resources>

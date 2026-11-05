@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">Étapes de votre ascension</string>
     <string name="hi_ver_mis">Voir mes étapes</string>
     <string name="hi_anios_con">%1$d avec étapes</string>
+    <string name="pap_un_momento">Un moment</string>
+    <string name="pap_titulo">Pas à pas</string>
+    <string name="pap_ayuda">Racontez le parcours complet d’un objectif ou d’un projet atteint : votre point de départ, chaque étape et le sommet. À qui commence, un chemin sert plus qu’une photo du sommet.</string>
+    <string name="pap_que_lograste">Qu’avez-vous accompli ?</string>
+    <string name="pap_que_lograste_ej">Courir mon premier semi-marathon…</string>
+    <string name="pap_traer">Reprendre les étapes d’un objectif</string>
+    <string name="pap_paso_n">Étape %1$d</string>
+    <string name="pap_paso_ej">Ce que vous avez fait</string>
+    <string name="pap_mes">Mois</string>
+    <string name="pap_detalle">Détail (facultatif)</string>
+    <string name="pap_agregar">Ajouter une étape</string>
+    <string name="pap_quitar">Retirer l’étape %1$d</string>
+    <string name="pap_subir">Monter l’étape %1$d</string>
+    <string name="pap_salida">Départ</string>
+    <string name="pap_cumbre">Sommet : %1$s</string>
+    <string name="pap_cumbre_sola">Sommet</string>
+    <string name="pap_ver_todos">Voir les %1$d étapes</string>
+    <string name="pap_ver_su">Voir son pas à pas</string>
+    <string name="pap_consejo">Ce que vous diriez à qui commence</string>
+    <string name="pap_de">Pas à pas de %1$s</string>
+    <string name="pap_como">Comment j’y suis arrivé</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d étape</item>
+        <item quantity="other">%d étapes</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">%1$d étape reprise de « %2$s »</item>
+        <item quantity="other">%1$d étapes reprises de « %2$s »</item>
+    </plurals>
 </resources>

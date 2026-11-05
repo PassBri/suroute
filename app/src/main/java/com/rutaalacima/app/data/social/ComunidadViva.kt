@@ -56,7 +56,9 @@ data class Compromiso(val hasta: String, val estado: String = ABIERTO) {
 }
 
 /** Lo nuevo de una publicación (columnas camino, compromiso y sello). */
-data class ExtrasPost(val camino: Camino? = null, val compromiso: Compromiso? = null, val sello: String? = null)
+data class ExtrasPost(val camino: Camino? = null, val compromiso: Compromiso? = null, val sello: String? = null,
+    /** Paso a paso: el recorrido de una meta lograda (columna "pasos"). */
+    val pasos: PasoAPaso? = null)
 
 /**
  * Comunidad viva (igual que web/js/45-comunidad-viva.js): lo que hace distinta a SuRoute.
@@ -131,10 +133,11 @@ object ComunidadViva {
     /** Lo que se guarda en el teléfono para una publicación propia. */
     fun aTexto(x: ExtrasPost): String = buildJsonObject {
         x.camino?.let { put("camino", json(it)) }; x.compromiso?.let { put("compromiso", json(it)) }; x.sello?.let { put("sello", jsonSello(it)) }
+        x.pasos?.let { put("pasos", PasoAPaso.json(it)) }
     }.toString()
     fun deTexto(s: String?): ExtrasPost = if (s.isNullOrBlank()) ExtrasPost() else runCatching {
         val o = kotlinx.serialization.json.Json.parseToJsonElement(s).jsonObject
-        ExtrasPost(caminoDe(o["camino"]), compromisoDe(o["compromiso"]), selloDe(o["sello"]))
+        ExtrasPost(caminoDe(o["camino"]), compromisoDe(o["compromiso"]), selloDe(o["sello"]), PasoAPaso.de(o["pasos"]))
     }.getOrDefault(ExtrasPost())
 
     /** Cordada: quien lleva 3 días seguidos sin marcar (sin contar hoy) necesita una cuerda. */

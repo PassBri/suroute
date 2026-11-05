@@ -221,6 +221,8 @@ fun PostCard(
             }
         }
 
+        // Paso a paso: el recorrido de la meta lograda, de la salida a la cumbre
+        if (post.pasoAPaso != null) PasoAPasoTarjeta(post, Modifier.padding(start = 12.dp, end = 12.dp, top = 10.dp).fillMaxWidth())
         if (post.camino != null || post.compromiso != null || (post.propio && post.sello != null)) androidx.compose.foundation.layout.Box(Modifier.padding(start = 12.dp, end = 12.dp, top = 10.dp)) { ChipsCamino(post, sobreFoto = false, onCerrarCompromiso = onCompromiso) }
         // Luces: la pila de las más dadas y la píldora para dar la tuya (mantener elige otra)
         com.rutaalacima.app.ui.components.BotonLuces(post.luces, post.miLuz, onLuz ?: { _ -> onImpulsar() },

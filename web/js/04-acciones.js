@@ -447,7 +447,7 @@ async function enviar(e) {
           // Se pide la fila de vuelta: así se sabe que quedó guardada y que tu cuenta puede verla
           let r = await sb.from("posts").insert({ id, user_id: Store.nube.dueno, image_url: url, ...post, ...extra, ...(media ? { media } : {}) }).select().single();
           // Sin las columnas nuevas en la base (falta correr supabase/2026-10-29-comunidad-viva.sql): se publica igual, sin ellas
-          if (r.error && /camino|compromiso|sello/.test(r.error.message || "")) r = await sb.from("posts").insert({ id, user_id: Store.nube.dueno, image_url: url, ...post, ...(media ? { media } : {}) }).select().single();
+          if (r.error && /camino|compromiso|sello|pasos/.test(r.error.message || "")) r = await sb.from("posts").insert({ id, user_id: Store.nube.dueno, image_url: url, ...post, ...(media ? { media } : {}) }).select().single();
           if (r.error && media && /media/.test(r.error.message || "")) r = await sb.from("posts").insert({ id, user_id: Store.nube.dueno, image_url: url, ...post }).select().single();
           if (r.error) throw r.error;
           const nuevo = { id, anio: post.anio, autorId: Store.nube.dueno, autorNombre: perfil().nombre || "Yo", tipo: post.tipo, eje: post.eje, texto, foto: url,

@@ -220,6 +220,8 @@ private fun CimaPagina(
                     com.rutaalacima.app.ui.ruta.TarjetaLibro(post.camino!!.libro!!, post.texto)
                 }
             }
+        } else if (post.pasoAPaso != null && post.foto.isBlank() && !post.media.esCarrusel()) {
+            PasoAPasoFondo(post, Modifier.fillMaxSize())
         } else if (post.camino?.paso != null && post.foto.isBlank() && !post.media.esCarrusel()) {
             TarjetaPaso(post, Modifier.fillMaxSize())
         } else if (post.media.esCarrusel()) {
@@ -311,6 +313,7 @@ private fun CimaPagina(
                 color = Color.White.copy(alpha = 0.78f), style = MaterialTheme.typography.labelMedium, maxLines = 1,
             )
             ChipsCamino(post, sobreFoto = true, onCerrarCompromiso = onCompromiso)
+            if (post.pasoAPaso != null && (post.foto.isNotBlank() || post.media.esCarrusel())) PasoAPasoChip(post)
             if (post.foto.isNotBlank() && post.texto.isNotBlank() && !com.rutaalacima.app.data.social.ComunidadViva.estaSellada(post)) {
                 TextoEnlazado(
                     post.texto, color = Color.White, style = MaterialTheme.typography.bodyMedium,

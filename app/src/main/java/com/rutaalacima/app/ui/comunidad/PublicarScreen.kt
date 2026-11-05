@@ -57,6 +57,8 @@ import coil.compose.AsyncImage
 import com.rutaalacima.app.AppContainer
 import com.rutaalacima.app.R
 import com.rutaalacima.app.data.local.avance
+import com.rutaalacima.app.data.social.PasoAPaso
+import com.rutaalacima.app.data.social.PasoP
 import com.rutaalacima.app.data.social.TipoPost
 import com.rutaalacima.app.data.social.Visibilidad
 import com.rutaalacima.app.domain.model.Eje
@@ -94,9 +96,35 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
     var libro by mutableStateOf(com.rutaalacima.app.data.social.ExpedicionEventos.libroPendiente.also { com.rutaalacima.app.data.social.ExpedicionEventos.libroPendiente = null })
     var compromisoDias by mutableStateOf(0)
     var selloMeses by mutableStateOf(0)
+    /** Paso a paso: contar el recorrido completo de una meta lograda (la meta, los pasos y la cumbre). */
+    var modoPasos by mutableStateOf(tipoInicial == "PASO_A_PASO")
+    var pasoMeta by mutableStateOf("")
+    val pasos = androidx.compose.runtime.mutableStateListOf(PasoP(""), PasoP(""), PasoP(""))
+    /** Las metas del año que tienen metas del mes: de ahí se pueden traer los pasos. */
+    var fuentesPasos by mutableStateOf<List<Pair<com.rutaalacima.app.data.local.MetaAnualEntity, List<com.rutaalacima.app.data.local.MetaMensualEntity>>>>(emptyList())
+        private set
+    val puedePublicar get() = texto.isNotBlank() || foto != null || medios.isNotEmpty() || (modoPasos && pasos.any { it.t.isNotBlank() })
+
+    /** Trae como pasos las metas del mes de una meta del año (las cumplidas; si no hay, todas). */
+    fun traerPasos(i: Int): Int {
+        val (a, ms) = fuentesPasos.getOrNull(i) ?: return 0
+        val usar = (ms.filter { it.cumplida }.ifEmpty { ms }).take(PasoAPaso.MAX)
+        pasoMeta = a.titulo.take(PasoAPaso.MAX_META)
+        pasos.clear(); pasos.addAll(usar.map { PasoP(it.texto.take(PasoAPaso.MAX_T), "%04d-%02d".format(it.anio, it.mes)) })
+        return usar.size
+    }
 
     init {
         paso?.let { eje = Eje.fromCodigo(it.cod) }
+        if (modoPasos) tipo = TipoPost.LOGRO
+        viewModelScope.launch {
+            val anuales = c.planificador.todasLasMetas.first(); val mensuales = c.planAnual.todasMetasMes.first()
+            fuentesPasos = anuales.mapNotNull { a ->
+                val hs = mensuales.filter { it.metaAnualId == a.id }.sortedWith(compareBy({ it.anio }, { it.mes }, { it.orden }))
+                if (hs.isEmpty()) null else a to hs
+            }.sortedWith(compareByDescending<Pair<com.rutaalacima.app.data.local.MetaAnualEntity, List<com.rutaalacima.app.data.local.MetaMensualEntity>>> { it.first.anio }
+                .thenBy { if (it.first.estado == "CUMPLIDA") 0 else 1 })
+        }
         viewModelScope.launch { camino = com.rutaalacima.app.data.social.ComunidadViva.caminoActual(c) }
         // Metas activas para vincular la publicación (del mes, del año y propósitos).
         viewModelScope.launch {
@@ -109,7 +137,7 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
     }
 
     fun publicar(alTerminar: () -> Unit) {
-        if (texto.isBlank() && foto == null && medios.isEmpty()) return
+        if (!puedePublicar) return
         publicando = true
         viewModelScope.launch {
             val h = hoy()
@@ -117,7 +145,9 @@ class PublicarViewModel(private val c: AppContainer, tipoInicial: String) : View
                 camino = camino.copy(paso = paso, libro = libro).takeUnless { it.vacio },
                 compromiso = compromisoDias.takeIf { it > 0 }?.let { com.rutaalacima.app.data.social.Compromiso(h.plusDays(it.toLong()).toString()) },
                 sello = selloMeses.takeIf { it > 0 }?.let { h.plusMonths(it.toLong()).toString() },
+                pasos = if (modoPasos) PasoAPaso.limpiar(pasoMeta, pasos) else null,
             )
+            if (extras.pasos != null && meta.isBlank()) meta = extras.pasos.meta
             runCatching { c.social.publicar(tipo, texto, foto, eje?.codigo, visibilidad, meta, anio ?: h.year, mes, medios = medios, extras = extras) }
             publicando = false
             alTerminar()
@@ -170,7 +200,7 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } },
                 actions = {
                     if (vm.publicando) CircularProgressIndicator(Modifier.size(22.dp).padding(end = 4.dp), strokeWidth = 2.dp)
-                    else TextButton(onClick = { vm.publicar(onBack) }, enabled = vm.texto.isNotBlank() || vm.foto != null || vm.medios.isNotEmpty()) {
+                    else TextButton(onClick = { vm.publicar(onBack) }, enabled = vm.puedePublicar) {
                         Text(stringResource(R.string.publicar))
                     }
                 },
@@ -186,6 +216,9 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
             if (vm.anio == null || vm.anio == hoy().year) item { EntradaFogata(onClick = { encendiendoFogata = true }) }
             vm.paso?.let { pa -> item { PreviaPaso(pa, vm.camino.mapa, onQuitar = { vm.paso = null }) } }
             vm.libro?.let { lb -> item { com.rutaalacima.app.ui.ruta.PreviaLibro(lb, onQuitar = { vm.libro = null }) } }
+            // ¿Un momento o el paso a paso de una meta lograda?
+            item { ModoPublicar(vm) }
+            if (vm.modoPasos) item { EditorPasoAPaso(vm) }
             item {
                 ChipSelector(null, TipoPost.entries, vm.tipo, { it.texto() }, { vm.tipo = it })
                 Text(
@@ -253,7 +286,7 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
                 }
             }
             item {
-                OutlinedTextField(vm.texto, { vm.texto = it }, label = { Text(stringResource(R.string.que_quieres_compartir)) },
+                OutlinedTextField(vm.texto, { vm.texto = it }, label = { Text(stringResource(if (vm.modoPasos) R.string.pap_consejo else R.string.que_quieres_compartir)) },
                     modifier = Modifier.fillMaxWidth(), minLines = 3)
             }
             // La meta recién cumplida ya no está entre las activas: se agrega para que se vea elegida

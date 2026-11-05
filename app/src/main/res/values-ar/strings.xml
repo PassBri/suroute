@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">إنجازات صعودك</string>
     <string name="hi_ver_mis">عرض إنجازاتي</string>
     <string name="hi_anios_con">%1$d بها إنجازات</string>
+    <string name="pap_un_momento">لحظة</string>
+    <string name="pap_titulo">خطوة بخطوة</string>
+    <string name="pap_ayuda">احكِ المسار الكامل لهدف أو غاية حققتها: من أين انطلقت، وكل خطوة، والقمة. من يبدأ للتو يستفيد من الطريق أكثر من صورة القمة.</string>
+    <string name="pap_que_lograste">ماذا حققت؟</string>
+    <string name="pap_que_lograste_ej">أن أركض أول نصف ماراثون…</string>
+    <string name="pap_traer">جلب خطوات هدف</string>
+    <string name="pap_paso_n">الخطوة %1$d</string>
+    <string name="pap_paso_ej">ما فعلته</string>
+    <string name="pap_mes">الشهر</string>
+    <string name="pap_detalle">تفاصيل (اختياري)</string>
+    <string name="pap_agregar">إضافة خطوة</string>
+    <string name="pap_quitar">إزالة الخطوة %1$d</string>
+    <string name="pap_subir">رفع الخطوة %1$d</string>
+    <string name="pap_salida">الانطلاق</string>
+    <string name="pap_cumbre">القمة: %1$s</string>
+    <string name="pap_cumbre_sola">القمة</string>
+    <string name="pap_ver_todos">عرض الخطوات الـ %1$d</string>
+    <string name="pap_ver_su">عرض خطواته</string>
+    <string name="pap_consejo">ما تقوله لمن يبدأ</string>
+    <string name="pap_de">خطوة بخطوة مع %1$s</string>
+    <string name="pap_como">كيف حققته</string>
+    <plurals name="pap_n">
+        <item quantity="one">خطوة واحدة</item>
+        <item quantity="other">%d خطوات</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">تم جلب خطوة واحدة من «%2$s»</item>
+        <item quantity="other">تم جلب %1$d خطوات من «%2$s»</item>
+    </plurals>
 </resources>

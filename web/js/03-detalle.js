@@ -775,7 +775,7 @@ Object.assign(DET, {
         : `<span style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${!p.demo || !Store.nube ? `<button class="btn mini" data-acc="escribirA" data-arg="${esc(p.autorId)}|${esc(p.autorNombre)}">${ic("mensajes")} Mensaje</button>` : ""}${!p.demo && Store.nube ? `<button class="btn mini" data-acc="seguir" data-arg="${esc(p.autorId)}">Seguir</button>` : ""}<button class="btn mini" data-acc="reportarPost" data-arg="${esc(p.id)}" title="Reportar publicación">Reportar</button><button class="btn mini peligro" data-acc="bloquearAutor" data-arg="${esc(p.id)}" title="Bloquear a esta persona">Bloquear</button></span>`) +
       `<div class="det-cuerpo"><div class="ancho" style="gap:16px;max-width:640px">
         ${p.demo ? `<div class="aviso">Comunidad de ejemplo. ${Store.nube ? "" : "Vincula la web con tu cuenta para ver la comunidad real."}</div>` : ""}
-        ${postal(p)}${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${p.foto ? `<p style="margin:0">${esc(p.texto)}</p>` : ""}
+        ${postal(p)}${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${p.foto ? `<p style="margin:0">${esc(p.texto)}</p>` : ""}${window.pasoAPasoHtml?.(p, "completo") || ""}
         <div class="acciones">${globalThis.botonLuz ? botonLuz(p, true) : ""}
           <span class="suave">${(p.comentariosLista || []).length || p.comentarios} comentarios</span></div>
         <div class="chat" style="max-width:none">${(p.comentariosLista || []).map(c => `<div class="burbuja el"><b style="color:var(--oro);font-size:13px">${esc(c.autor)}</b><br>${esc(c.texto)}</div>`).join("")}</div>
@@ -808,7 +808,7 @@ Object.assign(DET, {
 <span class="cimas-ancla" hidden></span></div>
         ${p0Demo(ps)}
         <div class="cimas" tabindex="0" aria-label="Cimas: desliza para ver la siguiente">${ps.length ? ps.map((p, i) => `<article class="cima" data-cima="${esc(p.id)}" aria-label="Publicación de ${esc(p.autorNombre)}">
-          <div class="cima-fondo">${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${window.selladaCima?.(p) || (window.mediaCima?.(p) || "") + (window.mediaCima?.(p) ? "" : p.foto ? `<img src="${esc(p.foto)}" alt="${altFoto(p)}" loading="lazy">`
+          <div class="cima-fondo">${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}${window.selladaCima?.(p) || window.pasoAPasoFondo?.(p) || (window.mediaCima?.(p) || "") + (window.mediaCima?.(p) ? "" : p.foto ? `<img src="${esc(p.foto)}" alt="${altFoto(p)}" loading="lazy">`
             : `<div class="cielo cima-cielo" data-cielo-post="${p.creadoEn}" aria-hidden="true"></div><p class="cima-cita">“${enlazarTexto(p.texto)}”</p>`)}</div>
           <div class="cima-acciones">
             <button class="cima-autor" data-acc="escribirA" data-arg="${esc(p.autorId)}|${esc(p.autorNombre)}" aria-label="Escribir a ${esc(p.autorNombre)}">${autor(p)}</button>
@@ -823,6 +823,7 @@ Object.assign(DET, {
             ${window.chipsCamino?.(p) || ""}
             ${p.foto && p.texto && !window.estaSellada?.(p) ? `<p class="cima-texto">${enlazarTexto(p.texto)}</p>${p.texto.length > 90 ? `<button class="cima-mas" data-acc="masTexto" aria-expanded="false">más</button>` : ""}` : p.foto ? "" : `<span class="cima-dato suave-c">Publicado bajo este cielo</span>`}
             ${p.metaTitulo ? `<span class="cima-meta">${ic("ruta")}${esc(p.metaTitulo)}</span>` : ""}
+            ${window.pasoAPasoChip?.(p) || ""}
             ${p.brujula && window.leerBrujula?.(p.brujula) ? `<button class="cima-explorar" data-ir="comunidad" data-arg="brujula:${esc(p.id)}">${ic("cima")} Explorar su Brújula 1 · 9 · 81</button>` : ""}
             ${i === 0 ? `<span class="cima-ayuda">${ic("arriba")}Desliza hacia arriba para ver la siguiente cima</span>` : ""}</div></article>`).join("") +
           // El feed tiene final: la invitación es volver a la propia ruta
@@ -836,7 +837,7 @@ Object.assign(DET, {
         <div class="autor">${autor(p)}<div style="flex:1;min-width:0"><b>${esc(p.autorNombre)}</b><div class="suave" style="font-size:13px">${hace(p.creadoEn)} · ${TIPOS_POST.find(t => t[0] === p.tipo)?.[1] || ""}</div></div></div>
         ${p.brujula && window.leerBrujula?.(p.brujula) ? brujulaMuro(p)
           : `<button data-acc="verCima" data-arg="${esc(p.id)}" aria-label="Ver en Cimas, a pantalla completa" style="display:block;width:100%;text-align:left">${postal(p)}</button>${window.botonRecuerdosPost ? botonRecuerdosPost(p) : ""}
-        ${p.foto && p.texto && !window.estaSellada?.(p) ? `<p style="margin:0">${esc(p.texto)}</p>` : ""}`}${window.chipsCamino?.(p) || ""}
+        ${p.foto && p.texto && !window.estaSellada?.(p) ? `<p style="margin:0">${esc(p.texto)}</p>` : ""}${window.pasoAPasoHtml?.(p, "muro") || ""}`}${window.chipsCamino?.(p) || ""}
         <div class="acciones">${globalThis.botonLuz ? botonLuz(p, true) : ""}
           <button class="btn" data-ir="comunidad" data-arg="post:${esc(p.id)}">${ic("comentario")} ${p.comentarios} comentarios</button>${globalThis.botonMochila ? botonMochila(p).replace("<button ", '<button class="btn mochila-btn" ') : ""}</div></article>`).join("") : vacioFeed),
       "max-width:600px");

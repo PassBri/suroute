@@ -3249,4 +3249,33 @@
     <string name="hi_de_tu_ascenso">你攀登路上的里程碑</string>
     <string name="hi_ver_mis">查看我的里程碑</string>
     <string name="hi_anios_con">%1$d 年有里程碑</string>
+    <string name="pap_un_momento">一个瞬间</string>
+    <string name="pap_titulo">一步一步</string>
+    <string name="pap_ayuda">讲述你实现某个目标或志向的完整路线：从哪里出发、每一步和顶峰。对刚起步的人来说，一条路比一张山顶照片更有用。</string>
+    <string name="pap_que_lograste">你实现了什么？</string>
+    <string name="pap_que_lograste_ej">跑完我的第一个半程马拉松…</string>
+    <string name="pap_traer">从目标中导入步骤</string>
+    <string name="pap_paso_n">第 %1$d 步</string>
+    <string name="pap_paso_ej">你做了什么</string>
+    <string name="pap_mes">月份</string>
+    <string name="pap_detalle">详情（可选）</string>
+    <string name="pap_agregar">添加一步</string>
+    <string name="pap_quitar">删除第 %1$d 步</string>
+    <string name="pap_subir">上移第 %1$d 步</string>
+    <string name="pap_salida">起点</string>
+    <string name="pap_cumbre">顶峰：%1$s</string>
+    <string name="pap_cumbre_sola">顶峰</string>
+    <string name="pap_ver_todos">查看全部 %1$d 步</string>
+    <string name="pap_ver_su">查看TA的一步一步</string>
+    <string name="pap_consejo">你想对刚起步的人说什么</string>
+    <string name="pap_de">%1$s 的一步一步</string>
+    <string name="pap_como">我是怎么做到的</string>
+    <plurals name="pap_n">
+        <item quantity="one">%d 步</item>
+        <item quantity="other">%d 步</item>
+    </plurals>
+    <plurals name="pap_traidos">
+        <item quantity="one">已从「%2$s」导入 %1$d 步</item>
+        <item quantity="other">已从「%2$s」导入 %1$d 步</item>
+    </plurals>
 </resources>

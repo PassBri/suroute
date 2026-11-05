@@ -69,6 +69,8 @@ data class Post(
     val camino: Camino? = null,
     val compromiso: Compromiso? = null,
     val sello: String? = null,
+    /** Paso a paso: cómo se logró una meta, de la salida a la cumbre. */
+    val pasoAPaso: PasoAPaso? = null,
 )
 
 /** Una pieza del carrusel: foto ("img") o video ("vid"), con su ruta local o URL. */
@@ -121,7 +123,7 @@ class SocialRepository(
         impulsos = impulsos + if (id in impulsados()) 1 else 0, yoImpulse = id in impulsados(),
         creadoEn = creadaEn, propio = true, visibilidad = runCatching { Visibilidad.valueOf(visibilidad) }.getOrDefault(Visibilidad.PUBLICA),
         brujula = brujula, media = MediaJson.leer(media),
-    ).let { p -> val x = extras(id); p.copy(camino = x.camino, compromiso = x.compromiso, sello = x.sello) }
+    ).let { p -> val x = extras(id); p.copy(camino = x.camino, compromiso = x.compromiso, sello = x.sello, pasoAPaso = x.pasos) }
 
     /** Lo nuevo de mis publicaciones se guarda aparte en el teléfono (sin tocar la base local). */
     private fun extras(id: String): ExtrasPost = ComunidadViva.deTexto(prefs.getString("extras:$id", null))
@@ -211,6 +213,7 @@ class SocialRepository(
                 x.camino?.let { put("camino", ComunidadViva.json(it)) }
                 x.compromiso?.let { put("compromiso", ComunidadViva.json(it)) }
                 x.sello?.let { put("sello", ComunidadViva.jsonSello(it)) }
+                x.pasos?.let { put("pasos", PasoAPaso.json(it)) }
             }
         }
         // Sin las columnas nuevas en la base (supabase/2026-10-29-comunidad-viva.sql), se publica igual sin ellas
@@ -537,6 +540,7 @@ class SocialRepository(
             brujula = when (val b = o["brujula"]) { is JsonObject -> b.toString(); is kotlinx.serialization.json.JsonPrimitive -> b.contentOrNull.orEmpty(); else -> "" },
             media = MediaJson.leer(o["media"]),
             camino = ComunidadViva.caminoDe(o["camino"]), compromiso = ComunidadViva.compromisoDe(o["compromiso"]), sello = ComunidadViva.selloDe(o["sello"]),
+            pasoAPaso = PasoAPaso.de(o["pasos"]),
         )
     }
 
