@@ -38,6 +38,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -229,11 +232,11 @@ fun PasoAPasoChip(post: Post) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModoPublicar(vm: PublicarViewModel) {
-    androidx.compose.material3.SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
+    SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth()) {
         listOf(false to R.string.pap_un_momento, true to R.string.pap_titulo).forEachIndexed { i, (v, t) ->
-            androidx.compose.material3.SegmentedButton(selected = vm.modoPasos == v,
+            SegmentedButton(selected = vm.modoPasos == v,
                 onClick = { vm.modoPasos = v; if (v) vm.tipo = com.rutaalacima.app.data.social.TipoPost.LOGRO },
-                shape = androidx.compose.material3.SegmentedButtonDefaults.itemShape(i, 2),
+                shape = SegmentedButtonDefaults.itemShape(i, 2),
                 icon = { Icon(if (v) Icons.Filled.Stairs else Icons.Filled.Add, null, Modifier.size(18.dp)) }) { Text(stringResource(t)) }
         }
     }
