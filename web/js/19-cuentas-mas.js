@@ -502,9 +502,9 @@ function pantallaBloqueo() {
       <p class="suave">${passkeyId() ? "Ábrelas con tu huella o rostro, o con tu PIN." : "Escribe tu PIN para abrir el libro de cuentas."} Se vuelve a cerrar tras ${finMinutos()} ${finMinutos() === 1 ? "minuto" : "minutos"} sin uso o al salir.</p>
       ${passkeyId() && passkeyPosible() ? `<button class="btn lleno pin-huella" data-acc="ascPasskey">${ic("huella")} Abrir con huella o rostro</button>` : ""}
       <form data-form="ascPin" class="pin-form">
-        <label class="pin-puntos" aria-label="PIN de 4 a 6 números">
+        <label class="pin-puntos" aria-label="${largoPin() ? `PIN de ${largoPin()} números` : "PIN de 4 a 6 números"}" data-largo="${largoPin() || ""}">
           <input name="texto" type="password" inputmode="${tactil ? "none" : "numeric"}" autocomplete="off" maxlength="6" pattern="[0-9]{4,6}" data-pin required ${espera ? "disabled" : tactil ? "" : "autofocus"}>
-          ${[0, 1, 2, 3, 4, 5].map(i => `<i class="${i > 3 ? "opc" : ""}"></i>`).join("")}
+          ${[0, 1, 2, 3, 4, 5].map(i => `<i class="${i >= (largoPin() || 4) ? "opc" : ""}"></i>`).join("")}
         </label>
         <div class="pin-teclado" role="group" aria-label="Teclado del PIN">${teclas.map(k => k === "ok"
           ? `<button type="submit" class="pin-ok" aria-label="Abrir" ${espera ? "disabled" : ""}>${ic("check")}</button>`
@@ -516,7 +516,15 @@ function pantallaBloqueo() {
     </div></div>`;
 }
 /** Los puntos del PIN siguen a lo que se escribe (teclado del aparato o el de la pantalla). */
-const pintarPuntosPin = inp => { const n = inp.value.length; inp.parentElement.querySelectorAll("i").forEach((p, i) => { p.classList.toggle("lleno", i < n); p.classList.toggle("ver", i < Math.max(4, n + 1)); }); };
+/** Cuántos números tiene el PIN (se guarda junto al hash: "sal.hash.largo"); 0 si es un PIN viejo sin ese dato. */
+const largoPin = () => Number((respuesta("fin#pin") || "").split(".")[2]) || 0;
+/** Los puntos siguen a lo que se escribe: tantos como números tiene el PIN (o los escritos, mínimo 4, en un PIN viejo).
+ *  Al completar el último número se abre solo, sin tocar ✓ (cuenta como un intento normal). */
+const pintarPuntosPin = inp => {
+  const n = inp.value.length, L = Number(inp.parentElement.dataset.largo) || 0;
+  inp.parentElement.querySelectorAll("i").forEach((p, i) => { p.classList.toggle("lleno", i < n); p.classList.toggle("ver", i < (L || Math.max(4, n))); });
+  if (L && n === L && !inp.form.dataset.enviando) { inp.form.dataset.enviando = "1"; setTimeout(() => inp.form.requestSubmit(), 120); }
+};
 document.addEventListener("input", e => { if (e.target.matches?.("[data-pin]")) { e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6); pintarPuntosPin(e.target); } });
 document.addEventListener("click", e => {
   const t = e.target.closest?.("[data-pin-tecla]"); if (!t) return;
@@ -906,7 +914,7 @@ Object.assign(ACC, {
         e.preventDefault(); const d = new FormData(e.target), a = String(d.get("a")), b = String(d.get("b"));
         if (a !== b) { toast("Los PIN no coinciden"); return; }
         const sal = [...crypto.getRandomValues(new Uint8Array(12))].map(x => x.toString(16).padStart(2, "0")).join("");
-        responder(ASC.WB, "fin#pin", sal + "." + await hashPin(a, sal)); responder(ASC.WB, "fin#bloqueo", "1");
+        responder(ASC.WB, "fin#pin", sal + "." + await hashPin(a, sal) + "." + a.length); responder(ASC.WB, "fin#bloqueo", "1");
         estado.ascAbierto = Date.now(); v.remove(); toast("Bloqueo activado");
       };
     });
@@ -946,6 +954,7 @@ window.FORMULARIOS = Object.assign(window.FORMULARIOS || {}, {
     if (finEspera()) { pintarDetalle(); return; }
     if (await hashPin(texto, sal) === h) {
       guardarIntentos({});
+      if (!largoPin()) responder(ASC.WB, "fin#pin", `${sal}.${h}.${texto.length}`);   // un PIN viejo aprende su largo
       let abierta = true; try { abierta = await (window.finAbrirConPin?.(texto) ?? true); } catch { abierta = false; }
       if (!abierta) { estado.finPinPendiente = texto; estado.finPideCodigo = true; pintarDetalle(); return; }
       estado.ascAbierto = Date.now(); pintarLista(); pintarDetalle(); return;

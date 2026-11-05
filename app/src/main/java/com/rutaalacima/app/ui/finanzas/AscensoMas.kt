@@ -136,6 +136,8 @@ fun PantallaBloqueo(modifier: Modifier = Modifier, onAbrir: () -> Unit) {
     val clave = remember { Bloqueo.tieneClave(ctx) }
     var pin by remember { mutableStateOf("") }
     var error by remember { mutableStateOf("") }
+    // Tantos puntos como números tiene la clave; al completar el último se abre sola (cuenta como un intento normal)
+    val largo = remember { Bloqueo.largoClave(ctx) }
     val titulo = stringResource(R.string.cu_bloqueado_titulo); val sub = stringResource(R.string.cu_bloqueado_sub)
     val abrirBio = {
         Bloqueo.actividad(ctx)?.let { a -> Bloqueo.pedirBiometria(a, titulo, sub, onExito = onAbrir, onError = { error = it }) } ?: onAbrir()
@@ -165,7 +167,7 @@ fun PantallaBloqueo(modifier: Modifier = Modifier, onAbrir: () -> Unit) {
                         if (clave) {
                             // Los puntos del PIN y el teclado numérico
                             Row(Modifier.semantics { contentDescription = ctx.getString(R.string.pin_puntos, pin.length) }, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                                repeat(maxOf(4, minOf(6, pin.length + 1))) { i ->
+                                repeat(if (largo > 0) largo else maxOf(4, pin.length)) { i ->
                                     val lleno = i < pin.length
                                     Box(Modifier.size(16.dp).clip(CircleShape).background(if (lleno) MaterialTheme.colorScheme.primary else Color.Transparent)
                                         .border(2.dp, if (lleno) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline, CircleShape))
@@ -179,7 +181,7 @@ fun PantallaBloqueo(modifier: Modifier = Modifier, onAbrir: () -> Unit) {
                                         when (k) {
                                             "ok" -> FilledIconButton(onClick = probar, enabled = pin.length >= 4, modifier = Modifier.size(64.dp)) { Icon(Icons.Filled.Check, stringResource(R.string.cu_abrir)) }
                                             "borrar" -> IconButton(onClick = { pin = pin.dropLast(1) }, modifier = Modifier.size(64.dp)) { Icon(Icons.AutoMirrored.Filled.Backspace, stringResource(R.string.borrar)) }
-                                            else -> FilledTonalButton(onClick = { if (pin.length < 6) { pin += k; error = ""; haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove) } },
+                                            else -> FilledTonalButton(onClick = { if (pin.length < (if (largo > 0) largo else 6)) { pin += k; error = ""; if (largo > 0 && pin.length == largo) probar(); haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove) } },
                                                 modifier = Modifier.size(64.dp), shape = CircleShape, contentPadding = PaddingValues(0.dp)) {
                                                 Text(k, style = MaterialTheme.typography.headlineSmall)
                                             }

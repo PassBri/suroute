@@ -97,11 +97,15 @@ object Bloqueo {
         prefs(c).edit()
             .putString("sal", sal.toHex())
             .putString("hash", hash(clave, sal).toHex())
+            .putInt("largo", clave.length)
             .putInt("fallos", 0).putLong("bloqueado_hasta", 0)
             .apply()
     }
 
-    fun borrarClave(c: Context) = prefs(c).edit().remove("sal").remove("hash").apply()
+    fun borrarClave(c: Context) = prefs(c).edit().remove("sal").remove("hash").remove("largo").apply()
+
+    /** Cuántos números tiene la clave (0 si es una clave vieja que todavía no lo ha guardado). */
+    fun largoClave(c: Context): Int = prefs(c).getInt("largo", 0)
 
     /** Milisegundos que faltan para poder intentar de nuevo (tras [MAX_INTENTOS] fallos). */
     fun esperaRestante(c: Context): Long = (prefs(c).getLong("bloqueado_hasta", 0) - System.currentTimeMillis()).coerceAtLeast(0)
@@ -112,7 +116,7 @@ object Bloqueo {
         val sal = p.getString("sal", null)?.fromHex() ?: return false
         val guardado = p.getString("hash", null) ?: return false
         val ok = java.security.MessageDigest.isEqual(hash(clave, sal), guardado.fromHex())
-        if (ok) p.edit().putInt("fallos", 0).putInt("nivel", 0).apply()
+        if (ok) p.edit().putInt("fallos", 0).putInt("nivel", 0).putInt("largo", clave.length).apply()   // una clave vieja aprende su largo
         else {
             // Cada tanda de 5 fallos espera más: 30 s, 1 min, 5 min y 15 min (igual que la web)
             val fallos = p.getInt("fallos", 0) + 1
