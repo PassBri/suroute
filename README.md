@@ -122,4 +122,8 @@ SuRoute cumple la Ley 1581 de 2012 de Colombia. Los documentos están en el
   <img src="diseno/readme/pie.svg" alt="SuRoute · Summit Route. Con el método Ruta a la Cima. Creado por Brian Gonzalo Suárez Acevedo, Santander, Colombia." width="100%">
 </p>
 
-<p align="center"><sub>Serie Ruta a la Cima · © 2026 Brian Gonzalo Suárez Acevedo</sub></p>
+## Derechos de autor
+
+El código y el contenido de SuRoute son de **Brian Gonzalo Suárez Acevedo** y tienen **todos los derechos reservados**. El repositorio es público solo para consultarlo: no se permite copiarlo, modificarlo, redistribuirlo ni usarlo para otra app o sitio sin su autorización por escrito. Detalles en [LICENSE](LICENSE).
+
+<p align="center"><sub>Serie Ruta a la Cima · © 2026 Brian Gonzalo Suárez Acevedo · Todos los derechos reservados</sub></p>
