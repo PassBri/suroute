@@ -3278,4 +3278,10 @@
         <item quantity="one">تم جلب خطوة واحدة من «%2$s»</item>
         <item quantity="other">تم جلب %1$d خطوات من «%2$s»</item>
     </plurals>
+    <string name="inicio_abrir_en">فتح التطبيق على</string>
+    <string name="inicio_auto">تلقائي</string>
+    <string name="inicio_ayuda">تلقائي: المجتمع إذا كان لديك حساب وكتبت قمتك؛ وإلا فمساري. يُطبَّق في المرة القادمة التي تفتح فيها التطبيق.</string>
+    <string name="paso_hoy_tu">خطوتك اليوم</string>
+    <string name="paso_hoy_dado">تمت الخطوة! واصل الصعود.</string>
+    <string name="paso_hoy_marcar">خطوت اليوم خطوة في «%1$s»</string>
 </resources>

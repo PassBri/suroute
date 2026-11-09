@@ -158,6 +158,9 @@ function abrirApp() {
   // La rutina diaria empieza en el día de hoy (marcar hábitos sin tocar nada antes).
   // Mientras no haya cumbre escrita, se empieza por la ruta.
   // El inicio es Mi vida: la cumbre, el vision board y los años; Hoy está a un toque en la barra
+  // En el teléfono, con cuenta y la cumbre escrita, se abre en Comunidad (Cimas) con «Tu paso de hoy» encima (igual que la app);
+  // sin cuenta o sin cumbre, en Mi ruta, que enseña el método.
+  if (Store.nube && perfil().cumbreFrase && matchMedia("(max-width: 700px)").matches) { estado.vistaCom = "cimas"; ir("comunidad", "feed"); return; }
   ir("ruta", recordatorio() ? "puntos" : null);
 }
 document.addEventListener("click", e => { if (e.target.closest("[data-acc-v='demo']")) { clearInterval(sondeo); clearInterval(renovar); entrarDemo(); } });

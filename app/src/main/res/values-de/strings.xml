@@ -3278,4 +3278,10 @@
         <item quantity="one">%1$d Schritt aus „%2$s“ übernommen</item>
         <item quantity="other">%1$d Schritte aus „%2$s“ übernommen</item>
     </plurals>
+    <string name="inicio_abrir_en">App öffnen in</string>
+    <string name="inicio_auto">Automatisch</string>
+    <string name="inicio_ayuda">Automatisch: Community, wenn du ein Konto hast und deinen Gipfel geschrieben hast; sonst Meine Route. Gilt beim nächsten Öffnen.</string>
+    <string name="paso_hoy_tu">Dein Schritt heute</string>
+    <string name="paso_hoy_dado">Schritt geschafft! Weiter aufwärts.</string>
+    <string name="paso_hoy_marcar">Heute einen Schritt bei „%1$s“ gemacht</string>
 </resources>

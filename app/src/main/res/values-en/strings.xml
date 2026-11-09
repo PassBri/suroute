@@ -3278,4 +3278,10 @@
         <item quantity="one">%1$d step brought from “%2$s”</item>
         <item quantity="other">%1$d steps brought from “%2$s”</item>
     </plurals>
+    <string name="inicio_abrir_en">Open the app in</string>
+    <string name="inicio_auto">Automatic</string>
+    <string name="inicio_ayuda">Automatic: Community if you have an account and have written your summit; otherwise, My route. Applies next time you open the app.</string>
+    <string name="paso_hoy_tu">Your step today</string>
+    <string name="paso_hoy_dado">Step taken! Keep climbing.</string>
+    <string name="paso_hoy_marcar">I took a step today on “%1$s”</string>
 </resources>

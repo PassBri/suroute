@@ -3278,4 +3278,10 @@
         <item quantity="one">「%2$s」에서 %1$d단계를 가져왔어요</item>
         <item quantity="other">「%2$s」에서 %1$d단계를 가져왔어요</item>
     </plurals>
+    <string name="inicio_abrir_en">앱을 열 때</string>
+    <string name="inicio_auto">자동</string>
+    <string name="inicio_ayuda">자동: 계정이 있고 정상을 적었다면 커뮤니티, 아니면 나의 길로 엽니다. 다음에 앱을 열 때 적용됩니다.</string>
+    <string name="paso_hoy_tu">오늘의 한 걸음</string>
+    <string name="paso_hoy_dado">한 걸음 내디뎠어요! 계속 올라가요.</string>
+    <string name="paso_hoy_marcar">오늘 「%1$s」에 한 걸음 내디뎠어요</string>
 </resources>

@@ -3278,4 +3278,10 @@
         <item quantity="one">%1$d passo preso da «%2$s»</item>
         <item quantity="other">%1$d passi presi da «%2$s»</item>
     </plurals>
+    <string name="inicio_abrir_en">Apri l’app in</string>
+    <string name="inicio_auto">Automatico</string>
+    <string name="inicio_ayuda">Automatico: Comunità se hai un account e hai scritto la tua vetta; altrimenti La mia rotta. Vale dalla prossima apertura.</string>
+    <string name="paso_hoy_tu">Il tuo passo di oggi</string>
+    <string name="paso_hoy_dado">Passo fatto! Continua a salire.</string>
+    <string name="paso_hoy_marcar">Oggi ho fatto un passo in «%1$s»</string>
 </resources>

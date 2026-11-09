@@ -373,7 +373,11 @@ fun ComunidadScreen(
                     )
                 }
                 PestanasCimas(vm, onMuro = { volverA = pagina; enMuro = true }, onCordadas = onCordadas, onMensajes = onMensajes, onCuenta = onCuenta, noLeidos = noLeidos, onAvisos = onAvisos, onBuscar = onBuscar,
-                    fogatas = { FranjaFogatas(vivas, onAbrir = { fogataVer = it }, modifier = Modifier.padding(top = 4.dp)) })
+                    fogatas = {
+                        FranjaFogatas(vivas, onAbrir = { fogataVer = it }, modifier = Modifier.padding(top = 4.dp))
+                        // El paso del día va primero: hasta que se da, la franja queda encima de Cimas
+                        FranjaPasoHoy(sobreOscuro = true, modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 6.dp))
+                    })
             }
             comentandoEn?.let { p -> HojaComentarios(vm, p, onCerrar = { comentandoEn = null }, onAbrirDetalle = { comentandoEn = null; onAbrirPost(p.id) }) }
             opcionesDe?.let { p -> HojaOpciones(vm, p, onChat = onChat, onCerrar = { opcionesDe = null }) }
@@ -439,8 +443,10 @@ fun ComunidadScreen(
                     }
                 }
             }
-            // Historias: atajos para publicar cada tipo
+            // Historias: atajos para publicar cada tipo (con «Tu paso de hoy» encima mientras no se haya dado)
             item {
+                Column {
+                FranjaPasoHoy(sobreOscuro = false, modifier = Modifier.padding(bottom = 10.dp))
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     items(TipoPost.entries) { t ->
                         Column(
@@ -457,6 +463,7 @@ fun ComunidadScreen(
                         }
                     }
                 }
+                            }
             }
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {

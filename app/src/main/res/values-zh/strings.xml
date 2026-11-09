@@ -3278,4 +3278,10 @@
         <item quantity="one">已从「%2$s」导入 %1$d 步</item>
         <item quantity="other">已从「%2$s」导入 %1$d 步</item>
     </plurals>
+    <string name="inicio_abrir_en">打开应用时进入</string>
+    <string name="inicio_auto">自动</string>
+    <string name="inicio_ayuda">自动：如果你有账号并已写下你的顶峰，进入社区；否则进入我的路线。下次打开应用时生效。</string>
+    <string name="paso_hoy_tu">你今天的一步</string>
+    <string name="paso_hoy_dado">迈出一步！继续攀登。</string>
+    <string name="paso_hoy_marcar">今天在「%1$s」上迈出了一步</string>
 </resources>

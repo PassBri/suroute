@@ -5939,3 +5939,19 @@ form:not(.pap-on) > .pap-editor { display: none; }
 .pap-ed-acc { display: flex; flex-direction: column; gap: 2px; }
 .pap-editor > .btn.texto { justify-self: start; }
 @media (max-width: 520px) { .pap-ed-sub { grid-template-columns: 128px minmax(0, 1fr); } .pap-ed-paso { grid-template-columns: 28px 1fr auto; gap: 8px; } .pap-ed-paso .pap-ctrl { width: 28px; height: 28px; font-size: 12.5px; } }
+/* «Tu paso de hoy» encima de Cimas (teléfono): hasta que se da el paso del día */
+.cimas-paso { position: absolute; left: 10px; right: 10px; top: 60px; z-index: 3; display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 12px; border-radius: 20px;
+  background: rgb(255 255 255 / .12); border: 1px solid rgb(255 255 255 / .22); color: #fff; backdrop-filter: none; }
+.cimas-paso > svg { width: 20px; height: 20px; fill: #E8C77A; flex: none; }
+.cimas-paso > b { font-weight: 500; font-size: 14px; white-space: nowrap; }
+.cimas-paso-fila { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
+.cimas-paso-fila button { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px; border-radius: 999px; border: 1px solid rgb(255 255 255 / .22); color: #fff; background: transparent; font: inherit; font-size: 13px; white-space: nowrap; touch-action: manipulation; }
+.cimas-paso-fila button svg { width: 16px; height: 16px; fill: currentColor; opacity: .75; }
+.cimas-paso-fila .eje-punto { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+@media (min-width: 901px) { .cimas-paso { display: none; } }
+#detalle:has(.fogatas-vivo.en-cimas) .cimas-paso { top: 124px; }
+.cimas-paso { z-index: 4; background: rgb(12 16 22 / .72); }
+@media (max-width: 700px) {
+  #detalle:has(.cimas-paso) .pap-cima { margin-top: 186px; }
+  #detalle:has(.cimas-paso):has(.fogatas-vivo.en-cimas) .pap-cima { margin-top: 250px; }
+}

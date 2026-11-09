@@ -55,6 +55,15 @@
     if (pasosMes(mm).ps.length) { estado.pasoHoy = estado.pasoHoy === Number(id) ? null : Number(id); pintarDetalle(); return; }
     marcar(id, fecha, "");
   };
+  /** «Tu paso de hoy» encima de Cimas (en el teléfono): las metas del mes con un toque; desaparece cuando ya hay un paso hoy. Igual que la app. */
+  window.franjaPasoHoy = () => {
+    const h = hoyFecha(), d = h.getDate(), ms = Store.lista("meta_mes").filter(x => x.anio === h.getFullYear() && x.mes === h.getMonth() + 1 && !x.cumplida);
+    if (!ms.length || ms.some(x => numeros(x.dias).includes(d))) return "";
+    return `<div class="cimas-paso" role="group" aria-label="Tu paso de hoy">${ic("hoy")}<b>Tu paso de hoy</b><div class="cimas-paso-fila">${ms.map(x => {
+      const a = Store.get("meta_anio", x.metaAnualId), t = a?.titulo || x.texto;
+      return `<button data-acc="pasoHoyFranja" data-arg="${x.id}" aria-label="Di hoy un paso en «${esc(t)}»"><i class="eje-punto" style="background:${COLOR_EJE[ejeEfectivo("meta_mes", x)] || "#7A4A6B"}"></i><span>${esc(corto(t, 24))}</span>${ic("check")}</button>`; }).join("")}</div></div>`;
+  };
+  ACC.pasoHoyFranja = (_, id) => { marcarDiaMeta(id, iso(hoyFecha())); navigator.vibrate?.(12); toast("¡Paso dado! Sigue subiendo."); pintarDetalle(); };
   ACC.pasoHoySub = (_, arg) => { const [id, fecha, p] = arg.split("|"); marcar(id, fecha, p); };
   ACC.pasoHoyCerrar = () => { estado.pasoHoy = null; pintarDetalle(); };
 })();

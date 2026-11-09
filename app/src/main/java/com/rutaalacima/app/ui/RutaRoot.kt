@@ -252,8 +252,14 @@ private val SECCIONES_TODAS: List<Seccion?> by lazy { listOf(
 enum class EstadoApp { CARGANDO, ONBOARDING, LISTO }
 
 class RootViewModel(c: AppContainer) : ViewModel() {
+    /** Dónde se abre la app (ver [InicioApp]); se calcula con el mismo perfil que decide el estado. */
+    @Volatile var inicio: String = Rutas.RUTA
+        private set
     val estado: StateFlow<EstadoApp> = c.perfil.perfil
-        .map { if (it.onboardingCompleto) EstadoApp.LISTO else EstadoApp.ONBOARDING }
+        .map {
+            inicio = InicioApp.ruta(c.contexto, c.supabase.configurado && c.supabase.sesion.value != null, it.cumbreFrase.isNotBlank())
+            if (it.onboardingCompleto) EstadoApp.LISTO else EstadoApp.ONBOARDING
+        }
         .stateIn(viewModelScope, SharingStarted.Eagerly, EstadoApp.CARGANDO)
 }
 
@@ -300,13 +306,13 @@ fun RutaRoot() {
     when (estado) {
         EstadoApp.CARGANDO -> Box(Modifier.fillMaxSize().fondoPapel())
         EstadoApp.ONBOARDING -> OnboardingScreen()
-        EstadoApp.LISTO -> AppPrincipal()
+        EstadoApp.LISTO -> { val inicio = androidx.compose.runtime.remember { vm.inicio }; AppPrincipal(inicio) }
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun AppPrincipal() {
+private fun AppPrincipal(inicio: String = Rutas.RUTA) {
     val nav = rememberNavController()
     androidx.compose.runtime.SideEffect { com.rutaalacima.app.ui.bienestar.NavBienestar.abrir = { tab -> nav.navigate("${Rutas.BIENESTAR}?tab=$tab") } }
     val entrada by nav.currentBackStackEntryAsState()
@@ -424,7 +430,7 @@ private fun AppPrincipal() {
         }
         androidx.compose.runtime.CompositionLocalProvider(com.rutaalacima.app.ui.comunidad.LocalAbrirEnlaceRed provides abrirEnlaceRed) {
         NavHost(
-            nav, startDestination = Rutas.RUTA,
+            nav, startDestination = inicio,
             enterTransition = {
                 if (esPestana(initialState.destination.route) && esPestana(targetState.destination.route))
                     androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(210, delayMillis = 90, easing = enfatizada)) +

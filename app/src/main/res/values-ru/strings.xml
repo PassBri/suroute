@@ -3278,4 +3278,10 @@
         <item quantity="one">Взят %1$d шаг из «%2$s»</item>
         <item quantity="other">Шагов взято из «%2$s»: %1$d</item>
     </plurals>
+    <string name="inicio_abrir_en">Открывать приложение на</string>
+    <string name="inicio_auto">Автоматически</string>
+    <string name="inicio_ayuda">Автоматически: «Сообщество», если у вас есть аккаунт и вы записали свою вершину; иначе «Мой маршрут». Применится при следующем запуске.</string>
+    <string name="paso_hoy_tu">Ваш шаг сегодня</string>
+    <string name="paso_hoy_dado">Шаг сделан! Поднимайтесь дальше.</string>
+    <string name="paso_hoy_marcar">Сегодня сделал шаг в «%1$s»</string>
 </resources>

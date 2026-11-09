@@ -3278,4 +3278,10 @@
         <item quantity="one">%1$d étape reprise de « %2$s »</item>
         <item quantity="other">%1$d étapes reprises de « %2$s »</item>
     </plurals>
+    <string name="inicio_abrir_en">Ouvrir l’app sur</string>
+    <string name="inicio_auto">Automatique</string>
+    <string name="inicio_ayuda">Automatique : Communauté si vous avez un compte et avez écrit votre sommet ; sinon, Mon itinéraire. S’applique à la prochaine ouverture.</string>
+    <string name="paso_hoy_tu">Votre pas du jour</string>
+    <string name="paso_hoy_dado">Pas franchi ! Continuez à monter.</string>
+    <string name="paso_hoy_marcar">J’ai fait un pas aujourd’hui pour « %1$s »</string>
 </resources>

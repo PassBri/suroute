@@ -3278,4 +3278,10 @@
         <item quantity="one">«%2$s» से %1$d कदम लाया गया</item>
         <item quantity="other">«%2$s» से %1$d कदम लाए गए</item>
     </plurals>
+    <string name="inicio_abrir_en">ऐप यहाँ खोलें</string>
+    <string name="inicio_auto">अपने आप</string>
+    <string name="inicio_ayuda">अपने आप: अगर आपका खाता है और आपने अपना शिखर लिखा है तो समुदाय; नहीं तो मेरा रास्ता। अगली बार ऐप खोलने पर लागू होगा।</string>
+    <string name="paso_hoy_tu">आज का आपका कदम</string>
+    <string name="paso_hoy_dado">कदम उठ गया! चढ़ते रहिए।</string>
+    <string name="paso_hoy_marcar">आज «%1$s» में एक कदम उठाया</string>
 </resources>

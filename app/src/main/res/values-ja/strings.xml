@@ -3278,4 +3278,10 @@
         <item quantity="one">「%2$s」から %1$d ステップを取り込みました</item>
         <item quantity="other">「%2$s」から %1$d ステップを取り込みました</item>
     </plurals>
+    <string name="inicio_abrir_en">アプリを開く画面</string>
+    <string name="inicio_auto">自動</string>
+    <string name="inicio_ayuda">自動：アカウントがあり頂上を書いていればコミュニティ、そうでなければマイルート。次にアプリを開いたときから適用されます。</string>
+    <string name="paso_hoy_tu">今日の一歩</string>
+    <string name="paso_hoy_dado">一歩前進！登り続けましょう。</string>
+    <string name="paso_hoy_marcar">「%1$s」で今日一歩進んだ</string>
 </resources>

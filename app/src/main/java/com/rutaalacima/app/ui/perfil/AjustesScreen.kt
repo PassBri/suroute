@@ -204,6 +204,28 @@ fun AjustesScreen(onBack: () -> Unit, onFrases: () -> Unit = {}, onWeb: () -> Un
                 )
             }
 
+            // Dónde se abre la app (automático: Comunidad con cuenta y cumbre escrita; si no, Mi ruta)
+            item { SectionTitle(stringResource(R.string.inicio_abrir_en)) }
+            item {
+                val ctx = LocalContext.current
+                var abrirEn by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(com.rutaalacima.app.ui.InicioApp.elegido(ctx)) }
+                ChipSelector(
+                    null, com.rutaalacima.app.ui.InicioApp.OPCIONES, abrirEn,
+                    {
+                        stringResource(
+                            when (it) {
+                                "comunidad" -> R.string.tab_comunidad
+                                "ruta" -> R.string.tab_ruta
+                                "hoy" -> R.string.tab_hoy
+                                else -> R.string.inicio_auto
+                            },
+                        )
+                    },
+                    { abrirEn = it; com.rutaalacima.app.ui.InicioApp.elegir(ctx, it) },
+                )
+                Text(stringResource(R.string.inicio_ayuda), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+
             item { SectionTitle(stringResource(R.string.bloqueo_titulo)) }
             item {
                 val ctx = LocalContext.current

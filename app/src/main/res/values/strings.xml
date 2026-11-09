@@ -3287,4 +3287,10 @@
         <item quantity="one">%1$d paso traído de «%2$s»</item>
         <item quantity="other">%1$d pasos traídos de «%2$s»</item>
     </plurals>
+    <string name="inicio_abrir_en">Abrir la app en</string>
+    <string name="inicio_auto">Automático</string>
+    <string name="inicio_ayuda">Automático: en Comunidad si tienes cuenta y ya escribiste tu cumbre; si no, en Mi ruta. Se aplica la próxima vez que abras la app.</string>
+    <string name="paso_hoy_tu">Tu paso de hoy</string>
+    <string name="paso_hoy_dado">¡Paso dado! Sigue subiendo.</string>
+    <string name="paso_hoy_marcar">Di hoy un paso en «%1$s»</string>
 </resources>
