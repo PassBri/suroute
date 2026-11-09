@@ -253,6 +253,8 @@ fun WebScreen(onBack: () -> Unit, onCuenta: () -> Unit) {
                                     Text(stringResource(R.string.web_sincronizar))
                                 }
                             }
+                            // Si la última sincronización falló, el detalle técnico (para saber qué pasó)
+                            estado.error?.let { Text(it.take(200), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error) }
                             Text(stringResource(R.string.web_privacidad), style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                             TextButton(onClick = { confirmarBorrado = true }) {
