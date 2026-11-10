@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">Your step today</string>
     <string name="paso_hoy_dado">Step taken! Keep climbing.</string>
     <string name="paso_hoy_marcar">I took a step today on “%1$s”</string>
+    <string name="nube_titulo">Your route is in the cloud</string>
+    <string name="nube_texto">This account already has your route saved (from the web or another phone). Bring it to this phone: what is here is replaced by what is in the cloud.</string>
+    <string name="nube_traer">Bring my route</string>
+    <string name="nube_unir">Merge with this phone</string>
+    <string name="nube_unir_aviso">This phone’s data is merged with the cloud. If something changed on both sides, this phone wins and replaces the cloud. Use it only if your real route is on this phone.</string>
+    <string name="nube_listo">Your route arrived on this phone.</string>
+    <string name="nube_error">Your route could not be brought. Check your connection and try again.</string>
 </resources>

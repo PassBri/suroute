@@ -118,8 +118,53 @@ class RutaWebRepository(
                 nombre = o["nombre"]?.jsonPrimitive?.contentOrNull ?: "Navegador",
                 ultimoUso = o["ultimo_uso"]?.jsonPrimitive?.contentOrNull?.let { runCatching { Instant.parse(it) }.getOrNull() },
             )
-        }.also { if (it.isNotEmpty() && !_estado.value.activo) activar(true) }
+        }.also {
+            // Se activa sola solo si este teléfono ya se había sincronizado con esta cuenta. Si es la primera vez y la nube
+            // ya tiene la ruta, primero se pregunta (ver [nubeConRutaNueva]) para que lo de este teléfono no la pise.
+            if (it.isNotEmpty() && !_estado.value.activo && huellas(uid).isNotEmpty()) activar(true)
+        }
     }
+
+    /** ¿Este teléfono nunca se ha sincronizado con esta cuenta y la nube ya tiene su ruta (de la web u otro teléfono)? */
+    suspend fun nubeConRutaNueva(): Boolean {
+        val uid = supabase.sesion.value?.userId ?: return false
+        if (!supabase.configurado || huellas(uid).isNotEmpty()) return false
+        return runCatching { supabase.select("ruta_datos", "select=clave&user_id=eq.$uid&limit=1").jsonArray.isNotEmpty() }.getOrDefault(false)
+    }
+
+    /**
+     * Teléfono nuevo: trae la ruta de la nube y reemplaza la de este teléfono (lo que solo está aquí se quita; el perfil
+     * se toma de la nube). Después la sincronización sigue normal en los dos sentidos.
+     */
+    suspend fun traerDeLaNube() = candado.withLock {
+        val uid = supabase.sesion.value?.userId ?: error("sin sesión")
+        _estado.value = _estado.value.copy(sincronizando = true, error = null)
+        try {
+            val desde = desde().toString()
+            val remotos = remotos(uid, desde)
+            check(remotos.isNotEmpty()) { "la nube no tiene datos" }
+            val locales = locales(desde)
+            // 1. Lo de la nube (padres antes que hijos)
+            remotos.entries.sortedBy { ORDEN.indexOf(Sincronia.tipoDe(it.key)) }.forEach { (k, v) -> runCatching { aplicar(k, v) } }
+            // 2. Lo que solo estaba en este teléfono se quita (hijos antes que padres); el perfil nunca se borra
+            locales.keys.filter { it !in remotos && Sincronia.tipoDe(it) != "perfil" && enVentana(it, desde) }
+                .sortedByDescending { ORDEN.indexOf(Sincronia.tipoDe(it)) }.forEach { k -> runCatching { borrarLocal(k) } }
+            // 3. Las huellas quedan como la nube: la próxima sincronización ya es normal
+            prefs.edit().remove("huellas").apply()
+            guardarHuellas(uid, emptyMap(), remotos.mapValues { Sincronia.huella(it.value) })
+            activar(true)
+            val ahora = System.currentTimeMillis()
+            prefs.edit().putLong("ultima", ahora).apply()
+            _estado.value = _estado.value.copy(sincronizando = false, ultima = ahora)
+        } catch (e: Exception) {
+            _estado.value = _estado.value.copy(sincronizando = false, error = e.message)
+            throw e
+        }
+        runCatching { publicaciones(uid) }
+    }
+
+    /** Une lo de este teléfono con la nube (en los choques gana lo de este teléfono) y deja la sincronización activa. */
+    suspend fun unirConLaNube() { activar(true); sincronizar() }
 
     suspend fun desvincular(webUid: String) {
         supabase.delete("dispositivos", "web_uid=eq.${SupabaseClient.enc(webUid)}")

@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">你今天的一步</string>
     <string name="paso_hoy_dado">迈出一步！继续攀登。</string>
     <string name="paso_hoy_marcar">今天在「%1$s」上迈出了一步</string>
+    <string name="nube_titulo">你的路线在云端</string>
+    <string name="nube_texto">这个账号已经保存了你的路线（来自网页或另一部手机）。把它带到这部手机：这里现有的内容会被云端内容替换。</string>
+    <string name="nube_traer">带回我的路线</string>
+    <string name="nube_unir">与这部手机合并</string>
+    <string name="nube_unir_aviso">这部手机的数据会与云端合并。如果两边都改过，以这部手机为准并替换云端。只有当你真正的路线在这部手机上时才使用。</string>
+    <string name="nube_listo">你的路线已到达这部手机。</string>
+    <string name="nube_error">无法带回你的路线。请检查网络后重试。</string>
 </resources>

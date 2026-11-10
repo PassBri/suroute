@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">Seu passo de hoje</string>
     <string name="paso_hoy_dado">Passo dado! Continue subindo.</string>
     <string name="paso_hoy_marcar">Dei hoje um passo em «%1$s»</string>
+    <string name="nube_titulo">Sua rota está na nuvem</string>
+    <string name="nube_texto">Esta conta já tem sua rota salva (da web ou de outro celular). Traga-a para este celular: o que há aqui é substituído pelo que está na nuvem.</string>
+    <string name="nube_traer">Trazer minha rota</string>
+    <string name="nube_unir">Unir com este celular</string>
+    <string name="nube_unir_aviso">O que está neste celular é unido ao da nuvem. Se algo mudou nos dois lados, vence este celular e substitui a nuvem. Use só se sua rota de verdade estiver neste celular.</string>
+    <string name="nube_listo">Sua rota chegou a este celular.</string>
+    <string name="nube_error">Não foi possível trazer sua rota. Verifique a conexão e tente de novo.</string>
 </resources>

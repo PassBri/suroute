@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">오늘의 한 걸음</string>
     <string name="paso_hoy_dado">한 걸음 내디뎠어요! 계속 올라가요.</string>
     <string name="paso_hoy_marcar">오늘 「%1$s」에 한 걸음 내디뎠어요</string>
+    <string name="nube_titulo">당신의 길은 클라우드에 있어요</string>
+    <string name="nube_texto">이 계정에는 이미 길이 저장되어 있어요(웹 또는 다른 휴대폰에서). 이 휴대폰으로 가져오면 여기 있는 내용이 클라우드 내용으로 바뀝니다.</string>
+    <string name="nube_traer">내 길 가져오기</string>
+    <string name="nube_unir">이 휴대폰과 합치기</string>
+    <string name="nube_unir_aviso">이 휴대폰의 데이터를 클라우드와 합칩니다. 양쪽에서 바뀐 것이 있으면 이 휴대폰이 우선이며 클라우드를 대체합니다. 진짜 길이 이 휴대폰에 있을 때만 사용하세요.</string>
+    <string name="nube_listo">길이 이 휴대폰에 도착했어요.</string>
+    <string name="nube_error">길을 가져오지 못했어요. 연결을 확인하고 다시 시도하세요.</string>
 </resources>

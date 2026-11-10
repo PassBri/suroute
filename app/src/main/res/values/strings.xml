@@ -3293,4 +3293,11 @@
     <string name="paso_hoy_tu">Tu paso de hoy</string>
     <string name="paso_hoy_dado">¡Paso dado! Sigue subiendo.</string>
     <string name="paso_hoy_marcar">Di hoy un paso en «%1$s»</string>
+    <string name="nube_titulo">Tu ruta está en la nube</string>
+    <string name="nube_texto">Esta cuenta ya tiene tu ruta guardada (de la web o de otro teléfono). Tráela a este teléfono: lo que hay aquí se reemplaza por lo de la nube.</string>
+    <string name="nube_traer">Traer mi ruta</string>
+    <string name="nube_unir">Unir con lo de este teléfono</string>
+    <string name="nube_unir_aviso">Se mezcla lo de este teléfono con lo de la nube. Si algo cambió en los dos lados, gana lo de este teléfono y reemplaza lo de la nube. Úsalo solo si en este teléfono está tu ruta de verdad.</string>
+    <string name="nube_listo">Tu ruta llegó a este teléfono.</string>
+    <string name="nube_error">No se pudo traer tu ruta. Revisa la conexión e inténtalo otra vez.</string>
 </resources>

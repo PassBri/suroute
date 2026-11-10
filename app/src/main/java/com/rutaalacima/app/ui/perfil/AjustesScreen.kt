@@ -341,6 +341,8 @@ fun AjustesScreen(onBack: () -> Unit, onFrases: () -> Unit = {}, onWeb: () -> Un
                         !vm.servidor -> Text(stringResource(R.string.servidor_no_configurado), style = MaterialTheme.typography.bodyMedium)
                         s != null -> {
                             Text(stringResource(R.string.sesion_iniciada, s.email), style = MaterialTheme.typography.bodyLarge)
+                            // Teléfono nuevo con la ruta ya en la nube: traerla antes de sincronizar
+                            com.rutaalacima.app.ui.web.TraerRutaNube(Modifier.padding(top = 8.dp, bottom = 4.dp))
                             // Mi @usuario: único y personal; así me encuentran para escribirme
                             val uvm = com.rutaalacima.app.ui.components.rutaViewModel { UsuarioViewModel(it) }
                             if (uvm.actual.isNotBlank()) Text("@" + uvm.actual, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary,

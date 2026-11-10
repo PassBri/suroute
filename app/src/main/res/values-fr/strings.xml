@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">Votre pas du jour</string>
     <string name="paso_hoy_dado">Pas franchi ! Continuez à monter.</string>
     <string name="paso_hoy_marcar">J’ai fait un pas aujourd’hui pour « %1$s »</string>
+    <string name="nube_titulo">Votre itinéraire est dans le cloud</string>
+    <string name="nube_texto">Ce compte a déjà votre itinéraire enregistré (depuis le web ou un autre téléphone). Ramenez-le sur ce téléphone : ce qui s’y trouve est remplacé par le cloud.</string>
+    <string name="nube_traer">Ramener mon itinéraire</string>
+    <string name="nube_unir">Fusionner avec ce téléphone</string>
+    <string name="nube_unir_aviso">Les données de ce téléphone sont fusionnées avec le cloud. Si quelque chose a changé des deux côtés, ce téléphone l’emporte et remplace le cloud. À utiliser seulement si votre vrai itinéraire est sur ce téléphone.</string>
+    <string name="nube_listo">Votre itinéraire est arrivé sur ce téléphone.</string>
+    <string name="nube_error">Impossible de ramener votre itinéraire. Vérifiez la connexion et réessayez.</string>
 </resources>

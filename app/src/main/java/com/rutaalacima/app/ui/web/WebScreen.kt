@@ -235,6 +235,7 @@ fun WebScreen(onBack: () -> Unit, onCuenta: () -> Unit) {
                         }
                     }
                 }
+                item { TraerRutaNube() }
                 if (estado.activo) {
                     item {
                         RutaCard {

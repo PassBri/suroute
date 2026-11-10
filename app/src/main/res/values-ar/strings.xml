@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">خطوتك اليوم</string>
     <string name="paso_hoy_dado">تمت الخطوة! واصل الصعود.</string>
     <string name="paso_hoy_marcar">خطوت اليوم خطوة في «%1$s»</string>
+    <string name="nube_titulo">مسارك في السحابة</string>
+    <string name="nube_texto">هذا الحساب يحفظ مسارك بالفعل (من الويب أو من هاتف آخر). أحضره إلى هذا الهاتف: سيُستبدل ما هنا بما في السحابة.</string>
+    <string name="nube_traer">إحضار مساري</string>
+    <string name="nube_unir">الدمج مع هذا الهاتف</string>
+    <string name="nube_unir_aviso">تُدمج بيانات هذا الهاتف مع السحابة. إذا تغيّر شيء في الجهتين، تفوز بيانات هذا الهاتف وتحل محل السحابة. استخدمه فقط إذا كان مسارك الحقيقي على هذا الهاتف.</string>
+    <string name="nube_listo">وصل مسارك إلى هذا الهاتف.</string>
+    <string name="nube_error">تعذّر إحضار مسارك. تحقق من الاتصال وحاول مرة أخرى.</string>
 </resources>

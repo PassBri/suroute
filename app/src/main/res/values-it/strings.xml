@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">Il tuo passo di oggi</string>
     <string name="paso_hoy_dado">Passo fatto! Continua a salire.</string>
     <string name="paso_hoy_marcar">Oggi ho fatto un passo in «%1$s»</string>
+    <string name="nube_titulo">La tua rotta è nel cloud</string>
+    <string name="nube_texto">Questo account ha già la tua rotta salvata (dal web o da un altro telefono). Portala su questo telefono: ciò che c’è qui viene sostituito dal cloud.</string>
+    <string name="nube_traer">Porta la mia rotta</string>
+    <string name="nube_unir">Unisci con questo telefono</string>
+    <string name="nube_unir_aviso">I dati di questo telefono vengono uniti al cloud. Se qualcosa è cambiato da entrambe le parti, vince questo telefono e sostituisce il cloud. Usalo solo se la tua vera rotta è su questo telefono.</string>
+    <string name="nube_listo">La tua rotta è arrivata su questo telefono.</string>
+    <string name="nube_error">Impossibile portare la tua rotta. Controlla la connessione e riprova.</string>
 </resources>

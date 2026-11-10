@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">今日の一歩</string>
     <string name="paso_hoy_dado">一歩前進！登り続けましょう。</string>
     <string name="paso_hoy_marcar">「%1$s」で今日一歩進んだ</string>
+    <string name="nube_titulo">あなたのルートはクラウドにあります</string>
+    <string name="nube_texto">このアカウントにはすでにルートが保存されています（ウェブまたは別のスマホから）。このスマホに取り込むと、ここにある内容はクラウドの内容に置き換わります。</string>
+    <string name="nube_traer">ルートを取り込む</string>
+    <string name="nube_unir">このスマホと統合</string>
+    <string name="nube_unir_aviso">このスマホのデータをクラウドと統合します。両方で変更がある場合はこのスマホが優先され、クラウドを置き換えます。本当のルートがこのスマホにある場合だけ使ってください。</string>
+    <string name="nube_listo">ルートがこのスマホに届きました。</string>
+    <string name="nube_error">ルートを取り込めませんでした。接続を確認してもう一度お試しください。</string>
 </resources>

@@ -3284,4 +3284,11 @@
     <string name="paso_hoy_tu">आज का आपका कदम</string>
     <string name="paso_hoy_dado">कदम उठ गया! चढ़ते रहिए।</string>
     <string name="paso_hoy_marcar">आज «%1$s» में एक कदम उठाया</string>
+    <string name="nube_titulo">आपका रास्ता क्लाउड में है</string>
+    <string name="nube_texto">इस खाते में आपका रास्ता पहले से सहेजा है (वेब या किसी दूसरे फ़ोन से)। इसे इस फ़ोन पर लाएँ: यहाँ जो है वह क्लाउड वाले से बदल जाएगा।</string>
+    <string name="nube_traer">मेरा रास्ता लाएँ</string>
+    <string name="nube_unir">इस फ़ोन के साथ मिलाएँ</string>
+    <string name="nube_unir_aviso">इस फ़ोन का डेटा क्लाउड के साथ मिलाया जाता है। अगर दोनों तरफ़ कुछ बदला है, तो यह फ़ोन जीतता है और क्लाउड को बदल देता है। तभी इस्तेमाल करें जब आपका असली रास्ता इसी फ़ोन पर हो।</string>
+    <string name="nube_listo">आपका रास्ता इस फ़ोन पर आ गया।</string>
+    <string name="nube_error">आपका रास्ता नहीं लाया जा सका। कनेक्शन जाँचें और फिर कोशिश करें।</string>
 </resources>
