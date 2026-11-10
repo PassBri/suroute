@@ -129,8 +129,8 @@ fun CordadasScreen(onBack: () -> Unit, onAbrir: (String) -> Unit, onCuenta: () -
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 32.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {
@@ -329,8 +329,8 @@ fun CordadaScreen(id: String, onBack: () -> Unit) {
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = padding.calculateBottomPadding() + 16.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = padding.calculateBottomPadding() + 16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             vm.aviso?.let { item { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) } }

@@ -304,8 +304,8 @@ fun ConstanciaScreen(onBack: () -> Unit, onResumen: (Int) -> Unit = {}) {
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 32.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {
@@ -400,8 +400,8 @@ fun RevisionScreen(tipo: Revision.Tipo, dia: LocalDate, onBack: () -> Unit) {
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 32.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {

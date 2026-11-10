@@ -142,7 +142,7 @@ fun AvisosScreen(onBack: () -> Unit, onPost: (String) -> Unit, onPersona: (Strin
         },
     ) { padding ->
         val lista = vm.avisos
-        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(top = padding.calculateTopPadding(), bottom = 32.dp)) {
+        LazyColumn(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), contentPadding = PaddingValues(top = 0.dp, bottom = 32.dp)) {
             if (ajustes) item("prefs") { PreferenciasAvisos(vm.prefs, vm::cambiarPref) }
             when {
                 lista == null -> item("cargando") { Text("…", Modifier.padding(24.dp)) }
@@ -275,7 +275,7 @@ fun BuscarPersonasScreen(onBack: () -> Unit, onPersona: (String) -> Unit, onList
             )
         },
     ) { padding ->
-        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(top = padding.calculateTopPadding(), bottom = 32.dp)) {
+        LazyColumn(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), contentPadding = PaddingValues(top = 0.dp, bottom = 32.dp)) {
             item("campo") {
                 OutlinedTextField(
                     texto, { texto = it; vm.buscar(it) }, Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
@@ -371,8 +371,8 @@ fun PersonaScreen(id: String, onBack: () -> Unit, onPost: (String) -> Unit, onCh
             return@Scaffold
         }
         LazyVerticalGrid(
-            GridCells.Fixed(3), Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(top = padding.calculateTopPadding(), bottom = 32.dp),
+            GridCells.Fixed(3), Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+            contentPadding = PaddingValues(top = 0.dp, bottom = 32.dp),
             horizontalArrangement = Arrangement.spacedBy(2.dp), verticalArrangement = Arrangement.spacedBy(2.dp),
         ) {
             item("cab", span = { GridItemSpan(3) }) {
@@ -464,8 +464,8 @@ class BienvenidaViewModel(private val c: AppContainer) : ViewModel() {
 @Composable
 fun PrimerosPasosComunidad(vm: BienvenidaViewModel, padding: PaddingValues, onListo: () -> Unit) {
     LazyColumn(
-        Modifier.fillMaxSize().fondoPapel(),
-        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 16.dp, bottom = padding.calculateBottomPadding() + 24.dp),
+        Modifier.fillMaxSize().fondoPapel().padding(top = padding.calculateTopPadding()),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = padding.calculateBottomPadding() + 24.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item("t") {
@@ -544,7 +544,7 @@ fun ListadoPublicacionesScreen(clave: String, onBack: () -> Unit, onPost: (Strin
         },
     ) { padding ->
         val ps = vm.posts
-        LazyVerticalGrid(GridCells.Fixed(3), Modifier.fillMaxSize(), contentPadding = PaddingValues(top = padding.calculateTopPadding(), bottom = 32.dp),
+        LazyVerticalGrid(GridCells.Fixed(3), Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), contentPadding = PaddingValues(top = 0.dp, bottom = 32.dp),
             horizontalArrangement = Arrangement.spacedBy(2.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
             if (ps != null && ps.isEmpty()) item("vacio", span = { GridItemSpan(3) }) {
                 Text(stringResource(R.string.red_listado_vacio), Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -687,7 +687,7 @@ fun PrivacidadScreen(onBack: () -> Unit) {
             )
         },
     ) { padding ->
-        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = 32.dp),
+        LazyColumn(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item("regla") {
                 Column(Modifier.clip(RoundedCornerShape(20.dp)).background(MaterialTheme.colorScheme.surface).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {

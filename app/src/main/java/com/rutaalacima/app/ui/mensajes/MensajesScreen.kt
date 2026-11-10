@@ -108,8 +108,8 @@ fun MensajesScreen(onBack: () -> Unit, onAbrir: (String) -> Unit, onCuenta: () -
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 24.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             if (!vm.repo.disponible) {
@@ -309,8 +309,8 @@ fun ChatScreen(id: String, onBack: () -> Unit) {
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(), state = lista,
-            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = padding.calculateTopPadding() + 4.dp, bottom = padding.calculateBottomPadding() + 8.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()), state = lista,
+            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 4.dp, bottom = padding.calculateBottomPadding() + 8.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
         ) {
             items(vm.mensajes, key = { it.id }) { m ->

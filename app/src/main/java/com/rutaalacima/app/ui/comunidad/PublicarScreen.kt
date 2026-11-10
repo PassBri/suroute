@@ -208,8 +208,8 @@ fun PublicarScreen(tipoInicial: String, onBack: () -> Unit, metaInicial: String?
         },
     ) { padding ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = 32.dp),
+            modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(14.dp),
         ) {
             // En vivo: encender una fogata (no aplica a un recuerdo de otro año)

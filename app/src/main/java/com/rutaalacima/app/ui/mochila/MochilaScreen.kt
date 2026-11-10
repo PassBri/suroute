@@ -81,7 +81,7 @@ fun MochilaScreen(onBack: () -> Unit, onOpen: (String) -> Unit) {
             )
         },
     ) { padding ->
-        LazyColumn(contentPadding = PaddingValues(top = padding.calculateTopPadding(), bottom = padding.calculateBottomPadding() + 24.dp),
+        LazyColumn(modifier = Modifier.padding(top = padding.calculateTopPadding()), contentPadding = PaddingValues(top = 0.dp, bottom = padding.calculateBottomPadding() + 24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)) {
             item {
                 Text(stringResource(R.string.mochila_intro), style = MaterialTheme.typography.bodyMedium,

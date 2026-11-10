@@ -241,7 +241,7 @@ fun LibroCumbresScreen(onBack: () -> Unit, onCapsula: (String) -> Unit, onAnio: 
         topBar = { TopAppBar(title = { Column { Text(stringResource(R.string.lb_titulo)); Text(stringResource(R.string.lb_sub), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant) } },
             navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } }) },
     ) { pad ->
-        LazyColumn(contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = pad.calculateTopPadding() + 8.dp, bottom = 40.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        LazyColumn(modifier = Modifier.padding(top = pad.calculateTopPadding()), contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 40.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             vm.haceUnAnio()?.let { p -> item { HaceUnAnio(p) { onPost(p.id) } } }
             item {
                 Surface(shape = RoundedCornerShape(20.dp), color = MaterialTheme.colorScheme.surface, border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)) {
@@ -560,7 +560,7 @@ fun LibroAnioScreen(anio: Int, onBack: () -> Unit, onPublicar: (String) -> Unit)
     ) { pad ->
         val ms = meses
         if (ms == null) { Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }; return@Scaffold }
-        LazyColumn(contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = pad.calculateTopPadding() + 8.dp, bottom = 40.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        LazyColumn(modifier = Modifier.padding(top = pad.calculateTopPadding()), contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 40.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
             item {
                 Surface(shape = RoundedCornerShape(20.dp), color = PAPEL) {
                     Column(Modifier.fillMaxWidth().padding(20.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {

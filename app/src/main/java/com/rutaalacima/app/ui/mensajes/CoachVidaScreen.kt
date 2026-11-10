@@ -127,8 +127,8 @@ fun CoachVidaScreen(onBack: () -> Unit, onChat: (String) -> Unit, onAcompanado: 
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 32.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item { Text(stringResource(R.string.coach_vida_intro), style = MaterialTheme.typography.bodyMedium) }
@@ -332,8 +332,8 @@ fun AcompanadoScreen(id: String, nombre: String, onBack: () -> Unit, onChat: (St
         },
     ) { padding ->
         LazyColumn(
-            Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 4.dp, bottom = 32.dp),
+            Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             if (r == null) {

@@ -99,8 +99,8 @@ fun WorkbookIndexScreen(
             Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) { com.rutaalacima.app.ui.components.CargandoMarca() }
             return@Scaffold
         }
-        LazyColumn(
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = 32.dp),
+        LazyColumn(modifier = Modifier.padding(top = padding.calculateTopPadding()), 
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             item {
@@ -320,10 +320,10 @@ fun SectionScreen(
         val resultado = calcularResultados(seccion, vm.respuestas)
         LazyColumn(
             state = listState,
-            modifier = Modifier.fillMaxSize().imePadding(),
+            modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
             contentPadding = PaddingValues(
                 start = 20.dp, end = 20.dp,
-                top = padding.calculateTopPadding() + 8.dp,
+                top = 8.dp,
                 bottom = padding.calculateBottomPadding() + 24.dp,
             ),
             verticalArrangement = Arrangement.spacedBy(14.dp),

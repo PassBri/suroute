@@ -107,10 +107,10 @@ fun AxesScreen(onBack: () -> Unit) {
             )
         },
     ) { padding ->
-    LazyColumn(
+    LazyColumn(modifier = Modifier.padding(top = padding.calculateTopPadding()), 
         contentPadding = PaddingValues(
             start = 16.dp, end = 16.dp,
-            top = padding.calculateTopPadding() + 8.dp,
+            top = 8.dp,
             bottom = padding.calculateBottomPadding() + 24.dp,
         ),
         verticalArrangement = Arrangement.spacedBy(12.dp),

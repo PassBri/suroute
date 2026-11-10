@@ -90,8 +90,8 @@ fun PropositoScreen(propositoId: Long, onBack: () -> Unit, onAnio: (Int) -> Unit
             return@Scaffold
         }
         LazyColumn(
-            modifier = Modifier.fillMaxSize().imePadding(),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = 32.dp),
+            modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item {

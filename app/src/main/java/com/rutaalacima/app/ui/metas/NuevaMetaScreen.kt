@@ -245,8 +245,8 @@ fun NuevaMetaScreen(nivelInicial: NivelMeta, onBack: () -> Unit, onCompartir: ()
     ) { padding ->
         AnimatedContent(targetState = if (vm.guardada) -1 else vm.paso, label = "paso") { paso ->
             LazyColumn(
-                modifier = Modifier.fillMaxSize().imePadding(),
-                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp,
+                modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()).imePadding(),
+                contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp,
                     bottom = padding.calculateBottomPadding() + 24.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
