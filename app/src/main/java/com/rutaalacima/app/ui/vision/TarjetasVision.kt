@@ -82,6 +82,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -162,11 +165,11 @@ internal fun NavegacionVision(modo: ModoTarjetas, onModo: (ModoTarjetas) -> Unit
         val ancha = maxWidth >= 560.dp
         androidx.compose.foundation.layout.Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             // 1 · 9 · 81: botones segmentados de Material 3 (la capa que se ve queda marcada)
-            androidx.compose.material3.SingleChoiceSegmentedButtonRow(Modifier.weight(if (ancha) 0.8f else 1f)) {
+            SingleChoiceSegmentedButtonRow(Modifier.weight(if (ancha) 0.8f else 1f)) {
                 listOf(1, 9, 81).forEachIndexed { i, numero ->
                     val descripcion = stringResource(listOf(R.string.vision_seccion_cumbre, R.string.vision_seccion_rosa, R.string.vision_seccion_ruta)[i])
-                    androidx.compose.material3.SegmentedButton(selected = i == seccion, onClick = { onSeccion(i) }, enabled = habilitada,
-                        shape = androidx.compose.material3.SegmentedButtonDefaults.itemShape(i, 3), icon = {},
+                    SegmentedButton(selected = i == seccion, onClick = { onSeccion(i) }, enabled = habilitada,
+                        shape = SegmentedButtonDefaults.itemShape(i, 3), icon = {},
                         modifier = Modifier.semantics { contentDescription = descripcion }) {
                         Text(stringResource(R.string.vision_nivel_numero, numero), maxLines = 1)
                     }
