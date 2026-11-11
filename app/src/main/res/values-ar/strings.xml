@@ -3404,4 +3404,18 @@
         <item quantity="other">آخر %1$d أشهر</item>
     </plurals>
     <string name="sal_ir_negocio">سجّل حساباته في «مشروعي»</string>
+    <string name="ng_agregar">أضف</string>
+    <string name="ng_concepto">الوصف (اختياري)</string>
+    <string name="ng_vacio_dia">لا توجد حركات في هذا اليوم بعد. سجّل الأولى بالأعلى: النوع والمبلغ وانتهيت.</string>
+    <string name="ng_util_dia">ربح اليوم</string>
+    <string name="ng_asi_va">هكذا يسير %1$s</string>
+    <string name="ng_de_utilidad">ربح %1$s</string>
+    <string name="ng_dia_a_dia">يومًا بيوم</string>
+    <string name="ng_util_anio">ربح %1$d</string>
+    <string name="ng_mes_a_mes">شهرًا بشهر</string>
+    <string name="ng_empieza">ابدأ من اليوم: اضغط «بيع» وسجّل ما بعته. كل يوم يُضاف إلى الشهر وكل شهر إلى السنة.</string>
+    <string name="ng_util_todo">ربح كل السنوات</string>
+    <string name="ng_anio_a_anio">سنة بسنة</string>
+    <string name="ng_registrar_hoy">سجّل اليوم</string>
+    <string name="ng_vendiste">بعت %1$s</string>
 </resources>

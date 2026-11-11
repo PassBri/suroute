@@ -3404,4 +3404,18 @@
         <item quantity="other">%1$d derniers mois</item>
     </plurals>
     <string name="sal_ir_negocio">Tenir ses comptes dans Mon entreprise</string>
+    <string name="ng_agregar">Ajouter</string>
+    <string name="ng_concepto">Libellé (facultatif)</string>
+    <string name="ng_vacio_dia">Aucun mouvement ce jour-là. Notez le premier ci-dessus : le type, le montant, c\'est tout.</string>
+    <string name="ng_util_dia">Bénéfice du jour</string>
+    <string name="ng_asi_va">Où en est %1$s</string>
+    <string name="ng_de_utilidad">%1$s de bénéfice</string>
+    <string name="ng_dia_a_dia">Jour après jour</string>
+    <string name="ng_util_anio">Bénéfice %1$d</string>
+    <string name="ng_mes_a_mes">Mois par mois</string>
+    <string name="ng_empieza">Commencez par aujourd\'hui : touchez « Vente » et notez ce que vous avez vendu. Chaque jour s\'ajoute au mois, chaque mois à l\'année.</string>
+    <string name="ng_util_todo">Bénéfice, toutes les années</string>
+    <string name="ng_anio_a_anio">Année par année</string>
+    <string name="ng_registrar_hoy">Noter aujourd\'hui</string>
+    <string name="ng_vendiste">Vendu %1$s</string>
 </resources>

@@ -3404,4 +3404,18 @@
         <item quantity="other">直近 %1$d か月</item>
     </plurals>
     <string name="sal_ir_negocio">「わたしのビジネス」で帳簿をつける</string>
+    <string name="ng_agregar">追加</string>
+    <string name="ng_concepto">内容（任意）</string>
+    <string name="ng_vacio_dia">この日の記録はまだありません。上で最初の一件を：種類と金額だけでOK。</string>
+    <string name="ng_util_dia">この日の利益</string>
+    <string name="ng_asi_va">%1$s の状況</string>
+    <string name="ng_de_utilidad">利益 %1$s</string>
+    <string name="ng_dia_a_dia">日ごと</string>
+    <string name="ng_util_anio">%1$d年の利益</string>
+    <string name="ng_mes_a_mes">月ごと</string>
+    <string name="ng_empieza">今日から始めましょう：「売上」をタップして売ったものを記録。毎日が月に、毎月が年に積み上がります。</string>
+    <string name="ng_util_todo">全期間の利益</string>
+    <string name="ng_anio_a_anio">年ごと</string>
+    <string name="ng_registrar_hoy">今日を記録</string>
+    <string name="ng_vendiste">売上 %1$s</string>
 </resources>

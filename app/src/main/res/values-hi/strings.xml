@@ -3404,4 +3404,18 @@
         <item quantity="other">पिछले %1$d महीने</item>
     </plurals>
     <string name="sal_ir_negocio">“मेरा व्यवसाय” में हिसाब रखें</string>
+    <string name="ng_agregar">जोड़ें</string>
+    <string name="ng_concepto">विवरण (वैकल्पिक)</string>
+    <string name="ng_vacio_dia">इस दिन अभी कोई प्रविष्टि नहीं। ऊपर पहली लिखें: प्रकार, राशि, बस।</string>
+    <string name="ng_util_dia">दिन का लाभ</string>
+    <string name="ng_asi_va">%1$s का हाल</string>
+    <string name="ng_de_utilidad">%1$s लाभ</string>
+    <string name="ng_dia_a_dia">दिन-ब-दिन</string>
+    <string name="ng_util_anio">%1$d का लाभ</string>
+    <string name="ng_mes_a_mes">महीना-दर-महीना</string>
+    <string name="ng_empieza">आज से शुरू करें: “बिक्री” दबाएँ और जो बेचा वह लिखें। हर दिन महीने में और हर महीना साल में जुड़ता है।</string>
+    <string name="ng_util_todo">सभी वर्षों का लाभ</string>
+    <string name="ng_anio_a_anio">साल-दर-साल</string>
+    <string name="ng_registrar_hoy">आज दर्ज करें</string>
+    <string name="ng_vendiste">बिक्री %1$s</string>
 </resources>

@@ -6021,3 +6021,59 @@ form:not(.pap-on) > .pap-editor { display: none; }
   .neg-rapido { gap: 4px; } .neg-rap { font-size: 11.5px; padding: 8px 2px; }
   .neg-tipos .seg-b { font-size: 12px; }
 }
+/* Mi negocio: año › mes › día, anotar en la página */
+.neg-seg { grid-template-columns: repeat(5, 1fr); }
+.neg-seg .seg-b { font-size: 13.5px; padding: 8px 2px; }
+.neg-seg .seg-b[aria-checked="true"] { background: var(--oro-suave); color: var(--burdeos); }
+.neg-seg .seg-b.nt-ven[aria-checked="true"] { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+.neg-nuevo .neg-ayuda { margin: -4px 2px 0; }
+.neg-fila-nueva { display: grid; grid-template-columns: minmax(130px, 1fr) minmax(180px, 2fr) auto; gap: 10px; align-items: end; }
+.neg-fila-nueva.con-cat { grid-template-columns: minmax(120px, 1fr) minmax(150px, 1.2fr) minmax(160px, 2fr) auto; }
+.neg-fila-nueva input[name="monto"] { font-variant-numeric: tabular-nums; font-size: 17px; }
+.neg-movs-t, .neg-per { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.neg-movs-t th, .neg-movs-t td, .neg-per th, .neg-per td { padding: 6px 6px; border-bottom: 1px solid var(--linea); text-align: start; }
+.neg-movs-t th.num, .neg-movs-t td.num, .neg-per .num { text-align: end; }
+.neg-movs-t thead th, .neg-per thead th { font-size: 12.5px; font-weight: 500; color: var(--tinta-suave); }
+.neg-movs-t input, .neg-movs-t select { width: 100%; min-width: 0; border: 1px solid transparent; background: transparent; color: var(--tinta); font: inherit; padding: 6px 8px; border-radius: 8px; min-height: 40px; }
+.neg-movs-t input.num { text-align: end; }
+@media (hover: hover) and (pointer: fine) { .neg-movs-t input:hover, .neg-movs-t select:hover { border-color: var(--linea); } .neg-per tbody tr:hover { background: color-mix(in srgb, var(--oro-suave) 45%, transparent); } }
+.neg-movs-t input:focus, .neg-movs-t select:focus { border-color: var(--burdeos); outline: none; background: var(--hoja); }
+.neg-movs-t tr.nt-ven td:nth-child(4) input { color: var(--ok); font-weight: 600; }
+.neg-movs-t td:nth-child(4) { width: 150px; } .neg-movs-t td:last-child { width: 52px; }
+.neg-movs-t tfoot th, .neg-movs-t tfoot td, .neg-per tfoot th, .neg-per tfoot td { font-weight: 700; border-bottom: 0; border-top: 2px solid var(--tinta); padding-top: 10px; }
+.neg-per tbody tr { cursor: pointer; } .neg-per tr.vacia { color: var(--tinta-suave); } .neg-per tr.actual th { color: var(--burdeos); }
+.neg-per .neg, .neg-movs-t .neg { color: var(--burdeos); }
+.neg-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin: 10px 0 14px; max-width: 420px; }
+.neg-cal > b { text-align: center; font-size: 12px; font-weight: 500; color: var(--tinta-suave); }
+.neg-dia { position: relative; height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--tinta); font: inherit; font-size: 14px; cursor: pointer; touch-action: manipulation; font-variant-numeric: tabular-nums; }
+.neg-dia.con { background: var(--oro-suave); color: var(--burdeos); font-weight: 600; }
+.neg-dia.hoy { box-shadow: inset 0 0 0 2px var(--burdeos); }
+.neg-dia:disabled { color: var(--tinta-suave); opacity: .45; cursor: default; }
+@media (hover: hover) and (pointer: fine) { .neg-dia:not(:disabled):hover { background: color-mix(in srgb, var(--oro-suave) 60%, transparent); } }
+.neg-bal li { display: grid; grid-template-columns: minmax(110px, 1.1fr) minmax(90px, 1.2fr) minmax(100px, 1fr) 40px; gap: 6px; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--linea); }
+.neg-bal input, .neg-bal select, .neg-bal-nuevo input, .neg-bal-nuevo select { width: 100%; min-width: 0; border: 1px solid transparent; background: transparent; color: var(--tinta); font: inherit; font-size: 14px; padding: 6px; border-radius: 8px; min-height: 40px; }
+.neg-bal input.num { text-align: end; font-variant-numeric: tabular-nums; font-weight: 600; }
+.neg-bal input:focus, .neg-bal select:focus { border-color: var(--burdeos); outline: none; }
+.neg-bal-nuevo { display: grid; grid-template-columns: 1.3fr 1fr auto; gap: 6px; align-items: center; margin-top: 8px; }
+.neg-bal-nuevo input, .neg-bal-nuevo select { border-color: var(--linea); }
+.neg-ajustes > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; min-height: 44px; font-weight: 500; list-style: none; }
+.neg-ajustes > summary::-webkit-details-marker { display: none; }
+.neg-ajustes > summary .i { width: 18px; height: 18px; fill: var(--tinta-suave); }
+.neg-form-neg { margin-top: 12px; }
+@media (max-width: 700px) {
+  .neg-fila-nueva, .neg-fila-nueva.con-cat { grid-template-columns: 1fr 1fr; }
+  .neg-fila-nueva label:last-of-type { grid-column: 1 / -1; } .neg-fila-nueva .btn { grid-column: 1 / -1; min-height: 48px; }
+  .neg-fila-nueva:not(.con-cat) label:first-child { grid-column: 1 / -1; }
+  .neg-seg .seg-b { font-size: 12px; }
+  .neg-movs-t thead { display: none; }
+  .neg-movs-t tbody tr { display: grid; grid-template-columns: 1fr 1fr 44px; grid-template-areas: "t m x" "c c c" "n n n"; border-bottom: 1px solid var(--linea); padding: 6px 0; }
+  .neg-movs-t tbody td { border: 0; padding: 2px; }
+  .neg-movs-t td:nth-child(1) { grid-area: t; } .neg-movs-t td:nth-child(2) { grid-area: c; } .neg-movs-t td:nth-child(3) { grid-area: n; }
+  .neg-movs-t td:nth-child(4) { grid-area: m; width: auto; } .neg-movs-t td:nth-child(5) { grid-area: x; width: auto; }
+  .neg-movs-t tbody tr td:nth-child(2):has(> span) { display: none; }
+  .neg-movs-t tbody tr td[colspan] { grid-column: 1 / -1; }
+  .neg-movs-t tfoot tr { display: flex; justify-content: space-between; } .neg-movs-t tfoot td:last-child { display: none; }
+  .neg-per { font-size: 13px; } .neg-per th, .neg-per td { padding: 6px 3px; }
+  .neg-bal li { grid-template-columns: 1fr 1fr 40px; grid-template-areas: "k m x" "n n n"; }
+  .neg-bal li select { grid-area: k; } .neg-bal li input:not(.num) { grid-area: n; } .neg-bal li input.num { grid-area: m; } .neg-bal li .rb { grid-area: x; }
+}

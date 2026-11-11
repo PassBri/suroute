@@ -3404,4 +3404,18 @@
         <item quantity="other">Letzte %1$d Monate</item>
     </plurals>
     <string name="sal_ir_negocio">Bücher in „Mein Geschäft“ führen</string>
+    <string name="ng_agregar">Hinzufügen</string>
+    <string name="ng_concepto">Beschreibung (optional)</string>
+    <string name="ng_vacio_dia">Noch keine Buchungen an diesem Tag. Trage oben die erste ein: Art, Betrag, fertig.</string>
+    <string name="ng_util_dia">Gewinn des Tages</string>
+    <string name="ng_asi_va">So läuft der %1$s</string>
+    <string name="ng_de_utilidad">%1$s Gewinn</string>
+    <string name="ng_dia_a_dia">Tag für Tag</string>
+    <string name="ng_util_anio">Gewinn %1$d</string>
+    <string name="ng_mes_a_mes">Monat für Monat</string>
+    <string name="ng_empieza">Beginne mit heute: tippe auf „Verkauf“ und trage ein, was du verkauft hast. Jeder Tag zählt zum Monat, jeder Monat zum Jahr.</string>
+    <string name="ng_util_todo">Gewinn aller Jahre</string>
+    <string name="ng_anio_a_anio">Jahr für Jahr</string>
+    <string name="ng_registrar_hoy">Heute eintragen</string>
+    <string name="ng_vendiste">Verkauft %1$s</string>
 </resources>

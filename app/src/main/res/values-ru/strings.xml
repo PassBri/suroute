@@ -3404,4 +3404,18 @@
         <item quantity="other">Последние мес.: %1$d</item>
     </plurals>
     <string name="sal_ir_negocio">Вести учёт в «Мой бизнес»</string>
+    <string name="ng_agregar">Добавить</string>
+    <string name="ng_concepto">Описание (необязательно)</string>
+    <string name="ng_vacio_dia">В этот день записей пока нет. Добавьте первую выше: тип и сумма — и готово.</string>
+    <string name="ng_util_dia">Прибыль за день</string>
+    <string name="ng_asi_va">Как идёт %1$s</string>
+    <string name="ng_de_utilidad">Прибыль %1$s</string>
+    <string name="ng_dia_a_dia">По дням</string>
+    <string name="ng_util_anio">Прибыль за %1$d</string>
+    <string name="ng_mes_a_mes">По месяцам</string>
+    <string name="ng_empieza">Начните с сегодняшнего дня: нажмите «Продажа» и запишите, что продали. Каждый день складывается в месяц, месяц — в год.</string>
+    <string name="ng_util_todo">Прибыль за все годы</string>
+    <string name="ng_anio_a_anio">По годам</string>
+    <string name="ng_registrar_hoy">Записать сегодня</string>
+    <string name="ng_vendiste">Продано %1$s</string>
 </resources>

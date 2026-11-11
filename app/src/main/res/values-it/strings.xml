@@ -3404,4 +3404,18 @@
         <item quantity="other">Ultimi %1$d mesi</item>
     </plurals>
     <string name="sal_ir_negocio">Tieni i conti in La mia attività</string>
+    <string name="ng_agregar">Aggiungi</string>
+    <string name="ng_concepto">Descrizione (facoltativa)</string>
+    <string name="ng_vacio_dia">Ancora nessun movimento in questo giorno. Annota il primo qui sopra: tipo, importo e via.</string>
+    <string name="ng_util_dia">Utile del giorno</string>
+    <string name="ng_asi_va">Come va %1$s</string>
+    <string name="ng_de_utilidad">%1$s di utile</string>
+    <string name="ng_dia_a_dia">Giorno per giorno</string>
+    <string name="ng_util_anio">Utile del %1$d</string>
+    <string name="ng_mes_a_mes">Mese per mese</string>
+    <string name="ng_empieza">Inizia da oggi: tocca «Vendita» e annota ciò che hai venduto. Ogni giorno si somma al mese e ogni mese all\'anno.</string>
+    <string name="ng_util_todo">Utile di tutti gli anni</string>
+    <string name="ng_anio_a_anio">Anno per anno</string>
+    <string name="ng_registrar_hoy">Registra oggi</string>
+    <string name="ng_vendiste">Venduto %1$s</string>
 </resources>

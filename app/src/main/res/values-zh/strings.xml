@@ -3404,4 +3404,18 @@
         <item quantity="other">最近 %1$d 个月</item>
     </plurals>
     <string name="sal_ir_negocio">在「我的生意」里记账</string>
+    <string name="ng_agregar">添加</string>
+    <string name="ng_concepto">说明（可选）</string>
+    <string name="ng_vacio_dia">这一天还没有记录。在上方记下第一笔：类型、金额，就好了。</string>
+    <string name="ng_util_dia">当日利润</string>
+    <string name="ng_asi_va">%1$s 进展</string>
+    <string name="ng_de_utilidad">利润 %1$s</string>
+    <string name="ng_dia_a_dia">逐日</string>
+    <string name="ng_util_anio">%1$d 年利润</string>
+    <string name="ng_mes_a_mes">逐月</string>
+    <string name="ng_empieza">从今天开始：点「销售」，记下卖了什么。每天累计到月，每月累计到年。</string>
+    <string name="ng_util_todo">历年利润</string>
+    <string name="ng_anio_a_anio">逐年</string>
+    <string name="ng_registrar_hoy">记录今天</string>
+    <string name="ng_vendiste">销售 %1$s</string>
 </resources>

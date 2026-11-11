@@ -32,6 +32,7 @@ function fbLugar() {
   return estado.fbUltimo || {};
 }
 const fbArriba = () => { const v = String(estado.sel || ""), l = fbLugar();
+  if (v.startsWith("negocio:")) { const r = v.slice(8); return r.startsWith("d:") ? "negocio:m:" + r.slice(2, 9) : r.startsWith("m:") ? "negocio:a:" + r.slice(2, 6) : "negocio"; }   // Mi negocio: día › mes › año › todo
   return v.startsWith("d:") ? `m:${l.a}-${pad2(l.m)}` : v.startsWith("m:") ? `a:${l.a}` : v.startsWith("a:") ? "b" : v === "b" ? null : "b"; };
 function fbVer() {
   const l = fbLugar(), hoy = hoyFecha();
@@ -191,7 +192,7 @@ function fbBarra() {
   const btn = (attrs, i, t, on) => `<button class="fb-r" type="button" ${attrs}${on != null ? ` aria-pressed="${on}"` : ""} aria-label="${t}">${ic(i)}</button>`;
   // El riel en grupos: navegar · ver · panorama · planear · herramientas (las de la cabecera viven aquí)
   const ATJ = Object.fromEntries(ATAJOS.map(x => [x[0], x]));
-  const atj = k => { const [sel, i, t] = ATJ[k]; return btn(`data-sel="${sel}"`, i, t, v === sel); };
+  const atj = k => { const [sel, i, t] = ATJ[k]; return btn(`data-sel="${sel}"`, i, t, v === sel || (sel === "negocio" && v.startsWith("negocio:"))); };
   const amplia = document.getElementById("pantallaApp")?.classList.contains("amplia");
   const candado = typeof bloqueoFin === "function"
     ? (bloqueoFin() ? btn('data-acc="ascBloquearSalir"', "candado", "Bloquear y salir") : btn('data-acc="ascProteger"', "candado", "Proteger con PIN")) : "";

@@ -3413,4 +3413,18 @@
         <item quantity="other">Últimos %1$d meses</item>
     </plurals>
     <string name="sal_ir_negocio">Llevar sus cuentas en Mi negocio</string>
+    <string name="ng_agregar">Agregar</string>
+    <string name="ng_concepto">Concepto (opcional)</string>
+    <string name="ng_vacio_dia">Aún no hay movimientos este día. Anota el primero arriba: el tipo, el monto y listo.</string>
+    <string name="ng_util_dia">Utilidad del día</string>
+    <string name="ng_asi_va">Así va %1$s</string>
+    <string name="ng_de_utilidad">%1$s de utilidad</string>
+    <string name="ng_dia_a_dia">Día a día</string>
+    <string name="ng_util_anio">Utilidad de %1$d</string>
+    <string name="ng_mes_a_mes">Mes a mes</string>
+    <string name="ng_empieza">Empieza por hoy: toca «Venta» y anota lo que vendiste. Cada día suma al mes y cada mes al año.</string>
+    <string name="ng_util_todo">Utilidad de todos los años</string>
+    <string name="ng_anio_a_anio">Año por año</string>
+    <string name="ng_registrar_hoy">Registrar hoy</string>
+    <string name="ng_vendiste">Vendiste %1$s</string>
 </resources>

@@ -3404,4 +3404,18 @@
         <item quantity="other">Last %1$d months</item>
     </plurals>
     <string name="sal_ir_negocio">Keep its books in My business</string>
+    <string name="ng_agregar">Add</string>
+    <string name="ng_concepto">Description (optional)</string>
+    <string name="ng_vacio_dia">No entries this day yet. Add the first one above: the type, the amount, done.</string>
+    <string name="ng_util_dia">Profit this day</string>
+    <string name="ng_asi_va">How %1$s is going</string>
+    <string name="ng_de_utilidad">%1$s profit</string>
+    <string name="ng_dia_a_dia">Day by day</string>
+    <string name="ng_util_anio">Profit in %1$d</string>
+    <string name="ng_mes_a_mes">Month by month</string>
+    <string name="ng_empieza">Start with today: tap “Sale” and record what you sold. Each day adds to the month and each month to the year.</string>
+    <string name="ng_util_todo">Profit, all years</string>
+    <string name="ng_anio_a_anio">Year by year</string>
+    <string name="ng_registrar_hoy">Record today</string>
+    <string name="ng_vendiste">Sold %1$s</string>
 </resources>
