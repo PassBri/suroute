@@ -359,7 +359,8 @@ private fun AppPrincipal(inicio: String = Rutas.RUTA) {
     // Al ganar un paso en cualquier pantalla: compartirlo con la mini-Brújula (y celebrar campamento y cumbre)
     com.rutaalacima.app.ui.comunidad.AvisosPasoGanado { texto -> nav.navigate(Rutas.publicar("LOGRO", texto = texto)) }
     // M3: la barra superior queda fija y toma el color del papel cuando el contenido pasa por debajo
-    val desplazamiento = TopAppBarDefaults.pinnedScrollBehavior()
+    // Se esconde al bajar y vuelve al subir un poco: más espacio para el contenido sin perder el título ni el perfil
+    val desplazamiento = TopAppBarDefaults.enterAlwaysScrollBehavior()
     Scaffold(
         modifier = Modifier.weight(1f).nestedScroll(desplazamiento.nestedScrollConnection),
         containerColor = androidx.compose.ui.graphics.Color.Transparent,
@@ -404,8 +405,8 @@ private fun AppPrincipal(inicio: String = Rutas.RUTA) {
                     com.rutaalacima.app.ui.workbook.MiniReproductor(onAbrir = { wb, sec -> nav.navigate(Rutas.seccion(wb, sec)) })
                     if (!ancho) {
                         if (inmersivo) com.rutaalacima.app.ui.theme.TemaNoche {
-                            BarraNavegacion(actual = rutaActual, onIr = { nav.irAPestana(it) }, onPublicar = { nav.navigate(Rutas.publicar()) })
-                        } else BarraNavegacion(actual = rutaActual, onIr = { nav.irAPestana(it) }, onPublicar = { nav.navigate(Rutas.publicar()) })
+                            BarraNavegacion(actual = rutaActual, onIr = { nav.irAPestana(it) }, onPublicar = { nav.navigate(Rutas.publicar()) }, onMas = { hojaSecciones = true })
+                        } else BarraNavegacion(actual = rutaActual, onIr = { nav.irAPestana(it) }, onPublicar = { nav.navigate(Rutas.publicar()) }, onMas = { hojaSecciones = true })
                     }
                 }
             }
@@ -856,17 +857,22 @@ private fun NavHostController.irAPestana(ruta: String) {
  * cada ícono se anuncia con su nombre y se activa con doble toque.
  */
 @Composable
-private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar: () -> Unit) {
+private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar: () -> Unit, onMas: () -> Unit = {}) {
     val colores = MaterialTheme.colorScheme
     var sobre by remember { mutableStateOf<Int?>(null) }
     val ir by androidx.compose.runtime.rememberUpdatedState(onIr)
     val publicar by androidx.compose.runtime.rememberUpdatedState(onPublicar)
+    val mas by androidx.compose.runtime.rememberUpdatedState(onMas)
     val haptico = androidx.compose.ui.platform.LocalHapticFeedback.current
     val n = EN_BARRA.size + 1
     fun pestanaEn(k: Int): Pestana? = if (k == CENTRO) null else EN_BARRA[if (k < CENTRO) k else k - 1]
     val nombrePublicar = stringResource(R.string.publicar)
     Column(Modifier.fillMaxWidth().background(colores.surface)) {
         androidx.compose.material3.HorizontalDivider(thickness = 0.5.dp, color = colores.outlineVariant.copy(alpha = 0.7f))
+        // El asa: deslizar hacia arriba sobre la barra abre todas las secciones (como en la web)
+        Box(Modifier.fillMaxWidth().padding(top = 4.dp), contentAlignment = Alignment.Center) {
+            Box(Modifier.size(28.dp, 3.dp).clip(RoundedCornerShape(2.dp)).background(colores.outlineVariant))
+        }
         Row(
             Modifier
                 .fillMaxWidth()
@@ -879,12 +885,14 @@ private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar:
                         var i = indice(abajo.position.x)
                         sobre = i
                         haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove)
-                        var soltado = false
+                        var soltado = false; var subio = false
+                        val umbral = 36.dp.toPx()
                         try {
                             while (true) {
                                 val evento = awaitPointerEvent()
                                 val c = evento.changes.firstOrNull { it.id == abajo.id } ?: break
                                 if (!c.pressed) { soltado = true; break }
+                                if (abajo.position.y - c.position.y > umbral) { subio = true; c.consume(); break }
                                 val j = indice(c.position.x)
                                 if (j != i) {
                                     i = j; sobre = j
@@ -893,7 +901,8 @@ private fun BarraNavegacion(actual: String?, onIr: (String) -> Unit, onPublicar:
                                 c.consume()
                             }
                         } finally { sobre = null }
-                        if (soltado) pestanaEn(i)?.let { ir(it.destino) } ?: publicar()
+                        if (subio) { haptico.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.LongPress); mas() }
+                        else if (soltado) pestanaEn(i)?.let { ir(it.destino) } ?: publicar()
                     }
                 }
                 .semantics { isTraversalGroup = true },
