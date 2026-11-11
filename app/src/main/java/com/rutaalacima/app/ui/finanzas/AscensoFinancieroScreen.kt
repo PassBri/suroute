@@ -372,6 +372,25 @@ class CuentasViewModel(private val c: AppContainer) : ViewModel() {
         com.rutaalacima.app.domain.model.Hitos.escribir(com.rutaalacima.app.domain.model.Hitos.guardar(libro.value.hitos, h)))
     fun hitoBorrar(id: String) = poner(com.rutaalacima.app.domain.model.Hitos.CLAVE, com.rutaalacima.app.domain.model.Hitos.escribir(libro.value.hitos.filter { it.id != id }))
     fun hitoLogrado(id: String) = libro.value.hitos.firstOrNull { it.id == id }?.let { hitoGuardar(it.copy(ok = true, f = hoy().toString())) }
+    /* Mi negocio (domain/model/Negocio.kt). Un «Pago a ti» escribe también un ingreso personal con id "ng-<id>". */
+    fun negLista(l: List<com.rutaalacima.app.domain.model.Negocio.Neg>) = poner(com.rutaalacima.app.domain.model.Negocio.LISTA, com.rutaalacima.app.domain.model.Negocio.escribirLista(l))
+    fun negBal(id: String, b: com.rutaalacima.app.domain.model.Negocio.Bal) = poner(com.rutaalacima.app.domain.model.Negocio.claveBal(id), com.rutaalacima.app.domain.model.Negocio.escribirBal(b))
+    private suspend fun negPuente(x: com.rutaalacima.app.domain.model.Negocio.Mov, nota: String?) {
+        val id = "ng-" + x.id; val l = guardados(x.f).filter { it.id != id }
+        guardar(x.f, if (nota != null && x.t == "pag") l + Mov(id, "ing", x.m, "negocio", nota) else l)
+    }
+    /** Guarda [x] (si [viejo] existe, lo reemplaza); [nota] es el texto del ingreso personal de un pago al dueño. */
+    fun negMov(neg: String, viejo: com.rutaalacima.app.domain.model.Negocio.Mov?, x: com.rutaalacima.app.domain.model.Negocio.Mov?, nota: String) = viewModelScope.launch {
+        val N = com.rutaalacima.app.domain.model.Negocio
+        if (viejo != null) { val ym = viejo.f.take(7); escribir(N.claveMes(neg, ym), N.escribirMovs(N.movs(libro.value.respuestas, neg, ym).filter { it.id != viejo.id })); negPuente(viejo, null) }
+        if (x != null) { val ym = x.f.take(7); val r = c.respuestas.cargar(Cuentas.WB)
+            escribir(N.claveMes(neg, ym), N.escribirMovs(N.movs(r, neg, ym).filter { it.id != x.id } + x)); negPuente(x, nota) }
+    }
+    fun negBorrar(id: String) = viewModelScope.launch {
+        val N = com.rutaalacima.app.domain.model.Negocio; val r = libro.value.respuestas
+        N.meses(r, id).forEach { escribir(N.claveMes(id, it), "") }; escribir(N.claveBal(id), "")
+        escribir(N.LISTA, N.escribirLista(N.lista(r).filter { it.id != id }))
+    }
     /** Guarda el orden de las tarjetas del balance (lista vacía: vuelve al de siempre). */
     fun ordenBalance(l: List<String>) = poner("fin#orden-balance", if (l.isEmpty()) "" else kotlinx.serialization.json.Json.encodeToString(kotlinx.serialization.serializer<List<String>>(), l))
 
@@ -556,14 +575,16 @@ sealed interface NivelCuentas {
     data object FijosN : NivelCuentas
     /** Mis hitos: las cumbres que el dinero hace posibles (planeadas y logradas). */
     data object HitosN : NivelCuentas
+    /** Mi negocio: las cuentas de cada negocio, aparte de las finanzas personales. */
+    data object NegocioN : NivelCuentas
 
-    fun codigo(): String = when (this) { Balance -> "b"; is Anio -> "a:$a"; is Mes -> "m:$ym"; is Dia -> "d:$f"; DeudasN -> "deudas"; PatrimonioN -> "patrimonio"; is SaludN -> if (a == null) "salud" else "salud:$a"; GraficaN -> "grafica"; MetasN -> "metasfin"; FijosN -> "fijos"; HitosN -> "hitos" }
-    fun arriba(): NivelCuentas? = when (this) { Balance -> null; is Anio -> Balance; is Mes -> Anio(ym.year); is Dia -> Mes(YearMonth.from(f)); DeudasN, PatrimonioN, is SaludN, GraficaN, MetasN, FijosN, HitosN -> Balance }
+    fun codigo(): String = when (this) { Balance -> "b"; is Anio -> "a:$a"; is Mes -> "m:$ym"; is Dia -> "d:$f"; DeudasN -> "deudas"; PatrimonioN -> "patrimonio"; is SaludN -> if (a == null) "salud" else "salud:$a"; GraficaN -> "grafica"; MetasN -> "metasfin"; FijosN -> "fijos"; HitosN -> "hitos"; NegocioN -> "negocio" }
+    fun arriba(): NivelCuentas? = when (this) { Balance -> null; is Anio -> Balance; is Mes -> Anio(ym.year); is Dia -> Mes(YearMonth.from(f)); DeudasN, PatrimonioN, is SaludN, GraficaN, MetasN, FijosN, HitosN, NegocioN -> Balance }
 
     companion object {
         fun de(c: String?): NivelCuentas = runCatching {
             val (t, v) = (c ?: "b").split(":", limit = 2).let { it[0] to it.getOrElse(1) { "" } }
-            when (t) { "a" -> Anio(v.toInt()); "m" -> Mes(YearMonth.parse(v)); "d" -> Dia(LocalDate.parse(v)); "deudas" -> DeudasN; "patrimonio" -> PatrimonioN; "salud" -> SaludN(v.toIntOrNull()); "grafica" -> GraficaN; "metasfin" -> MetasN; "fijos" -> FijosN; "hitos" -> HitosN; else -> Balance }
+            when (t) { "a" -> Anio(v.toInt()); "m" -> Mes(YearMonth.parse(v)); "d" -> Dia(LocalDate.parse(v)); "deudas" -> DeudasN; "patrimonio" -> PatrimonioN; "salud" -> SaludN(v.toIntOrNull()); "grafica" -> GraficaN; "metasfin" -> MetasN; "fijos" -> FijosN; "hitos" -> HitosN; "negocio" -> NegocioN; else -> Balance }
         }.getOrDefault(Balance)
     }
 }
@@ -730,6 +751,7 @@ fun AscensoFinancieroScreen(inicial: String?, onBack: () -> Unit, onAprende: () 
                         NivelCuentas.MetasN -> metasFinNivel(libro, plata, vm)
                         NivelCuentas.FijosN -> item(key = "fijos-solo") { FijosCard(libro, null, plata, vm) }
                         NivelCuentas.HitosN -> item(key = "hitos-solo") { HitosBalance(libro, plata, vm) }
+                        NivelCuentas.NegocioN -> item(key = "negocio-solo") { NegocioPantalla(libro, plata, vm) }
                         is NivelCuentas.SaludN -> saludNivel(n.a, libro, plata, ir)
                         NivelCuentas.GraficaN -> item(key = "grafica-sola") { if (libro.dias.isEmpty()) RutaCard { Text(stringResource(R.string.gr_vacia), style = MaterialTheme.typography.bodyMedium) } else GraficaAscensoCard(libro, plata) }
                     }
@@ -754,6 +776,7 @@ private fun Migas(n: NivelCuentas, ir: (NivelCuentas) -> Unit) {
             NivelCuentas.MetasN -> add(stringResource(R.string.mf_titulo) to n)
             NivelCuentas.FijosN -> add(stringResource(R.string.fb_fijos) to n)
             NivelCuentas.HitosN -> add(stringResource(R.string.hi_mis) to n)
+            NivelCuentas.NegocioN -> add(stringResource(R.string.ng_titulo) to n)
             is NivelCuentas.SaludN -> add(stringResource(R.string.cu_salud) to n)
             NivelCuentas.GraficaN -> add(stringResource(R.string.gr_titulo) to n)
             else -> {}

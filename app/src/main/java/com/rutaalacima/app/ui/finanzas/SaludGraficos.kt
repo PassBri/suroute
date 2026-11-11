@@ -110,11 +110,14 @@ private val ESCALAS = mapOf(
     "fondo" to Escala(12.0, 3.0, true, 6.0), "endeuda" to Escala(1.0, 0.3, false), "pasivos" to Escala(0.5, 0.2, true),
     "libertad" to Escala(1.2, 1.0, true), "buenas" to Escala(1.0, 0.5, true), "netoing" to Escala(5.0, 1.0, true),
     "liqcorr" to Escala(3.0, 1.0, true), "rendact" to Escala(0.1, 0.04, true), "rotneg" to Escala(3.0, 1.0, true),
+    // Mi negocio (Negocio.kt)
+    "nmargen" to Escala(0.8, 0.3, true), "nneto" to Escala(0.4, 0.1, true), "nroa" to Escala(0.4, 0.1, true),
+    "nrot" to Escala(4.0, 1.0, true), "nliq" to Escala(3.0, 1.2, true), "nendeuda" to Escala(1.0, 0.5, false),
 )
 
 @Composable
 private fun metaTexto(k: String, e: Escala) = when (k) {
-    "liquidez", "libertad", "liqcorr", "rotneg" -> numG(e.meta)
+    "liquidez", "libertad", "liqcorr", "rotneg", "nrot", "nliq" -> numG(e.meta)
     "fondo" -> stringResource(R.string.cu_meses_x, "3–6")
     "netoing" -> stringResource(R.string.cu_meta_anio)
     else -> pctG(e.meta)

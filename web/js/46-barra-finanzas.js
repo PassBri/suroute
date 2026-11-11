@@ -170,7 +170,7 @@ ACC.fbResMes = (_, d) => { const s = fbResMes(fbDatos()), [a, m] = s.ym.split("-
 function fbBarra() {
   const hoy = hoyFecha(), aHoy = hoy.getFullYear(), mHoy = hoy.getMonth() + 1, l = fbLugar(), ver = fbVer(), a = ver.a, m = ver.m;
   const v = String(estado.sel || ""), arriba = fbArriba(), datos = fbDatos();
-  const ATAJOS = [["b", "plata", "Balance general"], ["fijos", "repetir", "Mis cuentas fijas"], ["deudas", "deuda", "Deudas"], ["metasfin", "alcancia", "Metas financieras"], ["hitos", "bandera", "Mis hitos"],
+  const ATAJOS = [["b", "plata", "Balance general"], ["fijos", "repetir", "Mis cuentas fijas"], ["deudas", "deuda", "Deudas"], ["metasfin", "alcancia", "Metas financieras"], ["hitos", "bandera", "Mis hitos"], ["negocio", "bolsa", "Mi negocio"],
     ["salud", "salud", "Salud financiera"], ["grafica", "grafica", "Gráfica del ascenso"], ["patrimonio", "flechasVert", "Activos y pasivos"]];
   const donde = l.d ? `${l.d} ${MES_CORTO[l.m - 1]} ${l.a}` : l.m ? `${mayus(MESES[l.m - 1])} ${l.a}` : l.a ? String(l.a) : ATAJOS.find(x => x[0] === v)?.[2] || "Ascenso financiero";
   let meses = "";
@@ -204,7 +204,7 @@ function fbBarra() {
       ${sep}
       ${atj("b")}${atj("grafica")}${atj("salud")}
       ${sep}
-      ${atj("fijos")}${atj("metasfin")}${atj("hitos")}${atj("deudas")}${atj("patrimonio")}
+      ${atj("fijos")}${atj("metasfin")}${atj("hitos")}${atj("deudas")}${atj("patrimonio")}${atj("negocio")}
       ${sep}
       ${btn(`data-acc="ascDeshacer" ${HIST.atras.length ? "" : "disabled"}`, "deshacer", "Deshacer (Ctrl+Z)")}
       ${btn(`data-acc="ascRehacer" ${HIST.adelante.length ? "" : "disabled"}`, "rehacer", "Rehacer (Ctrl+Shift+Z)")}

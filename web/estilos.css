@@ -5961,3 +5961,63 @@ form:not(.pap-on) > .pap-editor { display: none; }
 .sal-ambito svg { width: 22px; height: 22px; fill: var(--burdeos); }
 .sal-ambito small { font: 400 13px/1.3 var(--font-ui, system-ui); color: var(--tinta-suave); }
 .sal-nota { margin: 10px 2px 0; font-size: 13.5px; }
+
+/* ---------- Mi negocio ---------- */
+.neg-chips { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; overscroll-behavior-x: contain; }
+.neg-chip { display: inline-flex; align-items: center; gap: 8px; flex: none; min-height: 40px; padding: 0 16px 0 12px; border-radius: 999px; border: 1px solid var(--linea);
+  background: var(--hoja); color: var(--tinta); font: inherit; font-size: 14px; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.neg-chip .i { width: 18px; height: 18px; fill: var(--tinta-suave); }
+.neg-chip[aria-selected="true"] { background: var(--oro-suave); border-color: transparent; color: var(--burdeos); font-weight: 600; }
+.neg-chip[aria-selected="true"] .i { fill: var(--burdeos); }
+.neg-mas { border-style: dashed; color: var(--tinta-suave); }
+.neg-cab h3 small { display: block; font: 400 13px/1.3 var(--font, inherit); color: var(--tinta-suave); margin-top: 2px; }
+.neg-rapido { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 14px 0 6px; }
+.neg-rap { display: grid; justify-items: center; gap: 4px; padding: 10px 4px; min-height: 64px; border: 1px solid var(--linea); border-radius: 14px; background: transparent;
+  color: var(--tinta); font: inherit; font-size: 12.5px; cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; transition: background .15s cubic-bezier(.2,0,0,1); }
+.neg-rap .i { width: 22px; height: 22px; fill: var(--tinta-suave); }
+.neg-rap.t-ven .i { fill: var(--ok); }
+.neg-rap:active { background: var(--oro-suave); }
+@media (hover: hover) and (pointer: fine) { .neg-rap:hover, .neg-chip:hover { background: color-mix(in srgb, var(--oro-suave) 55%, transparent); } }
+.neg-nav { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 4px; }
+.neg-nav b { min-width: 150px; text-align: center; font-weight: 600; }
+.neg-er { list-style: none; margin: 6px 0 4px; padding: 0; font-variant-numeric: tabular-nums; }
+.neg-er li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--linea); font-size: 14.5px; }
+.neg-er li.menos { color: var(--tinta-suave); }
+.neg-er li.sub b, .neg-er li.sub span { font-weight: 600; }
+.neg-er li.total { border-bottom: 0; border-top: 2px solid var(--tinta); font-size: 16px; }
+.neg-er li.total b, .neg-er li.total span { font-weight: 700; }
+.neg-er b.neg, .neg-patr b.neg { color: var(--burdeos); }
+.neg-movs { list-style: none; margin: 4px 0 0; padding: 0; }
+.neg-mov-b { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; width: 100%; padding: 8px 0; border: 0; border-bottom: 1px solid var(--linea);
+  background: transparent; color: var(--tinta); font: inherit; text-align: start; cursor: pointer; min-height: 56px; }
+.neg-mov-ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--tinta) 6%, transparent); }
+.neg-mov-ic .i { width: 20px; height: 20px; fill: var(--tinta-suave); }
+.t-ven .neg-mov-ic { background: color-mix(in srgb, var(--ok) 14%, transparent); } .t-ven .neg-mov-ic .i { fill: var(--ok); }
+.t-pag .neg-mov-ic { background: var(--oro-suave); } .t-pag .neg-mov-ic .i { fill: var(--burdeos); }
+.neg-mov-txt { display: grid; min-width: 0; } .neg-mov-txt b { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.neg-mov-txt small { color: var(--tinta-suave); font-size: 12.5px; }
+.neg-mov-m { font-variant-numeric: tabular-nums; font-weight: 600; } .t-ven .neg-mov-m { color: var(--ok); }
+.neg-vacio { margin: 10px 0 2px; }
+.neg-nota { font-size: 13px; margin: 14px 0 0; }
+.neg-bienvenida { display: grid; justify-items: center; text-align: center; gap: 8px; padding: 18px 8px; }
+.neg-bienvenida > .i { width: 44px; height: 44px; fill: var(--burdeos); padding: 12px; border-radius: 50%; background: var(--oro-suave); box-sizing: content-box; }
+.neg-bienvenida h3 { margin: 6px 0 0; font-family: var(--font-titulo); } .neg-bienvenida p { max-width: 46ch; margin: 0 0 6px; }
+.neg-bal-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px; }
+.neg-bal-col header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid var(--tinta); padding-bottom: 4px; font-variant-numeric: tabular-nums; }
+.neg-bal-col h4 { margin: 0; }
+.neg-bal { list-style: none; margin: 0 0 8px; padding: 0; }
+.neg-bal-b { display: flex; justify-content: space-between; gap: 10px; width: 100%; padding: 8px 0; border: 0; border-bottom: 1px solid var(--linea); background: transparent; color: var(--tinta);
+  font: inherit; font-size: 14px; text-align: start; cursor: pointer; min-height: 48px; align-items: center; font-variant-numeric: tabular-nums; }
+.neg-bal-b span { display: grid; } .neg-bal-b small { color: var(--tinta-suave); font-size: 12px; }
+.neg-patr { display: flex; justify-content: space-between; margin: 14px 0 0; padding-top: 10px; border-top: 1px solid var(--linea); font-variant-numeric: tabular-nums; }
+.neg-tipos { grid-template-columns: repeat(5, 1fr); }
+.neg-tipos .seg-b { position: relative; display: grid; place-items: center; min-height: 44px; cursor: pointer; font-size: 13px; padding: 6px 2px; text-align: center; }
+.neg-tipos .seg-b input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.neg-tipos .seg-b:has(input:checked) { background: var(--oro-suave); color: var(--burdeos); font-weight: 600; }
+.neg-tipos .seg-b:has(input:focus-visible) { outline: 2px solid var(--burdeos); outline-offset: -2px; }
+.neg-ayuda { font-size: 13px; margin: 6px 2px 4px; }
+@media (max-width: 640px) {
+  .neg-bal-col { grid-template-columns: 1fr; gap: 16px; }
+  .neg-rapido { gap: 4px; } .neg-rap { font-size: 11.5px; padding: 8px 2px; }
+  .neg-tipos .seg-b { font-size: 12px; }
+}
