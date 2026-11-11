@@ -142,7 +142,8 @@ const ESCALAS = {
   "Deuda ÷ ingreso (DTI)": { max: 0.6, meta: 0.3, alto: false, metaTxt: "30 %" }, "Relación gasto ÷ ingreso": { max: 1.2, meta: 0.7, alto: false, metaTxt: "70 %" },
   "Fondo de emergencia": { max: 12, meta: 3, meta2: 6, alto: true, metaTxt: "3 a 6 meses" }, "Índice de endeudamiento": { max: 1, meta: 0.3, alto: false, metaTxt: "30 %" },
   "Ingresos pasivos ÷ ingresos": { max: 0.5, meta: 0.2, alto: true, metaTxt: "20 %" }, "Índice de libertad financiera": { max: 1.2, meta: 1, alto: true, metaTxt: "1" },
-  "Pasivos buenos ÷ pasivos": { max: 1, meta: 0.5, alto: true, metaTxt: "50 %" }, "Patrimonio neto ÷ ingresos anuales": { max: 5, meta: 1, alto: true, metaTxt: "1 año" },
+  "Pasivos buenos ÷ pasivos": { max: 1, meta: 0.5, alto: true, metaTxt: "50 %" }, "Liquidez corriente": { max: 3, meta: 1, alto: true, metaTxt: "1" },
+  "Rendimiento de tus activos": { max: 0.1, meta: 0.04, alto: true, metaTxt: "4 %" }, "Rotación de activos del negocio": { max: 3, meta: 1, alto: true, metaTxt: "1" }, "Patrimonio neto ÷ ingresos anuales": { max: 5, meta: 1, alto: true, metaTxt: "1 año" },
 };
 /* ---------- Salud financiera: el estado de cuentas de la persona y su índice (ISF) ---------- */
 /**
@@ -171,6 +172,11 @@ function saludDe(pref, { sinDeudas = false } = {}) {
   // Fondo de emergencia: el ahorro de «Emergencia» más el efectivo y las cuentas declarados en Activos
   const liquidos = actual ? activosDatos().filter(x => x.tipo === "liquidez").reduce((a, x) => a + (Number(x.valor) || 0), 0) : 0;
   const emergencia = (hasta.cat["aho:emergencia"] || 0) + liquidos, fondo = mes(fijos) > 0 ? emergencia / mes(fijos) : null;
+  // Liquidez corriente (personal): lo que tienes a mano ÷ lo que debes pagar en los próximos 12 meses
+  const pasCorr = deudas.filter(x => x.actual > 0).reduce((a, x) => a + Math.min(x.actual, (Number(x.minimo) || 0) * 12), 0);
+  // Tu negocio (aparte de lo personal): ventas (ingresos «Negocio» y «Ventas») y lo que vale el negocio (Activos de tipo «Negocio»)
+  const ventas = (s.cat["ing:negocio"] || 0) + (s.cat["ing:ventas"] || 0);
+  const actNeg = actual ? activosDatos().filter(x => x.tipo === "negocio").reduce((a, x) => a + (Number(x.valor) || 0), 0) : 0;
   const r = {
     nMeses, s, activos, declarados, pasivos, neto, deudaMes, mesesLista: [...new Set(rango.map(f => f.slice(0, 7)))].sort(),
     filas: [["Ingresos activos (trabajo, negocio, ventas)", ingAct], ["Ingresos pasivos (rentas, intereses)", pasivoIng], ["Ingresos totales", s.ing, true],
@@ -182,11 +188,14 @@ function saludDe(pref, { sinDeudas = false } = {}) {
     pasivosRatio: s.ing > 0 ? pasivoIng / s.ing : null, buenasRatio: pasivos > 0 ? buenas / pasivos : null,
     endeuda: actual ? (pasivos === 0 ? 0 : activos > 0 ? pasivos / activos : Infinity) : null,
     libertad: gastos > 0 ? pasivoIng / gastos : null, netoIng: actual && s.ing > 0 ? neto / (mes(s.ing) * 12) : null, fondo,
+    liqCorr: actual && pasCorr > 0 ? emergencia / pasCorr : null, rendAct: actual && activos > 0 ? mes(pasivoIng) * 12 / activos : null,
+    ventasNeg: ventas, actNeg, rotNeg: actNeg > 0 && ventas > 0 ? mes(ventas) * 12 / actNeg : null, pesoNeg: s.ing > 0 && ventas > 0 ? ventas / s.ing : null,
   };
   // Índice de Salud Financiera: cada indicador puntúa de 0 a 1 y se promedia con su peso
   const lin = (v, malo, bueno) => v == null || !Number.isFinite(v) ? (v === Infinity ? (bueno > malo ? 1 : 0) : null) : Math.max(0, Math.min(1, (v - malo) / (bueno - malo)));
   const partes = [[lin(r.flujo, 0, 0.2), 2], [lin(r.tasaConstruye, 0, 0.2), 2], [lin(r.dti, 0.5, 0.2), 1.5], [lin(r.gastoIng, 1, 0.7), 1.5], [lin(r.liquidez, 1, 1.2), 1],
-    [lin(r.fondo, 0, 6), 1.5], [r.endeuda == null ? null : lin(r.endeuda, 1, 0.3), 1.5], [actual ? (neto >= 0 ? 1 : 0) : null, 1], [lin(r.libertad, 0, 1), 0.5]].filter(([v]) => v != null);
+    [lin(r.fondo, 0, 6), 1.5], [r.endeuda == null ? null : lin(r.endeuda, 1, 0.3), 1.5], [actual ? (neto >= 0 ? 1 : 0) : null, 1], [lin(r.libertad, 0, 1), 0.5],
+    [lin(r.liqCorr, 0.5, 1), 1], [lin(r.rendAct, 0, 0.04), 0.5]].filter(([v]) => v != null);
   r.isf = partes.length && s.ing > 0 ? Math.round(partes.reduce((a, [v, w]) => a + v * w, 0) / partes.reduce((a, [, w]) => a + w, 0) * 100) : null;
   r.nivel = r.isf == null ? null : r.isf >= 80 ? ["Excelente", "Finanzas sólidas: buen patrimonio, ahorro e inversión.", "ok"] : r.isf >= 50 ? ["Buena", "Manejo adecuado de tus activos y de tu flujo de dinero.", "ok"]
     : r.isf >= 20 ? ["Moderada", "Requiere mejoras en ahorro o inversión.", "medio"] : ["En riesgo", "Pasivos altos o activos bajos: empieza por el plan de deudas y el fondo de emergencia.", "bajo"];
@@ -205,7 +214,12 @@ function saludDe(pref, { sinDeudas = false } = {}) {
     ["Índice de libertad financiera", r.libertad, num, est(r.libertad, 1, 0.25), "Ingresos pasivos ÷ gastos. En 1, tus rentas pagan tu vida."],
     ["Pasivos buenos ÷ pasivos", r.buenasRatio, pct, r.buenasRatio == null ? "na" : r.buenasRatio >= 0.5 ? "ok" : "medio", "Deudas que producen (negocio, estudio, vivienda) frente a las que solo cuestan."],
     ["Patrimonio neto ÷ ingresos anuales", r.netoIng, num, est(r.netoIng, 1, 0.3), "Cuántos años de ingresos tienes construidos."],
-  ].filter(x => x[1] != null).map(([nombre, v, f, estado, ayuda]) => ({ nombre, valor: f(v), v, estado, ayuda, ...(ESCALAS[nombre] || {}) }));
+    ["Liquidez corriente", r.liqCorr, num, est(r.liqCorr, 1, 0.5), "Efectivo, cuentas y fondo de emergencia ÷ lo que debes pagar en los próximos 12 meses. En 1 o más, cubres tus deudas cortas con lo que tienes a mano."],
+    ["Rendimiento de tus activos", r.rendAct, pct, est(r.rendAct, 0.04, 0.02), "Ingresos pasivos del año ÷ todo lo que tienes. Muestra si tu patrimonio trabaja o está quieto. Ideal: 4 % o más."],
+    // Tu negocio: no cuentan en el ISF (que mide tus finanzas personales)
+    ["Rotación de activos del negocio", r.rotNeg, num, est(r.rotNeg, 1, 0.5), "Ventas del año ÷ lo que vale tu negocio (Activos de tipo «Negocio»). Cuánto vende con lo que tiene. Ideal: 1 o más.", true],
+    ["Peso del negocio en tus ingresos", r.pesoNeg, pct, "na", "Qué parte de lo que entra viene de tu negocio o de tus ventas.", true],
+  ].filter(x => x[1] != null).map(([nombre, v, f, estado, ayuda, negocio]) => ({ nombre, valor: f(v), v, estado, ayuda, negocio: !!negocio, ...(ESCALAS[nombre] || {}) }));
   return r;
 }
 /* Gráficos de la salud financiera (mismos colores y formas que la app):
@@ -277,22 +291,27 @@ function lineaMeses(pref, r) {
 const GRUPOS_SALUD = [
   ["Tu flujo de dinero", "plata", ["Porcentaje de flujo neto", "Índice de liquidez", "Relación gasto ÷ ingreso"]],
   ["Construir tu futuro", "metas", ["Tasa de ahorro", "Ahorro + inversión ÷ ingresos", "Fondo de emergencia"]],
-  ["Deudas", "deuda", ["Deuda ÷ ingreso (DTI)", "Índice de endeudamiento", "Pasivos buenos ÷ pasivos"]],
-  ["Libertad y patrimonio", "cima", ["Ingresos pasivos ÷ ingresos", "Índice de libertad financiera", "Patrimonio neto ÷ ingresos anuales"]],
+  ["Deudas", "deuda", ["Deuda ÷ ingreso (DTI)", "Índice de endeudamiento", "Liquidez corriente", "Pasivos buenos ÷ pasivos"]],
+  ["Libertad y patrimonio", "cima", ["Ingresos pasivos ÷ ingresos", "Índice de libertad financiera", "Rendimiento de tus activos", "Patrimonio neto ÷ ingresos anuales"]],
 ];
 function saludHoja(pref) {
   const r = saludDe(pref);
   if (!r.s.n) return "";
   const periodo = pref ? `en ${pref.slice(0, 4)}` : "en tus últimos 12 meses", actual = !pref || pref.startsWith(String(new Date().getFullYear()));
   const m = v => plata(Math.round(v / r.nMeses));
-  const cuenta = e => r.ind.filter(x => x.estado === e).length;
+  const cuenta = e => r.ind.filter(x => x.estado === e && !x.negocio).length;
   const nivelK = r.isf == null ? "" : r.isf >= 80 ? "excelente" : r.isf >= 50 ? "buena" : r.isf >= 20 ? "moderada" : "riesgo";
   const usados = new Set();
   const grupos = GRUPOS_SALUD.map(([t, icono, nombres]) => {
     const xs = nombres.map(n => r.ind.find(x => x.nombre === n)).filter(Boolean); xs.forEach(x => usados.add(x));
     return xs.length ? `<section class="sal-grupo"><h4>${ic(icono)}${t}</h4><div class="sal-inds">${xs.map(medidor).join("")}</div></section>` : "";
   }).join("");
-  const otros = r.ind.filter(x => !usados.has(x));
+  const otros = r.ind.filter(x => !usados.has(x) && !x.negocio);
+  // Tu negocio, aparte de lo personal (no cuenta en el ISF)
+  const neg = r.ind.filter(x => x.negocio);
+  const negocio = r.ventasNeg > 0 || r.actNeg > 0 ? `<h3 class="sal-ambito">${ic("bolsa")} Tu negocio <small>aparte de tus finanzas personales · no cuenta en tu ISF</small></h3>
+    <section class="sal-grupo"><div class="sal-inds">${neg.map(medidor).join("")}</div>
+      <p class="suave sal-nota">${r.actNeg ? "" : "Anota tu negocio en <button class=\"enlace\" data-sel=\"patrimonio\">Activos</button> (tipo «Negocio») para ver su rotación. "}Las ventas son tus ingresos de «Negocio» y «Ventas». La rentabilidad neta y el ROA del negocio necesitan sus costos anotados aparte de tus gastos personales.</p></section>` : "";
   return `<section class="sal-hero niv-${nivelK}">
       <div class="cab-lista-btn sal-hero-cab"><h3>Cómo está tu salud financiera</h3>${publicaFin() ? `<button class="btn mini tonal" data-acc="ascCompartir" data-arg="${pref}">${ic("publicar")} Compartir mi avance</button>` : ""}</div>
       ${r.isf != null ? `<div class="salud-cab"><div class="salud-anillo" style="--p:${r.isf}" role="img" aria-label="Índice de Salud Financiera ${r.isf} %"><b>${r.isf}</b><small>ISF %</small></div>
@@ -302,7 +321,9 @@ function saludHoja(pref) {
           <div class="sal-resumen">${[["ok", "en meta"], ["medio", "en atención"], ["bajo", "por mejorar"]].filter(([e]) => cuenta(e)).map(([e, t]) => `<span class="sal-cuenta e-${e}"><i aria-hidden="true">${EST_SALUD[e][1]}</i><b>${cuenta(e)}</b> ${t}</span>`).join("")}</div></div></div>` : ""}
     </section>
     <section class="sal-card">${barraPeso(r)}</section>
+    <h3 class="sal-ambito">${ic("perfil")} Tus finanzas personales</h3>
     ${grupos}${otros.length ? `<section class="sal-grupo"><h4>${ic("salud")}Otros</h4><div class="sal-inds">${otros.map(medidor).join("")}</div></section>` : ""}
+    ${negocio}
     ${actual && (r.activos || r.pasivos) ? `<section class="sal-card">${balanceBarras(r)}</section>` : ""}
     ${(() => { const l = lineaMeses(pref, r); return l ? `<section class="sal-card">${l}</section>` : ""; })()}
     <section class="sal-card"><details class="salud-detalle"><summary>Ver el estado de cuentas en cifras</summary>
@@ -971,6 +992,15 @@ window.FORMULARIOS = Object.assign(window.FORMULARIOS || {}, {
 });
 
 /** En el balance: cuánto debes y cuándo quedas libre, con el acceso al plan. */
+/** En el Balance general: el nivel de endeudamiento (pasivos ÷ activos) y la carga de cuotas (DTI) con sus medidores. */
+function endeudamientoResumen() {
+  const r = saludDe(""); if (r.endeuda == null || (!r.activos && !r.pasivos)) return "";
+  const xs = r.ind.filter(x => x.nombre === "Índice de endeudamiento" || x.nombre === "Deuda ÷ ingreso (DTI)");
+  if (!xs.length) return "";
+  return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">${ic("deuda")} Nivel de endeudamiento</h3><button class="btn mini" data-sel="salud">${ic("salud")} Salud financiera</button></div>
+    <p class="suave endeuda-linea">Debes <b>${plata(r.pasivos)}</b> y tienes <b>${plata(r.activos)}</b>${r.deudaMes ? ` · cuotas de <b>${plata(r.deudaMes)}</b> al mes` : ""}</p>
+    <div class="sal-inds">${xs.map(medidor).join("")}</div>`, "endeuda-hoja");
+}
 function deudasResumen() {
   const lista = deudasHoy(), d = deudasDatos();
   if (!lista.length) return hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Salir de deudas</h3><button class="btn mini lleno" data-sel="deudas">${ic("mas")} Armar mi plan</button></div><p class="suave" style="margin:8px 0 0">Anota tus deudas y elige avalancha o bola de nieve: verás el mes en que quedas libre.</p>`);

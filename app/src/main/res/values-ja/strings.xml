@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">このスマホのデータをクラウドと統合します。両方で変更がある場合はこのスマホが優先され、クラウドを置き換えます。本当のルートがこのスマホにある場合だけ使ってください。</string>
     <string name="nube_listo">ルートがこのスマホに届きました。</string>
     <string name="nube_error">ルートを取り込めませんでした。接続を確認してもう一度お試しください。</string>
+    <string name="en_titulo">負債の水準</string>
+    <string name="en_linea">借入 %1$s・資産 %2$s</string>
+    <string name="en_cuotas">月々の返済 %1$s</string>
+    <string name="cu_ind_liqcorr">流動比率</string>
+    <string name="cu_ind_liqcorr_d">現金・口座・緊急資金 ÷ 今後 12 か月に払う額。1 以上なら手元の資金で短期の借入をまかなえます。</string>
+    <string name="cu_ind_rendact">資産の利回り</string>
+    <string name="cu_ind_rendact_d">1 年の不労所得 ÷ 保有資産のすべて。資産が働いているか眠っているかがわかります。理想：4 % 以上。</string>
+    <string name="cu_ind_rotneg">事業の資産回転率</string>
+    <string name="cu_ind_rotneg_d">1 年の売上 ÷ 事業の価値（種類「事業」の資産）。手持ちでどれだけ売っているか。理想：1 以上。</string>
+    <string name="cu_ind_pesoneg">収入に占める事業の割合</string>
+    <string name="cu_ind_pesoneg_d">入ってくるお金のうち事業や販売によるものの割合。</string>
+    <string name="sal_personal">個人の家計</string>
+    <string name="sal_negocio">あなたの事業</string>
+    <string name="sal_negocio_sub">個人の家計とは別 · 健康指数には含めません</string>
+    <string name="sal_negocio_nota">売上は「事業」と「販売」の収入です。事業の純利益率と ROA には、事業の経費を個人の支出と分けて記録する必要があります。</string>
+    <string name="sal_negocio_nota_activo">資産に事業（種類「事業」）を登録すると回転率が見られます。売上は「事業」と「販売」の収入です。事業の純利益率と ROA には、事業の経費を個人の支出と分けて記録する必要があります。</string>
 </resources>

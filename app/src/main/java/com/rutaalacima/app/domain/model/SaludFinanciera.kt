@@ -148,6 +148,8 @@ object Patrimonio {
 object Salud {
     enum class Estado { OK, MEDIO, BAJO, NA }
     enum class Nivel { EXCELENTE, BUENA, MODERADA, RIESGO }
+    /** Indicadores de tu negocio: se muestran aparte de lo personal y no cuentan en el ISF. */
+    val NEGOCIO = setOf("rotneg", "pesoneg")
 
     data class Indicador(val clave: String, val valor: Double, val estado: Estado)
 
@@ -204,6 +206,16 @@ object Salud {
         val libertad = r(pasivoIng, gas)
         val buenasRatio = r(buenas, pasivos)
         val netoIng = if (actual && ing > 0) (totalActivos - pasivos) / (ing / meses * 12) else null
+        // Liquidez corriente (personal): lo que tienes a mano ÷ lo que debes pagar en los próximos 12 meses
+        val pasCorr = ds.filter { it.actual > 0 }.sumOf { minOf(it.actual, it.deuda.minimo * 12) }
+        val liqCorr = if (actual && pasCorr > 0) emergencia / pasCorr else null
+        // Rendimiento de tus activos (el ROA personal): ingresos pasivos del año ÷ todo lo que tienes
+        val rendAct = if (actual && totalActivos > 0) pasivoIng / meses * 12 / totalActivos else null
+        // Tu negocio: ventas (ingresos «Negocio» y «Ventas») y lo que vale (Activos de tipo «Negocio»)
+        val ventas = (s.categorias[Cuentas.Tipo.ING to "negocio"] ?: 0.0) + (s.categorias[Cuentas.Tipo.ING to "ventas"] ?: 0.0)
+        val actNeg = if (actual) activos.filter { it.tipo == "negocio" }.sumOf { it.valor } else 0.0
+        val rotNeg = if (actNeg > 0 && ventas > 0) ventas / meses * 12 / actNeg else null
+        val pesoNeg = if (ing > 0 && ventas > 0) ventas / ing else null
 
         fun mayor(v: Double?, ok: Double, medio: Double) = when { v == null -> Estado.NA; v >= ok -> Estado.OK; v >= medio -> Estado.MEDIO; else -> Estado.BAJO }
         fun menor(v: Double?, ok: Double, medio: Double) = when { v == null -> Estado.NA; v <= ok -> Estado.OK; v <= medio -> Estado.MEDIO; else -> Estado.BAJO }
@@ -220,6 +232,10 @@ object Salud {
             libertad?.let { Indicador("libertad", it, mayor(it, 1.0, 0.25)) },
             buenasRatio?.let { Indicador("buenas", it, if (it >= 0.5) Estado.OK else Estado.MEDIO) },
             netoIng?.let { Indicador("netoing", it, mayor(it, 1.0, 0.3)) },
+            liqCorr?.let { Indicador("liqcorr", it, mayor(it, 1.0, 0.5)) },
+            rendAct?.let { Indicador("rendact", it, mayor(it, 0.04, 0.02)) },
+            rotNeg?.let { Indicador("rotneg", it, mayor(it, 1.0, 0.5)) },
+            pesoNeg?.let { Indicador("pesoneg", it, Estado.NA) },
         )
         fun lin(v: Double?, malo: Double, bueno: Double): Double? = when {
             v == null -> null
@@ -228,7 +244,8 @@ object Salud {
         }
         val partes = listOf(lin(flujo, 0.0, 0.2) to 2.0, lin(tasaConstruye, 0.0, 0.2) to 2.0, lin(dti, 0.5, 0.2) to 1.5, lin(gastoIng, 1.0, 0.7) to 1.5,
             lin(liquidez, 1.0, 1.2) to 1.0, lin(fondo, 0.0, 6.0) to 1.5, (endeuda?.let { lin(it, 1.0, 0.3) }) to 1.5,
-            (if (actual) (if (totalActivos - pasivos >= 0) 1.0 else 0.0) else null) to 1.0, lin(libertad, 0.0, 1.0) to 0.5)
+            (if (actual) (if (totalActivos - pasivos >= 0) 1.0 else 0.0) else null) to 1.0, lin(libertad, 0.0, 1.0) to 0.5,
+            lin(liqCorr, 0.5, 1.0) to 1.0, lin(rendAct, 0.0, 0.04) to 0.5)
             .mapNotNull { (v, w) -> v?.let { it to w } }
         val isf = if (partes.isNotEmpty() && ing > 0) Math.round(partes.sumOf { it.first * it.second } / partes.sumOf { it.second } * 100).toInt() else null
         return Resultado(meses, s, ing - pasivoIng, pasivoIng, fijos, variables, egresos, ing - egresos, deudaMes, totalActivos, pasivos, actual, ind, isf)

@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">This phone’s data is merged with the cloud. If something changed on both sides, this phone wins and replaces the cloud. Use it only if your real route is on this phone.</string>
     <string name="nube_listo">Your route arrived on this phone.</string>
     <string name="nube_error">Your route could not be brought. Check your connection and try again.</string>
+    <string name="en_titulo">Debt level</string>
+    <string name="en_linea">You owe %1$s and own %2$s</string>
+    <string name="en_cuotas">%1$s in payments per month</string>
+    <string name="cu_ind_liqcorr">Current liquidity</string>
+    <string name="cu_ind_liqcorr_d">Cash, accounts and emergency fund ÷ what you must pay in the next 12 months. At 1 or more, you cover your short-term debts with what you have at hand.</string>
+    <string name="cu_ind_rendact">Return on your assets</string>
+    <string name="cu_ind_rendact_d">Passive income for the year ÷ everything you own. Shows whether your wealth is working or idle. Ideal: 4 % or more.</string>
+    <string name="cu_ind_rotneg">Business asset turnover</string>
+    <string name="cu_ind_rotneg_d">Sales for the year ÷ what your business is worth (Assets of type “Business”). How much it sells with what it has. Ideal: 1 or more.</string>
+    <string name="cu_ind_pesoneg">Business share of your income</string>
+    <string name="cu_ind_pesoneg_d">How much of what comes in comes from your business or your sales.</string>
+    <string name="sal_personal">Your personal finances</string>
+    <string name="sal_negocio">Your business</string>
+    <string name="sal_negocio_sub">Separate from your personal finances · not counted in your FHI</string>
+    <string name="sal_negocio_nota">Sales are your “Business” and “Sales” income. The business’s net profitability and ROA need its costs recorded separately from your personal expenses.</string>
+    <string name="sal_negocio_nota_activo">Add your business under Assets (type “Business”) to see its turnover. Sales are your “Business” and “Sales” income. The business’s net profitability and ROA need its costs recorded separately from your personal expenses.</string>
 </resources>

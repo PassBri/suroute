@@ -3300,4 +3300,20 @@
     <string name="nube_unir_aviso">Se mezcla lo de este teléfono con lo de la nube. Si algo cambió en los dos lados, gana lo de este teléfono y reemplaza lo de la nube. Úsalo solo si en este teléfono está tu ruta de verdad.</string>
     <string name="nube_listo">Tu ruta llegó a este teléfono.</string>
     <string name="nube_error">No se pudo traer tu ruta. Revisa la conexión e inténtalo otra vez.</string>
+    <string name="en_titulo">Nivel de endeudamiento</string>
+    <string name="en_linea">Debes %1$s y tienes %2$s</string>
+    <string name="en_cuotas">cuotas de %1$s al mes</string>
+    <string name="cu_ind_liqcorr">Liquidez corriente</string>
+    <string name="cu_ind_liqcorr_d">Efectivo, cuentas y fondo de emergencia ÷ lo que debes pagar en los próximos 12 meses. En 1 o más, cubres tus deudas cortas con lo que tienes a mano.</string>
+    <string name="cu_ind_rendact">Rendimiento de tus activos</string>
+    <string name="cu_ind_rendact_d">Ingresos pasivos del año ÷ todo lo que tienes. Muestra si tu patrimonio trabaja o está quieto. Ideal: 4 % o más.</string>
+    <string name="cu_ind_rotneg">Rotación de activos del negocio</string>
+    <string name="cu_ind_rotneg_d">Ventas del año ÷ lo que vale tu negocio (Activos de tipo «Negocio»). Cuánto vende con lo que tiene. Ideal: 1 o más.</string>
+    <string name="cu_ind_pesoneg">Peso del negocio en tus ingresos</string>
+    <string name="cu_ind_pesoneg_d">Qué parte de lo que entra viene de tu negocio o de tus ventas.</string>
+    <string name="sal_personal">Tus finanzas personales</string>
+    <string name="sal_negocio">Tu negocio</string>
+    <string name="sal_negocio_sub">Aparte de tus finanzas personales · no cuenta en tu ISF</string>
+    <string name="sal_negocio_nota">Las ventas son tus ingresos de «Negocio» y «Ventas». La rentabilidad neta y el ROA del negocio necesitan sus costos anotados aparte de tus gastos personales.</string>
+    <string name="sal_negocio_nota_activo">Anota tu negocio en Activos (tipo «Negocio») para ver su rotación. Las ventas son tus ingresos de «Negocio» y «Ventas». La rentabilidad neta y el ROA del negocio necesitan sus costos anotados aparte de tus gastos personales.</string>
 </resources>

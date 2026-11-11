@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">I dati di questo telefono vengono uniti al cloud. Se qualcosa è cambiato da entrambe le parti, vince questo telefono e sostituisce il cloud. Usalo solo se la tua vera rotta è su questo telefono.</string>
     <string name="nube_listo">La tua rotta è arrivata su questo telefono.</string>
     <string name="nube_error">Impossibile portare la tua rotta. Controlla la connessione e riprova.</string>
+    <string name="en_titulo">Livello di indebitamento</string>
+    <string name="en_linea">Devi %1$s e possiedi %2$s</string>
+    <string name="en_cuotas">rate di %1$s al mese</string>
+    <string name="cu_ind_liqcorr">Liquidità corrente</string>
+    <string name="cu_ind_liqcorr_d">Contanti, conti e fondo di emergenza ÷ ciò che devi pagare nei prossimi 12 mesi. Da 1 in su, copri i debiti a breve con ciò che hai a portata di mano.</string>
+    <string name="cu_ind_rendact">Rendimento dei tuoi beni</string>
+    <string name="cu_ind_rendact_d">Entrate passive dell’anno ÷ tutto ciò che possiedi. Mostra se il tuo patrimonio lavora o è fermo. Ideale: 4 % o più.</string>
+    <string name="cu_ind_rotneg">Rotazione dei beni dell’attività</string>
+    <string name="cu_ind_rotneg_d">Vendite dell’anno ÷ valore della tua attività (Beni di tipo «Attività»). Quanto vende con ciò che ha. Ideale: 1 o più.</string>
+    <string name="cu_ind_pesoneg">Peso dell’attività nelle tue entrate</string>
+    <string name="cu_ind_pesoneg_d">Quale parte di ciò che entra viene dalla tua attività o dalle tue vendite.</string>
+    <string name="sal_personal">Le tue finanze personali</string>
+    <string name="sal_negocio">La tua attività</string>
+    <string name="sal_negocio_sub">A parte dalle finanze personali · non conta nel tuo ISF</string>
+    <string name="sal_negocio_nota">Le vendite sono le entrate «Attività» e «Vendite». Redditività netta e ROA dell’attività richiedono i suoi costi annotati a parte dalle spese personali.</string>
+    <string name="sal_negocio_nota_activo">Aggiungi la tua attività in Beni (tipo «Attività») per vederne la rotazione. Le vendite sono le entrate «Attività» e «Vendite». Redditività netta e ROA dell’attività richiedono i suoi costi annotati a parte dalle spese personali.</string>
 </resources>

@@ -1064,6 +1064,8 @@ private fun LazyListScope.balance(libro: Libro, plata: (Double) -> String, ir: (
         }
     }
     sec("metasfin") { MetasFinResumen(libro, plata) { ir(NivelCuentas.MetasN) } }
+    sec("endeuda") { androidx.compose.foundation.layout.Column(verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp)) {
+        EndeudamientoCard(libro.salud(null), plata) { ir(NivelCuentas.SaludN(null)) } } }
     sec("deudas") { DeudasResumen(libro, plata) { ir(NivelCuentas.DeudasN) } }
     if (hitosRecuerdos(libro).isNotEmpty()) sec("hitos") { HitosRecuerdo(libro) { ir(NivelCuentas.HitosN) } }
     sec("fijos") { FijosResumen(libro, plata) { ir(NivelCuentas.FijosN) } }

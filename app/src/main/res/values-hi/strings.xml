@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">इस फ़ोन का डेटा क्लाउड के साथ मिलाया जाता है। अगर दोनों तरफ़ कुछ बदला है, तो यह फ़ोन जीतता है और क्लाउड को बदल देता है। तभी इस्तेमाल करें जब आपका असली रास्ता इसी फ़ोन पर हो।</string>
     <string name="nube_listo">आपका रास्ता इस फ़ोन पर आ गया।</string>
     <string name="nube_error">आपका रास्ता नहीं लाया जा सका। कनेक्शन जाँचें और फिर कोशिश करें।</string>
+    <string name="en_titulo">कर्ज़ का स्तर</string>
+    <string name="en_linea">आप पर %1$s कर्ज़ है और आपके पास %2$s है</string>
+    <string name="en_cuotas">हर महीने %1$s की किस्तें</string>
+    <string name="cu_ind_liqcorr">चालू तरलता</string>
+    <string name="cu_ind_liqcorr_d">नकद, खाते और आपातकालीन कोष ÷ अगले 12 महीनों में चुकाना है। 1 या ज़्यादा पर आप हाथ में मौजूद पैसे से छोटे कर्ज़ चुका सकते हैं।</string>
+    <string name="cu_ind_rendact">आपकी संपत्ति का प्रतिफल</string>
+    <string name="cu_ind_rendact_d">साल की निष्क्रिय आय ÷ आपकी पूरी संपत्ति। दिखाता है कि आपकी संपत्ति काम कर रही है या रुकी है। आदर्श: 4 % या ज़्यादा।</string>
+    <string name="cu_ind_rotneg">व्यवसाय की संपत्ति का टर्नओवर</string>
+    <string name="cu_ind_rotneg_d">साल की बिक्री ÷ आपके व्यवसाय का मूल्य («व्यवसाय» प्रकार की संपत्ति)। जो है उससे कितना बेचता है। आदर्श: 1 या ज़्यादा।</string>
+    <string name="cu_ind_pesoneg">आय में व्यवसाय का हिस्सा</string>
+    <string name="cu_ind_pesoneg_d">आने वाले पैसे का कितना हिस्सा व्यवसाय या बिक्री से आता है।</string>
+    <string name="sal_personal">आपका निजी वित्त</string>
+    <string name="sal_negocio">आपका व्यवसाय</string>
+    <string name="sal_negocio_sub">निजी वित्त से अलग · आपके सूचकांक में नहीं गिना जाता</string>
+    <string name="sal_negocio_nota">बिक्री आपकी «व्यवसाय» और «बिक्री» आय है। व्यवसाय की शुद्ध लाभप्रदता और ROA के लिए उसके खर्च निजी खर्चों से अलग दर्ज करने होंगे।</string>
+    <string name="sal_negocio_nota_activo">टर्नओवर देखने के लिए अपना व्यवसाय संपत्ति में («व्यवसाय» प्रकार) जोड़ें। बिक्री आपकी «व्यवसाय» और «बिक्री» आय है। व्यवसाय की शुद्ध लाभप्रदता और ROA के लिए उसके खर्च निजी खर्चों से अलग दर्ज करने होंगे।</string>
 </resources>

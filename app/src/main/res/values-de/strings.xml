@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">Die Daten dieses Handys werden mit der Cloud zusammengeführt. Wenn sich auf beiden Seiten etwas geändert hat, gewinnt dieses Handy und ersetzt die Cloud. Nur verwenden, wenn deine echte Route auf diesem Handy ist.</string>
     <string name="nube_listo">Deine Route ist auf diesem Handy angekommen.</string>
     <string name="nube_error">Deine Route konnte nicht geholt werden. Prüfe die Verbindung und versuche es erneut.</string>
+    <string name="en_titulo">Verschuldungsgrad</string>
+    <string name="en_linea">Du schuldest %1$s und besitzt %2$s</string>
+    <string name="en_cuotas">%1$s Raten pro Monat</string>
+    <string name="cu_ind_liqcorr">Liquidität</string>
+    <string name="cu_ind_liqcorr_d">Bargeld, Konten und Notgroschen ÷ was du in den nächsten 12 Monaten zahlen musst. Ab 1 deckst du kurzfristige Schulden mit dem, was du zur Hand hast.</string>
+    <string name="cu_ind_rendact">Rendite deines Vermögens</string>
+    <string name="cu_ind_rendact_d">Passive Einnahmen des Jahres ÷ alles, was du besitzt. Zeigt, ob dein Vermögen arbeitet oder ruht. Ideal: 4 % oder mehr.</string>
+    <string name="cu_ind_rotneg">Kapitalumschlag des Geschäfts</string>
+    <string name="cu_ind_rotneg_d">Umsatz des Jahres ÷ Wert deines Geschäfts (Vermögen vom Typ „Geschäft“). Wie viel es mit dem verkauft, was es hat. Ideal: 1 oder mehr.</string>
+    <string name="cu_ind_pesoneg">Anteil des Geschäfts am Einkommen</string>
+    <string name="cu_ind_pesoneg_d">Welcher Teil deiner Einnahmen aus deinem Geschäft oder deinen Verkäufen kommt.</string>
+    <string name="sal_personal">Deine privaten Finanzen</string>
+    <string name="sal_negocio">Dein Geschäft</string>
+    <string name="sal_negocio_sub">Getrennt von deinen privaten Finanzen · zählt nicht zu deinem FGI</string>
+    <string name="sal_negocio_nota">Umsatz sind deine Einnahmen „Geschäft“ und „Verkäufe“. Nettorendite und ROA des Geschäfts brauchen seine Kosten getrennt von deinen privaten Ausgaben.</string>
+    <string name="sal_negocio_nota_activo">Trage dein Geschäft unter Vermögen ein (Typ „Geschäft“), um den Umschlag zu sehen. Umsatz sind deine Einnahmen „Geschäft“ und „Verkäufe“. Nettorendite und ROA des Geschäfts brauchen seine Kosten getrennt von deinen privaten Ausgaben.</string>
 </resources>

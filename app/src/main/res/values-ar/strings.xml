@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">تُدمج بيانات هذا الهاتف مع السحابة. إذا تغيّر شيء في الجهتين، تفوز بيانات هذا الهاتف وتحل محل السحابة. استخدمه فقط إذا كان مسارك الحقيقي على هذا الهاتف.</string>
     <string name="nube_listo">وصل مسارك إلى هذا الهاتف.</string>
     <string name="nube_error">تعذّر إحضار مسارك. تحقق من الاتصال وحاول مرة أخرى.</string>
+    <string name="en_titulo">مستوى المديونية</string>
+    <string name="en_linea">عليك %1$s ولديك %2$s</string>
+    <string name="en_cuotas">أقساط %1$s شهريًا</string>
+    <string name="cu_ind_liqcorr">السيولة الجارية</string>
+    <string name="cu_ind_liqcorr_d">النقد والحسابات وصندوق الطوارئ ÷ ما عليك دفعه خلال الأشهر الـ 12 القادمة. عند 1 أو أكثر تغطي ديونك القصيرة بما لديك.</string>
+    <string name="cu_ind_rendact">عائد أصولك</string>
+    <string name="cu_ind_rendact_d">الدخل السلبي للسنة ÷ كل ما تملكه. يبين إن كانت ثروتك تعمل أم ساكنة. المثالي: 4 % أو أكثر.</string>
+    <string name="cu_ind_rotneg">دوران أصول المشروع</string>
+    <string name="cu_ind_rotneg_d">مبيعات السنة ÷ قيمة مشروعك (أصول من نوع «مشروع»). كم يبيع بما لديه. المثالي: 1 أو أكثر.</string>
+    <string name="cu_ind_pesoneg">حصة المشروع من دخلك</string>
+    <string name="cu_ind_pesoneg_d">أي جزء مما يدخل يأتي من مشروعك أو مبيعاتك.</string>
+    <string name="sal_personal">أموالك الشخصية</string>
+    <string name="sal_negocio">مشروعك</string>
+    <string name="sal_negocio_sub">منفصل عن أموالك الشخصية · لا يُحسب في مؤشرك</string>
+    <string name="sal_negocio_nota">المبيعات هي دخلك من «مشروع» و«مبيعات». ربحية المشروع الصافية والعائد على أصوله يحتاجان تسجيل تكاليفه منفصلة عن مصاريفك الشخصية.</string>
+    <string name="sal_negocio_nota_activo">أضف مشروعك في الأصول (نوع «مشروع») لترى دورانه. المبيعات هي دخلك من «مشروع» و«مبيعات». ربحية المشروع الصافية والعائد على أصوله يحتاجان تسجيل تكاليفه منفصلة عن مصاريفك الشخصية.</string>
 </resources>

@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">이 휴대폰의 데이터를 클라우드와 합칩니다. 양쪽에서 바뀐 것이 있으면 이 휴대폰이 우선이며 클라우드를 대체합니다. 진짜 길이 이 휴대폰에 있을 때만 사용하세요.</string>
     <string name="nube_listo">길이 이 휴대폰에 도착했어요.</string>
     <string name="nube_error">길을 가져오지 못했어요. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="en_titulo">부채 수준</string>
+    <string name="en_linea">빚 %1$s, 자산 %2$s</string>
+    <string name="en_cuotas">매달 상환 %1$s</string>
+    <string name="cu_ind_liqcorr">유동 비율</string>
+    <string name="cu_ind_liqcorr_d">현금·계좌·비상금 ÷ 앞으로 12개월 동안 갚아야 할 돈. 1 이상이면 가진 돈으로 단기 빚을 감당할 수 있어요.</string>
+    <string name="cu_ind_rendact">자산 수익률</string>
+    <string name="cu_ind_rendact_d">1년 불로소득 ÷ 가진 모든 자산. 자산이 일하고 있는지 쉬고 있는지 보여 줘요. 이상적: 4 % 이상.</string>
+    <string name="cu_ind_rotneg">사업 자산 회전율</string>
+    <string name="cu_ind_rotneg_d">1년 매출 ÷ 사업의 가치(유형 「사업」 자산). 가진 것으로 얼마나 파는지. 이상적: 1 이상.</string>
+    <string name="cu_ind_pesoneg">수입 중 사업 비중</string>
+    <string name="cu_ind_pesoneg_d">들어오는 돈 중 사업이나 판매에서 오는 비율.</string>
+    <string name="sal_personal">개인 재무</string>
+    <string name="sal_negocio">당신의 사업</string>
+    <string name="sal_negocio_sub">개인 재무와 별도 · 재무 건강 지수에 포함되지 않음</string>
+    <string name="sal_negocio_nota">매출은 「사업」과 「판매」 수입이에요. 사업의 순이익률과 ROA를 보려면 사업 비용을 개인 지출과 따로 기록해야 해요.</string>
+    <string name="sal_negocio_nota_activo">자산에 사업(유형 「사업」)을 등록하면 회전율을 볼 수 있어요. 매출은 「사업」과 「판매」 수입이에요. 사업의 순이익률과 ROA를 보려면 사업 비용을 개인 지출과 따로 기록해야 해요.</string>
 </resources>

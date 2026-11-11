@@ -47,6 +47,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CreditCard
+import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Image
@@ -223,7 +225,7 @@ private fun nombreIndicador(k: String): Pair<String, String> {
 
 @Composable
 private fun valorIndicador(i: Salud.Indicador): String = when (i.clave) {
-    "liquidez", "libertad", "netoing" -> num(i.valor)
+    "liquidez", "libertad", "netoing", "liqcorr", "rotneg" -> num(i.valor)
     "fondo" -> stringResource(R.string.cu_meses_x, num(i.valor))
     "endeuda" -> if (i.valor.isInfinite()) stringResource(R.string.cu_sin_activos) else if (i.valor == 0.0) stringResource(R.string.cu_sin_deudas) else pct(i.valor)
     else -> pct(i.valor)
@@ -297,7 +299,7 @@ fun SaludCard(r: Salud.Resultado, anio: Int?, libro: Libro, plata: (Double) -> S
             Text(stringResource(R.string.cu_isf_periodo, periodo), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 8.dp))
             androidx.compose.foundation.layout.FlowRow(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(Salud.Estado.OK to R.string.cu_cuenta_ok, Salud.Estado.MEDIO to R.string.cu_cuenta_medio, Salud.Estado.BAJO to R.string.cu_cuenta_bajo).forEach { (e, t) ->
-                    val n = r.indicadores.count { it.estado == e }
+                    val n = r.indicadores.count { it.estado == e && it.clave !in Salud.NEGOCIO }
                     if (n > 0) Row(Modifier.clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surface).padding(horizontal = 8.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                         ChipEstado(e, soloIcono = true); Spacer(Modifier.width(6.dp))
                         Text(stringResource(t, n), style = MaterialTheme.typography.labelLarge)
@@ -310,14 +312,23 @@ fun SaludCard(r: Salud.Resultado, anio: Int?, libro: Libro, plata: (Double) -> S
     // Los indicadores en tarjetas, agrupados como se leen
     val grupos = listOf(
         R.string.cu_g_flujo to listOf("flujo", "liquidez", "gasto"), R.string.cu_g_futuro to listOf("ahorro", "construye", "fondo"),
-        R.string.cu_g_deudas to listOf("dti", "endeuda", "buenas"), R.string.cu_g_libertad to listOf("pasivos", "libertad", "netoing"),
+        R.string.cu_g_deudas to listOf("dti", "endeuda", "liqcorr", "buenas"), R.string.cu_g_libertad to listOf("pasivos", "libertad", "rendact", "netoing"),
     )
+    // Lo personal y lo del negocio, separados
+    TituloAmbito(Icons.Filled.Person, stringResource(R.string.sal_personal), null)
     grupos.forEach { (titulo, claves) ->
         val xs = claves.mapNotNull { k -> r.indicadores.firstOrNull { it.clave == k } }
         if (xs.isNotEmpty()) {
             Text(stringResource(titulo), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 4.dp, top = 4.dp))
             xs.forEach { i -> val (n, d) = nombreIndicador(i.clave); Medidor(i, n, d, valorIndicador(i)) }
         }
+    }
+    val negocio = r.indicadores.filter { it.clave in Salud.NEGOCIO }
+    if (negocio.isNotEmpty()) {
+        TituloAmbito(Icons.Filled.Storefront, stringResource(R.string.sal_negocio), stringResource(R.string.sal_negocio_sub))
+        negocio.forEach { i -> val (n, d) = nombreIndicador(i.clave); Medidor(i, n, d, valorIndicador(i)) }
+        Text(stringResource(if (negocio.any { it.clave == "rotneg" }) R.string.sal_negocio_nota else R.string.sal_negocio_nota_activo),
+            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
     }
     RutaCard {
         if (r.actual) BalanceBarras(r, plata)
@@ -1406,5 +1417,35 @@ fun PantallaCodigoCifrado(modifier: Modifier = Modifier, llave: String, onAbiert
         OutlinedTextField(codigo, { codigo = it; error = "" }, modifier = Modifier.fillMaxWidth(), minLines = 3, placeholder = { Text("pino rio luna …") })
         Button(onClick = { if (com.rutaalacima.app.seguridad.FinCifrado.abrirConCodigo(ctx, codigo, llave)) onAbierta() else error = mal }, modifier = Modifier.padding(top = 10.dp)) { Text(stringResource(R.string.cu_cif_abrir)) }
         if (error.isNotBlank()) Text(error, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+    }
+}
+
+/** En el Balance general: el nivel de endeudamiento (pasivos ÷ activos) y la carga de cuotas (DTI), igual que la web. */
+@Composable
+fun EndeudamientoCard(r: Salud.Resultado, plata: (Double) -> String, onSalud: () -> Unit) {
+    val xs = listOf("endeuda", "dti").mapNotNull { k -> r.indicadores.firstOrNull { it.clave == k } }
+    if (xs.isEmpty() || (r.activos == 0.0 && r.pasivos == 0.0)) return
+    RutaCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Filled.CreditCard, null, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant); Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.en_titulo), Modifier.weight(1f), style = MaterialTheme.typography.titleMedium)
+            TextButton(onClick = onSalud) { Text(stringResource(R.string.cu_salud)) }
+        }
+        Text(stringResource(R.string.en_linea, plata(r.pasivos), plata(r.activos)) +
+            (if (r.deudaMes > 0) " · " + stringResource(R.string.en_cuotas, plata(r.deudaMes)) else ""),
+            style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(bottom = 6.dp))
+    }
+    xs.forEach { i -> val (n, d) = nombreIndicador(i.clave); Medidor(i, n, d, valorIndicador(i)) }
+}
+
+/** Encabezado de un ámbito de la salud financiera: tus finanzas personales o tu negocio. */
+@Composable
+private fun TituloAmbito(icono: androidx.compose.ui.graphics.vector.ImageVector, titulo: String, sub: String?) {
+    Column(Modifier.padding(start = 4.dp, top = 14.dp, bottom = 2.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(icono, null, Modifier.size(22.dp), tint = MaterialTheme.colorScheme.primary); Spacer(Modifier.width(8.dp))
+            Text(titulo, style = MaterialTheme.typography.titleLarge.copy(fontFamily = androidx.compose.ui.text.font.FontFamily.Serif), fontWeight = FontWeight.SemiBold)
+        }
+        if (sub != null) Text(sub, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }

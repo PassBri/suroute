@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">O que está neste celular é unido ao da nuvem. Se algo mudou nos dois lados, vence este celular e substitui a nuvem. Use só se sua rota de verdade estiver neste celular.</string>
     <string name="nube_listo">Sua rota chegou a este celular.</string>
     <string name="nube_error">Não foi possível trazer sua rota. Verifique a conexão e tente de novo.</string>
+    <string name="en_titulo">Nível de endividamento</string>
+    <string name="en_linea">Você deve %1$s e tem %2$s</string>
+    <string name="en_cuotas">parcelas de %1$s por mês</string>
+    <string name="cu_ind_liqcorr">Liquidez corrente</string>
+    <string name="cu_ind_liqcorr_d">Dinheiro, contas e fundo de emergência ÷ o que você deve pagar nos próximos 12 meses. Com 1 ou mais, você cobre suas dívidas curtas com o que tem à mão.</string>
+    <string name="cu_ind_rendact">Rendimento dos seus ativos</string>
+    <string name="cu_ind_rendact_d">Renda passiva do ano ÷ tudo o que você tem. Mostra se seu patrimônio trabalha ou está parado. Ideal: 4 % ou mais.</string>
+    <string name="cu_ind_rotneg">Giro dos ativos do negócio</string>
+    <string name="cu_ind_rotneg_d">Vendas do ano ÷ quanto vale seu negócio (Ativos do tipo «Negócio»). Quanto vende com o que tem. Ideal: 1 ou mais.</string>
+    <string name="cu_ind_pesoneg">Peso do negócio na sua renda</string>
+    <string name="cu_ind_pesoneg_d">Que parte do que entra vem do seu negócio ou das suas vendas.</string>
+    <string name="sal_personal">Suas finanças pessoais</string>
+    <string name="sal_negocio">Seu negócio</string>
+    <string name="sal_negocio_sub">À parte das suas finanças pessoais · não conta no seu ISF</string>
+    <string name="sal_negocio_nota">As vendas são sua renda de «Negócio» e «Vendas». A rentabilidade líquida e o ROA do negócio precisam dos custos registrados à parte dos seus gastos pessoais.</string>
+    <string name="sal_negocio_nota_activo">Registre seu negócio em Ativos (tipo «Negócio») para ver o giro. As vendas são sua renda de «Negócio» e «Vendas». A rentabilidade líquida e o ROA do negócio precisam dos custos registrados à parte dos seus gastos pessoais.</string>
 </resources>

@@ -333,6 +333,7 @@ DET["finanzas.b"] = () => {
       ["anios", "Año por año", hoja(`<div class="cab-lista-btn"><h3 style="margin:0">Año por año</h3><span class="suave" style="font-size:13px">Toca un año para ver sus meses</span></div>${anios.length > 1 ? grafica(filas) : ""}${tablaPeriodos(filas, "Año", t)}
       <p class="asc-pie">Patrimonio construido: <b>${plata(t.construido)}</b> en ahorro e inversión${t.tasa != null ? ` · ${Math.round(t.tasa * 100)} % de todo lo que entró` : ""}.</p>`)],
       ["salud", "Salud financiera", saludResumen("")],
+      ["endeuda", "Nivel de endeudamiento", endeudamientoResumen()],
       ["deudas", "Salir de deudas", deudasResumen()],
       ["hitos", "Recuerdo de un hito", window.hitosRecuerdo?.() || ""],
       ["fijos", "Fijos de cada mes", fijosResumen()],

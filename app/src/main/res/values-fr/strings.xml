@@ -3291,4 +3291,20 @@
     <string name="nube_unir_aviso">Les données de ce téléphone sont fusionnées avec le cloud. Si quelque chose a changé des deux côtés, ce téléphone l’emporte et remplace le cloud. À utiliser seulement si votre vrai itinéraire est sur ce téléphone.</string>
     <string name="nube_listo">Votre itinéraire est arrivé sur ce téléphone.</string>
     <string name="nube_error">Impossible de ramener votre itinéraire. Vérifiez la connexion et réessayez.</string>
+    <string name="en_titulo">Niveau d’endettement</string>
+    <string name="en_linea">Vous devez %1$s et possédez %2$s</string>
+    <string name="en_cuotas">%1$s de mensualités par mois</string>
+    <string name="cu_ind_liqcorr">Liquidité courante</string>
+    <string name="cu_ind_liqcorr_d">Espèces, comptes et fonds d’urgence ÷ ce que vous devez payer dans les 12 prochains mois. À 1 ou plus, vous couvrez vos dettes à court terme avec ce que vous avez sous la main.</string>
+    <string name="cu_ind_rendact">Rendement de vos actifs</string>
+    <string name="cu_ind_rendact_d">Revenus passifs de l’année ÷ tout ce que vous possédez. Montre si votre patrimoine travaille ou dort. Idéal : 4 % ou plus.</string>
+    <string name="cu_ind_rotneg">Rotation des actifs de l’entreprise</string>
+    <string name="cu_ind_rotneg_d">Ventes de l’année ÷ valeur de votre entreprise (Actifs de type « Entreprise »). Combien elle vend avec ce qu’elle a. Idéal : 1 ou plus.</string>
+    <string name="cu_ind_pesoneg">Part de l’entreprise dans vos revenus</string>
+    <string name="cu_ind_pesoneg_d">Quelle part de ce qui entre vient de votre entreprise ou de vos ventes.</string>
+    <string name="sal_personal">Vos finances personnelles</string>
+    <string name="sal_negocio">Votre entreprise</string>
+    <string name="sal_negocio_sub">À part de vos finances personnelles · ne compte pas dans votre ISF</string>
+    <string name="sal_negocio_nota">Les ventes sont vos revenus « Entreprise » et « Ventes ». La rentabilité nette et le ROA de l’entreprise demandent ses coûts notés à part de vos dépenses personnelles.</string>
+    <string name="sal_negocio_nota_activo">Ajoutez votre entreprise dans Actifs (type « Entreprise ») pour voir sa rotation. Les ventes sont vos revenus « Entreprise » et « Ventes ». La rentabilité nette et le ROA de l’entreprise demandent ses coûts notés à part de vos dépenses personnelles.</string>
 </resources>
