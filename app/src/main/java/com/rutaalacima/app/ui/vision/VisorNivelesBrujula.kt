@@ -64,7 +64,7 @@ import com.rutaalacima.app.domain.model.Mandala
 @Composable
 internal fun CabeceraSeccionVision(titulo: String, onGirar: (() -> Unit)? = null, girada: Boolean = false, onGrande: () -> Unit) {
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-        Text(titulo, Modifier.weight(1f), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+        Text(titulo, Modifier.weight(1f), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
         // Girar: gira todas las tarjetas de la sección a la vez (igual que la web)
         if (onGirar != null) {
             val giro by androidx.compose.animation.core.animateFloatAsState(if (girada) 180f else 0f, androidx.compose.animation.core.tween(600), label = "girarTodas")

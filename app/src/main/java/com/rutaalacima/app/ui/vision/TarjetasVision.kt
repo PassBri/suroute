@@ -119,7 +119,7 @@ internal data class AccionesTarjeta(
  * los extremos son redondos, los del medio tienen esquinas de 8 dp y el elegido se vuelve píldora con una animación.
  */
 @Composable
-internal fun SelectorModoTarjetas(modo: ModoTarjetas, onModo: (ModoTarjetas) -> Unit, modifier: Modifier = Modifier) {
+internal fun SelectorModoTarjetas(modo: ModoTarjetas, onModo: (ModoTarjetas) -> Unit, modifier: Modifier = Modifier, soloIconos: Boolean = false) {
     val opciones = remember {
         listOf(R.string.vision_modo_imagen to Icons.Outlined.Image,
             R.string.vision_modo_texto to Icons.Filled.FormatQuote,
@@ -137,9 +137,11 @@ internal fun SelectorModoTarjetas(modo: ModoTarjetas, onModo: (ModoTarjetas) -> 
                 selected = elegido, onClick = { onModo(ModoTarjetas.entries[i]) }, shape = forma,
                 color = if (elegido) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
                 contentColor = if (elegido) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(1f).heightIn(min = 40.dp).semantics { role = androidx.compose.ui.semantics.Role.RadioButton },
+                modifier = Modifier.weight(1f).heightIn(min = if (soloIconos) 48.dp else 40.dp).semantics { role = androidx.compose.ui.semantics.Role.RadioButton },
             ) {
-                androidx.compose.foundation.layout.Row(Modifier.padding(horizontal = 10.dp, vertical = 10.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                // En el teléfono, solo el ícono (el nombre lo lee TalkBack y aparece al mantener presionado)
+                if (soloIconos) Box(Modifier.padding(vertical = 12.dp), contentAlignment = Alignment.Center) { Icon(icono, stringResource(etiqueta), Modifier.size(20.dp)) }
+                else androidx.compose.foundation.layout.Row(Modifier.padding(horizontal = 10.dp, vertical = 10.dp), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                     Icon(icono, null, Modifier.size(18.dp))
                     androidx.compose.foundation.layout.Spacer(Modifier.size(6.dp))
                     Text(stringResource(etiqueta), maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelLarge)
@@ -151,23 +153,29 @@ internal fun SelectorModoTarjetas(modo: ModoTarjetas, onModo: (ModoTarjetas) -> 
 
 private fun Modifier.selectableGroupCompat() = this.then(Modifier.selectableGroup())
 
-@OptIn(ExperimentalLayoutApi::class)
+/** La barra de la Brújula: 1 · 9 · 81, cómo se ven las tarjetas y verla en grande, en UNA sola fila.
+ *  En el teléfono el modo va solo con íconos para que quepa; en pantallas anchas lleva su nombre. */
+@OptIn(ExperimentalLayoutApi::class, androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 internal fun NavegacionVision(modo: ModoTarjetas, onModo: (ModoTarjetas) -> Unit, habilitada: Boolean, onSeccion: (Int) -> Unit, onGrande: () -> Unit, seccion: Int = -1) {
-    FlowRow(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.fillMaxWidth()) {
-        listOf(1, 9, 81).forEachIndexed { i, numero ->
-            val descripcion = stringResource(listOf(R.string.vision_seccion_cumbre, R.string.vision_seccion_rosa, R.string.vision_seccion_ruta)[i])
-            // 1 · 9 · 81 en una sola pantalla: la capa elegida queda marcada
-            if (i == seccion) androidx.compose.material3.FilledTonalButton(onClick = { onSeccion(i) }, enabled = habilitada, modifier = Modifier.semantics { contentDescription = descripcion }) {
-                Text(stringResource(R.string.vision_nivel_numero, numero))
-            } else TextButton(onClick = { onSeccion(i) }, enabled = habilitada, modifier = Modifier.semantics { contentDescription = descripcion }) {
-                Text(stringResource(R.string.vision_nivel_numero, numero))
+    androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val ancha = maxWidth >= 560.dp
+        androidx.compose.foundation.layout.Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            // 1 · 9 · 81: botones segmentados de Material 3 (la capa que se ve queda marcada)
+            androidx.compose.material3.SingleChoiceSegmentedButtonRow(Modifier.weight(if (ancha) 0.8f else 1f)) {
+                listOf(1, 9, 81).forEachIndexed { i, numero ->
+                    val descripcion = stringResource(listOf(R.string.vision_seccion_cumbre, R.string.vision_seccion_rosa, R.string.vision_seccion_ruta)[i])
+                    androidx.compose.material3.SegmentedButton(selected = i == seccion, onClick = { onSeccion(i) }, enabled = habilitada,
+                        shape = androidx.compose.material3.SegmentedButtonDefaults.itemShape(i, 3), icon = {},
+                        modifier = Modifier.semantics { contentDescription = descripcion }) {
+                        Text(stringResource(R.string.vision_nivel_numero, numero), maxLines = 1)
+                    }
+                }
             }
-        }
-        SelectorModoTarjetas(modo, onModo)
-        androidx.compose.material3.IconButton(onClick = onGrande, enabled = habilitada) {
-            Icon(Icons.Filled.Fullscreen, stringResource(R.string.vision_ver_grande))
+            SelectorModoTarjetas(modo, onModo, Modifier.weight(if (ancha) 1.4f else 1f), soloIconos = !ancha)
+            androidx.compose.material3.IconButton(onClick = onGrande, enabled = habilitada) {
+                Icon(Icons.Filled.Fullscreen, stringResource(R.string.vision_ver_grande))
+            }
         }
     }
 }

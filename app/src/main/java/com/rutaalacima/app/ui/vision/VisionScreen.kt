@@ -473,7 +473,9 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
         topBar = {
             TopAppBar(
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                title = { Text(anioActivo?.let { stringResource(R.string.brujula_de_anio, it) } ?: stringResource(R.string.vision_titulo)) },
+                // El título es también el selector de Brújula (General o la de un año): se gana una fila para la brújula
+                title = { SelectorBrujula(anioActivo, anios, aniosConBrujula, cumbresPorAnio, perfilVida.anioNacimiento, perfilVida.esperanza(),
+                    onElegir = { giradas = emptyList(); bloqueAbierto = null; vm.elegirAnio(it) }) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.volver)) } },
                 actions = { CompaneroAccion { companero = true }; ModeloBrujulaAccion(onCompanero = { companero = true }) },
             )
@@ -483,9 +485,9 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
             columns = GridCells.Fixed(2),
             state = gridState,
             modifier = Modifier.fillMaxSize().padding(top = padding.calculateTopPadding()),
-            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 32.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 0.dp, bottom = 32.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             item(key = "navegacion", span = { GridItemSpan(2) }) {
                 NavegacionVision(vm.modo, ::cambiarModo, casillas.isNotEmpty(),
@@ -494,8 +496,6 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
             }
             item(key = "introduccion", span = { GridItemSpan(2) }) {
                 Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                    // Arriba se elige cuál Brújula: la General (toda tu vida) o la de un año
-                    SelectorBrujula(anioActivo, anios, aniosConBrujula, cumbresPorAnio, perfilVida.anioNacimiento, perfilVida.esperanza(), onElegir = { giradas = emptyList(); bloqueAbierto = null; vm.elegirAnio(it) })
                     IntroduccionVision(
                         anio = anioActivo, vacia = casillas.isEmpty(), armando = vm.armando, conIa = vm.conIa,
                         conFoto = conFoto, total = tarjetasVisor.size, onArmar = { vm.armar(it) },
@@ -634,11 +634,19 @@ private fun SelectorBrujula(anio: Int?, anios: List<Int>, conBrujula: Set<Int>, 
     val rango = (if (nacimiento != null) (nacimiento + 1)..(nacimiento + metaVida)
         else (minOf(hoy - 2, creados.minOrNull() ?: hoy))..(maxOf(hoy + 6, creados.maxOrNull() ?: hoy))).toList()
     val elegir: (Int?) -> Unit = { hoja = false; onElegir(it) }
-    FilterChip(selected = true, onClick = { hoja = true },
-        label = { Text(anio?.let { a -> cumbres[a]?.let { "$a · $it" } ?: "$a" } ?: stringResource(R.string.brujula_general), maxLines = 1,
-            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, modifier = Modifier.widthIn(max = 240.dp)) },
-        leadingIcon = { Icon(Icons.Filled.CalendarMonth, stringResource(R.string.bj_tus_brujulas), Modifier.size(18.dp)) },
-        trailingIcon = { Icon(Icons.Filled.ArrowDropDown, null) })
+    // El título de la pantalla: «Mi Brújula de 2026 ▾» y debajo la cumbre de ese año (o «General»). Al tocarlo, «Tus brújulas».
+    val titulo = anio?.let { stringResource(R.string.brujula_de_anio, it) } ?: stringResource(R.string.vision_titulo)
+    val sub = anio?.let { cumbres[it] } ?: if (anio == null) stringResource(R.string.brujula_general) else null
+    val desc = stringResource(R.string.bj_tus_brujulas)
+    Row(Modifier.clip(RoundedCornerShape(12.dp)).clickable(onClickLabel = desc) { hoja = true }.padding(end = 4.dp, top = 2.dp, bottom = 2.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f, fill = false)) {
+            Text(titulo, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+            if (sub != null) Text(sub, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+        }
+        Icon(Icons.Filled.ArrowDropDown, desc)
+    }
     if (hoja) androidx.compose.material3.ModalBottomSheet(onDismissRequest = { hoja = false }) {
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(start = 16.dp, end = 16.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text(stringResource(R.string.bj_tus_brujulas), style = MaterialTheme.typography.titleLarge)
@@ -701,6 +709,32 @@ private fun SelectorBrujula(anio: Int?, anios: List<Int>, conBrujula: Set<Int>, 
 @Composable
 private fun IntroduccionVision(anio: Int?, vacia: Boolean, armando: Boolean, conIa: Boolean?, conFoto: Int, total: Int, onArmar: (Boolean) -> Unit) {
     var abierta by rememberSaveable { mutableStateOf(false) }
+    // Armada: una sola fila fina (el avance y «Volver a proponer» plegado) para que la brújula se vea completa
+    if (!vacia && !armando) {
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(stringResource(R.string.vision_progreso, conFoto, total), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+                Spacer(Modifier.width(10.dp))
+                LinearProgressIndicator(progress = { conFoto.toFloat() / total.coerceAtLeast(1) }, modifier = Modifier.weight(1f))
+                IconButton(onClick = { abierta = !abierta }) {
+                    Icon(if (abierta) Icons.Filled.ExpandLess else Icons.Filled.AutoAwesome, stringResource(R.string.vision_rearmar),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            AnimatedVisibility(abierta) {
+                RutaCard {
+                    Text(stringResource(R.string.vision_intro), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Spacer(Modifier.height(6.dp))
+                    OutlinedButton(onClick = { onArmar(anio != null) }, modifier = Modifier.fillMaxWidth()) {
+                        Icon(Icons.Filled.AutoAwesome, null); Spacer(Modifier.width(8.dp)); Text(stringResource(R.string.vision_rearmar))
+                    }
+                    Text(stringResource(R.string.vision_rearmar_ayuda), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    if (conIa == false) Text(stringResource(R.string.vision_sin_ia), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        }
+        return
+    }
     RutaCard {
         if (vacia) {
             Text(anio?.let { stringResource(R.string.brujula_de_anio, it) } ?: stringResource(R.string.vision_titulo), style = MaterialTheme.typography.titleLarge)
@@ -708,10 +742,6 @@ private fun IntroduccionVision(anio: Int?, vacia: Boolean, armando: Boolean, con
             Text(anio?.let { stringResource(R.string.brujula_anio_intro, it) } ?: stringResource(R.string.vision_intro), style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.height(12.dp))
-        } else {
-            Text(stringResource(R.string.vision_progreso, conFoto, total), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
-            Spacer(Modifier.height(6.dp))
-            LinearProgressIndicator(progress = { conFoto.toFloat() / total.coerceAtLeast(1) }, modifier = Modifier.fillMaxWidth())
         }
         when {
             armando -> Row(verticalAlignment = Alignment.CenterVertically) {
