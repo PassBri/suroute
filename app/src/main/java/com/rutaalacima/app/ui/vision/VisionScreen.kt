@@ -415,6 +415,9 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
     val tarjetasVisor = remember(reparto) { listOfNotNull(cumbre) + campamentos.filterNotNull() }
     // 1 · 9 · 81 en una sola página: se muestra una capa a la vez en el mismo lugar (sin hacer scroll)
     var capa by rememberSaveable { mutableStateOf(9) }
+    // Teléfono: pantalla angosta. En el 81 se abre un campamento en grande y se pasa al siguiente deslizando de lado
+    val ancho = androidx.compose.ui.platform.LocalConfiguration.current.screenWidthDp >= 600
+    LaunchedEffect(capa) { if (capa == 81 && !ancho && bloqueAbierto == null && vm.modo != ModoTarjetas.EDICION) bloqueAbierto = Mandala.bloqueDe(0) }
     fun irSeccion(indice: Int) { capa = when (indice) { 2 -> 1; 3 -> 9; 4 -> 81; else -> capa }; scope.launch { gridState.scrollToItem(2) } }
     val elegirFoto = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         val c = paraFoto
@@ -521,6 +524,8 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
                             val atras = !todasAtras
                             giradas = giradas.filterNot { it in idsRosa } + if (atras != vm.modo.muestraDorso) idsRosa else emptyList()
                         }) { abrirNiveles(1) }
+                        // En el teléfono las 9 tarjetas casi de borde a borde (se gana el margen de la lista)
+                        Box(if (ancho) Modifier else Modifier.casiBordeABorde(12.dp)) {
                         RosaVision(cumbre, campamentos, onCrear = vm::crearCampamento) { cv, indice, rumbo, modificador ->
                             pintarTarjeta(cv, true, false, modificador, indice + 1, rumbo,
                                 rumbo?.let { _ -> {
@@ -528,6 +533,7 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
                                     if (vm.modo != ModoTarjetas.EDICION) bloqueAbierto = Mandala.bloqueDe(camp)
                                     irSeccion(4)
                                 } })
+                        }
                         }
                     }
                 }

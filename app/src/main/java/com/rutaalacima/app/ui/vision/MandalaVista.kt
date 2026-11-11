@@ -71,6 +71,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -254,12 +255,28 @@ fun MandalaSeccion(
                 }
                 MiniMapaBloques(datos, bloqueAbierto) { onBloque(it) }
             }
-            key(bloqueAbierto) {
-                Bloque(datos, bloqueAbierto, onElegirBloque = { onBloque(it) }, onPaso = { i, p -> editando = i to p },
-                    onSugerir = onSugerir, onAgregarCampamento = onAgregarCampamento, modoTexto = modoTexto,
-                    onTextoPaso = { i, p, texto -> datos.casilla(i)?.let { onPaso(it.casilla, p, texto) } },
-                    onAvanzarPaso = { i, p -> datos.casilla(i)?.let { onAvanzar(it.casilla, p) } },
-                    onGanadoPaso = { i, p, si -> datos.casilla(i)?.let { onGanado(it.casilla, p, si) } })
+            @Composable fun bloque(b: Int) = Bloque(datos, b, onElegirBloque = { onBloque(it) }, onPaso = { i, p -> editando = i to p },
+                onSugerir = onSugerir, onAgregarCampamento = onAgregarCampamento, modoTexto = modoTexto,
+                onTextoPaso = { i, p, texto -> datos.casilla(i)?.let { onPaso(it.casilla, p, texto) } },
+                onAvanzarPaso = { i, p -> datos.casilla(i)?.let { onAvanzar(it.casilla, p) } },
+                onGanadoPaso = { i, p, si -> datos.casilla(i)?.let { onGanado(it.casilla, p, si) } })
+            // De campamento en campamento deslizando de lado (en el orden de los rumbos); el centro se abre como antes
+            val paginas = remember { (0 until Mandala.CAMPAMENTOS).map { Mandala.bloqueDe(it) } }
+            val idx = paginas.indexOf(bloqueAbierto)
+            if (idx < 0) key(bloqueAbierto) { bloque(bloqueAbierto) }
+            else {
+                val pager = androidx.compose.foundation.pager.rememberPagerState(initialPage = idx) { paginas.size }
+                LaunchedEffect(pager.settledPage) { paginas[pager.settledPage].let { if (it != bloqueAbierto) onBloque(it) } }
+                LaunchedEffect(idx) { if (pager.currentPage != idx) pager.animateScrollToPage(idx) }
+                androidx.compose.foundation.pager.HorizontalPager(pager, Modifier.fillMaxWidth(), pageSpacing = 16.dp, beyondViewportPageCount = 1,
+                    verticalAlignment = Alignment.Top, key = { paginas[it] }) { pg -> bloque(paginas[pg]) }
+                // Puntos: en cuál campamento vas
+                Row(Modifier.fillMaxWidth().padding(top = 4.dp), horizontalArrangement = Arrangement.Center) {
+                    paginas.indices.forEach { i ->
+                        Box(Modifier.padding(horizontal = 3.dp).size(if (i == pager.currentPage) 8.dp else 6.dp).clip(androidx.compose.foundation.shape.CircleShape)
+                            .background(if (i == pager.currentPage) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant))
+                    }
+                }
             }
         }
         if (!modoTexto && !modoEdicion && bloqueAbierto == null) LeyendaCalor()

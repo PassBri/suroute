@@ -82,6 +82,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -187,9 +188,9 @@ internal fun RosaVision(
 ) {
     // El vision board es una brújula (la misma esfera de la cumbre y el 9×9)
     EsferaBrujula {
-    Column(Modifier.fillMaxWidth(0.88f).aspectRatio(1f).zIndex(1f), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(Modifier.fillMaxWidth(0.9f).aspectRatio(1f).zIndex(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         repeat(3) { fila ->
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 repeat(3) { columna ->
                     key(fila, columna) {
                         val celda = Mandala.celda(3 + fila, 3 + columna)
@@ -517,4 +518,13 @@ internal fun EsferaBrujula(modifier: Modifier = Modifier, contenido: @Composable
         }
         contenido()
     }
+}
+
+
+/** En el teléfono, la brújula usa casi todo el ancho: se sale del margen de la lista [extra] a cada lado. */
+internal fun Modifier.casiBordeABorde(extra: androidx.compose.ui.unit.Dp) = this.layout { medible, restricciones ->
+    val e = extra.roundToPx()
+    val ancho = restricciones.maxWidth + 2 * e
+    val p = medible.measure(restricciones.copy(minWidth = ancho, maxWidth = ancho))
+    layout(restricciones.maxWidth, p.height) { p.place(-e, 0) }
 }
