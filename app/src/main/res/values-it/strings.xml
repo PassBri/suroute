@@ -3403,4 +3403,5 @@
         <item quantity="one">Ultimo mese</item>
         <item quantity="other">Ultimi %1$d mesi</item>
     </plurals>
+    <string name="sal_ir_negocio">Tieni i conti in La mia attività</string>
 </resources>

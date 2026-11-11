@@ -395,7 +395,7 @@ fun LazyListScope.saludNivel(anio: Int?, libro: Libro, plata: (Double) -> String
     val r = libro.salud(anio)
     item(key = "salud-${anio ?: 0}") {
         if (r.suma.n == 0) RutaCard { Text(stringResource(R.string.cu_salud_vacia), style = MaterialTheme.typography.bodyMedium) }
-        else SaludCard(r, anio, libro, plata)
+        else SaludCard(r, anio, libro, plata) { ir(NivelCuentas.NegocioN) }
     }
     item(key = "atajos-salud") {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

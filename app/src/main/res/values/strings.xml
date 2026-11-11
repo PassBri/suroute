@@ -3412,4 +3412,5 @@
         <item quantity="one">Último mes</item>
         <item quantity="other">Últimos %1$d meses</item>
     </plurals>
+    <string name="sal_ir_negocio">Llevar sus cuentas en Mi negocio</string>
 </resources>

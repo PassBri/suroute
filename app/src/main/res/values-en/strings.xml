@@ -3403,4 +3403,5 @@
         <item quantity="one">Last month</item>
         <item quantity="other">Last %1$d months</item>
     </plurals>
+    <string name="sal_ir_negocio">Keep its books in My business</string>
 </resources>

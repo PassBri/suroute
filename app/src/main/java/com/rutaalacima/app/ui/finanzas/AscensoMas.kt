@@ -242,7 +242,7 @@ fun colorEstado(e: Salud.Estado) = when (e) {
 /** Salud financiera: el Índice (ISF) con su escala, cada peso que entra, los medidores, lo que tienes y debes, mes a mes y las cifras. */
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
-fun SaludCard(r: Salud.Resultado, anio: Int?, libro: Libro, plata: (Double) -> String) {
+fun SaludCard(r: Salud.Resultado, anio: Int?, libro: Libro, plata: (Double) -> String, irNegocio: (() -> Unit)? = null) {
     if (r.suma.n == 0) return
     val ctx = LocalContext.current
     var cifras by remember { mutableStateOf(false) }
@@ -329,6 +329,8 @@ fun SaludCard(r: Salud.Resultado, anio: Int?, libro: Libro, plata: (Double) -> S
         negocio.forEach { i -> val (n, d) = nombreIndicador(i.clave); Medidor(i, n, d, valorIndicador(i)) }
         Text(stringResource(if (negocio.any { it.clave == "rotneg" }) R.string.sal_negocio_nota else R.string.sal_negocio_nota_activo),
             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 4.dp))
+        if (irNegocio != null) androidx.compose.material3.TextButton(onClick = irNegocio) {
+            Icon(Icons.Filled.Storefront, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.sal_ir_negocio)) }
     }
     RutaCard {
         if (r.actual) BalanceBarras(r, plata)

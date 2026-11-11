@@ -311,7 +311,7 @@ function saludHoja(pref) {
   const neg = r.ind.filter(x => x.negocio);
   const negocio = r.ventasNeg > 0 || r.actNeg > 0 ? `<h3 class="sal-ambito">${ic("bolsa")} Tu negocio <small>aparte de tus finanzas personales · no cuenta en tu ISF</small></h3>
     <section class="sal-grupo"><div class="sal-inds">${neg.map(medidor).join("")}</div>
-      <p class="suave sal-nota">${r.actNeg ? "" : "Anota tu negocio en <button class=\"enlace\" data-sel=\"patrimonio\">Activos</button> (tipo «Negocio») para ver su rotación. "}Las ventas son tus ingresos de «Negocio» y «Ventas». La rentabilidad neta y el ROA del negocio necesitan sus costos anotados aparte de tus gastos personales.</p></section>` : "";
+      <p class="suave sal-nota">${r.actNeg ? "" : "Anota tu negocio en <button class=\"enlace\" data-sel=\"patrimonio\">Activos</button> (tipo «Negocio») para ver su rotación. "}Las ventas son tus ingresos de «Negocio» y «Ventas». Para ver su rentabilidad, su punto de equilibrio y su balance, lleva sus cuentas en <button class=\"enlace\" data-sel=\"negocio\">Mi negocio</button>.</p></section>` : "";
   return `<section class="sal-hero niv-${nivelK}">
       <div class="cab-lista-btn sal-hero-cab"><h3>Cómo está tu salud financiera</h3>${publicaFin() ? `<button class="btn mini tonal" data-acc="ascCompartir" data-arg="${pref}">${ic("publicar")} Compartir mi avance</button>` : ""}</div>
       ${r.isf != null ? `<div class="salud-cab"><div class="salud-anillo" style="--p:${r.isf}" role="img" aria-label="Índice de Salud Financiera ${r.isf} %"><b>${r.isf}</b><small>ISF %</small></div>

@@ -3403,4 +3403,5 @@
         <item quantity="one">直近 1 か月</item>
         <item quantity="other">直近 %1$d か月</item>
     </plurals>
+    <string name="sal_ir_negocio">「わたしのビジネス」で帳簿をつける</string>
 </resources>
