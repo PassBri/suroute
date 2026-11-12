@@ -195,8 +195,7 @@ fun HoyScreen(
             )
             Text(formatoDia(hoy()), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
-        // Lo que más haces (atajos que eliges) y los avisos del día en un carrusel, como en la banca móvil
-        bloque("lqh") { LoQueMasHaces(onIrA = onIrA) }
+        // Los avisos del día en un carrusel. «Lo que más haces» vive en la hoja de secciones (deslizar la barra de abajo hacia arriba)
         bloque("avisos") { AvisosCarrusel(metasMes, onIrA = onIrA) }
 
         // La acción principal del día: marcar los hábitos aquí mismo, un eje a la vez

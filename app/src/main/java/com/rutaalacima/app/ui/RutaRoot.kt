@@ -816,6 +816,8 @@ private fun HojaSecciones(actual: String?, nombre: String, foto: String, onIr: (
                 }
                 IconButton(onClick = { onCerrar(); onAjustes() }) { Icon(Icons.Filled.Settings, stringResource(R.string.ajustes)) }
             }
+            // Lo que más haces (tus atajos, editables): viven aquí, a un deslizamiento desde cualquier pantalla
+            com.rutaalacima.app.ui.hoy.LoQueMasHaces(onIrA = { onCerrar(); onIr(it) })
             grupos.forEach { (titulo, secciones) ->
                 Text(stringResource(titulo), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start = 4.dp))
                 Row(Modifier.fillMaxWidth()) {
