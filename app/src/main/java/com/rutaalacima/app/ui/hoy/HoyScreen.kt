@@ -6,6 +6,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.ui.layout.layout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -172,37 +173,38 @@ fun HoyScreen(
     LazyColumn(
         contentPadding = PaddingValues(
             start = 16.dp, end = 16.dp,
-            top = contentPadding.calculateTopPadding() + 4.dp,
+            top = contentPadding.calculateTopPadding(),
             bottom = contentPadding.calculateBottomPadding() + 24.dp,
         ),
-        verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         // Bienvenida de regreso, el paso del comienzo y la revisión que toca (cada una solo si aplica)
-        item { RegresoCard(onIrA = onIrA, onSeccion = onAbrirSeccion) }
+        bloque { RegresoCard(onIrA = onIrA, onSeccion = onAbrirSeccion) }
         // Libro de cumbres: la cápsula del mes lista para abrir y «Hace un año hoy»
-        item { com.rutaalacima.app.ui.ruta.TarjetasLibroHoy(onCapsula = { onIrA(Rutas.capsula(it)) }, onPost = { onIrA(Rutas.post(it)) }) }
+        bloque { com.rutaalacima.app.ui.ruta.TarjetasLibroHoy(onCapsula = { onIrA(Rutas.capsula(it)) }, onPost = { onIrA(Rutas.post(it)) }) }
         // El recuerdo de un hito del Ascenso financiero, solo la semana de su aniversario
-        item(key = "hito-recuerdo") { com.rutaalacima.app.ui.finanzas.HitosRecuerdoHoy() }
-        item { PrimerPasoCard(onIrA = onIrA) }
-        item { RevisionCard(onIrA = onIrA) }
+        bloque("hito-recuerdo") { com.rutaalacima.app.ui.finanzas.HitosRecuerdoHoy() }
+        bloque { PrimerPasoCard(onIrA = onIrA) }
+        bloque { RevisionCard(onIrA = onIrA) }
         // Diciembre y principios de enero: el resumen del año ya está listo
-        item { ResumenCard(onIrA = onIrA) }
-        // Recordatorio del día del camino hacia los 120 años
-        item { RecordatorioDiaCard(perfil, onAjustes = { onIrA(Rutas.AJUSTES) }) }
-        item {
+        bloque { ResumenCard(onIrA = onIrA) }
+        bloque {
             Text(
                 if (perfil.nombre.isBlank()) stringResource(R.string.hola_senderista)
                 else stringResource(R.string.hola_nombre, perfil.nombre.substringBefore(' ')),
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.titleLarge,
             )
-            Text(formatoDia(hoy()), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(formatoDia(hoy()), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         // Lo que más haces (atajos que eliges) y los avisos del día en un carrusel, como en la banca móvil
-        item(key = "lqh") { LoQueMasHaces(onIrA = onIrA) }
-        item(key = "avisos") { AvisosCarrusel(metasMes, onIrA = onIrA) }
+        bloque("lqh") { LoQueMasHaces(onIrA = onIrA) }
+        bloque("avisos") { AvisosCarrusel(metasMes, onIrA = onIrA) }
 
+        // La acción principal del día: marcar los hábitos aquí mismo, un eje a la vez
+        bloque { HabitosHoy(checks, onAlternar = { vm.alternarHabito(it) }, onVerKit = { onIrA(Rutas.KIT) }) }
+        // Recordatorio del día del camino hacia los 120 años
+        bloque { RecordatorioDiaCard(perfil, onAjustes = { onIrA(Rutas.AJUSTES) }) }
         // El día empieza con el cielo de este momento (sol, luna y planetas reales) y la cumbre encima
-        item {
+        bloque {
             Card(shape = RoundedCornerShape(16.dp), modifier = Modifier.fillMaxWidth().clickable { onIrA(Rutas.RUTA) }) {
                 com.rutaalacima.app.ui.components.CieloVivo(Modifier.fillMaxWidth().height(200.dp), onMirar = { onIrA(Rutas.CIELO) }) {
                     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0.4f to Color.Transparent, 1f to Color(0x9E060A10))))
@@ -225,19 +227,17 @@ fun HoyScreen(
             }
         }
 
-        // La acción principal del día: marcar los hábitos aquí mismo, un eje a la vez
-        item { HabitosHoy(checks, onAlternar = { vm.alternarHabito(it) }, onVerKit = { onIrA(Rutas.KIT) }) }
         // Bienestar del día: clima interior y vida saludable, se controlan todos los días
-        item(key = "bienestar-hoy") { com.rutaalacima.app.ui.bienestar.BienestarDiaCard(java.time.LocalDate.now()) }
+        bloque("bienestar-hoy") { com.rutaalacima.app.ui.bienestar.BienestarDiaCard(java.time.LocalDate.now()) }
         // Tus cordadas activas: marcar el día sin salir de Hoy (cuenta también en la meta unida)
-        item(key = "cordadas-hoy") { com.rutaalacima.app.ui.cordadas.CordadasHoy(onVerTodas = { onIrA(Rutas.CORDADAS) }) }
+        bloque("cordadas-hoy") { com.rutaalacima.app.ui.cordadas.CordadasHoy(onVerTodas = { onIrA(Rutas.CORDADAS) }) }
 
         // Metas del mes: check de hoy
         // Racha y mapa de constancia (toca para ver el año)
         // La frase del día pregunta algo distinto cada día para responder en la comunidad
-        item { InvitacionFraseCard(onIrA = onIrA) }
-        item { ConstanciaCard(onIrA = onIrA) }
-        item { Text(stringResource(R.string.metas_mes_hoy), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 6.dp)) }
+        bloque { InvitacionFraseCard(onIrA = onIrA) }
+        bloque { ConstanciaCard(onIrA = onIrA) }
+        bloque { Text(stringResource(R.string.metas_mes_hoy), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 6.dp)) }
         if (metasMes.isEmpty()) {
             item {
                 RutaCard(onClick = { onIrA(Rutas.nuevaMeta(NivelMeta.MES)) }) {
@@ -249,7 +249,7 @@ fun HoyScreen(
                 }
             }
         }
-        items(metasMes.filter { !it.cumplida }, key = { it.id }) { m ->
+        items(metasMes.filter { !it.cumplida }, key = { it.id }) { m -> Column(Modifier.separado()) {
             val hecho = diaHoy in m.diasMarcados()
             val color = MaterialTheme.colorScheme.secondary
             RutaCard(onClick = { vm.alternarHoy(m) }) {
@@ -268,10 +268,10 @@ fun HoyScreen(
                     }
                 }
             }
-        }
+        } }
 
         // Intención y prioridad de hoy
-        item {
+        bloque {
             val a = vm.agenda
             if (a != null) {
                 RutaCard {
@@ -297,7 +297,7 @@ fun HoyScreen(
 
         // Actividades del día por hora (las mismas del planificador y de la web): las escritas,
         // la hora de ahora y las dos siguientes; "Ver las 24 horas" abre el día completo
-        item(key = "acts-hoy") {
+        bloque("acts-hoy") {
             val a = vm.agenda
             if (a != null) {
                 val r by vm.dia.collectAsStateWithLifecycle()
@@ -357,11 +357,11 @@ fun HoyScreen(
         }
 
         // Antes de dormir: la pregunta de la noche y, cada mes, el alto en el camino (las mismas de la web)
-        item(key = "tramites") { com.rutaalacima.app.ui.tramites.TramitesDia(hoy()) }
-        item(key = "noche") { com.rutaalacima.app.ui.alto.PreguntaNocheCard() }
+        bloque("tramites") { com.rutaalacima.app.ui.tramites.TramitesDia(hoy()) }
+        bloque("noche") { com.rutaalacima.app.ui.alto.PreguntaNocheCard() }
         // Alto en el camino: ahora vive en el carrusel de avisos de arriba (y en Mis frases)
         // Cascada: largo plazo · año · mes (líneas finas; se abre el planificador)
-        item {
+        bloque {
             val c = cascada
             val cinco = c?.propositos?.map { it.avance }?.average()?.toFloat()?.takeIf { !it.isNaN() } ?: 0f
             val anuales = (c?.propositos?.flatMap { it.anios }.orEmpty() + c?.aniosSueltos.orEmpty()).filter { it.meta.anio == hoy().year }
@@ -377,7 +377,7 @@ fun HoyScreen(
         }
 
         // Rescate
-        item {
+        bloque {
             RutaCard {
                 Column {
                     Text(stringResource(R.string.rescate_titulo), style = MaterialTheme.typography.titleMedium)
@@ -411,7 +411,7 @@ fun HoyScreen(
         }
 
         // Coach y comunidad
-        item {
+        bloque {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 FilledTonalButton(onClick = { onIrA(Rutas.COACH) }, modifier = Modifier.weight(1f)) {
                     Icon(Icons.Filled.AutoAwesome, null); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.hablar_coach), maxLines = 1)
@@ -423,7 +423,7 @@ fun HoyScreen(
         }
 
         // Continuar aprendiendo
-        item {
+        bloque {
             val w = indice.firstOrNull { it.id == ultima?.workbookId }
             if (w != null) {
                 RutaCard(onClick = { onAbrirWorkbook(w.id) }) {
@@ -440,7 +440,7 @@ fun HoyScreen(
         }
 
         // Recordatorio del día
-        item {
+        bloque {
             val eje = Eje.entries[hoy().dayOfYear % Eje.entries.size]
             Column {
                 Text(stringResource(R.string.recordatorio_dia, eje.texto()), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -449,6 +449,15 @@ fun HoyScreen(
         }
     }
 }
+
+/** Un bloque de Hoy: deja su espacio arriba solo si muestra algo (las tarjetas que hoy no aplican no dejan huecos). */
+private fun androidx.compose.foundation.lazy.LazyListScope.bloque(key: Any? = null, contenido: @Composable () -> Unit) =
+    item(key) { Column(Modifier.separado()) { contenido() } }
+
+private fun Modifier.separado(arriba: androidx.compose.ui.unit.Dp = 14.dp) = this.then(Modifier.layout { medible, restricciones ->
+    val p = medible.measure(restricciones)
+    if (p.height == 0) layout(p.width, 0) {} else { val e = arriba.roundToPx(); layout(p.width, p.height + e) { p.place(0, e) } }
+})
 
 @Composable
 private fun NivelCascada(etiqueta: String, valor: Float) {
