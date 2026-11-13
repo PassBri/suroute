@@ -87,6 +87,7 @@ struct MisFrasesVista: View {
     var body: some View {
         let abiertas = Frases.abiertas(a).sorted(by: >), todas = Frases.todas()
         List {
+            Section { AltoInvitacion() }.listRowBackground(Color.clear).listRowInsets(EdgeInsets())
             Section {
                 Text(L("mis_frases_n", abiertas.count)).font(.headline).foregroundStyle(Tema.burdeos)
                 if abiertas.isEmpty { Text(L("frases_vacio")).foregroundStyle(Tema.tintaSuave) }

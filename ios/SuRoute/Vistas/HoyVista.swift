@@ -20,7 +20,9 @@ struct HoyVista: View {
                     FraseDelDia()
                     HabitosHoy()
                     ClimaRapido()
+                    if Fecha.cal.component(.hour, from: Date()) >= 18 { PreguntaNoche() }
                     MetasDelMes()
+                    AltoInvitacion()
                     RecordatorioDia(perfil: perfil)
                     CumbreHoy(perfil: perfil)
                 }

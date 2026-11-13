@@ -32,6 +32,9 @@ targets:
       - path: ../app/src/main/assets/frases
         type: folder
         buildPhase: resources
+      - path: ../app/src/main/assets/preguntas
+        type: folder
+        buildPhase: resources
     configFiles:
       Debug: Config/SuRoute.xcconfig
       Release: Config/SuRoute.xcconfig
