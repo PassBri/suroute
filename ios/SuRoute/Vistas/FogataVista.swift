@@ -269,7 +269,7 @@ final class SalaFogata: NSObject, ObservableObject, RoomDelegate {
         default: break
         }
     }
-    nonisolated func room(_ room: Room, participant: RemoteParticipant?, didReceiveData data: Data, forTopic topic: String) {
+    nonisolated func room(_ room: Room, participant: RemoteParticipant?, didReceiveData data: Data, forTopic topic: String, encryptionType: EncryptionType) {
         Task { @MainActor in self.recibir(data) }
     }
     nonisolated func room(_ room: Room, participant: RemoteParticipant, didSubscribeTrack publication: RemoteTrackPublication) {
