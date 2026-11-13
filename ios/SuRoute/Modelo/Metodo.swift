@@ -40,6 +40,7 @@ enum Fase: String, CaseIterable {
 }
 
 /// El recordatorio del día del camino hacia los N años (igual que RecordatorioVida en Android).
+@MainActor
 struct RecordatorioVida {
     let diaDeVida: Int, diasTotales: Int, diasRestantes: Int, meta: Int, frase: Int
     var avance: Double { diasTotales <= 0 ? 0 : min(1, Double(diaDeVida) / Double(diasTotales)) }
