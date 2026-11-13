@@ -4,6 +4,7 @@ import SwiftUI
 struct CuentaVista: View {
     @Environment(Almacen.self) private var a
     @Environment(\.openURL) private var abrir
+    @Environment(\.dismiss) private var cerrarHoja
     @State private var confirmarEliminar = false
     @State private var eliminando = false
     @State private var error: String?
@@ -49,6 +50,7 @@ struct CuentaVista: View {
             }
             .fondoPapel()
             .navigationTitle(L("tab_perfil"))
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L("listo")) { cerrarHoja() } } }
             .confirmationDialog(L("ios_eliminar_cuenta"), isPresented: $confirmarEliminar, titleVisibility: .visible) {
                 Button(L("ios_eliminar_si"), role: .destructive) {
                     Task {

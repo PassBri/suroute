@@ -9,7 +9,9 @@ final class Almacen {
 
     private(set) var docs: [String: [String: Doc]] = [:]
     /// La cuenta con sesión abierta (nil = sin sesión; en demostración, "demo").
-    private(set) var uid: String?
+    private(set) var uid: String? { didSet { Almacen.sharedUid = uid } }
+    /// El id de la cuenta para el código que no corre en el hilo principal (la comunidad).
+    nonisolated(unsafe) static var sharedUid: String?
     private(set) var cargando = false
     private(set) var errorNube: String?
     /// Cambia cada vez que algo cambia (para que las vistas se repinten).

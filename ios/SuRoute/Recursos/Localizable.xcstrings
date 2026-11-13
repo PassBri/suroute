@@ -159017,6 +159017,83 @@
     }
    }
   },
+  "ios_agregar_foto": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "أضف صورة"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto hinzufügen"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Add a photo"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Agregar una foto"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ajouter une photo"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ोटो जोड़ें"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Aggiungi una foto"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "写真を追加"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "사진 추가"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Adicionar uma foto"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Добавить фото"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "添加照片"
+     }
+    }
+   }
+  },
   "ios_al_dia": {
    "extractionState": "manual",
    "localizations": {
@@ -159094,6 +159171,160 @@
     }
    }
   },
+  "ios_cambiar_foto": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "غيّر الصورة"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto ändern"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Change the photo"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cambiar la foto"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Changer la photo"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ोटो बदलें"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cambia la foto"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "写真を変更"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "사진 변경"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Trocar a foto"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Сменить фото"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "更换照片"
+     }
+    }
+   }
+  },
+  "ios_codigo_no_existe": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "هذا الرمز لا يخص أي فريق."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Dieser Code gehört zu keiner Seilschaft."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "That code doesn't belong to any rope team."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ese código no es de ninguna cordada."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ce code ne correspond à aucune cordée."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "यह कोड किसी रस्सी दल का नहीं है।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quel codice non appartiene a nessuna cordata."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "そのコードのザイルパーティーはありません。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "해당 코드의 로프 팀이 없어요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Esse código não é de nenhuma cordada."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Такого кода нет ни у одной связки."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "该代码不属于任何绳队。"
+     }
+    }
+   }
+  },
   "ios_crear_sub": {
    "extractionState": "manual",
    "localizations": {
@@ -159167,6 +159398,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "你的顶峰、指南针和习惯，在你所有的设备上。"
+     }
+    }
+   }
+  },
+  "ios_cuenta_tu_paso": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "احكِ عن خطوتك…"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Erzähl von deinem Schritt…"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tell us about your step…"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cuenta tu paso…"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Racontez votre pas…"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "अपने कदम के बारे में बताएँ…"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Racconta il tuo passo…"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "あなたの一歩を書いてください…"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "당신의 걸음을 들려주세요…"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Conte seu passo…"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Расскажите о своём шаге…"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "说说你的这一步……"
      }
     }
    }
@@ -160018,6 +160326,391 @@
     }
    }
   },
+  "ios_muro_error": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تعذّر تحميل الجدار. اسحب للأسفل للمحاولة مجددًا."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Die Pinnwand konnte nicht geladen werden. Zum Aktualisieren nach unten ziehen."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Couldn't load the wall. Pull down to try again."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No se pudo cargar el muro. Desliza hacia abajo para intentar de nuevo."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Impossible de charger le mur. Tirez vers le bas pour réessayer."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "वॉल लोड नहीं हो सकी। फिर कोशिश के लिए नीचे खींचें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Impossibile caricare la bacheca. Trascina in giù per riprovare."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ウォールを読み込めませんでした。下に引いて再試行してください。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "담벼락을 불러오지 못했어요. 아래로 당겨 다시 시도하세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Não foi possível carregar o mural. Deslize para baixo para tentar de novo."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Не удалось загрузить ленту. Потяните вниз, чтобы повторить."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "无法加载动态。下拉重试。"
+     }
+    }
+   }
+  },
+  "ios_muro_siguiendo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "المتابَعون"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Gefolgt"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Following"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Siguiendo"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Abonnements"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ॉलो किए गए"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguiti"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "フォロー中"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "팔로잉"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguindo"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Подписки"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "关注"
+     }
+    }
+   }
+  },
+  "ios_muro_todos": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الجميع"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Alle"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Everyone"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Todos"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tout le monde"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "सभी"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tutti"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "すべて"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "전체"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Todos"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Все"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "全部"
+     }
+    }
+   }
+  },
+  "ios_muro_vacio": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "لا منشورات بعد. شارك خطوتك الأولى من «نشر»."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Noch keine Beiträge. Teile deinen ersten Schritt unter Posten."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No posts yet. Share your first step from Post."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Aún no hay publicaciones. Comparte tu primer paso desde Publicar."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Aucune publication pour l'instant. Partagez votre premier pas depuis Publier."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "अभी कोई पोस्ट नहीं। पोस्ट से अपना पहला कदम साझा करें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ancora nessuna pubblicazione. Condividi il tuo primo passo da Pubblica."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "まだ投稿がありません。「投稿」から最初の一歩を共有しましょう。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "아직 게시물이 없어요. 게시에서 첫걸음을 공유하세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ainda não há publicações. Compartilhe seu primeiro passo em Publicar."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Публикаций пока нет. Поделитесь первым шагом в разделе «Опубликовать»."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "还没有发布。在「发布」分享你的第一步。"
+     }
+    }
+   }
+  },
+  "ios_muro_vacio_siguiendo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "عندما تتابع أشخاصًا، سترى خطواتهم هنا."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Wenn du anderen folgst, siehst du hier ihre Schritte."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "When you follow people, you'll see their steps here."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cuando sigas a otras personas, aquí verás sus pasos."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quand vous suivrez des personnes, vous verrez leurs pas ici."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "जब आप लोगों को फ़ॉलो करेंगे, तो यहाँ उनके कदम दिखेंगे।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quando seguirai altre persone, qui vedrai i loro passi."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "誰かをフォローすると、ここにその歩みが表示されます。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "다른 사람을 팔로우하면 여기서 그들의 걸음을 볼 수 있어요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quando você seguir outras pessoas, verá os passos delas aqui."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Когда вы подпишетесь на людей, здесь появятся их шаги."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "关注他人后，你会在这里看到他们的进展。"
+     }
+    }
+   }
+  },
   "ios_nombre": {
    "extractionState": "manual",
    "localizations": {
@@ -160480,6 +161173,237 @@
     }
    }
   },
+  "ios_publicar_error": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تعذّر النشر. تحقّق من اتصالك وحاول مرة أخرى."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Posten nicht möglich. Prüfe die Verbindung und versuche es erneut."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Couldn't post. Check your connection and try again."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No se pudo publicar. Revisa tu conexión e inténtalo otra vez."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Publication impossible. Vérifiez votre connexion et réessayez."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "पोस्ट नहीं हो सका। कनेक्शन जाँचें और फिर कोशिश करें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Impossibile pubblicare. Controlla la connessione e riprova."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "投稿できませんでした。接続を確認してもう一度お試しください。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "게시하지 못했어요. 연결을 확인하고 다시 시도하세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Não foi possível publicar. Verifique sua conexão e tente de novo."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Не удалось опубликовать. Проверьте подключение и попробуйте снова."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "发布失败。请检查网络后重试。"
+     }
+    }
+   }
+  },
+  "ios_que_compartes": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ماذا تشارك؟"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Was teilst du?"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "What are you sharing?"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "¿Qué compartes?"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Que partagez-vous ?"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "आप क्या साझा कर रहे हैं?"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cosa condividi?"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "何を共有しますか？"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "무엇을 공유하나요?"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "O que você compartilha?"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Чем делитесь?"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "你要分享什么？"
+     }
+    }
+   }
+  },
+  "ios_quien_ve": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "من يراه"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Wer es sieht"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Who can see it"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quién lo ve"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Qui peut voir"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "कौन देख सकता है"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Chi lo vede"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "公開範囲"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "공개 범위"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Quem vê"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Кто видит"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "谁可以看到"
+     }
+    }
+   }
+  },
   "ios_recuperar_enviado": {
    "extractionState": "manual",
    "localizations": {
@@ -160711,6 +161635,237 @@
     }
    }
   },
+  "ios_seguir": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "متابعة"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Folgen"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Follow"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguir"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Suivre"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ॉलो करें"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Segui"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "フォロー"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "팔로우"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguir"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Подписаться"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "关注"
+     }
+    }
+   }
+  },
+  "ios_senderista": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "متسلّق"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Wanderer"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Hiker"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Senderista"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Randonneur"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "पर्वतारोही"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Escursionista"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "登山者"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "등반가"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Caminhante"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Путник"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "登山者"
+     }
+    }
+   }
+  },
+  "ios_siguiendo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تتابعه"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Folge ich"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Following"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Siguiendo"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Abonné"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ॉलो कर रहे हैं"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Segui già"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "フォロー中"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "팔로잉"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seguindo"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Вы подписаны"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "已关注"
+     }
+    }
+   }
+  },
   "ios_sin_nube": {
    "extractionState": "manual",
    "localizations": {
@@ -160861,6 +162016,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "指南针"
+     }
+    }
+   }
+  },
+  "ios_titulo_meta": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "العنوان (اختياري)"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Titel (optional)"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Title (optional)"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Título (opcional)"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Titre (facultatif)"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "शीर्षक (वैकल्पिक)"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Titolo (facoltativo)"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "タイトル（任意）"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "제목 (선택)"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Título (opcional)"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Заголовок (необязательно)"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "标题（可选）"
      }
     }
    }

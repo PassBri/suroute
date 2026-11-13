@@ -25,16 +25,29 @@ struct Raiz: View {
     }
 }
 
-/// Las pestañas al estilo iPhone: ícono con su nombre. (Etapa 2: Comunidad y Publicar; etapa 3: Finanzas.)
+/// Las pestañas al estilo iPhone: ícono con su nombre, Publicar al centro. El perfil va en el botón de arriba.
 struct Pestanas: View {
-    enum P: String { case hoy, ruta, brujula, cuenta }
+    enum P: String { case hoy, ruta, publicar, comunidad, brujula }
     @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? "").replacingOccurrences(of: "81", with: "")) ?? .hoy
     var body: some View {
         TabView(selection: $sel) {
             HoyVista().tabItem { Label(L("tab_hoy"), systemImage: "sun.horizon") }.tag(P.hoy)
             MiRutaVista().tabItem { Label(L("tab_ruta"), systemImage: "mountain.2") }.tag(P.ruta)
+            PublicarVista { sel = .comunidad }.tabItem { Label(L("publicar"), systemImage: "plus.circle") }.tag(P.publicar)
+            ComunidadVista().tabItem { Label(L("tab_comunidad"), systemImage: "flame") }.tag(P.comunidad)
             BrujulaVista(abrir81: Config.pestanaInicial == "brujula81").tabItem { Label(L("ios_tab_brujula"), systemImage: "safari") }.tag(P.brujula)
-            CuentaVista().tabItem { Label(L("tab_perfil"), systemImage: "person.crop.circle") }.tag(P.cuenta)
         }
+        .sheet(isPresented: .constant(Config.pestanaInicial == "cuenta")) { CuentaVista() }
+    }
+}
+
+/// El botón del perfil (arriba a la derecha en cada pestaña): abre tu cuenta.
+struct BotonPerfil: View {
+    @Environment(Almacen.self) private var a
+    @State private var abierto = false
+    var body: some View {
+        Button { abierto = true } label: { Avatar(url: nil, nombre: Perfil(a).nombre.isEmpty ? "?" : Perfil(a).nombre, tam: 32) }
+            .accessibilityLabel(L("tab_perfil"))
+            .sheet(isPresented: $abierto) { CuentaVista() }
     }
 }

@@ -46,6 +46,7 @@ struct BrujulaVista: View {
                         }
                     } label: { Label(L("bj_tus_brujulas"), systemImage: "calendar") }
                 }
+                ToolbarItem(placement: .topBarTrailing) { BotonPerfil() }
             }
             .sheet(item: $editando) { e in EditorPaso(b: b, e: e).presentationDetents([.medium]) }
         }

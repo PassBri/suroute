@@ -41,6 +41,7 @@ struct MiRutaVista: View {
             .refreshable { await a.traerDeLaNube() }
             .fondoPapel()
             .navigationTitle(L("tab_ruta"))
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { BotonPerfil() } }
             .navigationDestination(for: String.self) { clave in
                 if let pr = c.propositos.first(where: { $0.clave == clave }) { DetalleProposito(p: pr) }
             }

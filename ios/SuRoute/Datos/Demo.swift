@@ -42,3 +42,34 @@ enum Demo {
         return r
     }
 }
+
+/// La comunidad del modo demostración.
+extension Demo {
+    static let personas: [PerfilPublico] = [
+        PerfilPublico(id: "demo-1", username: "valentina", nombre: "Valentina R.", bio: "Corredora de montaña y maestra.", avatar_url: nil, cumbre: "Correr el Camino del Inca a los 40"),
+        PerfilPublico(id: "demo-2", username: "camilo", nombre: "Camilo T.", bio: "Aprendiendo a ahorrar.", avatar_url: nil, cumbre: "Mi propio taller de bicicletas"),
+        PerfilPublico(id: "demo-3", username: "luciap", nombre: "Lucía P.", bio: "Diseñadora.", avatar_url: nil, cumbre: "Vivir de lo que amo"),
+    ]
+    private static func hace(_ min: Int) -> String { ISO8601DateFormatter().string(from: Date().addingTimeInterval(TimeInterval(-min * 60))) }
+    static let posts: [Post] = [
+        Post(id: "p1", user_id: "demo-1", tipo: "LOGRO", texto: "Hoy terminé mi primera media maratón de montaña. Hace un año no podía subir el cerro sin parar. Paso a paso.",
+             image_url: nil, eje: "VOL", visibilidad: "PUBLICA", meta_titulo: "Mi primera media maratón", created_at: hace(35),
+             autor: Autor(username: "valentina", nombre: "Valentina R.", avatar_url: nil), impulsos: [Cuenta(count: 24)], comentarios: [Cuenta(count: 3)]),
+        Post(id: "p2", user_id: "demo-2", tipo: "EVIDENCIA", texto: "Tercer mes seguido guardando el 10 % de lo que gano. Ya tengo el fondo para la primera herramienta del taller.",
+             image_url: nil, eje: "VAL", visibilidad: "PUBLICA", meta_titulo: "", created_at: hace(190),
+             autor: Autor(username: "camilo", nombre: "Camilo T.", avatar_url: nil), impulsos: [Cuenta(count: 11)], comentarios: [Cuenta(count: 1)]),
+        Post(id: "p3", user_id: "demo-3", tipo: "REFLEXION", texto: "No se trata de hacerlo perfecto, se trata de no soltar la cuerda. Esta semana me costó, pero marqué 4 de 7 días.",
+             image_url: nil, eje: "EVO", visibilidad: "PUBLICA", meta_titulo: "", created_at: hace(1400),
+             autor: Autor(username: "luciap", nombre: "Lucía P.", avatar_url: nil), impulsos: [Cuenta(count: 37)], comentarios: [Cuenta(count: 6)]),
+    ]
+    static let comentarios: [Comentario] = [
+        Comentario(id: "c1", texto: "¡Qué orgullo! Se nota el trabajo de todo el año.", created_at: hace(20), user_id: "demo-3", autor: Autor(username: "luciap", nombre: "Lucía P.", avatar_url: nil)),
+        Comentario(id: "c2", texto: "Inspiración pura. ¿Cuántos días entrenabas?", created_at: hace(12), user_id: "demo-2", autor: Autor(username: "camilo", nombre: "Camilo T.", avatar_url: nil)),
+    ]
+    static let cordadas: [Cordada] = [
+        Cordada(id: "k1", nombre: "Madrugadores", reto: "Levantarme a las 5:00 y caminar 20 minutos", eje: "VOL", inicio: Fecha.iso(Date().addingTimeInterval(-9 * 86400)),
+                dias: 30, codigo: "MADR5K", miembros: 4, mis_dias: 8, dias_grupo: 29, marque_hoy: false),
+        Cordada(id: "k2", nombre: "Lectores", reto: "Leer 20 páginas al día", eje: "EVO", inicio: Fecha.iso(Date().addingTimeInterval(-20 * 86400)),
+                dias: 21, codigo: "LEE21D", miembros: 6, mis_dias: 17, dias_grupo: 88, marque_hoy: true),
+    ]
+}

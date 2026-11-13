@@ -28,6 +28,7 @@ struct HoyVista: View {
             .fondoPapel()
             .navigationTitle(L("tab_hoy"))
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .topBarTrailing) { BotonPerfil() } }
         }
     }
 }
