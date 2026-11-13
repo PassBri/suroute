@@ -56,7 +56,7 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Para que te escuchen cuando enciendes una fogata en vivo."
         INFOPLIST_KEY_NSFaceIDUsageDescription: "Para abrir tu Ascenso financiero sin escribir el PIN."
-        INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y de tus publicaciones."
+        INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y tus publicaciones, y para encender una fogata en vivo."
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Para elegir las fotos de tu Brújula y de tus publicaciones."
     info:
       path: SuRoute/Info.plist
