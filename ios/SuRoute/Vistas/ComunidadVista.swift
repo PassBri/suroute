@@ -3,6 +3,8 @@ import SwiftUI
 /// Comunidad: el muro (todos o solo a quienes sigues), con impulsos y comentarios.
 /// Arriba a la derecha, los mensajes y las cordadas.
 struct ComunidadVista: View {
+    @State private var publicando: Bool
+    init(abrirPublicar: Bool = false) { _publicando = State(initialValue: abrirPublicar) }
     @State private var siguiendo = false
     @State private var posts: [Post] = []
     @State private var impulsados: Set<String> = []
@@ -41,6 +43,7 @@ struct ComunidadVista: View {
             .navigationTitle(L("tab_comunidad"))
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button { publicando = true } label: { Image(systemName: "square.and.pencil").accessibilityLabel(L("publicar")) }
                     NavigationLink(value: Destino.cordadas) { Image(systemName: "link").accessibilityLabel(L("cordadas")) }
                     NavigationLink(value: Destino.mensajes) { Image(systemName: "bubble.left.and.bubble.right").accessibilityLabel(L("mensajes")) }
                     BotonPerfil()
@@ -56,6 +59,7 @@ struct ComunidadVista: View {
                 }
             }
             .task(id: siguiendo) { await cargar(mas: false) }
+            .sheet(isPresented: $publicando) { PublicarVista { publicando = false } }
             .onReceive(NotificationCenter.default.publisher(for: .publicado)) { _ in Task { await cargar(mas: false) } }
         }
     }

@@ -628,5 +628,61 @@
   "ar": "هذا الرمز لا يخص أي فريق.",
   "hi": "यह कोड किसी रस्सी दल का नहीं है।",
   "ru": "Такого кода нет ни у одной связки."
+ },
+ "ios_tab_finanzas": {
+  "es": "Finanzas",
+  "en": "Finances",
+  "pt": "Finanças",
+  "fr": "Finances",
+  "de": "Finanzen",
+  "it": "Finanze",
+  "zh": "财务",
+  "ja": "お金",
+  "ko": "재무",
+  "ar": "المال",
+  "hi": "वित्त",
+  "ru": "Финансы"
+ },
+ "ios_fin_codigo": {
+  "es": "Tus finanzas están cifradas. En este iPhone, escribe una sola vez tu código de recuperación de 12 palabras; luego entrarás con tu PIN o con Face ID.",
+  "en": "Your finances are encrypted. On this iPhone, enter your 12-word recovery code once; after that you'll use your PIN or Face ID.",
+  "pt": "Suas finanças estão criptografadas. Neste iPhone, digite uma única vez seu código de recuperação de 12 palavras; depois entrará com seu PIN ou Face ID.",
+  "fr": "Vos finances sont chiffrées. Sur cet iPhone, saisissez une seule fois votre code de récupération de 12 mots ; ensuite, PIN ou Face ID.",
+  "de": "Deine Finanzen sind verschlüsselt. Gib auf diesem iPhone einmal deinen 12-Wörter-Wiederherstellungscode ein; danach PIN oder Face ID.",
+  "it": "Le tue finanze sono cifrate. Su questo iPhone inserisci una sola volta il codice di recupero di 12 parole; poi entrerai con PIN o Face ID.",
+  "zh": "你的财务已加密。在这台 iPhone 上输入一次 12 个词的恢复码，之后用 PIN 或面容 ID 进入。",
+  "ja": "お金の記録は暗号化されています。この iPhone で 12 語の復元コードを一度だけ入力すると、以後は PIN か Face ID で開けます。",
+  "ko": "재무가 암호화되어 있어요. 이 iPhone에서 12단어 복구 코드를 한 번만 입력하면 이후에는 PIN이나 Face ID로 열 수 있어요.",
+  "ar": "أموالك مشفّرة. على هذا الـ iPhone أدخل رمز الاسترداد المكوّن من 12 كلمة مرة واحدة، ثم ستدخل بالرمز السري أو Face ID.",
+  "hi": "आपका वित्त एन्क्रिप्टेड है। इस iPhone पर एक बार 12 शब्दों का रिकवरी कोड लिखें; फिर PIN या Face ID से खोलें।",
+  "ru": "Ваши финансы зашифрованы. На этом iPhone один раз введите 12-словный код восстановления; дальше — PIN или Face ID."
+ },
+ "ios_fin_codigo_campo": {
+  "es": "Las 12 palabras, separadas por espacios",
+  "en": "The 12 words, separated by spaces",
+  "pt": "As 12 palavras, separadas por espaços",
+  "fr": "Les 12 mots, séparés par des espaces",
+  "de": "Die 12 Wörter, durch Leerzeichen getrennt",
+  "it": "Le 12 parole, separate da spazi",
+  "zh": "12 个词，用空格分隔",
+  "ja": "12 語をスペースで区切って",
+  "ko": "12단어를 띄어쓰기로 구분해서",
+  "ar": "الكلمات الـ12 مفصولة بمسافات",
+  "hi": "12 शब्द, स्पेस से अलग",
+  "ru": "12 слов через пробел"
+ },
+ "ios_fin_no": {
+  "es": "No se pudo abrir. Revisa e inténtalo de nuevo.",
+  "en": "Couldn't open. Check and try again.",
+  "pt": "Não foi possível abrir. Verifique e tente de novo.",
+  "fr": "Ouverture impossible. Vérifiez et réessayez.",
+  "de": "Öffnen nicht möglich. Prüfe und versuche es erneut.",
+  "it": "Impossibile aprire. Controlla e riprova.",
+  "zh": "无法打开。请检查后重试。",
+  "ja": "開けませんでした。確認してもう一度お試しください。",
+  "ko": "열지 못했어요. 확인하고 다시 시도하세요.",
+  "ar": "تعذّر الفتح. تحقّق وحاول مجددًا.",
+  "hi": "नहीं खुला। जाँचें और फिर कोशिश करें।",
+  "ru": "Не удалось открыть. Проверьте и попробуйте снова."
  }
 }

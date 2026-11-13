@@ -160172,6 +160172,237 @@
     }
    }
   },
+  "ios_fin_codigo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "أموالك مشفّرة. على هذا الـ iPhone أدخل رمز الاسترداد المكوّن من 12 كلمة مرة واحدة، ثم ستدخل بالرمز السري أو Face ID."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Deine Finanzen sind verschlüsselt. Gib auf diesem iPhone einmal deinen 12-Wörter-Wiederherstellungscode ein; danach PIN oder Face ID."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Your finances are encrypted. On this iPhone, enter your 12-word recovery code once; after that you'll use your PIN or Face ID."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tus finanzas están cifradas. En este iPhone, escribe una sola vez tu código de recuperación de 12 palabras; luego entrarás con tu PIN o con Face ID."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Vos finances sont chiffrées. Sur cet iPhone, saisissez une seule fois votre code de récupération de 12 mots ; ensuite, PIN ou Face ID."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "आपका वित्त एन्क्रिप्टेड है। इस iPhone पर एक बार 12 शब्दों का रिकवरी कोड लिखें; फिर PIN या Face ID से खोलें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Le tue finanze sono cifrate. Su questo iPhone inserisci una sola volta il codice di recupero di 12 parole; poi entrerai con PIN o Face ID."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "お金の記録は暗号化されています。この iPhone で 12 語の復元コードを一度だけ入力すると、以後は PIN か Face ID で開けます。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "재무가 암호화되어 있어요. 이 iPhone에서 12단어 복구 코드를 한 번만 입력하면 이후에는 PIN이나 Face ID로 열 수 있어요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Suas finanças estão criptografadas. Neste iPhone, digite uma única vez seu código de recuperação de 12 palavras; depois entrará com seu PIN ou Face ID."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ваши финансы зашифрованы. На этом iPhone один раз введите 12-словный код восстановления; дальше — PIN или Face ID."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "你的财务已加密。在这台 iPhone 上输入一次 12 个词的恢复码，之后用 PIN 或面容 ID 进入。"
+     }
+    }
+   }
+  },
+  "ios_fin_codigo_campo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الكلمات الـ12 مفصولة بمسافات"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Die 12 Wörter, durch Leerzeichen getrennt"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "The 12 words, separated by spaces"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Las 12 palabras, separadas por espacios"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Les 12 mots, séparés par des espaces"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "12 शब्द, स्पेस से अलग"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Le 12 parole, separate da spazi"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "12 語をスペースで区切って"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "12단어를 띄어쓰기로 구분해서"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "As 12 palavras, separadas por espaços"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "12 слов через пробел"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "12 个词，用空格分隔"
+     }
+    }
+   }
+  },
+  "ios_fin_no": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تعذّر الفتح. تحقّق وحاول مجددًا."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Öffnen nicht möglich. Prüfe und versuche es erneut."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Couldn't open. Check and try again."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "No se pudo abrir. Revisa e inténtalo de nuevo."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ouverture impossible. Vérifiez et réessayez."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "नहीं खुला। जाँचें और फिर कोशिश करें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Impossibile aprire. Controlla e riprova."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "開けませんでした。確認してもう一度お試しください。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "열지 못했어요. 확인하고 다시 시도하세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Não foi possível abrir. Verifique e tente de novo."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Не удалось открыть. Проверьте и попробуйте снова."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "无法打开。请检查后重试。"
+     }
+    }
+   }
+  },
   "ios_misma_cuenta": {
    "extractionState": "manual",
    "localizations": {
@@ -162016,6 +162247,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "指南针"
+     }
+    }
+   }
+  },
+  "ios_tab_finanzas": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "المال"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finanzen"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finances"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finanzas"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finances"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "वित्त"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finanze"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "お金"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "재무"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Finanças"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Финансы"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "财务"
      }
     }
    }

@@ -25,17 +25,18 @@ struct Raiz: View {
     }
 }
 
-/// Las pestañas al estilo iPhone: ícono con su nombre, Publicar al centro. El perfil va en el botón de arriba.
+/// Las pestañas al estilo iPhone: ícono con su nombre. Publicar es una acción (botón de redactar en
+/// Comunidad, como en Mail), no una pestaña; el perfil va en el botón de arriba a la derecha.
 struct Pestanas: View {
-    enum P: String { case hoy, ruta, publicar, comunidad, brujula }
-    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? "").replacingOccurrences(of: "81", with: "")) ?? .hoy
+    enum P: String { case hoy, ruta, brujula, comunidad, finanzas }
+    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? "").replacingOccurrences(of: "81", with: "").replacingOccurrences(of: "publicar", with: "comunidad")) ?? .hoy
     var body: some View {
         TabView(selection: $sel) {
             HoyVista().tabItem { Label(L("tab_hoy"), systemImage: "sun.horizon") }.tag(P.hoy)
             MiRutaVista().tabItem { Label(L("tab_ruta"), systemImage: "mountain.2") }.tag(P.ruta)
-            PublicarVista { sel = .comunidad }.tabItem { Label(L("publicar"), systemImage: "plus.circle") }.tag(P.publicar)
-            ComunidadVista().tabItem { Label(L("tab_comunidad"), systemImage: "flame") }.tag(P.comunidad)
             BrujulaVista(abrir81: Config.pestanaInicial == "brujula81").tabItem { Label(L("ios_tab_brujula"), systemImage: "safari") }.tag(P.brujula)
+            ComunidadVista(abrirPublicar: Config.pestanaInicial == "publicar").tabItem { Label(L("tab_comunidad"), systemImage: "flame") }.tag(P.comunidad)
+            FinanzasVista().tabItem { Label(L("ios_tab_finanzas"), systemImage: "dollarsign.circle") }.tag(P.finanzas)
         }
         .sheet(isPresented: .constant(Config.pestanaInicial == "cuenta")) { CuentaVista() }
     }

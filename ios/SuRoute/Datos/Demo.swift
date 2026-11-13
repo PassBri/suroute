@@ -38,6 +38,16 @@ enum Demo {
         var resp: [String: Doc] = [:]
         func rsp(_ k: String, _ v: String) { resp[k] = ["clave": .texto(k), "workbookId": .texto("mandala"), "valor": .texto(v), "actualizadoEn": .entero(0)] }
         for i in 0..<8 { for p in 0..<(i % 3 == 0 ? 8 : 4 + i % 4) { rsp("mandala#\(101 + i)#\(p)", i == 4 ? pasos[p] : "Paso \(p + 1) de \(camps[i].1.lowercased())") ; if p < 3 + i % 3 { rsp("mandala#\(101 + i)#\(p)#hecho", hoy) } } }
+        // Finanzas de ejemplo: unos días de este mes y una panadería
+        func fin(_ k: String, _ v: String) { resp[k] = ["clave": .texto(k), "workbookId": .texto("finanzas"), "valor": .texto(v), "actualizadoEn": .entero(0)] }
+        let ym = String(hoy.prefix(7))
+        func dia(_ n: Int) -> String { String(format: "%@-%02d", ym, min(n, max(1, d))) }
+        fin("fin#mov#" + dia(1), #"[{"id":"a1","t":"ing","m":4200000,"c":"trabajo","n":"Salario"},{"id":"a2","t":"gas","m":1200000,"c":"vivienda","n":"Arriendo"}]"#)
+        fin("fin#mov#" + dia(5), #"[{"id":"a3","t":"gas","m":380000,"c":"alimentacion","n":"Mercado"},{"id":"a4","t":"aho","m":420000,"c":"emergencia"}]"#)
+        fin("fin#mov#" + hoy, #"[{"id":"a5","t":"gas","m":18000,"c":"transporte","n":"Bus"},{"id":"a6","t":"gas","m":9500,"c":"hormiga","n":"Café"}]"#)
+        fin("fin#neg#lista", #"[{"id":"nd","n":"Panadería La Cima","g":"Pan, café y tortas por encargo"}]"#)
+        fin("fin#neg#nd#mov#" + ym, #"[{"id":"v1","f":"\#(dia(3))","t":"ven","m":4200000,"n":"Mostrador"},{"id":"v2","f":"\#(dia(5))","t":"cos","m":1800000,"n":"Harina y café"},{"id":"v3","f":"\#(dia(1))","t":"gas","m":900000,"c":"arriendo"}]"#)
+        fin("fin#moneda", "COP")
         r["respuesta"] = resp
         return r
     }

@@ -62,6 +62,7 @@ struct PublicarVista: View {
             .navigationTitle(L("publicar"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .cancellationAction) { Button(L("cancelar")) { alPublicar() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button { Task { await publicar() } } label: { if publicando { ProgressView() } else { Text(L("publicar")).bold() } }
                         .disabled(!listo || publicando || Config.demo)
