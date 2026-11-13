@@ -43,7 +43,13 @@ struct Raiz: View {
 /// Comunidad, como en Mail), no una pestaña; el perfil va en el botón de arriba a la derecha.
 struct Pestanas: View {
     enum P: String { case hoy, ruta, brujula, comunidad, finanzas }
-    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? UserDefaults.standard.string(forKey: "abrir_en") ?? "").replacingOccurrences(of: "81", with: "").replacingOccurrences(of: "publicar", with: "comunidad")) ?? .hoy
+    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? Pestanas.abrirEn).replacingOccurrences(of: "81", with: "").replacingOccurrences(of: "publicar", with: "comunidad")) ?? .hoy
+    /// Dónde se abre la app (Ajustes). Automático, igual que Android: Comunidad con cuenta y cumbre escrita; si no, Mi ruta.
+    @MainActor static var abrirEn: String {
+        let e = UserDefaults.standard.string(forKey: "abrir_en") ?? "auto"
+        if e != "auto" { return e }
+        return Perfil(Almacen.shared).cumbre.isEmpty ? "ruta" : "comunidad"
+    }
     var body: some View {
         TabView(selection: $sel) {
             HoyVista().tabItem { Label(L("tab_hoy"), systemImage: "sun.horizon") }.tag(P.hoy)
