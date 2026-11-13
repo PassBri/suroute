@@ -17,6 +17,7 @@ struct HoyVista: View {
                     }
                     .padding(.horizontal, 4)
                     if let e = a.errorNube { AvisoNube(texto: e) }
+                    FraseDelDia()
                     HabitosHoy()
                     ClimaRapido()
                     MetasDelMes()

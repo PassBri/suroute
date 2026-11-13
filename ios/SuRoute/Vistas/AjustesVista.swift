@@ -7,6 +7,7 @@ struct AjustesVista: View {
     @Environment(Almacen.self) private var a
     @Environment(\.openURL) private var abrir
     @AppStorage("abrir_en") private var abrirEn = "auto"
+    @AppStorage("frase_modo") private var fraseModo = "toque"
     @State private var recActivo = Recordatorios.activo
     @State private var recHora = Recordatorios.hora
     @State private var sinPermiso = false
@@ -33,6 +34,14 @@ struct AjustesVista: View {
                     Text(L("tab_comunidad")).tag("comunidad")
                 }
             } footer: { Text(L("inicio_ayuda")) }
+
+            Section {
+                Picker(L("bloqueo_titulo"), selection: $fraseModo) {
+                    Text(L("bloqueo_rostro")).tag("rostro")
+                    Text(L("bloqueo_toque")).tag("toque")
+                }
+                NavigationLink(L("mis_frases")) { MisFrasesVista() }
+            } footer: { Text(L("bloqueo_ayuda")) }
 
             Section {
                 Toggle(L("recordatorio_ajuste"), isOn: $recActivo).tint(Tema.ok)

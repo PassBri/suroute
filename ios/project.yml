@@ -28,6 +28,10 @@ targets:
       - path: ../app/src/main/assets/content
         type: folder
         buildPhase: resources
+      # Las 365 frases del día en 12 idiomas (las mismas de Android)
+      - path: ../app/src/main/assets/frases
+        type: folder
+        buildPhase: resources
     configFiles:
       Debug: Config/SuRoute.xcconfig
       Release: Config/SuRoute.xcconfig
