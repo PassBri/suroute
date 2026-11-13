@@ -19,9 +19,10 @@ struct SuRouteApp: App {
 struct Raiz: View {
     @Environment(Almacen.self) private var a
     @Environment(\.scenePhase) private var fase
-    @State private var carta = CartaBienvenidaVista.leida || Config.demo
+    @State private var carta = CartaBienvenidaVista.leida || (Config.demo && Config.pestanaInicial != "carta")
     /// Cuenta nueva: sin nombre ni primer uso hecho (en Android o la web ya lo habría marcado).
     private var faltaPrimerUso: Bool {
+        if Config.pestanaInicial == "inicio" { return true }
         guard a.sincronizado, !Config.demo else { return false }
         let p = Perfil(a)
         return p.d["onboardingCompleto"]?.bool != true && p.nombre.isEmpty && p.cumbre.isEmpty
@@ -52,6 +53,9 @@ struct Pestanas: View {
             FinanzasVista().tabItem { Label(L("ios_tab_finanzas"), systemImage: "dollarsign.circle") }.tag(P.finanzas)
         }
         .sheet(isPresented: .constant(Config.pestanaInicial == "cuenta")) { CuentaVista() }
+        .fullScreenCover(isPresented: .constant(["bienestar", "ajustes"].contains(Config.pestanaInicial ?? ""))) {
+            NavigationStack { if Config.pestanaInicial == "ajustes" { AjustesVista() } else { BienestarVista() } }
+        }
     }
 }
 

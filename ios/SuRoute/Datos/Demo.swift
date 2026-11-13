@@ -48,6 +48,13 @@ enum Demo {
         fin("fin#neg#lista", #"[{"id":"nd","n":"Panadería La Cima","g":"Pan, café y tortas por encargo"}]"#)
         fin("fin#neg#nd#mov#" + ym, #"[{"id":"v1","f":"\#(dia(3))","t":"ven","m":4200000,"n":"Mostrador"},{"id":"v2","f":"\#(dia(5))","t":"cos","m":1800000,"n":"Harina y café"},{"id":"v3","f":"\#(dia(1))","t":"gas","m":900000,"c":"arriendo"}]"#)
         fin("fin#moneda", "COP")
+        // Bienestar de ejemplo: tres semanas de clima y hábitos
+        let climas = ["sol", "valle", "sol", "niebla", "valle", "tormenta", "sol"], emos = ["Motivado", "Tranquilo", "Alegre", "Cansado", "Agradecido", "Estresado", "Inspirado"]
+        for i in 1..<21 {
+            let f = Fecha.iso(Fecha.cal.date(byAdding: .day, value: -i, to: Date())!), c = i % 7
+            let v = #"{"clima":"\#(climas[c])","emo":"\#(emos[c])","int":\#(2 + i % 3),"sueno":\#(6 + Double(i % 4) * 0.5),"mov":\#(20 + (i % 3) * 10),"fyv":\#(3 + i % 3),"aire":20,"pant":\#(i % 2 == 0)}"#
+            resp["bien#" + f] = ["clave": .texto("bien#" + f), "workbookId": .texto("bienestar"), "valor": .texto(v), "actualizadoEn": .entero(0)]
+        }
         r["respuesta"] = resp
         return r
     }
