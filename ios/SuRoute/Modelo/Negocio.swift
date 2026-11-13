@@ -46,7 +46,7 @@ enum Negocios {
     /// El pago al dueño entra también a las finanzas personales.
     static func puente(_ x: MovNeg, negocio: String, quitar: Bool) {
         let id = "ng-" + x.id
-        var l = Movs.del(x.f).filter { $0.id != id }
+        var l = Movs.guardados(x.f).filter { $0.id != id }
         if !quitar && x.t == "pag" {
             l.append(Mov(d: ["id": .texto(id), "t": .texto("ing"), "m": .numero(x.m), "c": .texto("negocio"),
                              "n": .texto(L("ng_pago_de", negocio) + (x.n.map { " · " + $0 } ?? ""))]))

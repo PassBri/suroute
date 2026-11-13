@@ -61,6 +61,7 @@ enum Valor: Codable, Hashable {
         default: return nil
         }
     }
+    var lista: [Valor]? { if case .lista(let l) = self { return l }; return nil }
     var bool: Bool? {
         switch self {
         case .bool(let b): return b

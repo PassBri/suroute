@@ -47,6 +47,7 @@ struct FinanzasVista: View {
                                 }
                             }
                             .buttonStyle(.plain)
+                            EntradasFinanzas()
                         }
                         .padding(.horizontal, 16).padding(.bottom, 24)
                     }
@@ -153,6 +154,9 @@ struct DiaFin: View {
     @State private var cat = "alimentacion"
     @State private var concepto = ""
     @State private var anotado = 0
+    @State private var repite = false
+    @State private var meta = ""
+    @State private var deuda = ""
     @FocusState private var enMonto: Bool
 
     var body: some View {
@@ -166,10 +170,31 @@ struct DiaFin: View {
                 TextField(L("cu_monto"), text: $monto).keyboardType(.decimalPad).font(.title2.monospacedDigit()).focused($enMonto)
                 Picker(L("cu_categoria"), selection: $cat) { ForEach(tipo.categorias, id: \.self) { Text(tipo.categoria($0)).tag($0) } }
                 TextField(L("cu_concepto"), text: $concepto)
+                if tipo == .aho, !MetasFin.lista().isEmpty {
+                    Picker(L("mf_titulo"), selection: $meta) {
+                        Text("—").tag("")
+                        ForEach(MetasFin.lista()) { m in Text(m.nombre).tag(m.id) }
+                    }
+                }
+                if tipo == .gas, cat == "deudas", !Deudas.lista().isEmpty {
+                    Picker(L("cu_deuda"), selection: $deuda) {
+                        Text("—").tag("")
+                        ForEach(Deudas.lista()) { x in Text(x.nombre).tag(x.id) }
+                    }
+                }
+                Toggle(L("cu_repite_dia", Int(fecha.suffix(2)) ?? 1), isOn: $repite).tint(Tema.ok)
                 Button {
                     let m = Plata.leer(monto); guard m > 0 else { return }
-                    Movs.agregar(fecha, t: tipo, m: m, c: cat, n: concepto.trimmingCharacters(in: .whitespaces))
-                    monto = ""; concepto = ""; anotado += 1; enMonto = true
+                    let n = concepto.trimmingCharacters(in: .whitespaces)
+                    if repite {
+                        Fijos.nuevo(t: tipo.rawValue, m: m, c: cat, n: n, fecha: fecha)
+                    } else {
+                        var extra: Doc = [:]
+                        if tipo == .aho && !meta.isEmpty { extra["meta"] = .texto(meta) }
+                        if tipo == .gas && cat == "deudas" && !deuda.isEmpty { extra["d"] = .texto(deuda) }
+                        Movs.agregar(fecha, t: tipo, m: m, c: cat, n: n, extra: extra)
+                    }
+                    monto = ""; concepto = ""; repite = false; anotado += 1; enMonto = true
                 } label: { Label(L("cu_agregar"), systemImage: "plus").frame(maxWidth: .infinity) }
                     .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).disabled(Plata.leer(monto) <= 0)
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
@@ -182,7 +207,7 @@ struct DiaFin: View {
                         Image(systemName: tt.icono).foregroundStyle(tt == .ing ? Tema.ok : Tema.tintaSuave)
                         VStack(alignment: .leading, spacing: 2) {
                             Text(m.n.isEmpty ? tt.categoria(m.c) : m.n)
-                            Text(tt.nombre + (m.n.isEmpty ? "" : " · " + tt.categoria(m.c))).font(.caption).foregroundStyle(Tema.tintaSuave)
+                            Text(tt.nombre + (m.n.isEmpty ? "" : " · " + tt.categoria(m.c)) + (m.virtual ? " · " + L("cu_fijo_marca") : "")).font(.caption).foregroundStyle(Tema.tintaSuave)
                         }
                         Spacer()
                         Text((tt == .ing ? "+" : "−") + Plata.texto(m.m)).monospacedDigit().fontWeight(.semibold).foregroundStyle(tt == .ing ? Tema.ok : Tema.tinta)

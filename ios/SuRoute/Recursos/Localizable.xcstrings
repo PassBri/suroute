@@ -162559,6 +162559,83 @@
     }
    }
   },
+  "ios_meses": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "أشهر"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Monaten"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "months"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "meses"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "mois"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "महीने"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "mesi"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "か月"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "개월"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "meses"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "мес."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "个月"
+     }
+    }
+   }
+  },
   "ios_misma_cuenta": {
    "extractionState": "manual",
    "localizations": {

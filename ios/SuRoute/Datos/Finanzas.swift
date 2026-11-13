@@ -142,6 +142,8 @@ enum Llavero {
 /// que vengan (r, d, fx, cap, ab, meta…) aunque esta pantalla no los use, para no perder nada.
 struct Mov: Identifiable, Hashable {
     var d: Doc
+    /// Puesto por un fijo de cada mes (no está guardado en el día).
+    var virtual = false
     var id: String { d.t("id") }
     var t: String { d.t("t") }
     var m: Double { d["m"]?.numero ?? 0 }
@@ -171,18 +173,28 @@ enum TipoMov: String, CaseIterable, Identifiable {
 @MainActor
 enum Movs {
     static func clave(_ fecha: String) -> String { "fin#mov#\(fecha)" }
-    static func del(_ fecha: String) -> [Mov] { (Fin.shared.json(clave(fecha), [Doc].self) ?? []).map { Mov(d: $0) }.filter { !$0.id.isEmpty } }
+    /// Lo guardado en el día.
+    static func guardados(_ fecha: String) -> [Mov] { (Fin.shared.json(clave(fecha), [Doc].self) ?? []).map { Mov(d: $0) }.filter { !$0.id.isEmpty } }
+    /// Lo del día con los fijos de cada mes que caen ese día.
+    static func del(_ fecha: String) -> [Mov] { let g = guardados(fecha); return Fijos.del(fecha, guardados: g) + g }
     static func guardar(_ fecha: String, _ l: [Mov]) { Fin.shared.guardarJSON(clave(fecha), l.isEmpty ? nil : l.map(\.d)) }
-    static func agregar(_ fecha: String, t: TipoMov, m: Double, c: String, n: String) {
-        var d: Doc = ["id": .texto("i" + String(Int(Date().timeIntervalSince1970 * 1000), radix: 36)), "t": .texto(t.rawValue), "m": .numero((m * 100).rounded() / 100), "c": .texto(c)]
+    static func agregar(_ fecha: String, t: TipoMov, m: Double, c: String, n: String, extra: Doc = [:]) {
+        var d: Doc = extra.merging(["id": .texto("i" + String(Int(Date().timeIntervalSince1970 * 1000), radix: 36)), "t": .texto(t.rawValue), "m": .numero((m * 100).rounded() / 100), "c": .texto(c)]) { $1 }
         if !n.isEmpty { d["n"] = .texto(String(n.prefix(120))) }
-        guardar(fecha, del(fecha) + [Mov(d: d)])
+        guardar(fecha, guardados(fecha) + [Mov(d: d)])
     }
-    static func quitar(_ fecha: String, _ id: String) { guardar(fecha, del(fecha).filter { $0.id != id }) }
+    /// Quitar: si es un fijo, se salta solo ese mes.
+    static func quitar(_ fecha: String, _ id: String) {
+        if id.hasPrefix("fx-") { Fijos.saltar(String(id.dropFirst(3)), String(fecha.prefix(7))); return }
+        guardar(fecha, guardados(fecha).filter { $0.id != id })
+    }
     /// Los días con movimientos (por las claves guardadas), de un prefijo "2026" o "2026-11".
     static func dias(_ prefijo: String) -> [String] {
-        (Almacen.shared.docs["respuesta"] ?? [:]).keys.filter { $0.hasPrefix("fin#mov#" + prefijo) }.map { String($0.dropFirst(8)) }.sorted()
+        let g = (Almacen.shared.docs["respuesta"] ?? [:]).keys.filter { $0.hasPrefix("fin#mov#" + prefijo) }.map { String($0.dropFirst(8)) }
+        return Array(Set(g + Fijos.dias(prefijo))).sorted()
     }
+    /// Lo construido en ahorro e inversión en todo el libro (cuenta como activo).
+    static func construido() -> Double { let t = totales(""); return t.aho + t.inv }
     struct Totales { var ing = 0.0, gas = 0.0, aho = 0.0, inv = 0.0, gen = 0.0; var disp: Double { ing - gas - aho - inv - gen } }
     static func totales(_ prefijo: String) -> Totales {
         var x = Totales()
