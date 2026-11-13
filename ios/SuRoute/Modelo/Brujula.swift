@@ -22,6 +22,7 @@ struct Casilla: Identifiable, Hashable {
     func hash(into h: inout Hasher) { h.combine(clave) }
 }
 
+@MainActor
 struct Brujula {
     let anio: Int?
     let cumbre: Casilla?

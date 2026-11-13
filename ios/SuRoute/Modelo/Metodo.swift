@@ -19,6 +19,7 @@ enum Campamento {
 
 // MARK: Perfil
 
+@MainActor
 struct Perfil {
     let d: Doc
     init(_ a: Almacen) { d = a.get("perfil", "1") ?? [:] }
@@ -58,6 +59,7 @@ struct RecordatorioVida {
 
 struct Habito: Identifiable, Hashable { let id: String; let eje: Eje; let texto: String }
 
+@MainActor
 enum Habitos {
     static let clave = "habitos#lista"
     static var base: [Habito] {
@@ -91,6 +93,7 @@ enum Habitos {
 
 // MARK: Metas y propósitos (la cascada)
 
+@MainActor
 struct MetaMes: Identifiable {
     let d: Doc
     var clave: String
@@ -135,6 +138,7 @@ struct Proposito: Identifiable {
 }
 
 /// Propósitos (largo plazo) → metas del año → metas del mes, con su avance (igual que cascada() en la web).
+@MainActor
 struct Cascada {
     let propositos: [Proposito], anuales: [MetaAnio], mensuales: [MetaMes]
     init(_ a: Almacen) {
