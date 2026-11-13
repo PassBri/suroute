@@ -89,7 +89,7 @@ private struct ResumenMes: View {
             NavigationLink(value: RutaFin.dia(Fecha.iso())) {
                 Label(L("cu_registrar_hoy"), systemImage: "plus").frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent).controlSize(.large).padding(.top, 4)
+            .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).controlSize(.large).padding(.top, 4)
         }
     }
 }
@@ -171,7 +171,7 @@ struct DiaFin: View {
                     Movs.agregar(fecha, t: tipo, m: m, c: cat, n: concepto.trimmingCharacters(in: .whitespaces))
                     monto = ""; concepto = ""; anotado += 1; enMonto = true
                 } label: { Label(L("cu_agregar"), systemImage: "plus").frame(maxWidth: .infinity) }
-                    .buttonStyle(.borderedProminent).disabled(Plata.leer(monto) <= 0)
+                    .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).disabled(Plata.leer(monto) <= 0)
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
             Section(L("cu_movimientos")) {
@@ -218,7 +218,7 @@ struct BloqueoFin: View {
                     .textInputAutocapitalization(.never).autocorrectionDisabled()
                     .padding(12).background(Tema.hoja, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                 Button(L("cu_abrir")) { error = !fin.abrirConCodigo(codigo); if error { intentos += 1 } }
-                    .buttonStyle(.borderedProminent).disabled(codigo.split(separator: " ").count < 12)
+                    .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).disabled(codigo.split(separator: " ").count < 12)
             } else {
                 Text(L("cu_bloqueado_sub")).font(.subheadline).foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
                 let largo = max(4, fin.largoPin)

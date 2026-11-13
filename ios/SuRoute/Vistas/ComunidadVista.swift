@@ -300,7 +300,7 @@ struct PerfilPersona: View {
                                     sigo.toggle(); let s = sigo
                                     Task { do { try await Red.seguir(id, s) } catch { sigo = !s } }
                                 } label: { Text(L(sigo ? "ios_siguiendo" : "ios_seguir")).frame(minWidth: 110) }
-                                    .buttonStyle(.borderedProminent).tint(sigo ? Tema.tintaSuave : Tema.burdeos)
+                                    .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).tint(sigo ? Tema.tintaSuave : Tema.burdeos)
                                 Button {
                                     Task {
                                         if let c = try? await Red.abrirConversacion(con: id),

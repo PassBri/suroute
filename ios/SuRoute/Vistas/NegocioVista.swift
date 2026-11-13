@@ -174,7 +174,7 @@ struct NegocioVista: View {
                 Negocios.agregar(neg, f: f, t: tipo, m: m, c: cat, n: nota.trimmingCharacters(in: .whitespaces))
                 monto = ""; nota = ""; anotado += 1
             } label: { Label(L("ng_agregar"), systemImage: "plus").frame(maxWidth: .infinity) }
-                .buttonStyle(.borderedProminent).disabled(Plata.leer(monto) <= 0)
+                .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).disabled(Plata.leer(monto) <= 0)
         }
         Section(L("ng_movs")) {
             if xs.isEmpty { Text(L("ng_vacio_dia")).foregroundStyle(Tema.tintaSuave) }

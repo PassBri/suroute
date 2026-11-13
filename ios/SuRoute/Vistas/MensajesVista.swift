@@ -89,7 +89,7 @@ struct ChatVista: View {
                         Text(L("mensajes_solicitud_texto")).font(.footnote).foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
                         HStack {
                             Button(L("mensajes_rechazar")) { Task { try? await Red.responderSolicitud(conv.id, aceptar: false); estado = "bloqueada" } }.buttonStyle(.bordered)
-                            Button(L("mensajes_aceptar")) { Task { try? await Red.responderSolicitud(conv.id, aceptar: true); estado = "aceptada" } }.buttonStyle(.borderedProminent)
+                            Button(L("mensajes_aceptar")) { Task { try? await Red.responderSolicitud(conv.id, aceptar: true); estado = "aceptada" } }.buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor)
                         }
                     }
                 } else if estado == "bloqueada" {
