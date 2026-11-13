@@ -1,0 +1,59 @@
+# SuRoute para iPhone (SwiftUI). El proyecto de Xcode se genera con XcodeGen:  cd ios && xcodegen
+name: SuRoute
+options:
+  bundleIdPrefix: com.rutaalacima
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: es
+  createIntermediateGroups: true
+packages:
+  Supabase:
+    url: https://github.com/supabase/supabase-swift
+    from: "2.20.0"
+configs:
+  Debug: debug
+  Release: release
+targets:
+  SuRoute:
+    type: application
+    platform: iOS
+    sources:
+      - path: SuRoute
+    configFiles:
+      Debug: Config/SuRoute.xcconfig
+      Release: Config/SuRoute.xcconfig
+    dependencies:
+      - package: Supabase
+        product: Supabase
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rutaalacima.app
+        PRODUCT_NAME: SuRoute
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.10"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_EMIT_LOC_STRINGS: YES
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: SuRoute
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
+        INFOPLIST_KEY_NSFaceIDUsageDescription: "Para abrir tu Ascenso financiero sin escribir el PIN."
+        INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y de tus publicaciones."
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Para elegir las fotos de tu Brújula y de tus publicaciones."
+    info:
+      path: SuRoute/Info.plist
+      properties:
+        SupabaseURL: $(SUPABASE_URL)
+        SupabaseAnonKey: $(SUPABASE_ANON_KEY)
+        CFBundleLocalizations: [es, en, pt, fr, de, it, zh-Hans, ja, ko, ar, hi, ru]
+schemes:
+  SuRoute:
+    build:
+      targets:
+        SuRoute: all
+    run:
+      config: Debug

@@ -1,0 +1,69 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+    paths: ["ios/**", "app/src/main/res/values*/strings.xml", ".github/workflows/ios.yml"]
+  pull_request:
+    paths: ["ios/**"]
+  workflow_dispatch:
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compilar:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: ios
+    steps:
+      - uses: actions/checkout@v4
+      - name: Xcode y XcodeGen
+        run: |
+          sudo xcode-select -s "$(ls -d /Applications/Xcode*.app | sort -V | tail -1)"
+          xcodebuild -version
+          brew install xcodegen
+      - name: Llaves de Supabase (sin guardarlas en el repositorio)
+        env:
+          SUPABASE_URL: ${{ vars.RUTACIMA_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ vars.RUTACIMA_SUPABASE_ANON_KEY }}
+        run: |
+          # En xcconfig "//" empieza un comentario: la URL se escribe con $() en medio
+          U="${SUPABASE_URL/https:\/\//https:\/$()\/}"
+          printf 'SUPABASE_URL = %s\nSUPABASE_ANON_KEY = %s\n' "$U" "$SUPABASE_ANON_KEY" > Config/Secretos.xcconfig
+      - name: Generar el proyecto
+        run: xcodegen
+      - name: Compilar para el simulador
+        run: |
+          set -o pipefail
+          xcodebuild -project SuRoute.xcodeproj -scheme SuRoute -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build 2>&1 | tee compilacion.log | grep -E "error:|warning: unre|BUILD" || true
+          grep -q "BUILD SUCCEEDED" compilacion.log
+      - name: Capturas en modo demostración
+        run: |
+          set -x
+          DISP=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in sorted(d.items(), reverse=True) if 'iOS' in k for x in v if x['name'].startswith('iPhone 1') and 'Pro' in x['name'] and 'Max' not in x['name']))")
+          xcrun simctl boot "$DISP"
+          xcrun simctl install "$DISP" build/Build/Products/Debug-iphonesimulator/SuRoute.app
+          mkdir -p capturas
+          for tema in light dark; do
+            xcrun simctl ui "$DISP" appearance $tema
+            for p in hoy ruta brujula brujula81 cuenta; do
+              xcrun simctl terminate "$DISP" com.rutaalacima.app 2>/dev/null || true
+              xcrun simctl launch "$DISP" com.rutaalacima.app -demo -pestana $p
+              sleep 6
+              xcrun simctl io "$DISP" screenshot "capturas/$p-$tema.png"
+            done
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-capturas
+          path: |
+            ios/capturas
+            ios/compilacion.log
+          retention-days: 7

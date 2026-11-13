@@ -1,0 +1,5 @@
+// Las llaves de Supabase NO se guardan en el repositorio: van en Secretos.xcconfig (ignorado por git).
+// En GitHub Actions se escribe desde las variables RUTACIMA_SUPABASE_URL y RUTACIMA_SUPABASE_ANON_KEY.
+SUPABASE_URL =
+SUPABASE_ANON_KEY =
+#include? "Secretos.xcconfig"
