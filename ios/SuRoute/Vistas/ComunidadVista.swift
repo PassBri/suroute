@@ -13,29 +13,29 @@ struct ComunidadVista: View {
 
     var body: some View {
         NavigationStack(path: $ruta) {
-            List {
-                Picker("", selection: $siguiendo) {
-                    Text(L("ios_muro_todos")).tag(false)
-                    Text(L("ios_muro_siguiendo")).tag(true)
-                }
-                .pickerStyle(.segmented)
-                .listRowBackground(Color.clear).listRowSeparator(.hidden).listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                if posts.isEmpty && !cargando {
-                    VStack(spacing: 10) {
-                        Image(systemName: error ? "wifi.slash" : "flame").font(.largeTitle).foregroundStyle(Tema.oro)
-                        Text(L(error ? "ios_muro_error" : (siguiendo ? "ios_muro_vacio_siguiendo" : "ios_muro_vacio"))).font(.subheadline)
-                            .foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    Picker("", selection: $siguiendo) {
+                        Text(L("ios_muro_todos")).tag(false)
+                        Text(L("ios_muro_siguiendo")).tag(true)
                     }
-                    .frame(maxWidth: .infinity).padding(.vertical, 40).listRowBackground(Color.clear).listRowSeparator(.hidden)
+                    .pickerStyle(.segmented)
+                    if posts.isEmpty && !cargando {
+                        VStack(spacing: 10) {
+                            Image(systemName: error ? "wifi.slash" : "flame").font(.largeTitle).foregroundStyle(Tema.oro)
+                            Text(L(error ? "ios_muro_error" : (siguiendo ? "ios_muro_vacio_siguiendo" : "ios_muro_vacio"))).font(.subheadline)
+                                .foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
+                        }
+                        .frame(maxWidth: .infinity).padding(.vertical, 40)
+                    }
+                    ForEach(posts) { p in
+                        TarjetaPost(post: p, impulsado: impulsados.contains(p.id), alImpulsar: { si in impulsar(p, si) }, alQuitar: { quitar(p.id) })
+                            .onAppear { if p.id == posts.last?.id { Task { await cargar(mas: true) } } }
+                    }
+                    if cargando { ProgressView().frame(maxWidth: .infinity).padding() }
                 }
-                ForEach(posts) { p in
-                    TarjetaPost(post: p, impulsado: impulsados.contains(p.id), alImpulsar: { si in impulsar(p, si) }, alQuitar: { quitar(p.id) })
-                        .listRowBackground(Color.clear).listRowSeparator(.hidden).listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
-                        .onAppear { if p.id == posts.last?.id { Task { await cargar(mas: true) } } }
-                }
-                if cargando { ProgressView().frame(maxWidth: .infinity).listRowBackground(Color.clear).listRowSeparator(.hidden) }
+                .padding(.horizontal, 16).padding(.bottom, 24)
             }
-            .listStyle(.plain)
             .fondoPapel()
             .refreshable { await cargar(mas: false) }
             .navigationTitle(L("tab_comunidad"))
@@ -103,7 +103,7 @@ struct TarjetaPost: View {
                         Avatar(url: post.autor?.avatar_url, nombre: post.nombreAutor, tam: 40)
                         VStack(alignment: .leading, spacing: 1) {
                             Text(post.nombreAutor).font(.subheadline.weight(.semibold)).foregroundStyle(Tema.tinta)
-                            Text(post.fecha, style: .relative).font(.caption).foregroundStyle(Tema.tintaSuave)
+                            Text(post.fecha.formatted(.relative(presentation: .named, unitsStyle: .abbreviated))).font(.caption).foregroundStyle(Tema.tintaSuave)
                         }
                     }
                 }
@@ -221,7 +221,7 @@ struct DetallePost: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 HStack {
                                     Text(c.nombreAutor).font(.footnote.weight(.semibold))
-                                    Text(Red.fecha(c.created_at), style: .relative).font(.caption2).foregroundStyle(Tema.tintaSuave)
+                                    Text(Red.fecha(c.created_at).formatted(.relative(presentation: .named, unitsStyle: .abbreviated))).font(.caption2).foregroundStyle(Tema.tintaSuave)
                                 }
                                 Text(c.texto).font(.subheadline)
                             }
