@@ -83,9 +83,9 @@ private struct TarjetaCumbre: View {
     let c: Casilla?
     var body: some View {
         VStack(spacing: 6) {
-            Image(systemName: "flag.fill").font(.caption).foregroundStyle(Tema.oroSuave)
+            Image(systemName: "flag.fill").font(.caption).foregroundStyle(Tema.sobreColor.opacity(0.8))
             Text(c?.afirmacion.isEmpty == false ? c!.afirmacion : L("mandala_cumbre"))
-                .font(Tema.serif(.caption, .semibold)).foregroundStyle(.white).multilineTextAlignment(.center).lineLimit(5).minimumScaleFactor(0.8)
+                .font(Tema.serif(.caption, .semibold)).foregroundStyle(Tema.sobreColor).multilineTextAlignment(.center).lineLimit(5).minimumScaleFactor(0.8)
         }
         .padding(8)
         .frame(maxWidth: .infinity, minHeight: 112)
@@ -174,7 +174,7 @@ private struct BloqueCampamento: View {
                             ForEach(0..<3, id: \.self) { col in
                                 let pos = f * 3 + col
                                 if pos == 4 {
-                                    Text(Campamento.nombre(cod)).font(.caption.weight(.bold)).foregroundStyle(.white).multilineTextAlignment(.center)
+                                    Text(Campamento.nombre(cod)).font(.caption.weight(.bold)).foregroundStyle(Tema.sobreColor).multilineTextAlignment(.center)
                                         .padding(4).frame(maxWidth: .infinity, minHeight: 92).background(color, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 } else if let p = reloj.firstIndex(of: pos) {
                                     Button { editar(c, p) } label: { CeldaPaso(texto: b.paso(a, c, p), hecho: b.hecho(a, c, p), n: p + 1, color: color) }
@@ -198,11 +198,11 @@ private struct CeldaPaso: View {
         let vacio = texto.trimmingCharacters(in: .whitespaces).isEmpty
         VStack(alignment: .leading, spacing: 2) {
             HStack {
-                Text("\(n)").font(.caption2.monospacedDigit().weight(.bold)).foregroundStyle(hecho ? .white : color)
+                Text("\(n)").font(.caption2.monospacedDigit().weight(.bold)).foregroundStyle(hecho ? Tema.sobreColor : color)
                 Spacer()
-                if hecho { Image(systemName: "checkmark").font(.caption2.weight(.bold)).foregroundStyle(.white) }
+                if hecho { Image(systemName: "checkmark").font(.caption2.weight(.bold)).foregroundStyle(Tema.sobreColor) }
             }
-            Text(vacio ? "+" : texto).font(.caption2).foregroundStyle(hecho ? .white : (vacio ? Tema.tintaSuave : Tema.tinta))
+            Text(vacio ? "+" : texto).font(.caption2).foregroundStyle(hecho ? Tema.sobreColor : (vacio ? Tema.tintaSuave : Tema.tinta))
                 .lineLimit(4).multilineTextAlignment(.leading)
             Spacer(minLength: 0)
         }

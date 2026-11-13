@@ -15,6 +15,8 @@ enum Tema {
     static let oro = Color.dinamico(0x86683A, 0xC9AE84)
     static let oroSuave = Color.dinamico(0xF6EAD3, 0x2E2817)
     static let ok = Color.dinamico(0x3F7A4A, 0x86C792)
+    /// Texto sobre un color lleno (burdeos, el color de un eje): blanco de día, tinta oscura de noche (los rellenos se aclaran).
+    static let sobreColor = Color.dinamico(0xFFFFFF, 0x1A0F0C)
 
     static func eje(_ cod: String) -> Color {
         switch cod {
