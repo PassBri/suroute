@@ -59,8 +59,17 @@ struct Pestanas: View {
             FinanzasVista().tabItem { Label(L("ios_tab_finanzas"), systemImage: "dollarsign.circle") }.tag(P.finanzas)
         }
         .sheet(isPresented: .constant(Config.pestanaInicial == "cuenta")) { CuentaVista() }
-        .fullScreenCover(isPresented: .constant(["bienestar", "ajustes"].contains(Config.pestanaInicial ?? ""))) {
-            NavigationStack { if Config.pestanaInicial == "ajustes" { AjustesVista() } else { BienestarVista() } }
+        .fullScreenCover(isPresented: .constant(["bienestar", "ajustes", "agenda", "mes", "deudas", "metasfin"].contains(Config.pestanaInicial ?? ""))) {
+            NavigationStack {
+                switch Config.pestanaInicial {
+                case "ajustes": AjustesVista()
+                case "agenda": AgendaVista()
+                case "mes": MesVista()
+                case "deudas": DeudasVista()
+                case "metasfin": MetasFinVista()
+                default: BienestarVista()
+                }
+            }
         }
     }
 }

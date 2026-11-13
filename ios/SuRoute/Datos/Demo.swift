@@ -55,6 +55,12 @@ enum Demo {
             let v = #"{"clima":"\#(climas[c])","emo":"\#(emos[c])","int":\#(2 + i % 3),"sueno":\#(6 + Double(i % 4) * 0.5),"mov":\#(20 + (i % 3) * 10),"fyv":\#(3 + i % 3),"aire":20,"pant":\#(i % 2 == 0)}"#
             resp["bien#" + f] = ["clave": .texto("bien#" + f), "workbookId": .texto("bienestar"), "valor": .texto(v), "actualizadoEn": .entero(0)]
         }
+        // Tu día de ejemplo: la intención, las 3 cumbres y unas horas
+        let hoyD = Fecha.iso()
+        resp["dia#\(hoyD)#top"] = ["clave": .texto("dia#\(hoyD)#top"), "workbookId": .texto("dia"), "valor": .texto(#"[{"t":"Escribir 2 páginas del manuscrito","meta":"","hecho":true},{"t":"Entrenar 10 km","meta":"","hecho":false},{"t":"Llamar a mamá","meta":"","hecho":false}]"#), "actualizadoEn": .entero(0)]
+        r["agenda"] = [hoyD: ["fecha": .texto(hoyD), "intencion": .texto("Avanzar con calma y presencia"), "horario": .texto(#"{"6":"Correr","8":"Escribir","12":"Almuerzo en familia","19":"Leer 30 min"}"#), "energia": .entero(4), "agua": .entero(5)]]
+        resp["fin#deudas"] = ["clave": .texto("fin#deudas"), "workbookId": .texto("finanzas"), "valor": .texto(#"{"metodo":"avalancha","extra":200000,"lista":[{"id":"d1","nombre":"Tarjeta de crédito","saldo":3200000,"tasa":28,"minimo":250000,"tipo":"mala"},{"id":"d2","nombre":"Crédito del taller","saldo":9000000,"tasa":14,"minimo":420000,"tipo":"buena"}]}"#), "actualizadoEn": .entero(0)]
+        resp["fin#metas"] = ["clave": .texto("fin#metas"), "workbookId": .texto("finanzas"), "valor": .texto(#"[{"id":"m1","tipo":"emergencia","nombre":"Fondo de emergencia","objetivo":6000000,"fecha":"2027-06","inicial":1800000,"creada":"2026-06"},{"id":"m2","tipo":"viaje","nombre":"Viaje a la Sierra Nevada","objetivo":2500000,"fecha":"","inicial":400000,"creada":"2026-09"}]"#), "actualizadoEn": .entero(0)]
         r["respuesta"] = resp
         return r
     }

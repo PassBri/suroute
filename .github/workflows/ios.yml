@@ -55,7 +55,7 @@ jobs:
           mkdir -p capturas
           for tema in light dark; do
             xcrun simctl ui "$DISP" appearance $tema
-            for p in hoy ruta brujula brujula81 comunidad publicar finanzas cuenta bienestar ajustes carta inicio; do
+            for p in hoy ruta brujula brujula81 comunidad publicar finanzas cuenta bienestar ajustes carta inicio agenda mes deudas metasfin; do
               xcrun simctl terminate "$DISP" com.rutaalacima.app 2>/dev/null || true
               xcrun simctl launch "$DISP" com.rutaalacima.app -demo -pestana $p
               sleep 6
