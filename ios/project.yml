@@ -10,6 +10,9 @@ packages:
   Supabase:
     url: https://github.com/supabase/supabase-swift
     from: "2.20.0"
+  LiveKit:
+    url: https://github.com/livekit/client-sdk-swift
+    from: "2.5.0"
 configs:
   Debug: debug
   Release: release
@@ -31,6 +34,8 @@ targets:
     dependencies:
       - package: Supabase
         product: Supabase
+      - package: LiveKit
+        product: LiveKit
       - target: SuRouteWidget
     settings:
       base:
@@ -49,6 +54,7 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Para que te escuchen cuando enciendes una fogata en vivo."
         INFOPLIST_KEY_NSFaceIDUsageDescription: "Para abrir tu Ascenso financiero sin escribir el PIN."
         INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y de tus publicaciones."
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Para elegir las fotos de tu Brújula y de tus publicaciones."

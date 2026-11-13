@@ -12,11 +12,14 @@ struct ComunidadVista: View {
     @State private var fin = false
     @State private var error = false
     @State private var ruta = NavigationPath()
+    @State private var fogata: ConexionFogata?
+    @State private var vueltaFogata = 0
 
     var body: some View {
         NavigationStack(path: $ruta) {
             ScrollView {
                 LazyVStack(spacing: 12) {
+                    FranjaFogatas(abierta: $fogata).id(vueltaFogata)
                     Picker("", selection: $siguiendo) {
                         Text(L("ios_muro_todos")).tag(false)
                         Text(L("ios_muro_siguiendo")).tag(true)
@@ -60,6 +63,7 @@ struct ComunidadVista: View {
             }
             .task(id: siguiendo) { await cargar(mas: false) }
             .sheet(isPresented: $publicando) { PublicarVista { publicando = false } }
+            .fullScreenCover(item: $fogata, onDismiss: { vueltaFogata += 1 }) { c in FogataVivoVista(c: c) }
             .onReceive(NotificationCenter.default.publisher(for: .publicado)) { _ in Task { await cargar(mas: false) } }
         }
     }
