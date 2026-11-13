@@ -19,15 +19,23 @@ targets:
     platform: iOS
     sources:
       - path: SuRoute
+        excludes: ["SuRoute.entitlements"]
+      - path: Compartido
+      # Los cuadernos de Aprende y Mochila: los mismos JSON de la app Android (una sola copia)
+      - path: ../app/src/main/assets/content
+        type: folder
+        buildPhase: resources
     configFiles:
       Debug: Config/SuRoute.xcconfig
       Release: Config/SuRoute.xcconfig
     dependencies:
       - package: Supabase
         product: Supabase
+      - target: SuRouteWidget
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.rutaalacima.app
+        CODE_SIGN_ENTITLEMENTS: SuRoute/SuRoute.entitlements
         PRODUCT_NAME: SuRoute
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
@@ -50,6 +58,30 @@ targets:
         SupabaseURL: $(SUPABASE_URL)
         SupabaseAnonKey: $(SUPABASE_ANON_KEY)
         CFBundleLocalizations: [es, en, pt, fr, de, it, zh-Hans, ja, ko, ar, hi, ru]
+  SuRouteWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+        excludes: ["Widget.entitlements"]
+      - path: Compartido
+      - path: SuRoute/Recursos/Localizable.xcstrings
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rutaalacima.app.widget
+        PRODUCT_NAME: SuRouteWidget
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.10"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: SuRoute
+        CODE_SIGN_ENTITLEMENTS: Widget/Widget.entitlements
+    info:
+      path: Widget/Info.plist
+      properties:
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
 schemes:
   SuRoute:
     build:

@@ -1,4 +1,5 @@
 import SwiftUI
+import WidgetKit
 
 @main
 struct SuRouteApp: App {
@@ -9,6 +10,7 @@ struct SuRouteApp: App {
                 .environment(almacen)
                 .tint(Tema.burdeos)
                 .task { await almacen.arrancar() }
+                .onChange(of: almacen.version) { _, _ in PuenteWidget.actualizar() }
         }
     }
 }
@@ -50,5 +52,19 @@ struct BotonPerfil: View {
         Button { abierto = true } label: { Avatar(url: nil, nombre: Perfil(a).nombre.isEmpty ? "?" : Perfil(a).nombre, tam: 32) }
             .accessibilityLabel(L("tab_perfil"))
             .sheet(isPresented: $abierto) { CuentaVista() }
+    }
+}
+
+/// Le deja al widget «Tu paso de hoy» los hábitos de hoy y el siguiente que falta.
+@MainActor
+enum PuenteWidget {
+    private static var ultimo = ""
+    static func actualizar() {
+        let a = Almacen.shared, h = Habitos.lista(a), m = Habitos.marcados(a)
+        let r = ResumenWidget(hechos: h.filter { m.contains($0.id) }.count, total: h.count, cumbre: Perfil(a).cumbre,
+                              siguiente: h.first { !m.contains($0.id) }?.texto ?? "", fecha: Fecha.iso())
+        let firma = "\(r.hechos)|\(r.total)|\(r.cumbre)|\(r.siguiente)|\(r.fecha)"
+        guard firma != ultimo else { return }
+        ultimo = firma; r.guardar(); WidgetCenter.shared.reloadAllTimelines()
     }
 }

@@ -36,6 +36,12 @@ struct CuentaVista: View {
                     Button { Task { await a.traerDeLaNube() } } label: { Label(L("ios_traer"), systemImage: "arrow.clockwise") }
                 } footer: { Text(L("ios_misma_cuenta")) }
                 Section {
+                    NavigationLink { CoachVista() } label: { Label(L("ios_coach"), systemImage: "sparkles") }
+                    NavigationLink { AprendeVista() } label: { Label(L("tab_aprende"), systemImage: "book") }
+                    NavigationLink { AprendeVista(mochila: true) } label: { Label(L("ios_mochila"), systemImage: "backpack") }
+                    NavigationLink { LibroVista() } label: { Label(L("ios_libro"), systemImage: "book.closed") }
+                }
+                Section {
                     Button { abrir(Config.sitio) } label: { Label(L("ios_abrir_web"), systemImage: "safari") }
                     Button { abrir(Config.sitio.appendingPathComponent("privacidad.html")) } label: { Label(L("ios_privacidad"), systemImage: "hand.raised") }
                 }
