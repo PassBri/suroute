@@ -13,6 +13,8 @@ final class Almacen {
     /// El id de la cuenta para el código que no corre en el hilo principal (la comunidad).
     nonisolated(unsafe) static var sharedUid: String?
     private(set) var cargando = false
+    /// Ya se leyó la ruta (de la nube o del archivo): antes de esto no se sabe si falta el primer uso.
+    private(set) var sincronizado = false
     private(set) var errorNube: String?
     /// Cambia cada vez que algo cambia (para que las vistas se repinten).
     private(set) var version = 0
@@ -26,8 +28,9 @@ final class Almacen {
     // MARK: sesión
 
     func arrancar() async {
-        if Config.demo { uid = "demo"; docs = Demo.ruta(); version += 1; return }
+        if Config.demo { uid = "demo"; docs = Demo.ruta(); version += 1; sincronizado = true; return }
         leerArchivo()
+        if !docs.isEmpty { sincronizado = true }
         guard let nube = Nube.shared, let u = await nube.usuario() else { uid = nil; return }
         uid = u
         await traerDeLaNube()
@@ -39,14 +42,14 @@ final class Almacen {
             let filas = try await nube.cargarTodo(u)
             var nuevos: [String: [String: Doc]] = [:]
             for f in filas { nuevos[f.tipo, default: [:]][f.clave] = f.datos }
-            docs = nuevos; errorNube = nil; version += 1
+            docs = nuevos; errorNube = nil; version += 1; sincronizado = true
             escribirArchivo()
         } catch { errorNube = error.localizedDescription }
     }
     func sesionAbierta() async { await arrancar() }
     func cerrarSesion() async {
         await Nube.shared?.salir()
-        uid = nil; docs = [:]; version += 1
+        uid = nil; docs = [:]; version += 1; sincronizado = false
         try? FileManager.default.removeItem(at: archivo)
     }
 

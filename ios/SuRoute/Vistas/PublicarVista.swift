@@ -4,6 +4,8 @@ import PhotosUI
 /// Publicar: un logro, una evidencia, tu visión, una meta o una reflexión, con foto si quieres.
 struct PublicarVista: View {
     var alPublicar: () -> Void = {}
+    /// Un recuerdo de otro año (desde el Diario de vida): se guarda en ese año y empieza como «Solo yo».
+    var anio: Int? = nil
     @State private var tipo = "LOGRO"
     @State private var eje: String? = nil
     @State private var texto = ""
@@ -59,6 +61,7 @@ struct PublicarVista: View {
                 }
             }
             .fondoPapel()
+            .onAppear { if anio != nil && texto.isEmpty { visibilidad = "PRIVADA" } }
             .navigationTitle(L("publicar"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -79,7 +82,7 @@ struct PublicarVista: View {
         // La foto se reduce a 1600 px y JPEG: sube rápido y pesa poco
         let datos = imagen.flatMap { reducir($0, maximo: 1600).jpegData(compressionQuality: 0.82) }
         do {
-            try await Red.publicar(tipo: tipo, texto: texto.trimmingCharacters(in: .whitespacesAndNewlines), eje: eje, visibilidad: visibilidad,
+            try await Red.publicar(tipo: tipo, texto: texto.trimmingCharacters(in: .whitespacesAndNewlines), eje: eje, visibilidad: visibilidad, anio: anio ?? Fecha.anio,
                                    meta: meta.trimmingCharacters(in: .whitespaces), foto: datos)
             texto = ""; meta = ""; imagen = nil; foto = nil
             NotificationCenter.default.post(name: .publicado, object: nil)

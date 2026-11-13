@@ -127,6 +127,7 @@ struct MetaAnio: Identifiable {
     var anio: Int { d.i("anio") ?? 0 }
     var propositoId: String? { d["propositoId"]?.texto }
     var eje: Eje? { Eje(rawValue: d.t("eje")) }
+    var cumplida: Bool { d.t("estado") == "CUMPLIDA" }
 }
 
 struct Proposito: Identifiable {

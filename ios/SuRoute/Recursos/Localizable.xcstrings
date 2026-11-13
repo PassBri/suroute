@@ -161789,6 +161789,237 @@
     }
    }
   },
+  "ios_foto": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "صورة"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Photo"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Photo"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "फ़ोटो"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "写真"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "사진"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Foto"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Фото"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "照片"
+     }
+    }
+   }
+  },
+  "ios_guardado": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تم الحفظ"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Gespeichert"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Saved"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Guardado"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Enregistré"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "सहेजा गया"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Salvato"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "保存しました"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "저장됨"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Salvo"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Сохранено"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "已保存"
+     }
+    }
+   }
+  },
+  "ios_idioma_ayuda": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "يستخدم SuRoute لغة iPhone. لتغييرها في SuRoute فقط، اضغط هنا واختر «اللغة» في الإعدادات."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute verwendet die Sprache deines iPhone. Um sie nur für SuRoute zu ändern, tippe hier und wähle „Sprache“ in den Einstellungen."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute uses your iPhone's language. To change it just for SuRoute, tap here and choose “Language” in iPhone Settings."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute usa el idioma de tu iPhone. Para cambiarlo solo en SuRoute, toca aquí y elige «Idioma» en los ajustes del iPhone."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute utilise la langue de votre iPhone. Pour la changer uniquement dans SuRoute, touchez ici et choisissez « Langue » dans les Réglages."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute आपके iPhone की भाषा इस्तेमाल करता है। केवल SuRoute के लिए बदलने हेतु यहाँ टैप करें और सेटिंग्स में “भाषा” चुनें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute usa la lingua del tuo iPhone. Per cambiarla solo in SuRoute, tocca qui e scegli «Lingua» nelle Impostazioni."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute は iPhone の言語を使います。SuRoute だけ変えるには、ここをタップして設定の「言語」を選んでください。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute는 iPhone의 언어를 사용합니다. SuRoute만 바꾸려면 여기를 눌러 설정에서 ‘언어’를 선택하세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "O SuRoute usa o idioma do seu iPhone. Para mudá-lo só no SuRoute, toque aqui e escolha «Idioma» nos Ajustes do iPhone."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute использует язык iPhone. Чтобы изменить его только для SuRoute, нажмите здесь и выберите «Язык» в Настройках."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute 使用 iPhone 的语言。若只想更改 SuRoute 的语言，请轻点此处，在 iPhone 设置中选择“语言”。"
+     }
+    }
+   }
+  },
   "ios_libro": {
    "extractionState": "manual",
    "localizations": {
@@ -163406,6 +163637,83 @@
     }
    }
   },
+  "ios_permiso_avisos": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الإشعارات متوقفة لـ SuRoute. اضغط لتفعيلها في الإعدادات."
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Mitteilungen für SuRoute sind aus. Tippe, um sie in den Einstellungen zu aktivieren."
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Notifications are off for SuRoute. Tap to turn them on in iPhone Settings."
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Los avisos están apagados para SuRoute. Toca para activarlos en los ajustes del iPhone."
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Les notifications sont désactivées pour SuRoute. Touchez pour les activer dans les Réglages."
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute की सूचनाएँ बंद हैं। सेटिंग्स में चालू करने के लिए टैप करें।"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Le notifiche di SuRoute sono disattivate. Tocca per attivarle nelle Impostazioni."
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute の通知がオフです。タップして設定でオンにしてください。"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute 알림이 꺼져 있습니다. 눌러서 설정에서 켜세요."
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "As notificações estão desativadas para o SuRoute. Toque para ativá-las nos Ajustes."
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Уведомления SuRoute выключены. Нажмите, чтобы включить их в Настройках."
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "SuRoute 的通知已关闭。轻点以在设置中开启。"
+     }
+    }
+   }
+  },
   "ios_privacidad": {
    "extractionState": "manual",
    "localizations": {
@@ -163787,6 +164095,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "如果该邮箱有账号，你会收到设置新密码的链接。"
+     }
+    }
+   }
+  },
+  "ios_releer_carta": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "إعادة قراءة رسالة الترحيب"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Willkommensbrief erneut lesen"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Reread the welcome letter"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Releer la carta de bienvenida"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Relire la lettre de bienvenue"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "स्वागत पत्र फिर से पढ़ें"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Rileggi la lettera di benvenuto"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "ウェルカムレターを読み返す"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "환영 편지 다시 읽기"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Reler a carta de boas-vindas"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Перечитать приветственное письмо"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "重读欢迎信"
      }
     }
    }

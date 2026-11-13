@@ -19,10 +19,21 @@ struct SuRouteApp: App {
 struct Raiz: View {
     @Environment(Almacen.self) private var a
     @Environment(\.scenePhase) private var fase
+    @State private var carta = CartaBienvenidaVista.leida || Config.demo
+    /// Cuenta nueva: sin nombre ni primer uso hecho (en Android o la web ya lo habría marcado).
+    private var faltaPrimerUso: Bool {
+        guard a.sincronizado, !Config.demo else { return false }
+        let p = Perfil(a)
+        return p.d["onboardingCompleto"]?.bool != true && p.nombre.isEmpty && p.cumbre.isEmpty
+    }
     var body: some View {
         Group {
-            if a.uid == nil { Entrar() } else { Pestanas() }
+            if !carta { CartaBienvenidaVista { withAnimation { carta = true } } }
+            else if a.uid == nil { Entrar() }
+            else if faltaPrimerUso { OnboardingVista() }
+            else { Pestanas() }
         }
+        .task(id: a.sincronizado) { if a.sincronizado { await Recordatorios.programar() } }
         .onChange(of: fase) { _, f in if f == .active { Task { await a.traerDeLaNube() } } }
     }
 }
@@ -31,7 +42,7 @@ struct Raiz: View {
 /// Comunidad, como en Mail), no una pestaña; el perfil va en el botón de arriba a la derecha.
 struct Pestanas: View {
     enum P: String { case hoy, ruta, brujula, comunidad, finanzas }
-    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? "").replacingOccurrences(of: "81", with: "").replacingOccurrences(of: "publicar", with: "comunidad")) ?? .hoy
+    @State private var sel: P = P(rawValue: (Config.pestanaInicial ?? UserDefaults.standard.string(forKey: "abrir_en") ?? "").replacingOccurrences(of: "81", with: "").replacingOccurrences(of: "publicar", with: "comunidad")) ?? .hoy
     var body: some View {
         TabView(selection: $sel) {
             HoyVista().tabItem { Label(L("tab_hoy"), systemImage: "sun.horizon") }.tag(P.hoy)

@@ -42,6 +42,11 @@ struct CuentaVista: View {
                     NavigationLink { LibroVista() } label: { Label(L("ios_libro"), systemImage: "book.closed") }
                 }
                 Section {
+                    NavigationLink { BienestarVista() } label: { Label(L("bi_titulo"), systemImage: "heart.text.square") }
+                    NavigationLink { DiarioVista() } label: { Label(L("diario_titulo"), systemImage: "photo.on.rectangle.angled") }
+                    NavigationLink { AjustesVista() } label: { Label(L("ajustes"), systemImage: "gearshape") }
+                }
+                Section {
                     Button { abrir(Config.sitio) } label: { Label(L("ios_abrir_web"), systemImage: "safari") }
                     Button { abrir(Config.sitio.appendingPathComponent("privacidad.html")) } label: { Label(L("ios_privacidad"), systemImage: "hand.raised") }
                 }
