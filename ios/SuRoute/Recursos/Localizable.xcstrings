@@ -160788,6 +160788,160 @@
     }
    }
   },
+  "ios_descripcion": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الوصف"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Beschreibung"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Description"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Descripción"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Description"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "विवरण"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Descrizione"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "説明"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "설명"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Descrição"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Описание"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "描述"
+     }
+    }
+   }
+  },
+  "ios_dias_objetivo": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الأيام المستهدفة: %ld"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Zieltage: %ld"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Target days: %ld"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Días objetivo: %ld"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Jours visés : %ld"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "लक्ष्य दिन: %ld"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Giorni obiettivo: %ld"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "目標日数：%ld"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "목표 일수: %ld"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Dias-meta: %ld"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Целевых дней: %ld"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "目标天数：%ld"
+     }
+    }
+   }
+  },
   "ios_edad": {
    "extractionState": "manual",
    "localizations": {
@@ -162016,6 +162170,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "SuRoute 使用 iPhone 的语言。若只想更改 SuRoute 的语言，请轻点此处，在 iPhone 设置中选择“语言”。"
+     }
+    }
+   }
+  },
+  "ios_indicador": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "كيف ستعرف أنك حققته"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Woran du merkst, dass du es geschafft hast"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "How you'll know you made it"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Cómo sabrás que lo lograste"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Comment saurez-vous que c'est réussi"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "आप कैसे जानेंगे कि हासिल हो गया"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Come saprai di averlo raggiunto"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "達成したとわかる基準"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "달성했음을 아는 기준"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Como saberá que conseguiu"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Как вы поймёте, что достигли"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "你如何知道已达成"
      }
     }
    }
@@ -163714,6 +163945,83 @@
     }
    }
   },
+  "ios_planificar": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "التخطيط"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Planen"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Plan"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Planificar"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Planifier"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "योजना"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Pianifica"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "計画"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "계획"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Planejar"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Планировать"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "规划"
+     }
+    }
+   }
+  },
   "ios_privacidad": {
    "extractionState": "manual",
    "localizations": {
@@ -163787,6 +164095,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "隐私"
+     }
+    }
+   }
+  },
+  "ios_proposito": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "الغاية"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Lebensziel"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Purpose"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Propósito"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Objectif"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "उद्देश्य"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Proposito"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "目的"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "목적"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Propósito"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Цель"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "目标"
      }
     }
    }
@@ -165096,6 +165481,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "从云端获取最新内容"
+     }
+    }
+   }
+  },
+  "ios_tu_mes": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "شهرك"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Dein Monat"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Your month"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Tu mes"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Votre mois"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "आपका महीना"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Il tuo mese"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "今月"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "이번 달"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Seu mês"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ваш месяц"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "你的月份"
      }
     }
    }
