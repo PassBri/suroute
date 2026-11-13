@@ -42,7 +42,7 @@ enum Fijos {
     static func del(_ f: String, guardados: [Mov]) -> [Mov] {
         guard f <= Fecha.iso() else { return [] }
         let ym = String(f.prefix(7))
-        return lista().filter { $0.activo(ym) && fecha($0, ym) == f && !guardados.contains { m in m.d.t("fx") == $0.id } }.map { x in
+        return lista().filter { x in x.activo(ym) && fecha(x, ym) == f && !guardados.contains { m in m.d.t("fx") == x.id } }.map { x in
             var d: Doc = ["id": .texto("fx-" + x.id), "t": .texto(x.t), "m": .numero(x.m), "c": .texto(x.c), "fx": .texto(x.id)]
             if !x.n.isEmpty { d["n"] = .texto(x.n) }
             if let dd = x.d["d"], dd != .nulo { d["d"] = dd }
