@@ -12,6 +12,9 @@ concurrency:
   group: ios-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   compilar:
     runs-on: macos-latest
@@ -59,6 +62,13 @@ jobs:
               xcrun simctl io "$DISP" screenshot "capturas/$p-$tema.png"
             done
           done
+      - name: Publicar las capturas en la rama ios-capturas (para revisarlas sin descargar artefactos)
+        if: github.event_name != 'pull_request'
+        run: |
+          cd capturas && for f in *.png; do sips -Z 1100 "$f" >/dev/null; done
+          git init -q -b ios-capturas . && git add *.png
+          git -c user.name="SuRoute CI" -c user.email="ci@suroute.local" commit -qm "Capturas de ${GITHUB_SHA::7}"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ios-capturas
       - uses: actions/upload-artifact@v4
         if: always()
         with:
