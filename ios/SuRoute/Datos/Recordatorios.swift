@@ -24,7 +24,8 @@ enum Recordatorios {
         let c = UNUserNotificationCenter.current()
         let viejos = await c.pendingNotificationRequests().map(\.identifier).filter { $0.hasPrefix("rec-") }
         c.removePendingNotificationRequests(withIdentifiers: viejos)
-        guard activo, !Config.demo, await c.notificationSettings().authorizationStatus == .authorized else { return }
+        let estado = await c.notificationSettings().authorizationStatus
+        guard activo, !Config.demo, estado == .authorized else { return }
         let ahora = Date()
         for i in 0..<30 {
             guard let dia = Fecha.cal.date(byAdding: .day, value: i, to: ahora),

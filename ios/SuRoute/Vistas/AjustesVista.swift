@@ -79,7 +79,8 @@ struct AjustesVista: View {
     }
 
     private func revisarPermiso() async {
-        sinPermiso = recActivo && !Config.demo && (await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .denied)
+        let estado = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+        sinPermiso = recActivo && !Config.demo && estado == .denied
     }
     private func cargar() {
         let p = Perfil(a)
