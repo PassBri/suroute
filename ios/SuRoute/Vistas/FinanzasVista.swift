@@ -157,6 +157,9 @@ struct DiaFin: View {
     @State private var repite = false
     @State private var meta = ""
     @State private var deuda = ""
+    @State private var creandoCat = false
+    @State private var nuevaCat = ""
+    @State private var esencial = true
     @FocusState private var enMonto: Bool
 
     var body: some View {
@@ -166,9 +169,13 @@ struct DiaFin: View {
             Section {
                 Picker("", selection: $tipo) { ForEach(TipoMov.allCases) { Text($0.nombre).tag($0) } }
                     .pickerStyle(.segmented)
-                    .onChange(of: tipo) { _, n in cat = n.categorias.first ?? "otro" }
+                    .onChange(of: tipo) { _, n in cat = n.todasCategorias.first ?? "otro" }
                 TextField(L("cu_monto"), text: $monto).keyboardType(.decimalPad).font(.title2.monospacedDigit()).focused($enMonto)
-                Picker(L("cu_categoria"), selection: $cat) { ForEach(tipo.categorias, id: \.self) { Text(tipo.categoria($0)).tag($0) } }
+                Picker(L("cu_categoria"), selection: $cat) {
+                    ForEach(tipo.todasCategorias, id: \.self) { Text(tipo.nombreCat($0)).tag($0) }
+                    Text("+ " + L("cu_nueva_categoria")).tag("__nueva")
+                }
+                .onChange(of: cat) { o, n in if n == "__nueva" { cat = o; nuevaCat = "" ; creandoCat = true } }
                 TextField(L("cu_concepto"), text: $concepto)
                 if tipo == .aho, !MetasFin.lista().isEmpty {
                     Picker(L("mf_titulo"), selection: $meta) {
@@ -199,6 +206,7 @@ struct DiaFin: View {
                     .buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor).disabled(Plata.leer(monto) <= 0)
                     .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
+            Section { FilaFrecuentes(fecha: fecha) { anotado += 1 } }
             Section(L("cu_movimientos")) {
                 if movs.isEmpty { Text(L("cu_sin_movs_dia")).foregroundStyle(Tema.tintaSuave) }
                 ForEach(movs) { m in
@@ -206,10 +214,16 @@ struct DiaFin: View {
                     HStack(spacing: 12) {
                         Image(systemName: tt.icono).foregroundStyle(tt == .ing ? Tema.ok : Tema.tintaSuave)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(m.n.isEmpty ? tt.categoria(m.c) : m.n)
-                            Text(tt.nombre + (m.n.isEmpty ? "" : " · " + tt.categoria(m.c)) + (m.virtual ? " · " + L("cu_fijo_marca") : "")).font(.caption).foregroundStyle(Tema.tintaSuave)
+                            Text(m.n.isEmpty ? tt.nombreCat(m.c) : m.n)
+                            Text(tt.nombre + (m.n.isEmpty ? "" : " · " + tt.nombreCat(m.c)) + (m.virtual ? " · " + L("cu_fijo_marca") : "")).font(.caption).foregroundStyle(Tema.tintaSuave)
                         }
                         Spacer()
+                        let nr = Recibos.de(m).count
+                        NavigationLink { RecibosVista(fecha: fecha, mov: m) } label: {
+                            Image(systemName: nr > 0 ? "paperclip.circle.fill" : "paperclip").foregroundStyle(nr > 0 ? Tema.oro : Tema.tintaSuave)
+                        }
+                        .buttonStyle(.borderless).fixedSize()
+                        .accessibilityLabel(nr > 0 ? L("cu_recibos_n", nr) : L("cu_agregar_recibo"))
                         Text((tt == .ing ? "+" : "−") + Plata.texto(m.m)).monospacedDigit().fontWeight(.semibold).foregroundStyle(tt == .ing ? Tema.ok : Tema.tinta)
                     }
                     .swipeActions { Button(L("cu_quitar"), role: .destructive) { Movs.quitar(fecha, m.id) } }
@@ -223,6 +237,16 @@ struct DiaFin: View {
         .navigationTitle(Fecha.de(fecha).map { $0.formatted(.dateTime.weekday(.abbreviated).day().month(.wide)) } ?? fecha)
         .navigationBarTitleDisplayMode(.inline)
         .sensoryFeedback(.success, trigger: anotado)
+        .alert(L("cu_crear_categoria"), isPresented: $creandoCat) {
+            TextField(L("cu_cat_ej"), text: $nuevaCat)
+            if tipo == .gas { Button(L("cu_es_esencial")) { crear(true) } ; Button(L("cu_crear")) { crear(false) } }
+            else { Button(L("cu_crear")) { crear(false) } }
+            Button(L("cancelar"), role: .cancel) {}
+        } message: { Text(tipo == .gas ? L("cu_mochilas") : L("cu_nueva_categoria")) }
+    }
+    private func crear(_ es: Bool) {
+        let n = nuevaCat.trimmingCharacters(in: .whitespaces); guard !n.isEmpty else { return }
+        cat = Propias.crear(tipo, nombre: n, esencial: es)
     }
 }
 

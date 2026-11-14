@@ -10,13 +10,15 @@ struct EntradasFinanzas: View {
         Hoja {
             NavigationLink { GraficaVista() } label: { Entrada(icono: "chart.xyaxis.line", titulo: L("gr_titulo"), sub: L("gr_acceso_sub")) }
             Divider()
+            NavigationLink { InformeVista() } label: { Entrada(icono: "doc.text.magnifyingglass", titulo: L("cu_informe_titulo"), sub: L("cu_informe_estado_cuentas") + " · PDF") }
+            Divider()
             NavigationLink { SaludFinVista() } label: {
                 let s = SaludFin.de(a, anio: nil)
                 Entrada(icono: "heart.text.square", titulo: L("cu_salud"), sub: s.isf.map { "ISF \($0) · " + L("cu_salud_sub", s.indicadores.filter { $0.estado == .ok }.count, s.indicadores.count) } ?? L("cu_isf_escala"))
             }
             Divider()
             NavigationLink { FijosVista() } label: {
-                Entrada(icono: "repeat", titulo: L("cu_fijos_titulo"), sub: fijos.isEmpty ? L("cu_fijos_sub") : fijos.prefix(3).map { $0.n.isEmpty ? (TipoMov(rawValue: $0.t) ?? .gas).categoria($0.c) : $0.n }.joined(separator: " · "))
+                Entrada(icono: "repeat", titulo: L("cu_fijos_titulo"), sub: fijos.isEmpty ? L("cu_fijos_sub") : fijos.prefix(3).map { $0.n.isEmpty ? (TipoMov(rawValue: $0.t) ?? .gas).nombreCat($0.c) : $0.n }.joined(separator: " · "))
             }
             Divider()
             NavigationLink { MetasFinVista() } label: {
@@ -80,7 +82,7 @@ struct FijosVista: View {
                     let tt = TipoMov(rawValue: x.t) ?? .gas
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(x.n.isEmpty ? tt.categoria(x.c) : x.n)
+                            Text(x.n.isEmpty ? tt.nombreCat(x.c) : x.n)
                             Text(tt.nombre + " · " + L("cu_fijo_dia", x.dia)).font(.caption).foregroundStyle(Tema.tintaSuave)
                         }
                         Spacer()
@@ -437,5 +439,25 @@ private struct EditarActivo: View {
             .onAppear { if let x { nombre = x.nombre; tipo = x.tipo; valor = String(format: "%.0f", x.valor) } }
         }
         .presentationDetents([.medium])
+    }
+}
+
+/// El análisis financiero completo, listo para guardar como PDF o compartir.
+struct InformeVista: View {
+    @Environment(Almacen.self) private var a
+    @State private var url: URL?
+    var body: some View {
+        VStack(spacing: 16) {
+            if let url {
+                Image(systemName: "doc.richtext").font(.system(size: 54)).foregroundStyle(Tema.burdeos)
+                Text(L("cu_informe_titulo")).font(Tema.serif(.title3, .semibold))
+                ShareLink(item: url) { Label(L("lb_pdf_ok"), systemImage: "square.and.arrow.up") }.buttonStyle(.borderedProminent).foregroundStyle(Tema.sobreColor)
+                Text(L("cu_informe_pie")).font(.caption).foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
+            } else { ProgressView() }
+        }
+        .padding(24).frame(maxWidth: .infinity, maxHeight: .infinity)
+        .fondoPapel()
+        .navigationTitle(L("cu_informe_titulo")).navigationBarTitleDisplayMode(.inline)
+        .task { url = InformeFin.pdf(a) }
     }
 }
