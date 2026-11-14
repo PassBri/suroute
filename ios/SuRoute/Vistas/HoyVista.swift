@@ -18,6 +18,7 @@ struct HoyVista: View {
                     .padding(.horizontal, 4)
                     if let e = a.errorNube { AvisoNube(texto: e) }
                     FraseDelDia()
+                    InvitacionRevision()
                     HabitosHoy()
                     ClimaRapido()
                     if Fecha.cal.component(.hour, from: Date()) >= 18 { PreguntaNoche() }

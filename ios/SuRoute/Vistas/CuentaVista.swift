@@ -8,6 +8,7 @@ struct CuentaVista: View {
     @State private var confirmarEliminar = false
     @State private var eliminando = false
     @State private var error: String?
+    @State private var moderador = false
     var body: some View {
         let _ = a.version
         let p = Perfil(a)
@@ -37,6 +38,7 @@ struct CuentaVista: View {
                 } footer: { Text(L("ios_misma_cuenta")) }
                 Section {
                     NavigationLink { CoachVista() } label: { Label(L("ios_coach"), systemImage: "sparkles") }
+                    NavigationLink { CoachVidaVista() } label: { Label(L("coach_vida"), systemImage: "person.2.wave.2") }
                     NavigationLink { AprendeVista() } label: { Label(L("tab_aprende"), systemImage: "book") }
                     NavigationLink { AprendeVista(mochila: true) } label: { Label(L("ios_mochila"), systemImage: "backpack") }
                     NavigationLink { LibroVista() } label: { Label(L("ios_libro"), systemImage: "book.closed") }
@@ -48,6 +50,7 @@ struct CuentaVista: View {
                     NavigationLink { MisFrasesVista() } label: { Label(L("mis_frases"), systemImage: "quote.opening") }
                     NavigationLink { AjustesVista() } label: { Label(L("ajustes"), systemImage: "gearshape") }
                     NavigationLink { WebVista() } label: { Label(L("web_titulo"), systemImage: "desktopcomputer") }
+                    if moderador { NavigationLink { ModeracionVista() } label: { Label(L("moderacion_titulo"), systemImage: "shield.lefthalf.filled") } }
                 }
                 Section {
                     Button { abrir(Config.sitio) } label: { Label(L("ios_abrir_web"), systemImage: "safari") }
@@ -63,6 +66,7 @@ struct CuentaVista: View {
                 }
             }
             .fondoPapel()
+            .task { moderador = await Moderacion.esModerador() }
             .navigationTitle(L("tab_perfil"))
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button(L("listo")) { cerrarHoja() } } }
             .confirmationDialog(L("ios_eliminar_cuenta"), isPresented: $confirmarEliminar, titleVisibility: .visible) {

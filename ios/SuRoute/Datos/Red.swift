@@ -36,6 +36,8 @@ struct Post: Decodable, Identifiable, Hashable {
 struct Comentario: Decodable, Identifiable, Hashable {
     let id: String, texto: String, created_at: String, user_id: String
     let autor: Autor?
+    /// Lanzar una cuerda: PREGUNTA, CONSEJO o YO_TAMBIEN.
+    var cuerda: String? = nil
     var nombreAutor: String { autor?.nombre?.isEmpty == false ? autor!.nombre! : (autor?.username ?? L("ios_senderista")) }
 }
 
@@ -169,12 +171,15 @@ enum Red {
 
     static func comentarios(_ post: String) async throws -> [Comentario] {
         guard let sb else { return Demo.comentarios }
-        return try await sb.from("comments").select("id,texto,created_at,user_id,autor:profiles!comments_user_id_fkey(username,nombre,avatar_url)")
-            .eq("post_id", value: post).order("created_at").execute().value
+        let cols = "id,texto,created_at,user_id,autor:profiles!comments_user_id_fkey(username,nombre,avatar_url)"
+        if let xs: [Comentario] = try? await sb.from("comments").select(cols + ",cuerda").eq("post_id", value: post).order("created_at").execute().value { return xs }
+        return try await sb.from("comments").select(cols).eq("post_id", value: post).order("created_at").execute().value
     }
-    static func comentar(_ post: String, _ texto: String) async throws {
+    static func comentar(_ post: String, _ texto: String, cuerda: String? = nil) async throws {
         guard let sb, let yo else { return }
-        try await sb.from("comments").insert(["post_id": post, "user_id": yo, "texto": String(texto.prefix(1000))]).execute()
+        let base = ["post_id": post, "user_id": yo, "texto": String(texto.prefix(1000))]
+        if let cuerda, (try? await sb.from("comments").insert(base.merging(["cuerda": cuerda]) { a, _ in a }).execute()) != nil { return }
+        try await sb.from("comments").insert(base).execute()
     }
     static func borrarComentario(_ id: String) async throws { try await sb?.from("comments").delete().eq("id", value: id).execute() }
 

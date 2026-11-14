@@ -6,6 +6,7 @@ struct ComunidadVista: View {
     @State private var publicando: Bool
     init(abrirPublicar: Bool = false) { _publicando = State(initialValue: abrirPublicar) }
     @State private var filtro = 0
+    @State private var noLeidos = 0
     private var siguiendo: Bool { filtro == 1 }
     @State private var posts: [Post] = []
     @State private var impulsados: Set<String> = []
@@ -21,6 +22,7 @@ struct ComunidadVista: View {
         NavigationStack(path: $ruta) {
             ScrollView {
                 LazyVStack(spacing: 12) {
+                    AvisoSuspension()
                     FranjaFogatas(abierta: $fogata).id(vueltaFogata)
                     Picker("", selection: $filtro) {
                         Text(L("ios_muro_todos")).tag(0)
@@ -28,6 +30,7 @@ struct ComunidadVista: View {
                         Text(L("filtro_guardados")).tag(2)
                     }
                     .pickerStyle(.segmented)
+                    if filtro == 0 { RetoComunidad() }
                     if posts.isEmpty && !cargando {
                         VStack(spacing: 10) {
                             Image(systemName: error ? "wifi.slash" : "flame").font(.largeTitle).foregroundStyle(Tema.oro)
@@ -48,6 +51,13 @@ struct ComunidadVista: View {
             .refreshable { await cargar(mas: false) }
             .navigationTitle(L("tab_comunidad"))
             .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    NavigationLink(value: Destino.avisos) {
+                        Image(systemName: noLeidos > 0 ? "bell.badge" : "bell").symbolRenderingMode(noLeidos > 0 ? .multicolor : .monochrome)
+                    }
+                    .accessibilityLabel(noLeidos > 0 ? L("red_n_nuevos", noLeidos) : L("red_avisos"))
+                    NavigationLink(value: Destino.buscar) { Image(systemName: "magnifyingglass") }.accessibilityLabel(L("red_buscar"))
+                }
                 ToolbarItemGroup(placement: .topBarTrailing) {
                     Button { publicando = true } label: { Image(systemName: "square.and.pencil").accessibilityLabel(L("publicar")) }
                     NavigationLink(value: Destino.cordadas) { Image(systemName: "link").accessibilityLabel(L("cordadas")) }
@@ -62,9 +72,12 @@ struct ComunidadVista: View {
                 case .mensajes: MensajesVista()
                 case .chat(let c): ChatVista(conv: c)
                 case .cordadas: CordadasVista()
+                case .avisos: AvisosVista()
+                case .buscar: BuscarPersonasVista()
                 }
             }
             .task(id: filtro) { await cargar(mas: false) }
+            .task(id: ruta.count) { if ruta.isEmpty { noLeidos = await AvisosRed.noLeidos() } }
             .sheet(isPresented: $publicando) { PublicarVista { publicando = false } }
             .fullScreenCover(item: $fogata, onDismiss: { vueltaFogata += 1 }) { c in FogataVivoVista(c: c) }
             .onReceive(NotificationCenter.default.publisher(for: .publicado)) { _ in Task { await cargar(mas: false) } }
@@ -93,7 +106,7 @@ struct ComunidadVista: View {
     private func quitar(_ id: String) { withAnimation { posts.removeAll { $0.id == id } } }
 }
 
-enum Destino: Hashable { case post(String), persona(String), mensajes, chat(Conversacion), cordadas }
+enum Destino: Hashable { case post(String), persona(String), mensajes, chat(Conversacion), cordadas, avisos, buscar }
 extension Notification.Name { static let publicado = Notification.Name("suroute.publicado") }
 
 /// Una publicación del muro.
@@ -263,6 +276,8 @@ struct Avatar: View {
 
 /// Una publicación completa con sus comentarios y la caja para comentar abajo.
 struct DetallePost: View {
+    static let cuerdas: [(String?, String)] = [(nil, "cv_comentar"), ("PREGUNTA", "cv_pregunta"), ("CONSEJO", "cv_consejo"), ("YO_TAMBIEN", "cv_yo_tambien")]
+    @State private var cuerda: String?
     let id: String
     @Environment(\.dismiss) private var cerrar
     @State private var post: Post?
@@ -288,6 +303,9 @@ struct DetallePost: View {
                                     Text(c.nombreAutor).font(.footnote.weight(.semibold))
                                     Text(Red.fecha(c.created_at).formatted(.relative(presentation: .named, unitsStyle: .abbreviated))).font(.caption2).foregroundStyle(Tema.tintaSuave)
                                 }
+                                if let k = c.cuerda, let n = DetallePost.cuerdas.first(where: { $0.0 == k })?.1 {
+                                    Label(L("cv_lanzo_cuerda", L(n)), systemImage: "link").font(.caption2.weight(.semibold)).foregroundStyle(Tema.burdeos)
+                                }
                                 Text(c.texto).font(.subheadline)
                             }
                             Spacer(minLength: 0)
@@ -309,19 +327,37 @@ struct DetallePost: View {
         .navigationTitle(L("comentarios_titulo"))
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
+            VStack(spacing: 6) {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(0..<DetallePost.cuerdas.count, id: \.self) { i in
+                        let (k, n) = DetallePost.cuerdas[i]
+                        Button { cuerda = k } label: {
+                            Label(L(n), systemImage: k == nil ? "bubble.left" : "link").font(.caption.weight(.medium)).padding(.horizontal, 10).padding(.vertical, 6)
+                                .foregroundStyle(cuerda == k ? Tema.sobreColor : Tema.tinta)
+                                .background(cuerda == k ? Tema.burdeos : Tema.hoja, in: Capsule())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.horizontal, 12)
+            }
             HStack(spacing: 8) {
-                TextField(L("comentar"), text: $texto, axis: .vertical).lineLimit(1...4).focused($escribiendo)
+                TextField(cuerda == "PREGUNTA" ? L("cv_ph_pregunta") : cuerda == "CONSEJO" ? L("cv_ph_consejo") : cuerda == "YO_TAMBIEN" ? L("cv_ph_yo_tambien") : L("comentar"), text: $texto, axis: .vertical).lineLimit(1...4).focused($escribiendo)
                     .padding(.horizontal, 14).padding(.vertical, 10)
                     .background(Tema.hoja, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
                 Button {
                     let t = texto.trimmingCharacters(in: .whitespacesAndNewlines); guard !t.isEmpty else { return }
                     enviando = true
-                    Task { try? await Red.comentar(id, t); texto = ""; enviando = false; await cargar() }
+                    let k = cuerda
+                    Task { try? await Red.comentar(id, t, cuerda: k); texto = ""; cuerda = nil; enviando = false; await cargar() }
                 } label: { Image(systemName: "arrow.up.circle.fill").font(.system(size: 34)) }
                     .disabled(texto.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || enviando)
                     .accessibilityLabel(L("enviar"))
             }
-            .padding(.horizontal, 12).padding(.vertical, 8)
+            .padding(.horizontal, 12)
+            }
+            .padding(.vertical, 8)
             .background(.bar)
         }
         .task { await cargar() }
