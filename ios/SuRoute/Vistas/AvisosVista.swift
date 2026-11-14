@@ -6,6 +6,12 @@ struct AvisoRed: Decodable, Identifiable, Hashable {
     let id: Int64; let tipo: String; let texto: String?; let leida: Bool?; let created_at: String; let post_id: String?
     let actor: Actor?
     struct Actor: Decodable, Hashable { let id: String?; let username: String?; let nombre: String?; let avatar_url: String? }
+    var destino: Destino {
+        if let p = post_id { return .post(p) }
+        if let a = actor?.id { return .persona(a) }
+        return .mensajes
+    }
+    var fraseCorta: String { " " + frase.prefix(1).lowercased() + String(frase.dropFirst()) }
     var nombre: String { actor?.nombre?.isEmpty == false ? actor!.nombre! : (actor?.username ?? "") }
     var frase: String {
         switch tipo {
@@ -47,15 +53,17 @@ struct AvisosVista: View {
             let hoy = avisos.filter { Fecha.cal.isDateInToday(Red.fecha($0.created_at)) }
             let semana = avisos.filter { !hoy.contains($0) && Red.fecha($0.created_at) > Date().addingTimeInterval(-7 * 86400) }
             let antes = avisos.filter { !hoy.contains($0) && !semana.contains($0) }
-            ForEach([(L("red_hoy"), hoy), (L("red_semana"), semana), (L("red_antes"), antes)], id: \.0) { titulo, xs in
+            let grupos: [(String, [AvisoRed])] = [(L("red_hoy"), hoy), (L("red_semana"), semana), (L("red_antes"), antes)]
+            ForEach(grupos.indices, id: \.self) { gi in
+                let (titulo, xs) = grupos[gi]
                 if !xs.isEmpty {
                     Section(titulo) {
                         ForEach(xs) { a in
-                            NavigationLink(value: a.post_id.map { Destino.post($0) } ?? a.actor?.id.map { Destino.persona($0) } ?? Destino.mensajes) {
+                            NavigationLink(value: a.destino) {
                                 HStack(spacing: 12) {
                                     Avatar(url: a.actor?.avatar_url, nombre: a.nombre.isEmpty ? "?" : a.nombre, tam: 44)
                                     VStack(alignment: .leading, spacing: 2) {
-                                        (Text(a.nombre).bold() + Text(" " + a.frase.prefix(1).lowercased() + a.frase.dropFirst())).font(.subheadline)
+                                        (Text(a.nombre).bold() + Text(a.fraseCorta)).font(.subheadline)
                                         if let t = a.texto, !t.isEmpty { Text(t).font(.caption).foregroundStyle(Tema.tintaSuave).lineLimit(2) }
                                         Text(Red.fecha(a.created_at).formatted(.relative(presentation: .named, unitsStyle: .abbreviated))).font(.caption2).foregroundStyle(Tema.tintaSuave)
                                     }
