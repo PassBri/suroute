@@ -61,6 +61,7 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
+        INFOPLIST_KEY_NSContactsUsageDescription: "Para ver quién de tu agenda ya está en SuRoute. Solo se envía una huella cifrada, nunca tus números ni correos."
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Para que te escuchen cuando enciendes una fogata en vivo."
         INFOPLIST_KEY_NSFaceIDUsageDescription: "Para abrir tu Ascenso financiero sin escribir el PIN."
         INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y tus publicaciones, encender una fogata en vivo y escanear el código de SuRoute Web."

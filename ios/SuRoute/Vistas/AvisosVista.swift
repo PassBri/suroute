@@ -106,6 +106,7 @@ struct BuscarPersonasVista: View {
         }
         .fondoPapel()
         .navigationTitle(L("red_buscar"))
+        .toolbar { NavigationLink(value: Destino.contactos) { Image(systemName: "person.crop.circle.badge.plus") }.accessibilityLabel(L("contactos_titulo")) }
         .searchable(text: $texto, placement: .navigationBarDrawer(displayMode: .always), prompt: L("red_buscar_hint"))
         .task(id: texto) {
             let t = texto.trimmingCharacters(in: .whitespaces).replacingOccurrences(of: "@", with: "").filter { !",()*".contains($0) }

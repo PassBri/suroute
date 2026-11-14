@@ -89,6 +89,7 @@ struct ComunidadVista: View {
                 case .cordadas: CordadasVista()
                 case .avisos: AvisosVista()
                 case .buscar: BuscarPersonasVista()
+                case .contactos: ContactosVista()
                 }
             }
             .task(id: "\(filtro)|\(eje ?? "")") { await cargar(mas: false) }
@@ -122,7 +123,7 @@ struct ComunidadVista: View {
     private func quitar(_ id: String) { withAnimation { posts.removeAll { $0.id == id } } }
 }
 
-enum Destino: Hashable { case post(String), persona(String), mensajes, chat(Conversacion), cordadas, avisos, buscar }
+enum Destino: Hashable { case post(String), persona(String), mensajes, chat(Conversacion), cordadas, avisos, buscar, contactos }
 extension Notification.Name { static let publicado = Notification.Name("suroute.publicado") }
 
 /// Una publicación del muro.

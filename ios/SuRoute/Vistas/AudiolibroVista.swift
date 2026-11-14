@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 import AVFoundation
 import Supabase
 
@@ -19,11 +20,32 @@ final class Audiolibro: NSObject, AVSpeechSynthesizerDelegate {
 
     override init() { super.init(); voz.delegate = self }
 
-    func cargarRemotos() async {
-        guard !cargado, let sb = Red.sb else { return }
+    private(set) var soyAutor = false
+    func cargarRemotos(forzar: Bool = false) async {
+        guard !cargado || forzar, let sb = Red.sb else { return }
+        if Red.yo != nil { let x: Bool? = try? await sb.rpc("es_autor").execute().value; soyAutor = x ?? false }
         struct Fila: Decodable { let workbook_id: String; let seccion: Int; let url: String }
         let xs: [Fila] = (try? await sb.from("audios").select("workbook_id,seccion,url").limit(2000).execute().value) ?? []
         remotos = Dictionary(xs.map { ("\($0.workbook_id)/\($0.seccion)", $0.url) }, uniquingKeysWith: { a, _ in a }); cargado = true
+    }
+    /// Sube la grabación de un capítulo (solo autores): nombre nuevo en cada subida para que nadie oiga una vieja en caché.
+    func subir(guia: String, seccion: Int, archivo: URL) async throws {
+        guard let sb = Red.sb else { return }
+        let ok = archivo.startAccessingSecurityScopedResource(); defer { if ok { archivo.stopAccessingSecurityScopedResource() } }
+        let datos = try Data(contentsOf: archivo)
+        guard datos.count <= 50 * 1024 * 1024 else { throw URLError(.dataLengthExceedsMaximum) }
+        let ext = ["m4a", "mp3", "wav", "ogg", "aac"].contains(archivo.pathExtension.lowercased()) ? archivo.pathExtension.lowercased() : "mp3"
+        let tipo = ext == "m4a" || ext == "aac" ? "audio/mp4" : ext == "wav" ? "audio/wav" : ext == "ogg" ? "audio/ogg" : "audio/mpeg"
+        let ruta = "\(guia)/\(seccion)-\(Int(Date().timeIntervalSince1970)).\(ext)"
+        _ = try await sb.storage.from("audios").upload(ruta, data: datos, options: FileOptions(contentType: tipo, upsert: true))
+        let url = try sb.storage.from("audios").getPublicURL(path: ruta).absoluteString
+        struct F: Encodable { let workbook_id: String; let seccion: Int; let url: String; let ruta: String }
+        try await sb.from("audios").upsert(F(workbook_id: guia, seccion: seccion, url: url, ruta: ruta)).execute()
+        await cargarRemotos(forzar: true)
+    }
+    func quitarGrabacion(guia: String, seccion: Int) async {
+        _ = try? await Red.sb?.from("audios").delete().eq("workbook_id", value: guia).eq("seccion", value: seccion).execute()
+        await cargarRemotos(forzar: true)
     }
     func hayGrabacion(_ guia: String, _ seccion: Int) -> Bool { remotos["\(guia)/\(seccion)"] != nil }
     func esEste(_ guia: String, _ seccion: Int) -> Bool { activo?.guia == guia && activo?.seccion == seccion }
@@ -87,6 +109,9 @@ final class Audiolibro: NSObject, AVSpeechSynthesizerDelegate {
 struct BarraAudio: View {
     let guia: String, seccion: Int, bloques: [Bloque]
     @State private var audio = Audiolibro.shared
+    @State private var eligiendo = false
+    @State private var subiendo = false
+    @State private var aviso: String?
     var body: some View {
         let t = Audiolibro.texto(de: bloques), minutos = max(1, t.split(separator: " ").count / 150)
         Group {
@@ -114,6 +139,25 @@ struct BarraAudio: View {
         }
         .padding(12).frame(maxWidth: .infinity, alignment: .leading)
         .background(Tema.oroSuave, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+        .overlay(alignment: .topTrailing) {
+            if audio.soyAutor {
+                Menu {
+                    Button(L(audio.hayGrabacion(guia, seccion) ? "audio_reemplazar" : "audio_subir"), systemImage: "mic") { eligiendo = true }
+                    if audio.hayGrabacion(guia, seccion) {
+                        Button(L("audio_quitar"), systemImage: "trash", role: .destructive) { Task { await audio.quitarGrabacion(guia: guia, seccion: seccion); aviso = L("audio_quitado") } }
+                    }
+                } label: { Image(systemName: subiendo ? "arrow.up.circle" : "ellipsis.circle").padding(8) }
+                .accessibilityLabel(L("audio_subir"))
+            }
+        }
+        .overlay(alignment: .bottomLeading) { if let aviso { Text(aviso).font(.caption2).foregroundStyle(Tema.burdeos).padding(.leading, 12).offset(y: 16) } }
+        .fileImporter(isPresented: $eligiendo, allowedContentTypes: [.audio]) { r in
+            guard case .success(let u) = r else { return }
+            Task {
+                subiendo = true; aviso = L("audio_subiendo"); defer { subiendo = false }
+                do { try await audio.subir(guia: guia, seccion: seccion, archivo: u); aviso = nil } catch { aviso = L("audio_error_subir") }
+            }
+        }
         .task { await audio.cargarRemotos() }
     }
 }
