@@ -8,6 +8,13 @@ struct EntradasFinanzas: View {
         let todos = Libro.todos()
         let metas = MetasFin.hoy(todos), deudas = Deudas.hoy(todos), fijos = Fijos.activosHoy, activos = Patrimonio.lista()
         Hoja {
+            NavigationLink { GraficaVista() } label: { Entrada(icono: "chart.xyaxis.line", titulo: L("gr_titulo"), sub: L("gr_acceso_sub")) }
+            Divider()
+            NavigationLink { SaludFinVista() } label: {
+                let s = SaludFin.de(a, anio: nil)
+                Entrada(icono: "heart.text.square", titulo: L("cu_salud"), sub: s.isf.map { "ISF \($0) · " + L("cu_salud_sub", s.indicadores.filter { $0.estado == .ok }.count, s.indicadores.count) } ?? L("cu_isf_escala"))
+            }
+            Divider()
             NavigationLink { FijosVista() } label: {
                 Entrada(icono: "repeat", titulo: L("cu_fijos_titulo"), sub: fijos.isEmpty ? L("cu_fijos_sub") : fijos.prefix(3).map { $0.n.isEmpty ? (TipoMov(rawValue: $0.t) ?? .gas).categoria($0.c) : $0.n }.joined(separator: " · "))
             }
