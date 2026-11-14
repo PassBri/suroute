@@ -87,9 +87,10 @@ enum Red {
     // MARK: publicaciones
 
     /// El muro: las públicas de todos o solo las de quienes sigues. Sin las de quienes bloqueaste.
-    static func muro(desde: Int, siguiendo: Bool) async throws -> [Post] {
-        guard let sb else { return Demo.posts }
+    static func muro(desde: Int, siguiendo: Bool, eje: String? = nil) async throws -> [Post] {
+        guard let sb else { return eje.map { e in Demo.posts.filter { $0.eje == e } } ?? Demo.posts }
         var q = sb.from("posts").select(columnasPost)
+        if let eje { q = q.eq("eje", value: eje) }
         if siguiendo {
             let ids = try await seguidos()
             if ids.isEmpty { return [] }
@@ -138,6 +139,19 @@ enum Red {
         do { try await sb.from("posts").insert(fila).execute() }
         catch { for k in extras.keys { fila[k] = nil }; try await sb.from("posts").insert(fila).execute() }
     }
+    /// Puntos de la expedición de la comunidad por tramo (semana) del año, sumados en el servidor.
+    static func expedicion(_ anio: Int) async -> [Int64]? {
+        guard let sb, yo != nil else { return nil }
+        struct F: Decodable { let semana: Int; let puntos: Valor }
+        guard let xs: [F] = try? await sb.rpc("expedicion", params: ["p_anio": anio]).execute().value else { return nil }
+        var r = [Int64](repeating: 0, count: Expedicion.tramos)
+        for f in xs {
+            let p: Int64 = { switch f.puntos { case .entero(let i): return i; case .numero(let d): return Int64(d); case .texto(let s): return Int64(s) ?? 0; default: return 0 } }()
+            r[min(max(0, f.semana), r.count - 1)] += p
+        }
+        return r
+    }
+
     // MARK: guardados, editar y quién ve
     static func guardados() async -> [Post] {
         guard let sb, let yo else { return [] }

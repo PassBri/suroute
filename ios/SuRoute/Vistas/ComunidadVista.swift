@@ -7,6 +7,8 @@ struct ComunidadVista: View {
     init(abrirPublicar: Bool = false) { _publicando = State(initialValue: abrirPublicar) }
     @State private var filtro = 0
     @State private var noLeidos = 0
+    @State private var eje: String?
+    @State private var cimas = false
     private var siguiendo: Bool { filtro == 1 }
     @State private var posts: [Post] = []
     @State private var impulsados: Set<String> = []
@@ -30,7 +32,20 @@ struct ComunidadVista: View {
                         Text(L("filtro_guardados")).tag(2)
                     }
                     .pickerStyle(.segmented)
-                    if filtro == 0 { RetoComunidad() }
+                    if filtro == 0 {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 6) {
+                                Ficha(texto: L("ios_muro_todos"), sel: eje == nil, color: Tema.burdeos) { eje = nil }
+                                ForEach(Eje.allCases) { e in Ficha(texto: e.nombre, sel: eje == e.rawValue, color: e.color) { eje = eje == e.rawValue ? nil : e.rawValue } }
+                            }
+                        }
+                        .scrollClipDisabled()
+                        if !posts.isEmpty {
+                            Button { cimas = true } label: { Label(L("cimas_pantalla_completa"), systemImage: "mountain.2.fill").frame(maxWidth: .infinity) }
+                                .buttonStyle(.bordered)
+                        }
+                        if eje == nil { ExpedicionTarjeta(posts: posts); RetoComunidad() }
+                    }
                     if posts.isEmpty && !cargando {
                         VStack(spacing: 10) {
                             Image(systemName: error ? "wifi.slash" : "flame").font(.largeTitle).foregroundStyle(Tema.oro)
@@ -76,7 +91,8 @@ struct ComunidadVista: View {
                 case .buscar: BuscarPersonasVista()
                 }
             }
-            .task(id: filtro) { await cargar(mas: false) }
+            .task(id: "\(filtro)|\(eje ?? "")") { await cargar(mas: false) }
+            .fullScreenCover(isPresented: $cimas) { CimasVista(posts: posts, luces: misLuces) }
             .task(id: ruta.count) { if ruta.isEmpty { noLeidos = await AvisosRed.noLeidos() } }
             .sheet(isPresented: $publicando) { PublicarVista { publicando = false } }
             .fullScreenCover(item: $fogata, onDismiss: { vueltaFogata += 1 }) { c in FogataVivoVista(c: c) }
@@ -90,7 +106,7 @@ struct ComunidadVista: View {
         do {
             if filtro == 2 && mas { return }
             let nuevos: [Post]
-            if filtro == 2 { nuevos = await Red.guardados() } else { nuevos = try await Red.muro(desde: mas ? posts.count : 0, siguiendo: siguiendo) }
+            if filtro == 2 { nuevos = await Red.guardados() } else { nuevos = try await Red.muro(desde: mas ? posts.count : 0, siguiendo: siguiendo, eje: filtro == 0 ? eje : nil) }
             if filtro == 2 { UserDefaults.standard.set(nuevos.map(\.id).sorted().joined(separator: ","), forKey: "guardados_ids") }
             let ids = nuevos.map(\.id)
             let lz = await ComunidadViva.misLuces(ids), imp = Set(lz.keys)
