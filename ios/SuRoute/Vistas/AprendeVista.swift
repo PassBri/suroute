@@ -110,6 +110,7 @@ struct CuadernoVista: View {
                     }
                     let s = secs[min(seccion, secs.count - 1)]
                     if let t = s.title { Text(t).font(Tema.serif(.title2, .semibold)) }
+                    BarraAudio(guia: id, seccion: min(seccion, secs.count - 1), bloques: s.blocks ?? [])
                     ForEach(s.blocks ?? [], id: \.self) { b in VistaBloque(b: b, wb: id) }
                     HStack {
                         if seccion > 0 { Button { withAnimation { seccion -= 1 } } label: { Label(L("ios_anterior"), systemImage: "chevron.left") } }

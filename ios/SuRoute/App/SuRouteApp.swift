@@ -19,6 +19,8 @@ struct SuRouteApp: App {
 struct Raiz: View {
     @Environment(Almacen.self) private var a
     @Environment(\.scenePhase) private var fase
+    @State private var vinculo: String?
+    struct AnioCodigo: Identifiable { let id: String }
     @State private var carta = CartaBienvenidaVista.leida || (Config.demo && Config.pestanaInicial != "carta")
     /// Cuenta nueva: sin nombre ni primer uso hecho (en Android o la web ya lo habría marcado).
     private var faltaPrimerUso: Bool {
@@ -36,6 +38,8 @@ struct Raiz: View {
         }
         .task(id: a.sincronizado) { if a.sincronizado { await Recordatorios.programar() } }
         .onChange(of: fase) { _, f in if f == .active { Task { await a.traerDeLaNube() } } }
+        .onOpenURL { u in if u.scheme == "rutacima", let c = Vinculo.codigo(u.absoluteString) { vinculo = c } }
+        .sheet(item: Binding(get: { vinculo.map(AnioCodigo.init) }, set: { vinculo = $0?.id })) { x in NavigationStack { WebVista(codigoEntrante: x.id) } }
     }
 }
 

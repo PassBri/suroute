@@ -63,7 +63,7 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.lifestyle
         INFOPLIST_KEY_NSMicrophoneUsageDescription: "Para que te escuchen cuando enciendes una fogata en vivo."
         INFOPLIST_KEY_NSFaceIDUsageDescription: "Para abrir tu Ascenso financiero sin escribir el PIN."
-        INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y tus publicaciones, y para encender una fogata en vivo."
+        INFOPLIST_KEY_NSCameraUsageDescription: "Para tomar las fotos de tu Brújula y tus publicaciones, encender una fogata en vivo y escanear el código de SuRoute Web."
         INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Para elegir las fotos de tu Brújula y de tus publicaciones."
     info:
       path: SuRoute/Info.plist
@@ -71,6 +71,12 @@ targets:
         SupabaseURL: $(SUPABASE_URL)
         SupabaseAnonKey: $(SUPABASE_ANON_KEY)
         CFBundleLocalizations: [es, en, pt, fr, de, it, zh-Hans, ja, ko, ar, hi, ru]
+        # El QR de SuRoute Web (rutacima://vincular?codigo=…) se abre con la cámara del iPhone
+        # El audiolibro sigue sonando con la pantalla apagada
+        UIBackgroundModes: [audio]
+        CFBundleURLTypes:
+          - CFBundleURLName: com.rutaalacima.app.vincular
+            CFBundleURLSchemes: [rutacima]
   SuRouteWidget:
     type: app-extension
     platform: iOS

@@ -32,7 +32,7 @@ struct MesVista: View {
                 }
                 ForEach(metas) { m in TarjetaMetaMes(m: m, anio: anio, mes: mes) { editando = m } }
                 Button { nueva = true } label: { Label(L("nueva_meta_mes"), systemImage: "plus") }
-            } header: { Text(L("foco_mis_metas")) }
+            } header: { Text(L("foco_mis_metas", Fecha.nombreMes(mes).lowercased())) }
             Section(L("actividades_notas")) {
                 campo("actividades", "actividades", 2...6)
                 campo("notas_importantes", "notas", 2...6)
@@ -81,9 +81,10 @@ private struct Calendario: View {
         let f = DateFormatter(); f.locale = .current
         let simbolos = Array(f.veryShortStandaloneWeekdaySymbols[1...] + [f.veryShortStandaloneWeekdaySymbols[0]])
         return LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 4), count: 7), spacing: 6) {
-            ForEach(0..<7, id: \.self) { i in Text(simbolos[i]).font(.caption2.weight(.semibold)).foregroundStyle(Tema.tintaSuave) }
-            ForEach(0..<hueco, id: \.self) { i in Color.clear.frame(height: 36).id("h\(i)") }
-            ForEach(1...n, id: \.self) { d in
+            ForEach(0..<7, id: \.self) { i in Text(simbolos[i]).font(.caption2.weight(.semibold)).foregroundStyle(Tema.tintaSuave).id("s\(i)") }
+            ForEach((0..<hueco).map { "h\($0)" }, id: \.self) { _ in Color.clear.frame(height: 36) }
+            ForEach((1...n).map { "d\($0)" }, id: \.self) { k in
+                let d = Int(k.dropFirst())!
                 Button { abrir(d) } label: {
                     VStack(spacing: 2) {
                         Text("\(d)").font(.subheadline.monospacedDigit().weight(d == hoy ? .bold : .regular))

@@ -81,6 +81,8 @@ struct AgendaVista: View {
                 }
             } footer: { Text(L("actividades_ayuda")) }
 
+            TramitesDia(f: f)
+
             Section(L("cierre_dia")) {
                 CampoGuardado(titulo: L("victorias_dia"), valor: ag.t("victorias"), lineas: 2...6) { Plan.campo(a, f, "victorias", .texto($0)) }
                 CampoGuardado(titulo: L("aprendizaje"), valor: ag.t("aprendizaje"), lineas: 2...6) { Plan.campo(a, f, "aprendizaje", .texto($0)) }

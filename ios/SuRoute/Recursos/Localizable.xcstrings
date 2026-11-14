@@ -162636,6 +162636,83 @@
     }
    }
   },
+  "ios_mi_vida": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "حياتي"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Mein Leben"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "My life"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Mi vida"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Ma vie"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "मेरा जीवन"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "La mia vita"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "私の人生"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "나의 삶"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Minha vida"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Моя жизнь"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "我的人生"
+     }
+    }
+   }
+  },
   "ios_misma_cuenta": {
    "extractionState": "manual",
    "localizations": {

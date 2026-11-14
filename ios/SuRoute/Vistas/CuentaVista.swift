@@ -44,7 +44,10 @@ struct CuentaVista: View {
                 Section {
                     NavigationLink { BienestarVista() } label: { Label(L("bi_titulo"), systemImage: "heart.text.square") }
                     NavigationLink { DiarioVista() } label: { Label(L("diario_titulo"), systemImage: "photo.on.rectangle.angled") }
+                    NavigationLink { TramitesVista() } label: { Label(L("tr_titulo"), systemImage: "clock.badge.checkmark") }
+                    NavigationLink { MisFrasesVista() } label: { Label(L("mis_frases"), systemImage: "quote.opening") }
                     NavigationLink { AjustesVista() } label: { Label(L("ajustes"), systemImage: "gearshape") }
+                    NavigationLink { WebVista() } label: { Label(L("web_titulo"), systemImage: "desktopcomputer") }
                 }
                 Section {
                     Button { abrir(Config.sitio) } label: { Label(L("ios_abrir_web"), systemImage: "safari") }

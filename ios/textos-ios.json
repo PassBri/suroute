@@ -1258,5 +1258,19 @@
   "ar": "أشهر",
   "hi": "महीने",
   "ru": "мес."
+ },
+ "ios_mi_vida": {
+  "es": "Mi vida",
+  "en": "My life",
+  "pt": "Minha vida",
+  "fr": "Ma vie",
+  "de": "Mein Leben",
+  "it": "La mia vita",
+  "zh": "我的人生",
+  "ja": "私の人生",
+  "ko": "나의 삶",
+  "ar": "حياتي",
+  "hi": "मेरा जीवन",
+  "ru": "Моя жизнь"
  }
 }

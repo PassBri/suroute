@@ -22,6 +22,11 @@ struct MiRutaVista: View {
                         NavigationLink { MesVista() } label: { Atajo(icono: "calendar", texto: L("ios_tu_mes")) }
                     }
                     .buttonStyle(.plain)
+                    HStack(spacing: 10) {
+                        NavigationLink { VidaVista() } label: { Atajo(icono: "circle.grid.3x3", texto: L("ios_mi_vida")) }
+                        NavigationLink { EvaluacionVista() } label: { Atajo(icono: "chart.bar.doc.horizontal", texto: L("ev_titulo")) }
+                    }
+                    .buttonStyle(.plain)
                     Hoja {
                         Text(L("tu_cascada")).font(.headline)
                         Nivel(nombre: L("nivel_5_anios"), valor: c.avanceGlobal, color: Tema.burdeos)
