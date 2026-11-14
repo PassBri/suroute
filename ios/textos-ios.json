@@ -1272,5 +1272,19 @@
   "ar": "حياتي",
   "hi": "मेरा जीवन",
   "ru": "Моя жизнь"
+ },
+ "ios_todos_ejes": {
+  "es": "Todos los ejes",
+  "en": "All areas",
+  "pt": "Todos os eixos",
+  "fr": "Tous les axes",
+  "de": "Alle Bereiche",
+  "it": "Tutti gli assi",
+  "zh": "全部领域",
+  "ja": "すべての軸",
+  "ko": "모든 영역",
+  "ar": "كل المحاور",
+  "hi": "सभी क्षेत्र",
+  "ru": "Все сферы"
  }
 }

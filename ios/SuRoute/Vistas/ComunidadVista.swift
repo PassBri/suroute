@@ -35,15 +35,19 @@ struct ComunidadVista: View {
                     if filtro == 0 {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 6) {
-                                Ficha(texto: L("ios_muro_todos"), sel: eje == nil, color: Tema.burdeos) { eje = nil }
+                                if !posts.isEmpty {
+                                    Button { cimas = true } label: {
+                                        Image(systemName: "rectangle.portrait.on.rectangle.portrait.angled").frame(width: 40, height: 36)
+                                            .background(Tema.hoja2, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+                                            .overlay(RoundedRectangle(cornerRadius: 10, style: .continuous).strokeBorder(Tema.linea))
+                                    }
+                                    .buttonStyle(.plain).accessibilityLabel(L("cimas_pantalla_completa"))
+                                }
+                                Ficha(texto: L("ios_todos_ejes"), sel: eje == nil, color: Tema.burdeos) { eje = nil }
                                 ForEach(Eje.allCases) { e in Ficha(texto: e.nombre, sel: eje == e.rawValue, color: e.color) { eje = eje == e.rawValue ? nil : e.rawValue } }
                             }
                         }
                         .scrollClipDisabled()
-                        if !posts.isEmpty {
-                            Button { cimas = true } label: { Label(L("cimas_pantalla_completa"), systemImage: "mountain.2.fill").frame(maxWidth: .infinity) }
-                                .buttonStyle(.bordered)
-                        }
                         if eje == nil { ExpedicionTarjeta(posts: posts); RetoComunidad() }
                     }
                     if posts.isEmpty && !cargando {

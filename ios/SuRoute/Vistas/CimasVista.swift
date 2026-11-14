@@ -33,6 +33,7 @@ struct ExpedicionTarjeta: View {
     let posts: [Post]
     @State private var puntos: [Int64]?
     @State private var avance = 0.0
+    @State private var abierta = false
     @Environment(\.accessibilityReduceMotion) private var sinMovimiento
     var body: some View {
         let anio = Fecha.anio, hoy = Date()
@@ -46,17 +47,22 @@ struct ExpedicionTarjeta: View {
         }()
         let e = Expedicion.calcular(puntos ?? locales, mios: mios)
         VStack(alignment: .leading, spacing: 8) {
-            Text(L("cumbre_comunidad_titulo")).font(Tema.serif(.title3, .bold))
-            Text(L(e.cumbre ? "cumbre_comunidad_logro" : "cumbre_comunidad_texto")).font(.subheadline)
-            Montana(avance: avance).frame(height: 110).accessibilityHidden(true)
+            Text(L("cumbre_comunidad_titulo")).font(Tema.serif(.headline, .bold))
+            Text(L(e.cumbre ? "cumbre_comunidad_logro" : "cumbre_comunidad_texto")).font(.caption).foregroundStyle(Tema.tintaSuave).lineLimit(abierta ? nil : 2)
+            Montana(avance: avance).frame(height: 64).accessibilityHidden(true)
             Text(L("cumbre_comunidad_metros", Expedicion.mm(e.mm), Expedicion.mm(Expedicion.altura))).font(.headline.monospacedDigit())
-            Text(L("cumbre_comunidad_datos", e.tramo + 1, e.diasParaAjuste)).font(.caption)
-            Text(L("cumbre_comunidad_valor", Expedicion.mm(e.mmPorPunto * Double(Expedicion.ptsPublicacion)), Expedicion.mm(e.mmPorPunto))).font(.caption)
+            if abierta {
+                Text(L("cumbre_comunidad_datos", e.tramo + 1, e.diasParaAjuste)).font(.caption)
+                Text(L("cumbre_comunidad_valor", Expedicion.mm(e.mmPorPunto * Double(Expedicion.ptsPublicacion)), Expedicion.mm(e.mmPorPunto))).font(.caption)
+            }
             if e.miAporteMm > 0 { Text(L("cumbre_comunidad_aporte", Expedicion.mm(e.miAporteMm))).font(.caption.weight(.semibold)).foregroundStyle(Tema.oro) }
         }
         .foregroundStyle(Tema.tinta)
-        .padding(16).frame(maxWidth: .infinity, alignment: .leading)
-        .background(Tema.burdeosSuave, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .padding(14).frame(maxWidth: .infinity, alignment: .leading)
+        .background(Tema.burdeosSuave, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .contentShape(Rectangle())
+        .onTapGesture { withAnimation(.easeOut(duration: 0.25)) { abierta.toggle() } }
+        .accessibilityAddTraits(.isButton)
         .task { puntos = await Red.expedicion(anio) }
         .onChange(of: e.fraccion, initial: true) { _, f in withAnimation(sinMovimiento ? nil : .spring(response: 1.2, dampingFraction: 0.75)) { avance = f } }
     }
