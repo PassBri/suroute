@@ -5,9 +5,11 @@ import SwiftUI
 struct ComunidadVista: View {
     @State private var publicando: Bool
     init(abrirPublicar: Bool = false) { _publicando = State(initialValue: abrirPublicar) }
-    @State private var siguiendo = false
+    @State private var filtro = 0
+    private var siguiendo: Bool { filtro == 1 }
     @State private var posts: [Post] = []
     @State private var impulsados: Set<String> = []
+    @State private var misLuces: [String: String] = [:]
     @State private var cargando = false
     @State private var fin = false
     @State private var error = false
@@ -20,21 +22,22 @@ struct ComunidadVista: View {
             ScrollView {
                 LazyVStack(spacing: 12) {
                     FranjaFogatas(abierta: $fogata).id(vueltaFogata)
-                    Picker("", selection: $siguiendo) {
-                        Text(L("ios_muro_todos")).tag(false)
-                        Text(L("ios_muro_siguiendo")).tag(true)
+                    Picker("", selection: $filtro) {
+                        Text(L("ios_muro_todos")).tag(0)
+                        Text(L("ios_muro_siguiendo")).tag(1)
+                        Text(L("filtro_guardados")).tag(2)
                     }
                     .pickerStyle(.segmented)
                     if posts.isEmpty && !cargando {
                         VStack(spacing: 10) {
                             Image(systemName: error ? "wifi.slash" : "flame").font(.largeTitle).foregroundStyle(Tema.oro)
-                            Text(L(error ? "ios_muro_error" : (siguiendo ? "ios_muro_vacio_siguiendo" : "ios_muro_vacio"))).font(.subheadline)
+                            Text(L(error ? "ios_muro_error" : filtro == 2 ? "vacio_guardados" : (siguiendo ? "ios_muro_vacio_siguiendo" : "ios_muro_vacio"))).font(.subheadline)
                                 .foregroundStyle(Tema.tintaSuave).multilineTextAlignment(.center)
                         }
                         .frame(maxWidth: .infinity).padding(.vertical, 40)
                     }
                     ForEach(posts) { p in
-                        TarjetaPost(post: p, impulsado: impulsados.contains(p.id), alImpulsar: { si in impulsar(p, si) }, alQuitar: { quitar(p.id) })
+                        TarjetaPost(post: p, impulsado: impulsados.contains(p.id), miLuz: misLuces[p.id], alImpulsar: { si in impulsar(p, si) }, alQuitar: { quitar(p.id) })
                             .onAppear { if p.id == posts.last?.id { Task { await cargar(mas: true) } } }
                     }
                     if cargando { ProgressView().frame(maxWidth: .infinity).padding() }
@@ -61,7 +64,7 @@ struct ComunidadVista: View {
                 case .cordadas: CordadasVista()
                 }
             }
-            .task(id: siguiendo) { await cargar(mas: false) }
+            .task(id: filtro) { await cargar(mas: false) }
             .sheet(isPresented: $publicando) { PublicarVista { publicando = false } }
             .fullScreenCover(item: $fogata, onDismiss: { vueltaFogata += 1 }) { c in FogataVivoVista(c: c) }
             .onReceive(NotificationCenter.default.publisher(for: .publicado)) { _ in Task { await cargar(mas: false) } }
@@ -72,11 +75,14 @@ struct ComunidadVista: View {
         if cargando || (mas && fin) { return }
         cargando = true; defer { cargando = false }
         do {
-            let nuevos = try await Red.muro(desde: mas ? posts.count : 0, siguiendo: siguiendo)
+            if filtro == 2 && mas { return }
+            let nuevos: [Post]
+            if filtro == 2 { nuevos = await Red.guardados() } else { nuevos = try await Red.muro(desde: mas ? posts.count : 0, siguiendo: siguiendo) }
+            if filtro == 2 { UserDefaults.standard.set(nuevos.map(\.id).sorted().joined(separator: ","), forKey: "guardados_ids") }
             let ids = nuevos.map(\.id)
-            let imp = await Red.misImpulsos(ids)
-            if mas { posts += nuevos.filter { n in !posts.contains { $0.id == n.id } }; impulsados.formUnion(imp) }
-            else { posts = nuevos; impulsados = imp }
+            let lz = await ComunidadViva.misLuces(ids), imp = Set(lz.keys)
+            if mas { posts += nuevos.filter { n in !posts.contains { $0.id == n.id } }; impulsados.formUnion(imp); misLuces.merge(lz) { a, _ in a } }
+            else { posts = nuevos; impulsados = imp; misLuces = lz }
             fin = nuevos.count < 20; error = false
         } catch { if !mas { self.error = true } }
     }
@@ -101,6 +107,18 @@ struct TarjetaPost: View {
     @State private var bloqueando = false
     @State private var borrando = false
     @State private var motivo = ""
+    @State private var editando = false
+    @State private var textoEd = ""
+    @State private var metaEd = ""
+    @AppStorage("guardados_ids") private var guardadosIds = ""
+    private var guardado: Bool {
+        get { guardadosIds.split(separator: ",").contains { $0 == post.id } }
+        nonmutating set {
+            var s = Set(guardadosIds.split(separator: ",").map(String.init))
+            if newValue { s.insert(post.id) } else { s.remove(post.id) }
+            guardadosIds = s.sorted().joined(separator: ",")
+        }
+    }
 
     var body: some View {
         let mio = post.user_id == Red.yo
@@ -122,7 +140,20 @@ struct TarjetaPost: View {
                     .background((post.eje.map { Tema.eje($0) } ?? Tema.oro).opacity(0.14), in: Capsule())
                     .foregroundStyle(post.eje.map { Tema.eje($0) } ?? Tema.oro)
                 Menu {
-                    if mio { Button(L("borrar"), systemImage: "trash", role: .destructive) { borrando = true } }
+                    Button(guardado ? L("quitar_guardado") : L("guardar"), systemImage: guardado ? "bookmark.fill" : "bookmark") {
+                        guardado.toggle(); let g = guardado; Task { await Red.guardar(post.id, g) }
+                    }
+                    if mio {
+                        Button(L("red_editar"), systemImage: "pencil") { textoEd = post.texto; metaEd = post.meta_titulo ?? ""; editando = true }
+                        Menu {
+                            ForEach(["PUBLICA", "SEGUIDORES", "PRIVADA"], id: \.self) { v in
+                                Button(L(v == "PUBLICA" ? "visibilidad_publica" : v == "SEGUIDORES" ? "visibilidad_seguidores" : "visibilidad_privada")) {
+                                    Task { try? await Red.visibilidad(post.id, v); NotificationCenter.default.post(name: .publicado, object: nil) }
+                                }
+                            }
+                        } label: { Label(L("ios_quien_ve"), systemImage: "eye") }
+                        Button(L("borrar"), systemImage: "trash", role: .destructive) { borrando = true }
+                    }
                     else {
                         Button(L("reportar_publicacion"), systemImage: "flag") { reportando = true }
                         Button(L("bloquear_a", post.nombreAutor), systemImage: "hand.raised") { bloqueando = true }
@@ -130,6 +161,9 @@ struct TarjetaPost: View {
                 } label: { Image(systemName: "ellipsis").frame(width: 32, height: 32).contentShape(Rectangle()) }
                     .foregroundStyle(Tema.tintaSuave)
             }
+            if ComunidadViva.sellada(post), let abre = post.selloAbre {
+                CartaSellada(abre: abre)
+            } else {
             NavigationLink(value: Destino.post(post.id)) {
                 VStack(alignment: .leading, spacing: 10) {
                     if let m = post.meta_titulo, !m.isEmpty { Text(m).font(Tema.serif(.headline)).foregroundStyle(Tema.tinta) }
@@ -151,15 +185,25 @@ struct TarjetaPost: View {
             }
             .buttonStyle(.plain)
             .disabled(completa)
+            if let pp = post.pasoAPaso { PasoAPasoTarjeta(meta: pp.meta, pasos: pp.pasos, completa: completa) }
+            }
+            if let c = post.caminoDoc { CaminoFila(c: c) }
+            if let k = post.compromisoDoc { CompromisoFila(post: post, k: k) }
             HStack(spacing: 18) {
-                Button { alImpulsar(!impulsado) } label: {
-                    Label("\(post.nImpulsos + (impulsado ? 1 : 0) - (yaContado ? 1 : 0))", systemImage: impulsado ? "arrow.up.circle.fill" : "arrow.up.circle")
-                        .font(.subheadline.monospacedDigit()).foregroundStyle(impulsado ? Tema.burdeos : Tema.tintaSuave)
+                Menu {
+                    Section(L("lz_elegir")) {
+                        ForEach(ComunidadViva.luces, id: \.self) { k in
+                            Button { darLuz(k) } label: { Label(L("lz_" + k), systemImage: ComunidadViva.iconoLuz(k)) }
+                        }
+                    }
+                    if luz != nil { Button(L("borrar"), systemImage: "xmark", role: .destructive) { darLuz(nil) } }
+                } label: {
+                    Label("\(post.nImpulsos + (luz != nil ? 1 : 0) - (yaContado ? 1 : 0))", systemImage: luz.map(ComunidadViva.iconoLuz) ?? "sun.max")
+                        .font(.subheadline.monospacedDigit()).foregroundStyle(luz != nil ? Tema.oro : Tema.tintaSuave)
                         .contentTransition(.symbolEffect(.replace))
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel(L("impulsar"))
-                .sensoryFeedback(.impact(weight: .light), trigger: impulsado)
+                } primaryAction: { darLuz(luz == nil ? ComunidadViva.ultimaLuz : nil) }
+                .accessibilityLabel(luz.map { L("lz_quitar", L("lz_" + $0)) } ?? L("lz_dar", L("lz_" + ComunidadViva.ultimaLuz)))
+                .sensoryFeedback(.impact(weight: .light), trigger: luz)
                 Label("\(post.nComentarios)", systemImage: "bubble.left").font(.subheadline.monospacedDigit()).foregroundStyle(Tema.tintaSuave)
                     .accessibilityLabel(L("comentarios_n", post.nComentarios))
                 Spacer()
@@ -176,15 +220,28 @@ struct TarjetaPost: View {
         .confirmationDialog(L("bloquear_a", post.nombreAutor), isPresented: $bloqueando, titleVisibility: .visible) {
             Button(L("bloquear_a", post.nombreAutor), role: .destructive) { Task { try? await Red.bloquear(post.user_id); alQuitar() } }
         } message: { Text(L("bloquear_texto")) }
+        .alert(L("red_editar"), isPresented: $editando) {
+            TextField(L("ios_titulo_meta"), text: $metaEd)
+            TextField(L("ios_cuenta_tu_paso"), text: $textoEd, axis: .vertical)
+            Button(L("cancelar"), role: .cancel) {}
+            Button(L("guardar")) { Task { try? await Red.editar(post.id, texto: textoEd, meta: metaEd); NotificationCenter.default.post(name: .publicado, object: nil) } }
+        }
         .confirmationDialog(L("borrar"), isPresented: $borrando) {
             Button(L("borrar"), role: .destructive) { Task { try? await Red.borrar(post.id); alQuitar() } }
         }
     }
-    /// El conteo del servidor ya incluye mi impulso si lo di antes de cargar.
+    /// El conteo del servidor ya incluye mi luz si la di antes de cargar.
     @State private var yaContado = false
-    init(post: Post, impulsado: Bool, completa: Bool = false, alImpulsar: @escaping (Bool) -> Void, alQuitar: @escaping () -> Void = {}) {
+    @State private var luz: String?
+    init(post: Post, impulsado: Bool, miLuz: String? = nil, completa: Bool = false, alImpulsar: @escaping (Bool) -> Void, alQuitar: @escaping () -> Void = {}) {
         self.post = post; self.impulsado = impulsado; self.completa = completa; self.alImpulsar = alImpulsar; self.alQuitar = alQuitar
         _yaContado = State(initialValue: impulsado)
+        _luz = State(initialValue: impulsado ? (miLuz ?? "sol") : nil)
+    }
+    private func darLuz(_ k: String?) {
+        let antes = luz
+        luz = k
+        Task { do { try await ComunidadViva.darLuz(post.id, k) } catch { luz = antes } }
     }
 }
 

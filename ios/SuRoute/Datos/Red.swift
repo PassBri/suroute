@@ -21,6 +21,11 @@ struct Post: Decodable, Identifiable, Hashable {
     let impulsos: [Cuenta]?
     let comentarios: [Cuenta]?
     var anio: Int? = nil
+    // Comunidad viva (columnas que pueden no existir aún si no se corrió su SQL)
+    var camino: Valor? = nil
+    var compromiso: Valor? = nil
+    var sello: Valor? = nil
+    var pasos: Valor? = nil
     var nImpulsos: Int { impulsos?.first?.count ?? 0 }
     var nComentarios: Int { comentarios?.first?.count ?? 0 }
     var nombreAutor: String { autor?.nombre?.isEmpty == false ? autor!.nombre! : (autor?.username ?? L("ios_senderista")) }
@@ -68,7 +73,7 @@ struct MiembroCordada: Decodable, Identifiable, Hashable {
 enum Red {
     static var sb: SupabaseClient? { Nube.shared?.cliente }
     static var yo: String? { Almacen.sharedUid }
-    static let columnasPost = "id,user_id,tipo,texto,image_url,eje,visibilidad,meta_titulo,anio,created_at,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)"
+    static let columnasPost = "*,autor:profiles!posts_user_id_fkey(username,nombre,avatar_url),impulsos:votes(count),comentarios:comments(count)"
 
     static func fecha(_ s: String) -> Date {
         let f = ISO8601DateFormatter(); f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
@@ -114,7 +119,7 @@ enum Red {
         if si { try await sb.from("votes").insert(["post_id": post, "user_id": yo]).execute() }
         else { try await sb.from("votes").delete().eq("post_id", value: post).eq("user_id", value: yo).execute() }
     }
-    static func publicar(tipo: String, texto: String, eje: String?, visibilidad: String, anio: Int = Fecha.anio, meta: String, foto: Data?) async throws {
+    static func publicar(tipo: String, texto: String, eje: String?, visibilidad: String, anio: Int = Fecha.anio, meta: String, foto: Data?, extras: Doc = [:]) async throws {
         guard let sb, let yo else { return }
         let id = UUID().uuidString.lowercased()
         var url = ""
@@ -123,9 +128,40 @@ enum Red {
             try await sb.storage.from("media").upload(ruta, data: foto, options: FileOptions(contentType: "image/jpeg", upsert: true))
             url = try sb.storage.from("media").getPublicURL(path: ruta).absoluteString
         }
-        struct Nuevo: Encodable { let id, user_id, tipo, texto, image_url: String; let eje: String?; let visibilidad, meta_titulo: String; let anio: Int }
-        try await sb.from("posts").insert(Nuevo(id: id, user_id: yo, tipo: tipo, texto: String(texto.prefix(2200)), image_url: url, eje: eje,
-                                                visibilidad: visibilidad, meta_titulo: meta, anio: anio)).execute()
+        var fila: Doc = ["id": .texto(id), "user_id": .texto(yo), "tipo": .texto(tipo), "texto": .texto(String(texto.prefix(2200))), "image_url": .texto(url),
+                         "eje": eje.map { .texto($0) } ?? .nulo, "visibilidad": .texto(visibilidad), "meta_titulo": .texto(meta), "anio": .entero(Int64(anio))]
+        if extras.isEmpty { try await sb.from("posts").insert(fila).execute(); return }
+        for (k, v) in extras { fila[k] = v }
+        // Si aún no existen las columnas de la comunidad viva, se publica sin ellas
+        do { try await sb.from("posts").insert(fila).execute() }
+        catch { for k in extras.keys { fila[k] = nil }; try await sb.from("posts").insert(fila).execute() }
+    }
+    // MARK: guardados, editar y quién ve
+    static func guardados() async -> [Post] {
+        guard let sb, let yo else { return [] }
+        struct G: Decodable { let post_id: String }
+        let ids: [G] = (try? await sb.from("guardadas").select("post_id").eq("user_id", value: yo).limit(500).execute().value) ?? []
+        guard !ids.isEmpty else { return [] }
+        return (try? await sb.from("posts").select(columnasPost).in("id", values: ids.map(\.post_id)).order("created_at", ascending: false).execute().value) ?? []
+    }
+    static func misGuardados() async -> Set<String> {
+        guard let sb, let yo else { return [] }
+        struct G: Decodable { let post_id: String }
+        let ids: [G] = (try? await sb.from("guardadas").select("post_id").eq("user_id", value: yo).limit(500).execute().value) ?? []
+        return Set(ids.map(\.post_id))
+    }
+    static func guardar(_ post: String, _ si: Bool) async {
+        guard let sb, let yo else { return }
+        if si { _ = try? await sb.from("guardadas").upsert(["user_id": yo, "post_id": post]).execute() }
+        else { _ = try? await sb.from("guardadas").delete().eq("user_id", value: yo).eq("post_id", value: post).execute() }
+    }
+    static func editar(_ post: String, texto: String, meta: String) async throws {
+        guard let sb, let yo else { return }
+        try await sb.from("posts").update(["texto": String(texto.prefix(2200)), "meta_titulo": meta]).eq("id", value: post).eq("user_id", value: yo).execute()
+    }
+    static func visibilidad(_ post: String, _ v: String) async throws {
+        guard let sb, let yo else { return }
+        try await sb.from("posts").update(["visibilidad": v]).eq("id", value: post).eq("user_id", value: yo).execute()
     }
     static func borrar(_ post: String) async throws { try await sb?.from("posts").delete().eq("id", value: post).execute() }
 
