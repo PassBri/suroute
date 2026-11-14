@@ -11,11 +11,20 @@ enum CoachesVida {
         let estado: String; let comparte_avance: Bool?; let especialidad: String?
         var visible: String { otro_nombre?.isEmpty == false ? otro_nombre! : (otro_usuario ?? "") } }
     struct MiFicha: Decodable { let bio: String?; let especialidad: String?; let verificado: Bool? }
-    static func directorio() async -> [Ficha] { (try? await Red.sb?.rpc("directorio_coaches").execute().value as [Ficha]) ?? [] }
-    static func acompanamientos() async -> [Acomp] { (try? await Red.sb?.rpc("mis_acompanamientos").execute().value as [Acomp]) ?? [] }
+    static func directorio() async -> [Ficha] {
+        guard let sb = Red.sb else { return [] }
+        let x: [Ficha]? = try? await sb.rpc("directorio_coaches").execute().value
+        return x ?? []
+    }
+    static func acompanamientos() async -> [Acomp] {
+        guard let sb = Red.sb else { return [] }
+        let x: [Acomp]? = try? await sb.rpc("mis_acompanamientos").execute().value
+        return x ?? []
+    }
     static func miFicha() async -> MiFicha? {
         guard let sb = Red.sb, let yo = Red.yo else { return nil }
-        return ((try? await sb.from("coaches").select("bio,especialidad,verificado").eq("user_id", value: yo).execute().value as [MiFicha]) ?? []).first
+        let x: [MiFicha]? = try? await sb.from("coaches").select("bio,especialidad,verificado").eq("user_id", value: yo).execute().value
+        return x?.first
     }
     static func rpc(_ f: String, _ p: [String: AnyJSON]) async throws { try await Red.sb?.rpc(f, params: p).execute() }
 }
@@ -123,7 +132,7 @@ struct CoachVidaVista: View {
         dir = await d; acomps = await x; ficha = await f; cargado = true
     }
     private func hacer(_ f: String, _ p: [String: AnyJSON]) {
-        Task { do { try await CoachesVida.rpc(f, p); error = false } catch { error = true }; await cargar() }
+        Task { do { try await CoachesVida.rpc(f, p); self.error = false } catch { self.error = true }; await cargar() }
     }
     private func abrirChat(_ otro: String) {
         Task {

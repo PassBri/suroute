@@ -17,10 +17,19 @@ enum Moderacion {
 
     static func esModerador() async -> Bool {
         guard let sb = Red.sb, Red.yo != nil else { return false }
-        return (try? await sb.rpc("es_moderador").execute().value as Bool) ?? false
+        let x: Bool? = try? await sb.rpc("es_moderador").execute().value
+        return x ?? false
     }
-    static func pendientes() async -> [Caso] { (try? await Red.sb?.rpc("moderacion_pendientes").execute().value as [Caso]) ?? [] }
-    static func historial() async -> [Decision] { (try? await Red.sb?.rpc("moderacion_historial").execute().value as [Decision]) ?? [] }
+    static func pendientes() async -> [Caso] {
+        guard let sb = Red.sb else { return [] }
+        let x: [Caso]? = try? await sb.rpc("moderacion_pendientes").execute().value
+        return x ?? []
+    }
+    static func historial() async -> [Decision] {
+        guard let sb = Red.sb else { return [] }
+        let x: [Decision]? = try? await sb.rpc("moderacion_historial").execute().value
+        return x ?? []
+    }
     static func moderar(_ c: Caso, _ accion: String, nota: String = "") async throws {
         struct P: Encodable { let p_tipo, p_objetivo, p_accion, p_nota: String }
         try await Red.sb?.rpc("moderar", params: P(p_tipo: c.tipo, p_objetivo: c.objetivo, p_accion: accion, p_nota: String(nota.prefix(500)))).execute()
@@ -122,7 +131,7 @@ struct ModeracionVista: View {
                     ToolbarItem(placement: .cancellationAction) { Button(L("cancelar")) { suspendiendo = nil } }
                     ToolbarItem(placement: .confirmationAction) {
                         Button(L("mod_confirmar")) {
-                            if let u = c.autor?.id { let d = dias, m = motivo; Task { do { try await Moderacion.suspender(u, dias: d, motivo: m) } catch { error = true }; await cargar() } }
+                            if let u = c.autor?.id { let d = dias, m = motivo; Task { do { try await Moderacion.suspender(u, dias: d, motivo: m) } catch { self.error = true }; await cargar() } }
                             suspendiendo = nil
                         }
                     }
@@ -133,7 +142,7 @@ struct ModeracionVista: View {
     }
     private func cargar() async { casos = await Moderacion.pendientes(); historial = await Moderacion.historial() }
     private func accion(_ c: Moderacion.Caso, _ a: String) {
-        Task { do { try await Moderacion.moderar(c, a); error = false } catch { error = true }; await cargar() }
+        Task { do { try await Moderacion.moderar(c, a); error = false } catch { self.error = true }; await cargar() }
     }
 }
 
