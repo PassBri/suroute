@@ -247,12 +247,6 @@ private struct EditorPaso: View {
                         Button { pct = min(100, pct + 1) } label: { Image(systemName: "plus.circle") }.buttonStyle(.borderless).accessibilityLabel(L("bja_mas_uno"))
                         Text("\(Int(pct)) %").font(.body.monospacedDigit()).frame(minWidth: 52, alignment: .trailing)
                     }
-                    HStack(spacing: 6) {
-                        ForEach([0, 25, 50, 75, 100], id: \.self) { n in
-                            Button(n == 100 ? L("foco_ganada") : "\(n) %") { pct = Double(n) }
-                                .buttonStyle(.bordered).controlSize(.small).tint(Int(pct) == n ? Tema.oro : Tema.tintaSuave)
-                        }
-                    }
                 }
                 .disabled(vacio)
             }

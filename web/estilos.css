@@ -4067,8 +4067,6 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 .ba-fila input[type="range"] { flex: 1; }
 .ba-uno { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea); background: var(--hoja); color: var(--tinta); font-size: 1.2rem; line-height: 1; cursor: pointer; touch-action: manipulation; user-select: none; }
 .ba-uno:active { background: color-mix(in srgb, var(--c) 12%, var(--hoja)); }
-.ba-desliza .atajos { display: flex; flex-wrap: wrap; gap: 6px; }
-.ba-desliza .chip { min-height: 32px; }
 @media (prefers-reduced-motion: reduce) { .ba-mini b { transition: none; } }
 .ba-plan summary { cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--tinta-suave); min-height: 36px; list-style: none; }
 .ba-plan summary::-webkit-details-marker { display: none; }

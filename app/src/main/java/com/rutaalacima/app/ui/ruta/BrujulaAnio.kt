@@ -58,7 +58,6 @@ import com.rutaalacima.app.ui.vision.nombreCodigo
  * El año es su Brújula (igual que la web): la cumbre de ese año y sus 8 campamentos, cada uno con su meta,
  * sus sub-metas (los pasos, con su casilla de ganado y su porcentaje de avance) y cuántas actividades lleva su plan de acción.
  */
-@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 internal fun BrujulaAnioCard(
     anio: Int, casillas: List<VisionCasillaEntity>, anuales: List<MetaAnualEntity>, mandala: Map<String, String>,
@@ -157,12 +156,6 @@ internal fun BrujulaAnioCard(
                                             Icon(Icons.Filled.Add, stringResource(R.string.bja_mas_uno)) }
                                         Text("${Math.round(deslizando)} %", style = MaterialTheme.typography.labelLarge.copy(fontFeatureSettings = "tnum"),
                                             modifier = Modifier.padding(start = 8.dp).widthIn(min = 44.dp))
-                                    }
-                                    androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                        listOf(0, 25, 50, 75, 100).forEach { n ->
-                                            androidx.compose.material3.FilterChip(selected = v == n, onClick = { onPct(c.id, p, n); if (n == 100) abierto = null },
-                                                label = { Text(if (n == 100) stringResource(R.string.foco_ganada) else "$n %") })
-                                        }
                                     }
                                 }
                             }
