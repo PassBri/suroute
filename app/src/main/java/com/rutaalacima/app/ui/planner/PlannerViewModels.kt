@@ -154,6 +154,19 @@ internal suspend fun alternarGanadoPaso(c: AppContainer, casillaId: Long, paso: 
     if (x.jornadas.size >= req) c.respuestas.guardar(M.WORKBOOK, com.rutaalacima.app.domain.model.MetodoCima.claveJornadas(casillaId, paso), x.jornadas.sorted().take(req - 1).joinToString(","))
 }
 
+/** Porcentaje de avance de un paso (igual que la web): 100 lo deja ganado; menos de 100 le quita el ganado. */
+internal suspend fun pctPaso(c: AppContainer, casillaId: Long, paso: Int, n: Int) {
+    val M = com.rutaalacima.app.domain.model.Mandala; val MC = com.rutaalacima.app.domain.model.MetodoCima
+    val v = ((n.coerceIn(0, 100) + 2) / 5) * 5
+    if (v >= 100) {
+        c.respuestas.guardar(M.WORKBOOK, MC.clavePct(casillaId, paso), "")
+        c.respuestas.guardar(M.WORKBOOK, M.claveHecho(casillaId, paso), java.time.LocalDate.now().toString())
+        return
+    }
+    if (MC.leer(casillaId, paso, c.respuestas.cargar(M.WORKBOOK)).cumplido) c.respuestas.guardar(M.WORKBOOK, M.claveHecho(casillaId, paso), "")
+    c.respuestas.guardar(M.WORKBOOK, MC.clavePct(casillaId, paso), if (v == 0) "" else v.toString())
+}
+
 /** Una jornada del Método Cima en un paso (de cualquier Brújula): al juntar las que pide, el paso queda ganado. */
 internal suspend fun jornadaPaso(c: AppContainer, casillaId: Long, paso: Int, fecha: java.time.LocalDate) {
     val M = com.rutaalacima.app.domain.model.Mandala; val MC = com.rutaalacima.app.domain.model.MetodoCima

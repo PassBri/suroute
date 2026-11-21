@@ -231,6 +231,7 @@ class RutaViewModel(private val c: AppContainer) : ViewModel() {
     val todasCasillas: StateFlow<List<com.rutaalacima.app.data.local.VisionCasillaEntity>> = e(c.db.visionDao().observe(), emptyList())
     val mandala: StateFlow<Map<String, String>> = e(c.respuestas.observar(com.rutaalacima.app.domain.model.Mandala.WORKBOOK), emptyMap())
     fun alternarGanado(casillaId: Long, paso: Int) = viewModelScope.launch { com.rutaalacima.app.ui.planner.alternarGanadoPaso(c, casillaId, paso) }
+    fun ponerPct(casillaId: Long, paso: Int, n: Int) = viewModelScope.launch { com.rutaalacima.app.ui.planner.pctPaso(c, casillaId, paso, n) }
     fun abrirBrujulaAnio(anio: Int) = c.vision.elegirAnio(anio)
     fun copiarGeneral(anio: Int, alTerminar: (Int) -> Unit) = viewModelScope.launch { alTerminar(c.sincro.copiarGeneral(anio)) }
     /** Lo de cada año de la vida: palabra, anhelos y carta (respuestas del workbook "vida", sincronizadas con la web). */
@@ -354,7 +355,7 @@ fun RutaScreen(
                             val todas by vm.todasCasillas.collectAsStateWithLifecycle()
                             val mandala by vm.mandala.collectAsStateWithLifecycle()
                             val ctxB = androidx.compose.ui.platform.LocalContext.current
-                            BrujulaAnioCard(n.anio, todas, anuales, mandala, onGanado = vm::alternarGanado,
+                            BrujulaAnioCard(n.anio, todas, anuales, mandala, onGanado = vm::alternarGanado, onPct = vm::ponerPct,
                                 onCopiar = { vm.copiarGeneral(n.anio) { k -> android.widget.Toast.makeText(ctxB, ctxB.getString(R.string.bja_copiada, n.anio, k), android.widget.Toast.LENGTH_LONG).show() } },
                                 onAbrirBrujula = { vm.abrirBrujulaAnio(n.anio); onVision() },
                                 onMeta = { onPlanificador(3, LocalDate.of(n.anio, 1, 1)) })

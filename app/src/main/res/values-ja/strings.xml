@@ -3418,4 +3418,5 @@
     <string name="ng_anio_a_anio">年ごと</string>
     <string name="ng_registrar_hoy">今日を記録</string>
     <string name="ng_vendiste">売上 %1$s</string>
+    <string name="bja_avance_de">%1$s の進み具合：%2$d%%</string>
 </resources>

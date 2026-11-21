@@ -32,6 +32,8 @@ object MetodoCima {
 
     fun claveJornadas(casillaId: Long, paso: Int) = Mandala.clave(casillaId, paso) + "#jornadas"
     fun claveRequeridas(casillaId: Long, paso: Int) = Mandala.clave(casillaId, paso) + "#req"
+    /** Porcentaje de avance que la persona marca a mano (0 a 99; 100 = ganado), igual que la web. */
+    fun clavePct(casillaId: Long, paso: Int) = Mandala.clave(casillaId, paso) + "#pct"
 
     /** Un paso de la mandala con sus jornadas. [cumplido] = fecha en que se ganó (null si no). */
     data class Paso(
@@ -40,6 +42,7 @@ object MetodoCima {
         val requeridas: Int? = null,
         val cumplido: Boolean = false,
         val cumplidoEn: LocalDate? = null,
+        val pct: Int = 0,
     )
 
     /** Lee un paso desde las respuestas guardadas. */
@@ -52,6 +55,7 @@ object MetodoCima {
             requeridas = r[claveRequeridas(casillaId, paso)]?.toIntOrNull(),
             cumplido = hecho.isNotBlank(),
             cumplidoEn = runCatching { LocalDate.parse(hecho) }.getOrNull(),
+            pct = (r[clavePct(casillaId, paso)]?.toDoubleOrNull()?.let { Math.round(it).toInt() } ?: 0).coerceIn(0, 99),
         )
     }
 
@@ -69,8 +73,7 @@ object MetodoCima {
     /** Fracción ganada de un paso (0..1). */
     fun avance(p: Paso, dificultadActual: Int): Float = when {
         p.cumplido -> 1f
-        p.jornadas.isEmpty() -> 0f
-        else -> min(0.99f, p.jornadas.size.toFloat() / (p.requeridas ?: dificultadActual))
+        else -> min(0.99f, maxOf(if (p.jornadas.isEmpty()) 0f else p.jornadas.size.toFloat() / (p.requeridas ?: dificultadActual), p.pct / 100f))
     }
 
     /**

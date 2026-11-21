@@ -3418,4 +3418,5 @@
     <string name="ng_anio_a_anio">Jahr für Jahr</string>
     <string name="ng_registrar_hoy">Heute eintragen</string>
     <string name="ng_vendiste">Verkauft %1$s</string>
+    <string name="bja_avance_de">Fortschritt bei %1$s: %2$d %%</string>
 </resources>
