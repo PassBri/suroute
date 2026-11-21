@@ -99,18 +99,22 @@ const MetodoCima = {
   TOTAL: 64, MM_POR_PASO: Math.floor(8848000 / 64), INICIAL: 3, MIN: 1, MAX: 30, AJUSTE: 4, CICLO: 4,
   claveJornadas: (id, p) => Mandala.clave(id, p) + "#jornadas",
   claveReq: (id, p) => Mandala.clave(id, p) + "#req",
+  /** Porcentaje de avance que la persona marca a mano en una sub-meta (0 a 99; 100 = ganada). */
+  clavePct: (id, p) => Mandala.clave(id, p) + "#pct",
   leer(id, p) {
-    if (id == null) return { escrito: false, jornadas: [], req: null, cumplido: false, cumplidoEn: null };
+    if (id == null) return { escrito: false, jornadas: [], req: null, cumplido: false, cumplidoEn: null, pct: 0 };
     const hecho = respuesta(Mandala.claveHecho(id, p)).trim();
     return {
       escrito: !!respuesta(Mandala.clave(id, p)).trim(),
       jornadas: [...new Set(respuesta(this.claveJornadas(id, p)).split(",").map(x => x.trim()).filter(x => /^\d{4}-\d\d-\d\d$/.test(x)))],
       req: Number(respuesta(this.claveReq(id, p))) || null,
       cumplido: !!hecho, cumplidoEn: /^\d{4}-\d\d-\d\d$/.test(hecho) ? hecho : null,
+      pct: Math.min(99, Math.max(0, Math.round(Number(respuesta(this.clavePct(id, p))) || 0))),
     };
   },
   pasosDe(ids) { const r = []; for (let c = 0; c < 8; c++) for (let p = 0; p < 8; p++) r.push(this.leer(ids[c], p)); return r; },
-  avance(p, d) { return p.cumplido ? 1 : !p.jornadas.length ? 0 : Math.min(0.99, p.jornadas.length / (p.req || d)); },
+  /** Lo ganado de un paso: ganado = 1; si no, lo mayor entre sus jornadas y el % marcado a mano (máx. 0,99). */
+  avance(p, d) { return p.cumplido ? 1 : Math.min(0.99, Math.max(p.jornadas.length ? p.jornadas.length / (p.req || d) : 0, (p.pct || 0) / 100)); },
   dificultades(ganados, pendientes, t) {
     const r = []; let d = this.INICIAL, rest = pendientes, gc = 0, ec = 0;
     for (let n = 0; n <= t; n++) {

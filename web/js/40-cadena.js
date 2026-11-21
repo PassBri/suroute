@@ -53,11 +53,21 @@ function brujulaDelAnio(a) {
     if (!c) return `<div class="ba-camp vacio" style="--c:${color}"><small>${esc(Mandala.nombre(cod))}</small><p class="suave">Sin campamento en la Brújula de ${a}.</p></div>`;
     const m = Sincro.objetivo(a, cod), pasos = [0, 1, 2, 3, 4, 5, 6, 7].map(p => ({ p, t: respuesta(Mandala.clave(c.id, p)).trim(), x: MetodoCima.leer(c.id, p) }));
     const ganados = pasos.filter(x => x.x.cumplido).length, plan = m ? PlanMeta.leer(m.id) : [];
+    const pct = x => Math.round(MetodoCima.avance(x, MetodoCima.INICIAL) * 100);
+    const total = Math.round(pasos.reduce((s, { x }) => s + MetodoCima.avance(x, MetodoCima.INICIAL), 0) / 8 * 100);
     return `<article class="ba-camp" style="--c:${color}">
-      <header><small>${esc(Mandala.nombre(cod))}</small><span class="ba-pct">${ganados}/8</span></header>
+      <header><small>${esc(Mandala.nombre(cod))}</small><span class="ba-pct" title="Sub-metas ganadas · avance del campamento">${ganados}/8 · ${total} %</span></header>
       ${m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
-      <div class="ba-barra"><i style="width:${ganados / 8 * 100}%"></i></div>
-      <ol class="ba-pasos">${pasos.map(({ p, t, x }) => t ? `<li class="${x.cumplido ? "ganado" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button><span>${esc(t)}</span>${!x.cumplido && x.jornadas.length ? `<small>${x.jornadas.length}/${x.req || MetodoCima.INICIAL}</small>` : ""}</li>` : "").join("")
+      <div class="ba-barra"><i style="width:${total}%"></i></div>
+      <ol class="ba-pasos">${pasos.map(({ p, t, x }) => {
+        if (!t) return "";
+        const abierto = estado.baAvance === `${c.id}|${p}`, v = x.cumplido ? 100 : pct(x);
+        return `<li class="${x.cumplido ? "ganado" : ""}${abierto ? " abierto" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button><span>${esc(t)}</span>
+          <button class="ba-avance${v > 0 && !x.cumplido ? " con" : ""}" data-acc="baAvance" data-arg="${c.id}|${p}" aria-expanded="${abierto}" aria-label="Avance de ${esc(t)}: ${v} %">${v} %</button>
+          ${!x.cumplido && v > 0 ? `<i class="ba-mini" aria-hidden="true"><b style="width:${v}%"></b></i>` : ""}
+          ${abierto ? `<div class="ba-desliza"><input type="range" min="0" max="100" step="5" value="${v}" data-acc-change="baPctFin" data-acc-input="baPctVer" data-arg="${c.id}|${p}" aria-label="Porcentaje de avance de ${esc(t)}">
+            <div class="atajos">${[0, 25, 50, 75, 100].map(n => `<button type="button" class="chip" aria-pressed="${v === n}" data-acc="baPct" data-arg="${c.id}|${p}|${n}">${n === 100 ? "Ganada" : n + " %"}</button>`).join("")}</div></div>` : ""}</li>`;
+      }).join("")
         || `<li class="suave">Sin sub-metas todavía: escríbelas en la Brújula o en la meta.</li>`}</ol>
     </article>`;
   };
@@ -68,6 +78,23 @@ function brujulaDelAnio(a) {
     <div class="ba-grid">${Mandala.CAMPAMENTOS_FIJOS.map((_, i) => tarjeta(camps[i], i)).join("")}</div>`, "ba-hoja");
 }
 window.brujulaDelAnio = brujulaDelAnio;
+/** Abrir o cerrar el deslizador de avance de una sub-meta. */
+ACC.baAvance = (_, arg) => { estado.baAvance = estado.baAvance === arg ? null : arg; pintarDetalle(); };
+/** Poner el % de avance: 100 la marca ganada; menos de 100 la deja abierta con ese porcentaje. */
+async function ponerPct(cid, p, n) {
+  n = Math.min(100, Math.max(0, Math.round(Number(n) / 5) * 5));
+  const x = MetodoCima.leer(cid, p);
+  if (n >= 100) {
+    await responderBase("mandala", MetodoCima.clavePct(cid, p), "");
+    if (!x.cumplido) { await responderBase("mandala", Mandala.claveHecho(cid, p), iso(new Date())); toast("¡Sub-meta ganada!"); }
+  } else {
+    if (x.cumplido) await responderBase("mandala", Mandala.claveHecho(cid, p), "");
+    await responderBase("mandala", MetodoCima.clavePct(cid, p), n ? String(n) : "");
+  }
+}
+ACC.baPct = async (_, arg) => { const [cid, p, n] = arg.split("|").map(Number); await ponerPct(cid, p, n); estado.baAvance = n >= 100 ? null : estado.baAvance; pintarDetalle(); };
+ACC.baPctFin = async (el, arg) => { const [cid, p] = arg.split("|").map(Number); await ponerPct(cid, p, el.value); pintarDetalle(); };
+ACC.baPctVer = (el) => { const b = el.closest("li")?.querySelector(".ba-avance"); if (b) b.textContent = el.value + " %"; };
 ACC.baPlan = (_, id) => { estado.baPlan = estado.baPlan === Number(id) ? null : Number(id); };
 ACC.baGanado = async (_, arg) => {
   const [cid, n] = arg.split("|"), p = Number(n), x = MetodoCima.leer(Number(cid), p);

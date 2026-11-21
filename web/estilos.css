@@ -4052,6 +4052,19 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 .ba-check { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--c) 50%, var(--linea)); background: transparent; color: transparent; display: grid; place-items: center; padding: 0; cursor: pointer; }
 .ba-check svg { width: 14px; height: 14px; fill: currentColor; }
 .ba-check[aria-pressed="true"] { background: var(--c); border-color: var(--c); color: #fff; }
+/* Avance en % de cada sub-meta: la píldora a la derecha y, al abrirla, un deslizador con atajos */
+.ba-pasos li { flex-wrap: wrap; position: relative; }
+.ba-avance { flex: none; min-width: 52px; min-height: 32px; padding: 0 10px; border-radius: 16px; border: 1px solid var(--linea); background: transparent;
+  color: var(--tinta-suave); font: 600 12px/1 var(--font, inherit); font-variant-numeric: tabular-nums; cursor: pointer; }
+.ba-avance.con { color: color-mix(in srgb, var(--c) 65%, var(--tinta)); border-color: color-mix(in srgb, var(--c) 45%, var(--linea)); background: color-mix(in srgb, var(--c) 8%, transparent); }
+.ba-pasos li.ganado .ba-avance { color: color-mix(in srgb, var(--c) 65%, var(--tinta)); border-color: transparent; }
+.ba-mini { position: absolute; left: 32px; right: 62px; bottom: 1px; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--c) 14%, transparent); overflow: hidden; }
+.ba-mini b { display: block; height: 100%; background: var(--c); border-radius: 2px; transition: width .3s cubic-bezier(.2,0,0,1); }
+.ba-desliza { flex-basis: 100%; padding: 6px 0 10px 32px; display: grid; gap: 8px; }
+.ba-desliza input[type="range"] { width: 100%; color-scheme: light dark; accent-color: var(--c); min-height: 32px; }
+.ba-desliza .atajos { display: flex; flex-wrap: wrap; gap: 6px; }
+.ba-desliza .chip { min-height: 32px; }
+@media (prefers-reduced-motion: reduce) { .ba-mini b { transition: none; } }
 .ba-plan summary { cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--tinta-suave); min-height: 36px; list-style: none; }
 .ba-plan summary::-webkit-details-marker { display: none; }
 .ba-plan summary svg { width: 16px; height: 16px; fill: currentColor; }
