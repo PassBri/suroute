@@ -52,9 +52,23 @@ struct Brujula {
 
     static func clavePaso(_ casilla: String, _ p: Int) -> String { "mandala#\(casilla)#\(p)" }
     static func claveHecho(_ casilla: String, _ p: Int) -> String { "mandala#\(casilla)#\(p)#hecho" }
+    /// Porcentaje de avance marcado a mano (0 a 99; 100 = cumplido), igual que Android y la web.
+    static func clavePct(_ casilla: String, _ p: Int) -> String { "mandala#\(casilla)#\(p)#pct" }
 
     func paso(_ a: Almacen, _ c: Casilla, _ p: Int) -> String { a.respuesta(Brujula.clavePaso(c.clave, p)) }
     func hecho(_ a: Almacen, _ c: Casilla, _ p: Int) -> Bool { !a.respuesta(Brujula.claveHecho(c.clave, p)).trimmingCharacters(in: .whitespaces).isEmpty }
+    /// Avance del paso en porcentaje: 100 si está cumplido; si no, el mayor entre el marcado a mano y sus jornadas.
+    func pct(_ a: Almacen, _ c: Casilla, _ p: Int) -> Int {
+        if hecho(a, c, p) { return 100 }
+        let manual = Int((Double(a.respuesta(Brujula.clavePct(c.clave, p))) ?? 0).rounded())
+        let base = "mandala#\(c.clave)#\(p)"
+        let js = a.respuesta(base + "#jornadas").split(separator: ",").filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }.count
+        let req = Int(a.respuesta(base + "#req")) ?? 3
+        let porJornadas = js > 0 ? Int((Double(js) / Double(max(1, req)) * 100).rounded()) : 0
+        return min(99, max(0, max(manual, porJornadas)))
+    }
+    /// Avance del campamento: el promedio de sus 8 pasos.
+    func pct(_ a: Almacen, _ c: Casilla) -> Int { Int((Double((0..<8).map { pct(a, c, $0) }.reduce(0, +)) / 8).rounded()) }
 
     /// Pasos escritos y cumplidos de toda la Brújula.
     func cuenta(_ a: Almacen) -> (escritos: Int, hechos: Int) {
@@ -78,5 +92,12 @@ struct Brujula {
     }
     static func alternarHecho(_ a: Almacen, _ c: Casilla, _ p: Int, _ si: Bool) {
         a.responder("mandala", claveHecho(c.clave, p), si ? Fecha.iso() : "")
+    }
+    /// Guarda el avance a mano (de 5 en 5): 100 deja el paso cumplido; menos de 100 le quita el cumplido.
+    static func ponerPct(_ a: Almacen, _ c: Casilla, _ p: Int, _ n: Int) {
+        let v = min(100, max(0, Int((Double(n) / 5).rounded()) * 5))
+        if v >= 100 { a.responder("mandala", clavePct(c.clave, p), ""); a.responder("mandala", claveHecho(c.clave, p), Fecha.iso()); return }
+        a.responder("mandala", claveHecho(c.clave, p), "")
+        a.responder("mandala", clavePct(c.clave, p), v == 0 ? "" : String(v))
     }
 }

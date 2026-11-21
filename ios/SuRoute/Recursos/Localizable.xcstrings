@@ -23409,6 +23409,83 @@
     }
    }
   },
+  "bja_avance_de": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تقدّم %1$@: %2$ld%%"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Fortschritt bei %1$@: %2$ld %%"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Progress on %1$@: %2$ld %%"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avance de %1$@: %2$ld %%"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avancement de %1$@ : %2$ld %%"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$@ की प्रगति: %2$ld%%"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanzamento di %1$@: %2$ld %%"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$@ の進み具合：%2$ld%%"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$@ 진행률: %2$ld%%"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanço de %1$@: %2$ld %%"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Прогресс «%1$@»: %2$ld %%"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$@ 的进度：%2$ld%%"
+     }
+    }
+   }
+  },
   "bja_copiada": {
    "extractionState": "manual",
    "localizations": {
@@ -159244,6 +159321,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "上一节"
+     }
+    }
+   }
+  },
+  "ios_avance_paso": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "التقدّم"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Fortschritt"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Progress"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avance"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avancement"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "प्रगति"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanzamento"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "進み具合"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "진행률"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanço"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Прогресс"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "进度"
      }
     }
    }

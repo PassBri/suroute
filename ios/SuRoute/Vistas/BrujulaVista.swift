@@ -162,7 +162,7 @@ private struct BloqueCampamento: View {
                 Spacer()
                 if let c = b.campamentos[i] {
                     let (_, h) = b.cuenta(a, c)
-                    Text("\(h)/8").font(.subheadline.monospacedDigit()).foregroundStyle(Tema.tintaSuave)
+                    Text("\(h)/8 · \(b.pct(a, c)) %").font(.subheadline.monospacedDigit()).foregroundStyle(Tema.tintaSuave)
                 }
             }
             if let c = b.campamentos[i] {
@@ -178,7 +178,7 @@ private struct BloqueCampamento: View {
                                     Text(Campamento.nombre(cod)).font(.caption.weight(.bold)).foregroundStyle(Tema.sobreColor).multilineTextAlignment(.center)
                                         .padding(4).frame(maxWidth: .infinity, minHeight: 92).background(color, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
                                 } else if let p = reloj.firstIndex(of: pos) {
-                                    Button { editar(c, p) } label: { CeldaPaso(texto: b.paso(a, c, p), hecho: b.hecho(a, c, p), n: p + 1, color: color) }
+                                    Button { editar(c, p) } label: { CeldaPaso(texto: b.paso(a, c, p), hecho: b.hecho(a, c, p), pct: b.pct(a, c, p), n: p + 1, color: color) }
                                         .buttonStyle(.plain)
                                 }
                             }
@@ -194,7 +194,7 @@ private struct BloqueCampamento: View {
 }
 
 private struct CeldaPaso: View {
-    let texto: String, hecho: Bool, n: Int, color: Color
+    let texto: String, hecho: Bool, pct: Int, n: Int, color: Color
     var body: some View {
         let vacio = texto.trimmingCharacters(in: .whitespaces).isEmpty
         VStack(alignment: .leading, spacing: 2) {
@@ -202,17 +202,22 @@ private struct CeldaPaso: View {
                 Text("\(n)").font(.caption2.monospacedDigit().weight(.bold)).foregroundStyle(hecho ? Tema.sobreColor : color)
                 Spacer()
                 if hecho { Image(systemName: "checkmark").font(.caption2.weight(.bold)).foregroundStyle(Tema.sobreColor) }
+                else if pct > 0 { Text("\(pct) %").font(.caption2.monospacedDigit().weight(.semibold)).foregroundStyle(color) }
             }
             Text(vacio ? "+" : texto).font(.caption2).foregroundStyle(hecho ? Tema.sobreColor : (vacio ? Tema.tintaSuave : Tema.tinta))
                 .lineLimit(4).multilineTextAlignment(.leading)
             Spacer(minLength: 0)
+            if !hecho && pct > 0 {
+                Capsule().fill(color.opacity(0.18)).frame(height: 3)
+                    .overlay(alignment: .leading) { GeometryReader { g in Capsule().fill(color).frame(width: g.size.width * CGFloat(pct) / 100) } }
+            }
         }
         .padding(6)
         .frame(maxWidth: .infinity, minHeight: 92, alignment: .topLeading)
         .background(hecho ? color : color.opacity(0.08), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(L("mandala_paso", n) + ". " + (vacio ? L("ios_paso_vacio") : texto) + (hecho ? ". " + L("mandala_paso_hecho") : "")))
+        .accessibilityLabel(Text(L("mandala_paso", n) + ". " + (vacio ? L("ios_paso_vacio") : texto) + (hecho ? ". " + L("mandala_paso_hecho") : (pct > 0 ? ". \(pct) %" : ""))))
     }
 }
 
@@ -223,13 +228,31 @@ private struct EditorPaso: View {
     let b: Brujula, e: EditarPaso
     @State private var texto = ""
     @State private var hecho = false
+    @State private var pct: Double = 0
     var body: some View {
+        let vacio = texto.trimmingCharacters(in: .whitespaces).isEmpty
         NavigationStack {
             Form {
                 Section(Campamento.nombre(Campamento.fijos[b.campamentos.firstIndex(of: e.casilla) ?? 0])) {
                     TextField(L("ios_paso_vacio"), text: $texto, axis: .vertical).lineLimit(2...5)
                 }
-                Section { Toggle(L("mandala_paso_hecho"), isOn: $hecho).disabled(texto.trimmingCharacters(in: .whitespaces).isEmpty) }
+                Section { Toggle(L("mandala_paso_hecho"), isOn: $hecho).disabled(vacio).onChange(of: hecho) { _, si in if si { pct = 100 } else if pct >= 100 { pct = 95 } } }
+                // El porcentaje de avance (igual que Android y la web): 100 lo deja cumplido
+                Section(L("ios_avance_paso")) {
+                    HStack {
+                        Slider(value: $pct, in: 0...100, step: 5).tint(Tema.eje(Campamento.fijos[b.campamentos.firstIndex(of: e.casilla) ?? 0]))
+                            .onChange(of: pct) { _, v in hecho = v >= 100 }
+                        Text("\(Int(pct)) %").font(.body.monospacedDigit()).frame(minWidth: 52, alignment: .trailing)
+                    }
+                    .accessibilityElement(children: .combine)
+                    HStack(spacing: 6) {
+                        ForEach([0, 25, 50, 75, 100], id: \.self) { n in
+                            Button(n == 100 ? L("foco_ganada") : "\(n) %") { pct = Double(n) }
+                                .buttonStyle(.bordered).controlSize(.small).tint(Int(pct) == n ? Tema.oro : Tema.tintaSuave)
+                        }
+                    }
+                }
+                .disabled(vacio)
             }
             .navigationTitle(L("mandala_paso", e.paso + 1))
             .navigationBarTitleDisplayMode(.inline)
@@ -238,12 +261,13 @@ private struct EditorPaso: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(L("guardar")) {
                         Brujula.escribirPaso(a, e.casilla, e.paso, texto)
-                        if b.hecho(a, e.casilla, e.paso) != hecho { Brujula.alternarHecho(a, e.casilla, e.paso, hecho && !texto.isEmpty) }
+                        if !vacio && Int(pct) != b.pct(a, e.casilla, e.paso) { Brujula.ponerPct(a, e.casilla, e.paso, Int(pct)) }
+                        else if b.hecho(a, e.casilla, e.paso) != hecho { Brujula.alternarHecho(a, e.casilla, e.paso, hecho && !vacio) }
                         cerrar()
                     }.bold()
                 }
             }
-            .onAppear { texto = b.paso(a, e.casilla, e.paso); hecho = b.hecho(a, e.casilla, e.paso) }
+            .onAppear { texto = b.paso(a, e.casilla, e.paso); hecho = b.hecho(a, e.casilla, e.paso); pct = Double(b.pct(a, e.casilla, e.paso)) }
         }
     }
 }

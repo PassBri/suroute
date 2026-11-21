@@ -1286,5 +1286,19 @@
   "ar": "كل المحاور",
   "hi": "सभी क्षेत्र",
   "ru": "Все сферы"
+ },
+ "ios_avance_paso": {
+  "es": "Avance",
+  "en": "Progress",
+  "pt": "Avanço",
+  "fr": "Avancement",
+  "de": "Fortschritt",
+  "it": "Avanzamento",
+  "zh": "进度",
+  "ja": "進み具合",
+  "ko": "진행률",
+  "ar": "التقدّم",
+  "hi": "प्रगति",
+  "ru": "Прогресс"
  }
 }
