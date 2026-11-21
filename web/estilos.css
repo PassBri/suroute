@@ -4062,6 +4062,11 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 .ba-mini b { display: block; height: 100%; background: var(--c); border-radius: 2px; transition: width .3s cubic-bezier(.2,0,0,1); }
 .ba-desliza { flex-basis: 100%; padding: 6px 0 10px 32px; display: grid; gap: 8px; }
 .ba-desliza input[type="range"] { width: 100%; color-scheme: light dark; accent-color: var(--c); min-height: 32px; }
+.ba-pasos li.abierto .ba-mini { display: none; }
+.ba-fila { display: flex; align-items: center; gap: 8px; }
+.ba-fila input[type="range"] { flex: 1; }
+.ba-uno { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea); background: var(--hoja); color: var(--tinta); font-size: 1.2rem; line-height: 1; cursor: pointer; touch-action: manipulation; user-select: none; }
+.ba-uno:active { background: color-mix(in srgb, var(--c) 12%, var(--hoja)); }
 .ba-desliza .atajos { display: flex; flex-wrap: wrap; gap: 6px; }
 .ba-desliza .chip { min-height: 32px; }
 @media (prefers-reduced-motion: reduce) { .ba-mini b { transition: none; } }

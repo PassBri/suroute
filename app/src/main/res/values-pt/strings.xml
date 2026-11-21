@@ -3419,4 +3419,6 @@
     <string name="ng_registrar_hoy">Registrar hoje</string>
     <string name="ng_vendiste">Vendeu %1$s</string>
     <string name="bja_avance_de">Avanço de %1$s: %2$d %%</string>
+    <string name="bja_menos_uno">Um ponto a menos</string>
+    <string name="bja_mas_uno">Um ponto a mais</string>
 </resources>

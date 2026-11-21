@@ -157,7 +157,7 @@ internal suspend fun alternarGanadoPaso(c: AppContainer, casillaId: Long, paso: 
 /** Porcentaje de avance de un paso (igual que la web): 100 lo deja ganado; menos de 100 le quita el ganado. */
 internal suspend fun pctPaso(c: AppContainer, casillaId: Long, paso: Int, n: Int) {
     val M = com.rutaalacima.app.domain.model.Mandala; val MC = com.rutaalacima.app.domain.model.MetodoCima
-    val v = ((n.coerceIn(0, 100) + 2) / 5) * 5
+    val v = n.coerceIn(0, 100)
     if (v >= 100) {
         c.respuestas.guardar(M.WORKBOOK, MC.clavePct(casillaId, paso), "")
         c.respuestas.guardar(M.WORKBOOK, M.claveHecho(casillaId, paso), java.time.LocalDate.now().toString())

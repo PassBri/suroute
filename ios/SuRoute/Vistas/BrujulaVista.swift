@@ -240,11 +240,13 @@ private struct EditorPaso: View {
                 // El porcentaje de avance (igual que Android y la web): 100 lo deja cumplido
                 Section(L("ios_avance_paso")) {
                     HStack {
-                        Slider(value: $pct, in: 0...100, step: 5).tint(Tema.eje(Campamento.fijos[b.campamentos.firstIndex(of: e.casilla) ?? 0]))
+                        // − y + de a 1 % para llegar a cualquier número (67 %, por ejemplo)
+                        Button { pct = max(0, pct - 1) } label: { Image(systemName: "minus.circle") }.buttonStyle(.borderless).accessibilityLabel(L("bja_menos_uno"))
+                        Slider(value: $pct, in: 0...100, step: 1).tint(Tema.eje(Campamento.fijos[b.campamentos.firstIndex(of: e.casilla) ?? 0]))
                             .onChange(of: pct) { _, v in hecho = v >= 100 }
+                        Button { pct = min(100, pct + 1) } label: { Image(systemName: "plus.circle") }.buttonStyle(.borderless).accessibilityLabel(L("bja_mas_uno"))
                         Text("\(Int(pct)) %").font(.body.monospacedDigit()).frame(minWidth: 52, alignment: .trailing)
                     }
-                    .accessibilityElement(children: .combine)
                     HStack(spacing: 6) {
                         ForEach([0, 25, 50, 75, 100], id: \.self) { n in
                             Button(n == 100 ? L("foco_ganada") : "\(n) %") { pct = Double(n) }

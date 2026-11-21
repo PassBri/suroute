@@ -3419,4 +3419,6 @@
     <string name="ng_registrar_hoy">记录今天</string>
     <string name="ng_vendiste">销售 %1$s</string>
     <string name="bja_avance_de">%1$s 的进度：%2$d%%</string>
+    <string name="bja_menos_uno">减少 1%</string>
+    <string name="bja_mas_uno">增加 1%</string>
 </resources>

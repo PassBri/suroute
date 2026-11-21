@@ -3419,4 +3419,6 @@
     <string name="ng_registrar_hoy">سجّل اليوم</string>
     <string name="ng_vendiste">بعت %1$s</string>
     <string name="bja_avance_de">تقدّم %1$s: %2$d%%</string>
+    <string name="bja_menos_uno">نقطة أقل</string>
+    <string name="bja_mas_uno">نقطة أكثر</string>
 </resources>

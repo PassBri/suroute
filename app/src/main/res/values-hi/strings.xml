@@ -3419,4 +3419,6 @@
     <string name="ng_registrar_hoy">आज दर्ज करें</string>
     <string name="ng_vendiste">बिक्री %1$s</string>
     <string name="bja_avance_de">%1$s की प्रगति: %2$d%%</string>
+    <string name="bja_menos_uno">एक अंक कम</string>
+    <string name="bja_mas_uno">एक अंक ज़्यादा</string>
 </resources>

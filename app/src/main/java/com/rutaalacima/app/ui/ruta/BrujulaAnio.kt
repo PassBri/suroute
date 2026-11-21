@@ -21,7 +21,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -142,12 +144,17 @@ internal fun BrujulaAnioCard(
                             }
                             androidx.compose.animation.AnimatedVisibility(abiertoAqui) {
                                 var deslizando by androidx.compose.runtime.remember(v) { androidx.compose.runtime.mutableFloatStateOf(v.toFloat()) }
-                                Column(Modifier.fillMaxWidth().padding(start = 34.dp, bottom = 6.dp)) {
+                                Column(Modifier.fillMaxWidth().padding(start = 22.dp, bottom = 6.dp)) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
-                                        androidx.compose.material3.Slider(value = deslizando, onValueChange = { deslizando = it }, valueRange = 0f..100f, steps = 19,
+                                        // − y + mueven de a 1 % para llegar a cualquier número (67 %, por ejemplo)
+                                        androidx.compose.material3.IconButton(onClick = { onPct(c.id, p, (v - 1).coerceAtLeast(0)) }, enabled = v > 0) {
+                                            Icon(Icons.Filled.Remove, stringResource(R.string.bja_menos_uno)) }
+                                        androidx.compose.material3.Slider(value = deslizando, onValueChange = { deslizando = Math.round(it).toFloat() }, valueRange = 0f..100f,
                                             onValueChangeFinished = { onPct(c.id, p, Math.round(deslizando)) }, modifier = Modifier.weight(1f),
                                             colors = androidx.compose.material3.SliderDefaults.colors(thumbColor = color, activeTrackColor = color, inactiveTrackColor = color.copy(alpha = .18f),
                                                 activeTickColor = Color.Transparent, inactiveTickColor = Color.Transparent))
+                                        androidx.compose.material3.IconButton(onClick = { onPct(c.id, p, (v + 1).coerceAtMost(100)) }, enabled = v < 100) {
+                                            Icon(Icons.Filled.Add, stringResource(R.string.bja_mas_uno)) }
                                         Text("${Math.round(deslizando)} %", style = MaterialTheme.typography.labelLarge.copy(fontFeatureSettings = "tnum"),
                                             modifier = Modifier.padding(start = 8.dp).widthIn(min = 44.dp))
                                     }

@@ -65,7 +65,7 @@ function brujulaDelAnio(a) {
         return `<li class="${x.cumplido ? "ganado" : ""}${abierto ? " abierto" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button><span>${esc(t)}</span>
           <button class="ba-avance${v > 0 && !x.cumplido ? " con" : ""}" data-acc="baAvance" data-arg="${c.id}|${p}" aria-expanded="${abierto}" aria-label="Avance de ${esc(t)}: ${v} %">${v} %</button>
           ${!x.cumplido && v > 0 ? `<i class="ba-mini" aria-hidden="true"><b style="width:${v}%"></b></i>` : ""}
-          ${abierto ? `<div class="ba-desliza"><input type="range" min="0" max="100" step="5" value="${v}" data-acc-change="baPctFin" data-acc-input="baPctVer" data-arg="${c.id}|${p}" aria-label="Porcentaje de avance de ${esc(t)}">
+          ${abierto ? `<div class="ba-desliza"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.max(0, v - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${v}" data-acc-change="baPctFin" data-acc-input="baPctVer" data-arg="${c.id}|${p}" aria-label="Porcentaje de avance de ${esc(t)}"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.min(100, v + 1)}" aria-label="Un punto más">+</button></div>
             <div class="atajos">${[0, 25, 50, 75, 100].map(n => `<button type="button" class="chip" aria-pressed="${v === n}" data-acc="baPct" data-arg="${c.id}|${p}|${n}">${n === 100 ? "Ganada" : n + " %"}</button>`).join("")}</div></div>` : ""}</li>`;
       }).join("")
         || `<li class="suave">Sin sub-metas todavía: escríbelas en la Brújula o en la meta.</li>`}</ol>
@@ -82,7 +82,7 @@ window.brujulaDelAnio = brujulaDelAnio;
 ACC.baAvance = (_, arg) => { estado.baAvance = estado.baAvance === arg ? null : arg; pintarDetalle(); };
 /** Poner el % de avance: 100 la marca ganada; menos de 100 la deja abierta con ese porcentaje. */
 async function ponerPct(cid, p, n) {
-  n = Math.min(100, Math.max(0, Math.round(Number(n) / 5) * 5));
+  n = Math.min(100, Math.max(0, Math.round(Number(n) || 0)));
   const x = MetodoCima.leer(cid, p);
   if (n >= 100) {
     await responderBase("mandala", MetodoCima.clavePct(cid, p), "");

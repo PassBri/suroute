@@ -95,7 +95,7 @@ struct Brujula {
     }
     /// Guarda el avance a mano (de 5 en 5): 100 deja el paso cumplido; menos de 100 le quita el cumplido.
     static func ponerPct(_ a: Almacen, _ c: Casilla, _ p: Int, _ n: Int) {
-        let v = min(100, max(0, Int((Double(n) / 5).rounded()) * 5))
+        let v = min(100, max(0, n))
         if v >= 100 { a.responder("mandala", clavePct(c.clave, p), ""); a.responder("mandala", claveHecho(c.clave, p), Fecha.iso()); return }
         a.responder("mandala", claveHecho(c.clave, p), "")
         a.responder("mandala", clavePct(c.clave, p), v == 0 ? "" : String(v))
