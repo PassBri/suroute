@@ -164,7 +164,7 @@ internal suspend fun pctPaso(c: AppContainer, casillaId: Long, paso: Int, n: Int
         return
     }
     if (MC.leer(casillaId, paso, c.respuestas.cargar(M.WORKBOOK)).cumplido) c.respuestas.guardar(M.WORKBOOK, M.claveHecho(casillaId, paso), "")
-    c.respuestas.guardar(M.WORKBOOK, MC.clavePct(casillaId, paso), if (v == 0) "" else v.toString())
+    c.respuestas.guardar(M.WORKBOOK, MC.clavePct(casillaId, paso), v.toString())
 }
 
 /** Una jornada del Método Cima en un paso (de cualquier Brújula): al juntar las que pide, el paso queda ganado. */

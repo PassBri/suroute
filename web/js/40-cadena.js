@@ -97,7 +97,7 @@ async function ponerPct(cid, p, n) {
     if (!x.cumplido) { await responderBase("mandala", Mandala.claveHecho(cid, p), iso(new Date())); toast("¡Sub-meta ganada!"); }
   } else {
     if (x.cumplido) await responderBase("mandala", Mandala.claveHecho(cid, p), "");
-    await responderBase("mandala", MetodoCima.clavePct(cid, p), n ? String(n) : "");
+    await responderBase("mandala", MetodoCima.clavePct(cid, p), String(n));   // "0" también se guarda: así baja aunque tenga jornadas
   }
 }
 ACC.baPct = async (_, arg) => { const [cid, p, n] = arg.split("|").map(Number); await ponerPct(cid, p, n); estado.baAvance = n >= 100 ? null : estado.baAvance; pintarDetalle(); };

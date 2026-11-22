@@ -42,7 +42,8 @@ object MetodoCima {
         val requeridas: Int? = null,
         val cumplido: Boolean = false,
         val cumplidoEn: LocalDate? = null,
-        val pct: Int = 0,
+        /** null = nunca lo marcó a mano; un número (aunque sea 0) manda sobre las jornadas. */
+        val pct: Int? = null,
     )
 
     /** Lee un paso desde las respuestas guardadas. */
@@ -55,7 +56,7 @@ object MetodoCima {
             requeridas = r[claveRequeridas(casillaId, paso)]?.toIntOrNull(),
             cumplido = hecho.isNotBlank(),
             cumplidoEn = runCatching { LocalDate.parse(hecho) }.getOrNull(),
-            pct = (r[clavePct(casillaId, paso)]?.toDoubleOrNull()?.let { Math.round(it).toInt() } ?: 0).coerceIn(0, 99),
+            pct = r[clavePct(casillaId, paso)]?.trim()?.takeIf { it.isNotEmpty() }?.let { (it.toDoubleOrNull()?.let { d -> Math.round(d).toInt() } ?: 0).coerceIn(0, 99) },
         )
     }
 
@@ -73,7 +74,9 @@ object MetodoCima {
     /** Fracción ganada de un paso (0..1). */
     fun avance(p: Paso, dificultadActual: Int): Float = when {
         p.cumplido -> 1f
-        else -> min(0.99f, maxOf(if (p.jornadas.isEmpty()) 0f else p.jornadas.size.toFloat() / (p.requeridas ?: dificultadActual), p.pct / 100f))
+        p.pct != null -> min(0.99f, p.pct / 100f)
+        p.jornadas.isEmpty() -> 0f
+        else -> min(0.99f, p.jornadas.size.toFloat() / (p.requeridas ?: dificultadActual))
     }
 
     /**

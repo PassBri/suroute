@@ -60,12 +60,13 @@ struct Brujula {
     /// Avance del paso en porcentaje: 100 si está cumplido; si no, el mayor entre el marcado a mano y sus jornadas.
     func pct(_ a: Almacen, _ c: Casilla, _ p: Int) -> Int {
         if hecho(a, c, p) { return 100 }
-        let manual = Int((Double(a.respuesta(Brujula.clavePct(c.clave, p))) ?? 0).rounded())
+        // Si lo marcó a mano (aunque sea 0), manda ese número; si no, el avance por jornadas
+        let marcado = a.respuesta(Brujula.clavePct(c.clave, p)).trimmingCharacters(in: .whitespaces)
+        if !marcado.isEmpty { return min(99, max(0, Int((Double(marcado) ?? 0).rounded()))) }
         let base = "mandala#\(c.clave)#\(p)"
         let js = a.respuesta(base + "#jornadas").split(separator: ",").filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }.count
         let req = Int(a.respuesta(base + "#req")) ?? 3
-        let porJornadas = js > 0 ? Int((Double(js) / Double(max(1, req)) * 100).rounded()) : 0
-        return min(99, max(0, max(manual, porJornadas)))
+        return js > 0 ? min(99, Int((Double(js) / Double(max(1, req)) * 100).rounded())) : 0
     }
     /// Avance del campamento: el promedio de sus 8 pasos.
     func pct(_ a: Almacen, _ c: Casilla) -> Int { Int((Double((0..<8).map { pct(a, c, $0) }.reduce(0, +)) / 8).rounded()) }
@@ -98,6 +99,6 @@ struct Brujula {
         let v = min(100, max(0, n))
         if v >= 100 { a.responder("mandala", clavePct(c.clave, p), ""); a.responder("mandala", claveHecho(c.clave, p), Fecha.iso()); return }
         a.responder("mandala", claveHecho(c.clave, p), "")
-        a.responder("mandala", clavePct(c.clave, p), v == 0 ? "" : String(v))
+        a.responder("mandala", clavePct(c.clave, p), String(v))
     }
 }
