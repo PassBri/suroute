@@ -23409,6 +23409,83 @@
     }
    }
   },
+  "bja_avance_anio": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تقدّم العام"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Fortschritt im Jahr"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Progress this year"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avance del año"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avancement de l’année"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "साल की प्रगति"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanzamento dell’anno"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "今年の進み具合"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "올해 진행률"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Avanço do ano"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Прогресс года"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "全年进度"
+     }
+    }
+   }
+  },
   "bja_avance_de": {
    "extractionState": "manual",
    "localizations": {
@@ -23713,6 +23790,83 @@
      "stringUnit": {
       "state": "translated",
       "value": "创建"
+     }
+    }
+   }
+  },
+  "bja_ganadas_anio": {
+   "extractionState": "manual",
+   "localizations": {
+    "ar": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "تحقّق %1$ld من 64 هدفًا فرعيًا"
+     }
+    },
+    "de": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld von 64 Teilzielen erreicht"
+     }
+    },
+    "en": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld of 64 sub-goals won"
+     }
+    },
+    "es": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld de 64 sub-metas ganadas"
+     }
+    },
+    "fr": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld sous-objectifs atteints sur 64"
+     }
+    },
+    "hi": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "64 में से %1$ld उप-लक्ष्य पूरे"
+     }
+    },
+    "it": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld su 64 sotto-obiettivi raggiunti"
+     }
+    },
+    "ja": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "64 個中 %1$ld 個のサブ目標を達成"
+     }
+    },
+    "ko": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "하위 목표 64개 중 %1$ld개 달성"
+     }
+    },
+    "pt": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "%1$ld de 64 submetas conquistadas"
+     }
+    },
+    "ru": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "Достигнуто подцелей: %1$ld из 64"
+     }
+    },
+    "zh-Hans": {
+     "stringUnit": {
+      "state": "translated",
+      "value": "已达成 %1$ld / 64 个子目标"
      }
     }
    }

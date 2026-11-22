@@ -22,10 +22,20 @@ struct BrujulaVista: View {
                         Text(L("vision_nivel_numero", 81)).tag(81)
                     }
                     .pickerStyle(.segmented)
-                    HStack {
+                    // Avance general (igual que la web y Android): el promedio de los 64 pasos
+                    let total = Int((Double(b.campamentos.compactMap { $0 }.map { b.pct(a, $0) }.reduce(0, +)) / 8).rounded())
+                    VStack(spacing: 6) {
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(anio == nil ? L("ios_avance_paso") : L("bja_avance_anio")).font(.subheadline).foregroundStyle(Tema.tintaSuave)
+                            Spacer()
+                            Text("\(total) %").font(Tema.serif(.title2, .bold).monospacedDigit()).foregroundStyle(Tema.burdeos)
+                        }
+                        Avance(valor: Double(total) / 100, color: Tema.burdeos, alto: 4)
                         Text(L("ios_pasos_cuenta", hechos, escritos)).font(.footnote).foregroundStyle(Tema.tintaSuave)
-                        Spacer()
                     }
+                    .padding(.horizontal, 14).padding(.vertical, 12)
+                    .background(Tema.oroSuave, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .accessibilityElement(children: .combine)
                     if capa == 9 {
                         Rosa(b: b) { i in withAnimation(.snappy) { campamento = i; capa = 81 } }
                     } else {

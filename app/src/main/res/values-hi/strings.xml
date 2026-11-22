@@ -3421,4 +3421,6 @@
     <string name="bja_avance_de">%1$s की प्रगति: %2$d%%</string>
     <string name="bja_menos_uno">एक अंक कम</string>
     <string name="bja_mas_uno">एक अंक ज़्यादा</string>
+    <string name="bja_avance_anio">साल की प्रगति</string>
+    <string name="bja_ganadas_anio">64 में से %1$d उप-लक्ष्य पूरे</string>
 </resources>

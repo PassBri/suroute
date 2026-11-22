@@ -3421,4 +3421,6 @@
     <string name="bja_avance_de">%1$s 진행률: %2$d%%</string>
     <string name="bja_menos_uno">1% 줄이기</string>
     <string name="bja_mas_uno">1% 늘리기</string>
+    <string name="bja_avance_anio">올해 진행률</string>
+    <string name="bja_ganadas_anio">하위 목표 64개 중 %1$d개 달성</string>
 </resources>

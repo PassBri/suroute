@@ -72,20 +72,38 @@ internal fun BrujulaAnioCard(
         confirmButton = { androidx.compose.material3.TextButton(onClick = { confirmar = false; onCopiar() }) { Text(stringResource(R.string.bja_copiar)) } },
         dismissButton = { androidx.compose.material3.TextButton(onClick = { confirmar = false }) { Text(stringResource(R.string.cancelar)) } })
     RutaCard {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.bja_titulo, anio), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Bold)
-                val (cumbre, _) = Mandala.repartir(delAnio, { it.origen }, { it.eje })
-                Text(cumbre?.afirmacion?.ifBlank { cumbre.titulo } ?: stringResource(R.string.bja_sin_brujula, anio),
-                    style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        // Cabecera centrada: la cumbre del año, su avance general y las acciones (igual que la web)
+        val (cumbre, campsCab) = Mandala.repartir(delAnio, { it.origen }, { it.eje })
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(stringResource(R.string.bja_titulo, anio), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Bold)
+            Text(cumbre?.afirmacion?.ifBlank { cumbre.titulo } ?: stringResource(R.string.bja_sin_brujula, anio),
+                style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center, fontWeight = FontWeight.SemiBold)
+            if (delAnio.isNotEmpty()) {
+                var suma = 0f; var ganadasAnio = 0
+                campsCab.forEach { c -> if (c != null) for (p in 0 until Mandala.PASOS) { val x = MetodoCima.leer(c.id, p, mandala); suma += MetodoCima.avance(x, MetodoCima.DIFICULTAD_INICIAL); if (x.cumplido) ganadasAnio++ } }
+                val totalAnio = suma / (Mandala.CAMPAMENTOS_FIJOS.size * Mandala.PASOS)
+                Surface(shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.secondary.copy(alpha = .08f),
+                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = .3f)), modifier = Modifier.padding(top = 4.dp).widthIn(max = 420.dp).fillMaxWidth()) {
+                    Column(Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                            Text(stringResource(R.string.bja_avance_anio), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
+                            Text("${Math.round(totalAnio * 100)} %", style = MaterialTheme.typography.headlineSmall.copy(fontFeatureSettings = "tnum"), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                        }
+                        LinearProgressIndicator(progress = { totalAnio }, modifier = Modifier.fillMaxWidth().height(4.dp), color = MaterialTheme.colorScheme.primary, trackColor = MaterialTheme.colorScheme.primary.copy(alpha = .14f))
+                        Text(stringResource(R.string.bja_ganadas_anio, ganadasAnio), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
             }
-            OutlinedButton(onClick = onAbrirBrujula) {
-                Icon(Icons.Filled.Explore, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp))
-                Text(stringResource(if (delAnio.isEmpty()) R.string.bja_crear else R.string.bja_abrir))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
+                OutlinedButton(onClick = onAbrirBrujula) {
+                    Icon(Icons.Filled.Explore, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp))
+                    Text(stringResource(if (delAnio.isEmpty()) R.string.bja_crear else R.string.bja_abrir))
+                }
+                if (hayGeneral) androidx.compose.material3.TextButton(onClick = { if (delAnio.isEmpty()) onCopiar() else confirmar = true }) {
+                    Icon(Icons.Filled.ContentCopy, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.bja_copiar))
+                }
             }
-        }
-        if (hayGeneral) androidx.compose.material3.TextButton(onClick = { if (delAnio.isEmpty()) onCopiar() else confirmar = true }) {
-            Icon(Icons.Filled.ContentCopy, null, Modifier.size(18.dp)); Spacer(Modifier.width(6.dp)); Text(stringResource(R.string.bja_copiar))
         }
         if (delAnio.isEmpty()) return@RutaCard
         val (_, camps) = Mandala.repartir(delAnio, { it.origen }, { it.eje })

@@ -4031,9 +4031,14 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 .per-fila label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--tinta-suave); }
 .per-fila input { width: 96px !important; font-variant-numeric: tabular-nums; }
 .per-fila b { color: var(--burdeos); font-size: 14px; }
-.ba-cab { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.ba-cab { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; margin-bottom: 10px; }
 .ba-cab small { font-size: 12px; color: var(--oro); font-weight: 700; letter-spacing: .02em; }
-.ba-cab h3 { margin: 2px 0 6px; font: 600 19px/1.3 var(--font-titulo); color: var(--burdeos); }
+.ba-cab h3 { margin: 2px 0 4px; max-width: 36ch; font: 600 clamp(19px, 4.6vw, 24px)/1.3 var(--font-titulo); color: var(--burdeos); text-wrap: balance; }
+.ba-general { width: min(100%, 420px); display: grid; gap: 6px; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, var(--oro) 8%, var(--hoja)); border: 1px solid color-mix(in srgb, var(--oro) 30%, var(--linea)); --c: var(--burdeos); }
+.ba-general-fila { display: flex; justify-content: space-between; align-items: baseline; font-size: 14px; color: var(--tinta-suave); }
+.ba-general-fila b { font: 700 22px/1 var(--font-titulo); color: var(--burdeos); font-variant-numeric: tabular-nums; }
+.ba-general small { color: var(--tinta-suave); font-weight: 400; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.ba-intro { margin: 0 auto 12px; max-width: 60ch; text-align: center; }
 .ba-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .ba-camp { display: grid; gap: 8px; align-content: start; padding: 14px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--c) 25%, var(--linea)); background: color-mix(in srgb, var(--c) 5%, var(--hoja)); }
 .ba-camp.vacio { opacity: .7; }
@@ -4083,7 +4088,7 @@ html[data-theme="dark"] .md-c .mdp-num { color: color-mix(in srgb, var(--c) 45%,
 .aporte-dia b { color: var(--burdeos); }
 .aporte-dia span { color: var(--tinta); }
 .ba-cab .btn { white-space: nowrap; flex: none; }
-.ba-acc { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.ba-acc { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
 
 /* Otras metas del año: nombre editable ahí mismo + abrir, copiar, borrar */
 .om-fila { display: flex; align-items: center; gap: 4px; padding-block: 6px; border-bottom: 1px solid var(--linea); }

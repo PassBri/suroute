@@ -70,10 +70,19 @@ function brujulaDelAnio(a) {
         || `<li class="suave">Sin sub-metas todavía: escríbelas en la Brújula o en la meta.</li>`}</ol>
     </article>`;
   };
-  return hoja(`<div class="ba-cab"><div><small>Brújula de ${a}</small><h3>${esc(cumbre?.afirmacion || cumbre?.titulo || `Mi cumbre de ${a}`)}</h3></div>
+  // Avance general del año: el promedio de los 64 pasos (8 campamentos × 8), igual que cada campamento promedia sus 8
+  let sumaAnio = 0, ganadasAnio = 0;
+  camps.forEach(c => { if (!c) return; for (let p = 0; p < 8; p++) { const x = MetodoCima.leer(c.id, p); sumaAnio += MetodoCima.avance(x, MetodoCima.INICIAL); if (x.cumplido) ganadasAnio++; } });
+  const totalAnio = Math.round(sumaAnio / 64 * 100);
+  return hoja(`<div class="ba-cab"><small>Brújula de ${a}</small><h3>${esc(cumbre?.afirmacion || cumbre?.titulo || `Mi cumbre de ${a}`)}</h3>
+      <div class="ba-general" role="group" aria-label="Avance general de ${a}: ${totalAnio} %">
+        <div class="ba-general-fila"><span>Avance del año</span><b>${totalAnio} %</b></div>
+        <div class="ba-barra"><i style="width:${totalAnio}%"></i></div>
+        <small>${ganadasAnio} de 64 sub-metas ganadas</small>
+      </div>
       <span class="ba-acc">${casillasDe(null).length ? `<button class="btn mini" data-acc="copiarGeneral" data-arg="${a}" title="Trae la cumbre, los campamentos y sus sub-metas de tu Brújula general">${ic("copiar")} Copiar de la general</button>` : ""}
       <button class="btn mini" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Abrir la Brújula</button></span></div>
-    <p class="suave" style="margin:0 0 12px">La cumbre de ${a} y sus 8 campamentos: cada uno con su meta, sus sub-metas (los pasos) y su plan de acción.</p>
+    <p class="suave ba-intro">La cumbre de ${a} y sus 8 campamentos: cada uno con su meta, sus sub-metas (los pasos) y su plan de acción.</p>
     <div class="ba-grid">${Mandala.CAMPAMENTOS_FIJOS.map((_, i) => tarjeta(camps[i], i)).join("")}</div>`, "ba-hoja");
 }
 window.brujulaDelAnio = brujulaDelAnio;

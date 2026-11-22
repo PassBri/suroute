@@ -3421,4 +3421,6 @@
     <string name="bja_avance_de">%1$s 的进度：%2$d%%</string>
     <string name="bja_menos_uno">减少 1%</string>
     <string name="bja_mas_uno">增加 1%</string>
+    <string name="bja_avance_anio">全年进度</string>
+    <string name="bja_ganadas_anio">已达成 %1$d / 64 个子目标</string>
 </resources>
