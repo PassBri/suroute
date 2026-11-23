@@ -27,7 +27,7 @@ async function informeBrujula() {
       <div class="t9-pie"><b>${esc(nombre)}</b>${cum ? "" : `<small>${esc(Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp]))}</small>`}<span class="t9-bar"><i style="width:${pc}%"></i></span></div></div>`;
   };
   const vista9 = `<div class="v9">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(tarjeta9).join("")}</div>`;
-  const logo = new URL("iconos/logo-horizontal-crema.svg", location.href).href, simbolo = new URL("iconos/simbolo.svg", location.href).href;
+  const logo = new URL("iconos/logo-horizontal-tinta.svg", location.href).href, simbolo = new URL("iconos/simbolo.svg", location.href).href;
   let sec = 0; const h2 = t => `<h2><span>${String(++sec).padStart(2, "0")}</span>${t}</h2>`;
   const EST = { VACIO: ["Por escribir", "#5A666B", "#EEF1F2"], INICIO: ["Por empezar", "#5A666B", "#EEF1F2"], ESCRITO: ["En camino", "#8A5A00", "#FBEFD8"], HECHO: ["Ganado", "#1E7B4A", "#E3F2E9"] };
   const pill = e => `<span class="pill" style="color:${EST[e][1]};background:${EST[e][2]}">${EST[e][0]}</span>`;
@@ -73,7 +73,7 @@ async function informeBrujula() {
       @top-right{content:"Informe de mi Brújula";font:italic 500 8.5pt "Roboto Serif",Georgia,serif;color:#6B2A1A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
       @bottom-left{content:"Método Ruta a la Cima";font:400 7.5pt Roboto,sans-serif;color:#5A666B;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}
       @bottom-right{content:counter(page) " / " counter(pages);font:600 8pt Roboto,sans-serif;color:#6B2A1A;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}}
-    @page:first{margin-top:14mm;@top-left{content:none;border:0}@top-right{content:none;border:0}}`;
+    @page:first{margin-top:14mm;@top-left{content:"";border:0}@top-center{content:""}@top-right{content:"";border:0}}`;
   const css = `@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500;8..144,600&family=Roboto:wght@400;500;700&display=swap");
     *{box-sizing:border-box}body{font:13.5px/1.55 Roboto,system-ui,sans-serif;color:#1D2427;margin:0;background:#E6EAEC;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .doc{max-width:900px;margin:24px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px -12px rgb(0 0 0/.25)}
@@ -132,14 +132,32 @@ async function informeBrujula() {
     .nota{margin-top:28px;padding-top:12px;border-top:1px solid #DCE2E4;font-size:11.5px;color:#5A666B;display:flex;gap:10px;align-items:center}.nota img{width:20px;height:20px;opacity:.7}
     .barra-acc{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;padding:12px;background:#E6EAEC}
     .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
+    /* ---- Estilo de informe profesional ---- */
+    .banda{background:#fff;color:#6B2A1A;padding:26px 44px 14px;border-bottom:0;position:relative}
+    .banda::after{content:"";position:absolute;left:44px;right:44px;bottom:0;height:3px;border-top:1.5px solid #6B2A1A;border-bottom:.5px solid #C9973B}
+    .banda img{height:40px}.banda .meta{opacity:1;color:#86683A;font-size:10.5px;letter-spacing:.14em;line-height:1.7}.banda .meta b{color:#6B2A1A;font-weight:700}
+    .portada{padding:22px 44px 6px;border-bottom:0}.sobre{margin:0 0 4px;font:600 10.5px Roboto,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#86683A}
+    h1{font:600 32px/1.1 "Roboto Serif",Georgia,serif;color:#1D2427;letter-spacing:-.01em}
+    .ficha{display:grid;grid-template-columns:repeat(4,1fr);margin:16px 0 0;border-top:.5px solid #D9CBB0;border-bottom:.5px solid #D9CBB0}
+    .ficha div{padding:8px 12px;border-left:.5px solid #E8DCC4}.ficha div:first-child{border-left:0;padding-left:0}
+    .ficha dt{font:500 9.5px Roboto,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#86683A}.ficha dd{margin:2px 0 0;font:600 13px "Roboto Serif",Georgia,serif;color:#1D2427}
+    .cumbre{margin:18px 0 0;padding:4px 0 4px 18px;border:0;border-left:3px solid #C9973B;border-radius:0;background:none;font:italic 500 18px/1.45 "Roboto Serif",Georgia,serif;color:#6B2A1A}
+    h2{align-items:center}h2::after{content:"";flex:1;border-top:.5px solid #D9CBB0;margin-left:6px}
+    .kpis{gap:0;border-top:.5px solid #D9CBB0;border-bottom:.5px solid #D9CBB0}.kpi{background:none;border-radius:0;padding:10px 14px;border-left:.5px solid #E8DCC4}.kpi:first-child{border-left:0;padding-left:0}
+    .kpi span{font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#86683A}.kpi b{display:block;margin-top:2px;font:600 22px "Roboto Serif",Georgia,serif;color:#1D2427}
+    .barra{height:4px;margin:12px 0 6px}.ritmo{border-left:0;border:.5px solid #E8DCC4;border-radius:8px;background:#FDFBF7;padding:10px 14px}
+    .camp{border-color:#E8DCC4;border-radius:10px}.pill{font-weight:600}
+    .control{border-width:1px}.control-cab{background:#FBF8F2;color:#6B2A1A;border-bottom:1px solid #6B2A1A;border-radius:11px 11px 0 0}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
-      .banda{padding:14px 22px;border-radius:12px}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
+    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.control{overflow:visible}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
+      .banda{padding:0 0 12px;border-radius:0}.banda::after{left:0;right:0}.ficha div:first-child,.kpi:first-child{padding-left:0}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
-    <div class="doc"><div class="banda"><img src="${logo}" alt="SuRoute"><div class="meta">Brújula 1·9·81<br>${anio ? "Año " + anio : "General · toda la vida"}</div></div>
-    <div class="portada"><h1>Informe de mi Brújula</h1><p class="sub">${nombre ? nombre + " · " : ""}${fecha}</p>
-      <div class="cumbre"><small>Mi cumbre</small>${esc(d.titulo)}</div></div>
+    <div class="doc"><div class="banda"><img src="${logo}" alt="SuRoute"><div class="meta">Método Ruta a la Cima<br><b>Brújula 1·9·81</b></div></div>
+    <div class="portada"><p class="sobre">Informe de avance</p><h1>Informe de mi Brújula</h1>
+      <dl class="ficha"><div><dt>Titular</dt><dd>${nombre || "—"}</dd></div><div><dt>Periodo</dt><dd>${anio ? "Año " + anio : "General · toda la vida"}</dd></div>
+        <div><dt>Emitido</dt><dd>${fecha}</dd></div><div><dt>Avance general</dt><dd>${pctC} %</dd></div></dl>
+      <blockquote class="cumbre"><small>Mi cumbre</small>${esc(d.titulo)}</blockquote></div>
     <div class="cuerpo">
       ${h2("Cómo voy")}<div class="kpis"><div class="kpi"><span>Avance de la cumbre</span><b>${pctC} %</b></div><div class="kpi"><span>Pasos escritos</span><b>${d.escritos} de 64</b></div>
         <div class="kpi"><span>Pasos ganados</span><b>${d.hechos} de 64</b></div><div class="kpi"><span>Fotos de evidencia</span><b>${d.evidencias}</b></div></div>
