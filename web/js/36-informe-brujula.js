@@ -91,7 +91,7 @@ async function informeBrujula() {
     table{width:100%;border-collapse:collapse}th,td{padding:6px 8px;border-bottom:1px solid #EEF1F2;text-align:left;vertical-align:top}thead th{font:500 11px Roboto,sans-serif;color:#5A666B;text-transform:uppercase;letter-spacing:.05em}
     td small{display:block;font-size:10.5px;color:#86683A;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.num{width:26px;color:#5A666B;font-variant-numeric:tabular-nums}
     .n{text-align:right;white-space:nowrap}.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:700}.suave,.vacio{color:#5A666B}.metas{margin:8px 0 0;font-size:12.5px}
-    .v9{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;break-inside:avoid}
+    .mis9{break-inside:avoid}.mis9 h2{margin-top:18px}.v9{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;break-inside:avoid;max-width:560px;margin:0 auto}
     .t9{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#DCE2E4)}
     .t9 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
     .t9.cum{box-shadow:0 0 0 3px #C9973B;border-color:#C9973B}
@@ -127,7 +127,7 @@ async function informeBrujula() {
     .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
     table.hoja-imp{width:100%;border-collapse:collapse}table.hoja-imp>thead>tr>td,table.hoja-imp>tfoot>tr>td,table.hoja-imp>tbody>tr>td{padding:0;border:0}.esp-arr,.esp-aba{height:0}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.esp-arr{height:12mm}.esp-aba{height:14mm}@page{size:A4;margin:0}
+    @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}.esp-arr{height:12mm}.esp-aba{height:14mm}@page{size:A4;margin:0}
       .banda{padding:16px 14mm}.portada,.cuerpo{padding-left:14mm;padding-right:14mm}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
@@ -143,7 +143,7 @@ async function informeBrujula() {
         <p>Tramo ${r.tramo + 1} de 52 · un paso nuevo pide ${r.dificultad} ${r.dificultad === 1 ? "jornada" : "jornadas"} · ${r.adelanto >= 0 ? `vas ${r.adelanto.toLocaleString("es", { maximumFractionDigits: 1 })} pasos adelante del ritmo` : `te faltan ${(-r.adelanto).toLocaleString("es", { maximumFractionDigits: 1 })} pasos para ir al ritmo`}</p>
         ${d.confluencias ? `<p>${d.confluencias} ${d.confluencias === 1 ? "paso de confluencia" : "pasos de confluencia"}: acciones que movieron varios ejes.</p>` : ""}
         ${d.enNiebla ? `<p>${d.enNiebla} ${d.enNiebla === 1 ? "paso" : "pasos"} en la niebla (más de ${Travesia.NIEBLA_DIAS} días sin avanzar).</p>` : ""}</div>
-      <div class="salto"></div>${h2("Mis 9: la cumbre y sus campamentos")}${vista9}
+      <section class="mis9">${h2("Mis 9: la cumbre y sus campamentos")}${vista9}</section>
       <div class="salto"></div>${h2("Mi Brújula 9×9")}${grilla}
       <div class="salto"></div>${h2("Campamentos y sub-metas")}${camps}
       ${h2(`Mi carta de ${aCarta}`)}${cartaHtml}
