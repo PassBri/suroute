@@ -48,8 +48,14 @@ async function informeBrujula() {
   const cartaHtml = `<section class="carta">${palabra ? `<p class="palabra"><small>Mi palabra de ${aCarta}</small>${esc(palabra)}</p>` : ""}
       ${anhelos.length ? `<div class="anhelos"><small>Mis anhelos</small><ul>${anhelos.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
       <div class="carta-papel"><small>Mi carta de ${aCarta}</small>${carta ? parrafos(carta) : `<p class="suave">Aún no escribe su carta de ${aCarta}. Puede escribirla en Mi vida en años, o aquí a mano:</p><div class="renglones">${"<i></i>".repeat(6)}</div>`}</div></section>`;
+  /* Cuadro de firmas al estilo de los documentos de calidad (ISO 9000): quién elabora y quién revisa, con nombre, firma y fecha.
+     Los nombres van en blanco para escribirlos a mano. */
+  const fila = (rol, det) => `<tr><th><b>${rol}</b><small>${det}</small></th><td></td><td></td><td></td></tr>`;
   const firma = `<section class="firma"><p class="compromiso">Me comprometo con mi cumbre: <b>${esc(d.titulo)}</b></p>
-      <div class="firmas"><div><span></span><small>Firma</small></div><div><span>${nombre}</span><small>Nombre</small></div><div><span></span><small>Fecha</small></div></div></section>`;
+      <div class="control"><div class="control-cab"><span>Control de firmas</span><span>Brújula 1·9·81 · ${anio ? "Año " + anio : "General"} · Emitido el ${fecha}</span></div>
+        <table><thead><tr><th>Rol</th><th>Nombre</th><th>Firma</th><th class="fe">Fecha</th></tr></thead><tbody>
+          ${fila("Elaboró", "El senderista, dueño de la Brújula")}${fila("Revisó y acompañó", "Coach de vida · Método Ruta a la Cima")}
+        </tbody></table></div></section>`;
   const css = `@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500;8..144,600&family=Roboto:wght@400;500;700&display=swap");
     *{box-sizing:border-box}body{font:13.5px/1.55 Roboto,system-ui,sans-serif;color:#1D2427;margin:0;background:#E6EAEC;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .doc{max-width:900px;margin:24px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px -12px rgb(0 0 0/.25)}
@@ -82,8 +88,15 @@ async function informeBrujula() {
     .palabra{margin:0 0 14px;font:600 22px "Roboto Serif",Georgia,serif;color:#6B2A1A}.anhelos{margin:0 0 14px}.anhelos ul{margin:0;padding-left:18px}
     .carta-papel{padding:22px 26px;border-radius:12px;background:#FBF8F2;border:1px solid #E8DCC4;font:400 14.5px/1.7 "Roboto Serif",Georgia,serif}.carta-papel p{margin:0 0 10px}
     .renglones i{display:block;height:30px;border-bottom:1px solid #D9CBB0}
-    .firma{margin-top:30px;break-inside:avoid}.compromiso{margin:0 0 46px;font-size:14px}.compromiso b{font-family:"Roboto Serif",Georgia,serif;color:#6B2A1A}
-    .firmas{display:grid;grid-template-columns:1.4fr 1.4fr 1fr;gap:28px}.firmas span{display:block;min-height:26px;border-bottom:1.5px solid #1D2427;font-size:13px;padding:0 2px 2px}.firmas small{display:block;margin-top:6px;color:#5A666B;font-size:11.5px}
+    .firma{margin-top:24px;break-inside:avoid}.compromiso{margin:0 0 22px;font-size:14px}.compromiso b{font-family:"Roboto Serif",Georgia,serif;color:#6B2A1A}
+    .control{border:1.5px solid #6B2A1A;border-radius:12px;overflow:hidden;break-inside:avoid}
+    .control-cab{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 16px;background:#6B2A1A;color:#F3EDE0;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}.control-cab span:first-child{font-weight:700}
+    .control table{width:100%;border-collapse:collapse;table-layout:fixed}.control th,.control td{border-bottom:1px solid #E8DCC4;border-right:1px solid #E8DCC4;padding:8px 12px;text-align:left;vertical-align:top}
+    .control th:last-child,.control td:last-child{border-right:0}.control tbody tr:last-child th,.control tbody tr:last-child td{border-bottom:0}
+    .control thead th{background:#FBF8F2;font:500 11px Roboto,sans-serif;color:#86683A;text-transform:uppercase;letter-spacing:.08em}
+    .control thead th:first-child{width:28%}.control thead th.fe{width:18%}
+    .control tbody th{background:#FBF8F2;font-weight:400}.control tbody th b{display:block;font:600 14px "Roboto Serif",Georgia,serif;color:#6B2A1A}.control tbody th small{display:block;margin-top:2px;font-size:11px;color:#5A666B;text-transform:none;letter-spacing:0;font-weight:400}
+    .control tbody td{height:74px}
     .nota{margin-top:28px;padding-top:12px;border-top:1px solid #DCE2E4;font-size:11.5px;color:#5A666B;display:flex;gap:10px;align-items:center}.nota img{width:20px;height:20px;opacity:.7}
     .barra-acc{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;padding:12px;background:#E6EAEC}
     .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
