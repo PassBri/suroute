@@ -310,7 +310,7 @@ DET["perfil.publicaciones"] = () => {
 {
   const abrir = (e, bl) => { if (estado.modoTarjetas === "edicion" && !bl.closest(".md-visor")) return; ACC.mandalaBloque(bl, bl.dataset.bloque); };
   document.addEventListener("click", e => {
-    const bl = e.target.closest?.(".md-grilla .md-bloque[data-bloque]"); if (!bl || e.target.closest("textarea")) return;
+    const bl = e.target.closest?.(".md-grilla .md-bloque[data-bloque]"); if (!bl || e.target.closest("textarea, .md-cacc")) return;
     abrir(e, bl);
   });
   document.addEventListener("keydown", e => {

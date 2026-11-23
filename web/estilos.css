@@ -6124,3 +6124,17 @@ form:not(.pap-on) > .pap-editor { display: none; }
   .neg-bal li { grid-template-columns: 1fr 1fr 40px; grid-template-areas: "k m x" "n n n"; }
   .neg-bal li select { grid-area: k; } .neg-bal li input:not(.num) { grid-area: n; } .neg-bal li input.num { grid-area: m; } .neg-bal li .rb { grid-area: x; }
 }
+
+/* 9×9: cambiar la foto y girar cada casilla de la cumbre y los campamentos */
+.md-cacc { position: absolute; z-index: 3; top: 3px; right: 3px; display: flex; gap: 3px; opacity: 0; transition: opacity .15s cubic-bezier(.2,0,0,1); }
+.md-c:hover .md-cacc, .md-c:focus-within .md-cacc { opacity: 1; }
+@media (pointer: coarse) { .md-cacc { opacity: 1; } }
+.md-cbtn { width: 24px; height: 24px; border-radius: 50%; border: 0; padding: 0; display: grid; place-items: center; cursor: pointer;
+  background: color-mix(in srgb, var(--hoja) 88%, transparent); color: var(--tinta); box-shadow: 0 1px 3px rgb(0 0 0 / .25); }
+.md-cbtn .i { width: 14px; height: 14px; }
+@media (hover: hover) and (pointer: fine) { .md-cbtn:hover { background: var(--hoja); } }
+.md-c.c-girada > img, .md-flip .cara-imagen .md-grilla .md-c.c-girada > img { opacity: 0 !important; }
+.md-c.c-girada::after { display: none; }
+.md-c.c-girada b { color: var(--tinta) !important; text-shadow: none !important; }
+.md-c > img { transition: opacity .3s cubic-bezier(.2,0,0,1); }
+@media (prefers-reduced-motion: reduce) { .md-c > img, .md-cacc { transition: none; } }

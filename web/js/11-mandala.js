@@ -248,15 +248,20 @@ function mdBarraAvance(d, camp) {
 }
 
 /** Una celda: la cumbre, un campamento (con su foto) o un paso. */
+/* En el 9×9, la cumbre y cada campamento llevan dos botones pequeños: cambiar su foto y girar esa casilla (foto ⇄ texto). */
+const mdCeldaAcc = (c, nombre, foto) => !c ? "" : `<span class="md-cacc">
+  <label class="md-cbtn" title="${foto ? "Cambiar la foto" : "Agregar foto"}" aria-label="${foto ? "Cambiar la foto" : "Agregar foto"} de ${esc(nombre)}"><input type="file" accept="image/*" hidden data-foto-vision="${c.id}">${ic("foto")}</label>
+  ${foto ? `<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${c.id}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>` : ""}</span>`;
+const mdGirada = c => !!c && !!estado.mdCeldasGiradas?.has(String(c.id));
 function mdCelda(d, cel, grande) {
   if (cel.tipo === "CUMBRE") {
-    const foto = mdFoto(d.cumbre);
-    return `<span class="md-c md-cumbre${foto ? " con-foto" : ""}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="▲">${esc(d.titulo)}</b>${mdBarraMini(mdPct(d, -1))}</span>`;
+    const foto = mdFoto(d.cumbre), g = mdGirada(d.cumbre);
+    return `<span class="md-c md-cumbre${foto ? " con-foto" : ""}${g ? " c-girada" : ""}"${d.cumbre ? ` data-cid="${d.cumbre.id}"` : ""}>${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="▲">${esc(d.titulo)}</b>${mdBarraMini(mdPct(d, -1))}${grande ? "" : mdCeldaAcc(d.cumbre, d.titulo, foto)}</span>`;
   }
   const camp = d.camps[cel.camp], color = d.color(cel.camp);
   if (cel.tipo === "CAMPAMENTO") {
-    const foto = mdFoto(camp);
-    return `<span class="md-c md-camp${camp ? "" : " libre"}" style="--c:${color}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="${Mandala.RUMBOS[cel.camp]}">${camp ? esc(mdNombre(camp)) : "+ " + Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp])}</b>${camp ? mdBarraMini(mdPct(d, cel.camp)) : ""}</span>`;
+    const foto = mdFoto(camp), g = mdGirada(camp);
+    return `<span class="md-c md-camp${camp ? "" : " libre"}${g ? " c-girada" : ""}" style="--c:${color}"${camp ? ` data-cid="${camp.id}"` : ""}>${grande ? "" : mdCeldaAcc(camp, camp ? mdNombre(camp) : "", foto)}${foto ? `<img src="${esc(foto)}" alt="">` : ""}<b data-corto="${Mandala.RUMBOS[cel.camp]}">${camp ? esc(mdNombre(camp)) : "+ " + Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp])}</b>${camp ? mdBarraMini(mdPct(d, cel.camp)) : ""}</span>`;
   }
   const est = Mandala.estado(camp?.id, cel.paso), texto = camp ? respuesta(Mandala.clave(camp.id, cel.paso)) : "";
   const evid = mdFotoPaso(camp, cel.paso), fase = `<small class="md-fase">${cel.paso + 1}</small>`;
@@ -1042,6 +1047,12 @@ Object.assign(ACC, {
 });
 window.visionVida = visionVida;
 
+/* Girar una sola casilla del 9×9 (cumbre o campamento): su foto ⇄ su texto, sin redibujar */
+ACC.mdGirarCelda = (_, id) => {
+  const set = estado.mdCeldasGiradas ||= new Set(), k = String(id), si = !set.has(k);
+  si ? set.add(k) : set.delete(k);
+  document.querySelectorAll(`.md-c[data-cid="${k}"]`).forEach(x => x.classList.toggle("c-girada", si));
+};
 /* Girar la tarjeta del 9×9 sin redibujar (la animación se ve completa) */
 ACC.md81Girar = el => {
   estado.md81Girada = !estado.md81Girada;
