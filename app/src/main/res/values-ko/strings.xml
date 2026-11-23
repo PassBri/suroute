@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">1% 늘리기</string>
     <string name="bja_avance_anio">올해 진행률</string>
     <string name="bja_ganadas_anio">하위 목표 64개 중 %1$d개 달성</string>
-    <string name="vision_avance_por_pasos">이 진행률은 하위 목표 8개의 평균입니다. 각 단계에서 여기나 나의 길에서 조정하면 양쪽에 똑같이 표시됩니다.</string>
+    <string name="vision_avance_por_pasos">하위 목표 8개에서 계산됩니다. 움직이면 직접 설정으로 바뀌며 나의 길에도 똑같이 적용됩니다.</string>
+    <string name="bja_mano_info">직접 설정 · 하위 목표 %1$d%%</string>
+    <string name="bja_por_submetas">하위 목표 기준: %1$d%%</string>
+    <string name="bja_usar_submetas">하위 목표 값 사용</string>
+    <string name="bja_ajustar_camp">캠프 진행률: %1$d%%. 탭하여 직접 설정</string>
 </resources>

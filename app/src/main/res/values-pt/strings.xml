@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">Um ponto a mais</string>
     <string name="bja_avance_anio">Avanço do ano</string>
     <string name="bja_ganadas_anio">%1$d de 64 submetas conquistadas</string>
-    <string name="vision_avance_por_pasos">Este avanço é a média das suas 8 submetas. Ajuste-o em cada passo, aqui ou em Minha rota: os dois mostram o mesmo.</string>
+    <string name="vision_avance_por_pasos">Vem das suas 8 submetas. Se você movê-lo, fica definido à mão, também em Minha rota.</string>
+    <string name="bja_mano_info">Definido à mão · submetas %1$d %%</string>
+    <string name="bja_por_submetas">Pelas submetas: %1$d %%</string>
+    <string name="bja_usar_submetas">Usar o das submetas</string>
+    <string name="bja_ajustar_camp">Avanço do acampamento: %1$d %%. Toque para defini-lo à mão</string>
 </resources>

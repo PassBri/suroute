@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">Ein Punkt mehr</string>
     <string name="bja_avance_anio">Fortschritt im Jahr</string>
     <string name="bja_ganadas_anio">%1$d von 64 Teilzielen erreicht</string>
-    <string name="vision_avance_por_pasos">Dieser Fortschritt ist der Durchschnitt seiner 8 Teilziele. Ändern Sie ihn bei jedem Schritt, hier oder in Mein Weg: Beide zeigen dasselbe.</string>
+    <string name="vision_avance_por_pasos">Er ergibt sich aus seinen 8 Teilzielen. Wenn Sie ihn verschieben, bleibt er von Hand gesetzt, auch in Mein Weg.</string>
+    <string name="bja_mano_info">Von Hand gesetzt · Teilziele %1$d %%</string>
+    <string name="bja_por_submetas">Aus den Teilzielen: %1$d %%</string>
+    <string name="bja_usar_submetas">Wert der Teilziele verwenden</string>
+    <string name="bja_ajustar_camp">Fortschritt des Lagers: %1$d %%. Tippen, um ihn von Hand zu setzen</string>
 </resources>

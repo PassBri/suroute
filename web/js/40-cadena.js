@@ -55,11 +55,13 @@ function brujulaDelAnio(a) {
     const ganados = pasos.filter(x => x.x.cumplido).length, plan = m ? PlanMeta.leer(m.id) : [];
     // La misma cuenta que la Brújula (mdPctCamp): mover un paso aquí o allá cambia lo mismo en los dos lados
     const pct = x => Math.round(MetodoCima.avance(x, dif) * 100);
-    const total = Math.round(mdPctCamp(c, i, dif));
+    const total = Math.round(mdPctCamp(c, i, dif)), mano = mdManoCamp(c), porPasos = Math.round(mdPctPasos(c, dif)), ajustando = estado.baCamp === c.id;
     return `<article class="ba-camp" style="--c:${color}">
-      <header><small>${esc(Mandala.nombre(cod))}</small><span class="ba-pct" title="Sub-metas ganadas · avance del campamento">${ganados}/8 · ${total} %</span></header>
+      <header><small>${esc(Mandala.nombre(cod))}</small><button class="ba-pct" data-acc="baCamp" data-arg="${c.id}" aria-expanded="${ajustando}" title="Toca para poner el avance a mano">${ganados}/8 · <b>${total} %</b></button></header>
       ${m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
       <div class="ba-barra"><i style="width:${total}%"></i></div>
+      ${mano != null || ajustando ? `<p class="ba-mano">${mano != null ? `Puesto a mano · sub-metas ${porPasos} %` : `Por sub-metas: ${porPasos} %`}${mano != null ? ` <button class="ba-mano-quitar" data-acc="baManoQuitar" data-arg="${c.id}">Usar el de las sub-metas</button>` : ""}</p>` : ""}
+      ${ajustando ? `<div class="ba-desliza ba-desliza-camp"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.max(0, total - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${total}" data-acc-change="baManoFin" data-acc-input="baManoVer" data-arg="${c.id}" aria-label="Avance del campamento a mano"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.min(100, total + 1)}" aria-label="Un punto más">+</button></div></div>` : ""}
       <ol class="ba-pasos">${pasos.map(({ p, t, x }) => {
         if (!t) return "";
         const abierto = estado.baAvance === `${c.id}|${p}`, v = x.cumplido ? 100 : pct(x);
@@ -88,6 +90,13 @@ function brujulaDelAnio(a) {
 }
 window.brujulaDelAnio = brujulaDelAnio;
 /** Abrir o cerrar el deslizador de avance de una sub-meta. */
+/* El % del campamento puesto a mano (vision:mano:<id>): el mismo dato que ajusta la casilla de la Brújula */
+ACC.baCamp = (_, id) => { estado.baCamp = estado.baCamp === Number(id) ? null : Number(id); pintarDetalle(); };
+const ponerMano = async (id, n) => { await responderBase("vision", `vision:mano:${id}`, String(Math.min(100, Math.max(0, Math.round(Number(n) || 0))))); pintarDetalle(); };
+ACC.baMano = (_, arg) => { const [id, n] = arg.split("|"); return ponerMano(id, n); };
+ACC.baManoFin = (el, id) => ponerMano(id, el.value);
+ACC.baManoVer = (el) => { const b = el.closest(".ba-camp")?.querySelector(".ba-pct b"); if (b) b.textContent = el.value + " %"; };
+ACC.baManoQuitar = async (_, id) => { await responderBase("vision", `vision:mano:${id}`, ""); toast("Ahora manda el avance de las sub-metas"); pintarDetalle(); };
 ACC.baAvance = (_, arg) => { estado.baAvance = estado.baAvance === arg ? null : arg; pintarDetalle(); };
 /** Poner el % de avance: 100 la marca ganada; menos de 100 la deja abierta con ese porcentaje. */
 async function ponerPct(cid, p, n) {

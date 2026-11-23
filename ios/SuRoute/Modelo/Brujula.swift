@@ -69,7 +69,12 @@ struct Brujula {
         return js > 0 ? min(99, Int((Double(js) / Double(max(1, req)) * 100).rounded())) : 0
     }
     /// Avance del campamento: el promedio de sus 8 pasos.
-    func pct(_ a: Almacen, _ c: Casilla) -> Int { Int((Double((0..<8).map { pct(a, c, $0) }.reduce(0, +)) / 8).rounded()) }
+    func pct(_ a: Almacen, _ c: Casilla) -> Int {
+        // Si le puso un % a mano al campamento (en la web o en Android), manda ese; si no, el promedio de sus 8 pasos
+        let mano = a.respuesta("vision:mano:\(c.clave)").trimmingCharacters(in: .whitespaces)
+        if !mano.isEmpty, let v = Double(mano) { return min(100, max(0, Int(v.rounded()))) }
+        return Int((Double((0..<8).map { pct(a, c, $0) }.reduce(0, +)) / 8).rounded())
+    }
 
     /// Pasos escritos y cumplidos de toda la Brújula.
     func cuenta(_ a: Almacen) -> (escritos: Int, hechos: Int) {

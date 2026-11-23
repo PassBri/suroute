@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">1% 増やす</string>
     <string name="bja_avance_anio">今年の進み具合</string>
     <string name="bja_ganadas_anio">64 個中 %1$d 個のサブ目標を達成</string>
-    <string name="vision_avance_por_pasos">この進み具合は 8 つのサブ目標の平均です。各ステップで、ここでも「私の道」でも調整でき、両方に同じ値が表示されます。</string>
+    <string name="vision_avance_por_pasos">8 つのサブ目標から計算されます。動かすと手動設定になり、「私の道」でも同じです。</string>
+    <string name="bja_mano_info">手動で設定 · サブ目標 %1$d%%</string>
+    <string name="bja_por_submetas">サブ目標から：%1$d%%</string>
+    <string name="bja_usar_submetas">サブ目標の値を使う</string>
+    <string name="bja_ajustar_camp">キャンプの進み具合：%1$d%%。タップして手動で設定</string>
 </resources>

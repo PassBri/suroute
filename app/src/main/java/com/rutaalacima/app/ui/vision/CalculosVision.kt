@@ -62,7 +62,7 @@ internal fun porcentajesVision(datos: DatosMandala, estados: Map<String, String>
         if (cv == null) 0f else {
             val pasos = (0 until Mandala.PASOS).sumOf { MetodoCima.avance(datos.pasoCima(i, it), datos.ritmo.dificultad).toDouble() }
                 .toFloat() * 100f / Mandala.PASOS
-            if (conPasos[i]) pasos else manual(cv.casilla.id, maxOf(pasos, metas[datos.codigo(i)] ?: 0f))
+            if (conPasos[i]) (estados["vision:mano:${cv.casilla.id}"]?.trim()?.takeIf { it.isNotEmpty() }?.toFloatOrNull()?.coerceIn(0f, 100f) ?: pasos) else manual(cv.casilla.id, maxOf(pasos, metas[datos.codigo(i)] ?: 0f))
         }
     }
     return buildMap {

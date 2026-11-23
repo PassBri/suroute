@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">Un point de plus</string>
     <string name="bja_avance_anio">Avancement de l’année</string>
     <string name="bja_ganadas_anio">%1$d sous-objectifs atteints sur 64</string>
-    <string name="vision_avance_por_pasos">Cet avancement est la moyenne de ses 8 sous-objectifs. Ajustez-le à chaque pas, ici ou dans Mon chemin : les deux affichent la même chose.</string>
+    <string name="vision_avance_por_pasos">Il vient de ses 8 sous-objectifs. Si vous le déplacez, il reste réglé à la main, aussi dans Mon chemin.</string>
+    <string name="bja_mano_info">Réglé à la main · sous-objectifs %1$d %%</string>
+    <string name="bja_por_submetas">D’après les sous-objectifs : %1$d %%</string>
+    <string name="bja_usar_submetas">Utiliser celui des sous-objectifs</string>
+    <string name="bja_ajustar_camp">Avancement du camp : %1$d %%. Touchez pour le régler à la main</string>
 </resources>

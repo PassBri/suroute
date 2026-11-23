@@ -1347,7 +1347,10 @@ function edicionCasillaHtml(c, md = window.Mandala ? Mandala.datos() : null) {
           ${foto ? `<button class="btn mini" data-acc="quitarFotoVision" data-arg="${k}" title="Quitar la foto">${ic("borrar")}</button>`
             : `<a href="${urlIdeas(c.busqueda)}" target="_blank" rel="noopener" class="btn mini">${ic("buscar")} Ideas</a>`}
         </div>
-        ${estado.pctCasilla === k && porPasos ? `<div class="casilla-ajuste"><b>${av.pct}%</b><small>Este avance es el promedio de sus 8 sub-metas. Muévalo en cada paso, aquí en la Brújula o en Mi ruta: los dos lados muestran lo mismo.</small></div>` : ""}
+        ${estado.pctCasilla === k && porPasos ? (() => { const mano = mdManoCamp(c), sub = Math.round(mdPctPasos(c, md.ritmo.dificultad));
+          return `<div class="casilla-ajuste"><label for="pct-${k}">Avance</label>
+          <input id="pct-${k}" type="range" min="0" max="100" step="1" value="${av.pct}" data-acc-input="pctCasillaVer" data-acc-change="baManoFin" data-arg="${k}"><b>${av.pct}%</b>
+          <small>${mano != null ? `Puesto a mano · sus sub-metas dicen ${sub} %. <button class="ba-mano-quitar" data-acc="baManoQuitar" data-arg="${k}">Usar el de las sub-metas</button>` : `Sale de sus 8 sub-metas. Si lo mueve, queda puesto a mano, también en Mi ruta.`}</small></div>`; })() : ""}
         ${estado.pctCasilla === k && !porPasos ? `<div class="casilla-ajuste"><label for="pct-${k}">Avance</label>
           <input id="pct-${k}" type="range" min="0" max="100" step="5" value="${av.pct}" data-acc-input="pctCasillaVer" data-acc-change="pctCasillaGuardar" data-arg="${k}"><b>${av.pct}%</b>
           <small>${md && String(md.cumbre?.id) === k && md.camps.some(x => window.mdConPasos?.(x)) ? "La cumbre es el promedio de sus 8 campamentos." : ""}</small></div>` : ""}

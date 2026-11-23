@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">One point more</string>
     <string name="bja_avance_anio">Progress this year</string>
     <string name="bja_ganadas_anio">%1$d of 64 sub-goals won</string>
-    <string name="vision_avance_por_pasos">This progress is the average of its 8 sub-goals. Move it on each step, here or in My road: both show the same.</string>
+    <string name="vision_avance_por_pasos">It comes from its 8 sub-goals. If you move it, it stays set by hand, in My road too.</string>
+    <string name="bja_mano_info">Set by hand · sub-goals %1$d %%</string>
+    <string name="bja_por_submetas">From sub-goals: %1$d %%</string>
+    <string name="bja_usar_submetas">Use the sub-goals value</string>
+    <string name="bja_ajustar_camp">Camp progress: %1$d %%. Tap to set it by hand</string>
 </resources>

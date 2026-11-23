@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">نقطة أكثر</string>
     <string name="bja_avance_anio">تقدّم العام</string>
     <string name="bja_ganadas_anio">تحقّق %1$d من 64 هدفًا فرعيًا</string>
-    <string name="vision_avance_por_pasos">هذا التقدّم هو متوسط أهدافه الفرعية الثمانية. عدّله في كل خطوة، هنا أو في طريقي: يظهر الشيء نفسه في المكانين.</string>
+    <string name="vision_avance_por_pasos">يُحسب من أهدافه الفرعية الثمانية. إذا حرّكته يبقى مضبوطًا يدويًا، وفي طريقي أيضًا.</string>
+    <string name="bja_mano_info">مضبوط يدويًا · الأهداف الفرعية %1$d%%</string>
+    <string name="bja_por_submetas">حسب الأهداف الفرعية: %1$d%%</string>
+    <string name="bja_usar_submetas">استخدام قيمة الأهداف الفرعية</string>
+    <string name="bja_ajustar_camp">تقدّم المخيّم: %1$d%%. المس لضبطه يدويًا</string>
 </resources>

@@ -115,6 +115,9 @@ internal data class AccionesTarjeta(
     val onMeta: (String) -> Unit,
     /** Casillas cuyo avance sale de sus sub-metas: no llevan deslizador ni cambio de estado a mano. */
     val porPasos: Set<Long> = emptySet(),
+    /** Pone (o quita, con null) el % a mano de un campamento con sub-metas: vision:mano, igual que Mi ruta y la web. */
+    val onMano: (Long, Int?) -> Unit = { _, _ -> },
+    val manos: Map<Long, Int> = emptyMap(),
 )
 
 /**
@@ -374,7 +377,11 @@ private fun DorsoCompleto(cv: CasillaVista, apodo: String, porcentaje: Int, acci
         val porPasos = c.id in acciones.porPasos
         EstadoTarjeta(porcentaje, { if (!porPasos) acciones.onPorcentaje(c.id, siguienteEstado(porcentaje)) })
         Text(stringResource(R.string.progreso_pct, porcentaje), style = MaterialTheme.typography.labelLarge)
-        if (porPasos) Text(stringResource(R.string.vision_avance_por_pasos), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (porPasos) {
+            Slider(porcentaje.toFloat(), { acciones.onMano(c.id, Math.round(it)) }, valueRange = 0f..100f)
+            Text(stringResource(R.string.vision_avance_por_pasos), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (c.id in acciones.manos) androidx.compose.material3.TextButton(onClick = { acciones.onMano(c.id, null) }) { Text(stringResource(R.string.bja_usar_submetas)) }
+        }
         else Slider(porcentaje.toFloat(), { acciones.onPorcentaje(c.id, (it / 5).toInt() * 5) }, valueRange = 0f..100f)
         if (metas.isNotEmpty()) {
             Text(stringResource(R.string.vision_metas_sostienen), style = MaterialTheme.typography.titleSmall)

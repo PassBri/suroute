@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">На 1 % больше</string>
     <string name="bja_avance_anio">Прогресс года</string>
     <string name="bja_ganadas_anio">Достигнуто подцелей: %1$d из 64</string>
-    <string name="vision_avance_por_pasos">Этот прогресс — среднее его 8 подцелей. Меняйте его в каждом шаге, здесь или в «Моём пути»: в обоих местах будет одно и то же.</string>
+    <string name="vision_avance_por_pasos">Считается по 8 подцелям. Если сдвинуть, значение станет ручным, и в «Моём пути» тоже.</string>
+    <string name="bja_mano_info">Задано вручную · подцели %1$d %%</string>
+    <string name="bja_por_submetas">По подцелям: %1$d %%</string>
+    <string name="bja_usar_submetas">Брать значение подцелей</string>
+    <string name="bja_ajustar_camp">Прогресс лагеря: %1$d %%. Нажмите, чтобы задать вручную</string>
 </resources>

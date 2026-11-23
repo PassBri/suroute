@@ -141,6 +141,7 @@ class VisionViewModel(private val c: AppContainer) : ViewModel() {
     val apodos = c.respuestas.observar("apodo").stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
     val estados = c.respuestas.observar("vision").stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyMap())
     fun guardarApodo(id: Long, texto: String) = viewModelScope.launch { c.respuestas.guardar("apodo", "apodo:vision:$id", texto.trim()) }
+    fun guardarMano(id: Long, pct: Int?) = viewModelScope.launch { c.respuestas.guardar("vision", "vision:mano:$id", pct?.coerceIn(0, 100)?.toString() ?: "") }
     fun guardarPorcentaje(id: Long, pct: Int) = viewModelScope.launch {
         c.respuestas.guardar("vision", "vision:pct:$id", pct.toString())
         c.respuestas.guardar("vision", "vision:estado:$id", if (pct >= 100) "LOGRADA" else if (pct > 0) "CAMINO" else "ABIERTA")
@@ -454,10 +455,11 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
         { casilla, paso, texto -> vm.guardarPaso(casilla, paso, texto) }
     }
     val porPasos = remember(datos) { casillasPorPasos(datos) }
-    val acciones = remember(vm, elegirFoto, ctx, onIrA, porPasos) { AccionesTarjeta(
+    val manos = remember(estados) { estados.mapNotNull { (k, v) -> if (k.startsWith("vision:mano:") && v.isNotBlank()) k.removePrefix("vision:mano:").toLongOrNull()?.let { it to (v.toFloatOrNull()?.toInt() ?: 0) } else null }.toMap() }
+    val acciones = remember(vm, elegirFoto, ctx, onIrA, porPasos, manos) { AccionesTarjeta(
         onFoto = ::pedirFoto, onCampo = vm::editarCampo, onApodo = vm::guardarApodo,
         onPorcentaje = vm::guardarPorcentaje, onBorrar = { cv -> vm.borrar(cv); if (visor == cv.id) visor = null }, onIdeas = ::ideas,
-        onMeta = { visor = null; onIrA(it) }, porPasos = porPasos,
+        onMeta = { visor = null; onIrA(it) }, porPasos = porPasos, onMano = vm::guardarMano, manos = manos,
     ) }
     val pintarTarjeta: @Composable (CasillaVista, Boolean, Boolean, Modifier, Int, String?, (() -> Unit)?) -> Unit = { cv, compacta, grande, modificador, indice, rumbo, onPasos ->
         val id = cv.casilla.id

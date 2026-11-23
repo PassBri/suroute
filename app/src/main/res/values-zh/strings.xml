@@ -3423,5 +3423,9 @@
     <string name="bja_mas_uno">增加 1%</string>
     <string name="bja_avance_anio">全年进度</string>
     <string name="bja_ganadas_anio">已达成 %1$d / 64 个子目标</string>
-    <string name="vision_avance_por_pasos">此进度是其 8 个子目标的平均值。可在每一步中调整，在这里或“我的路”中均可：两边显示相同。</string>
+    <string name="vision_avance_por_pasos">它来自 8 个子目标。如果你移动它，就会保持手动设置，“我的路”中也一样。</string>
+    <string name="bja_mano_info">手动设置 · 子目标 %1$d%%</string>
+    <string name="bja_por_submetas">按子目标：%1$d%%</string>
+    <string name="bja_usar_submetas">使用子目标的数值</string>
+    <string name="bja_ajustar_camp">营地进度：%1$d%%。点按可手动设置</string>
 </resources>

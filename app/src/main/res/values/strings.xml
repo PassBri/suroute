@@ -3432,5 +3432,9 @@
     <string name="bja_mas_uno">Un punto más</string>
     <string name="bja_avance_anio">Avance del año</string>
     <string name="bja_ganadas_anio">%1$d de 64 sub-metas ganadas</string>
-    <string name="vision_avance_por_pasos">Este avance es el promedio de sus 8 sub-metas. Muévalo en cada paso, aquí o en Mi ruta: los dos lados muestran lo mismo.</string>
+    <string name="vision_avance_por_pasos">Sale de sus 8 sub-metas. Si lo mueve, queda puesto a mano, también en Mi ruta.</string>
+    <string name="bja_mano_info">Puesto a mano · sub-metas %1$d %%</string>
+    <string name="bja_por_submetas">Por sub-metas: %1$d %%</string>
+    <string name="bja_usar_submetas">Usar el de las sub-metas</string>
+    <string name="bja_ajustar_camp">Avance del campamento: %1$d %%. Toque para ponerlo a mano</string>
 </resources>

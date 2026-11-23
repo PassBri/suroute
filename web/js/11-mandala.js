@@ -179,9 +179,14 @@ const mdNombre = c => (c.afirmacion || c.titulo || "").trim();
 const mdConPasos = c => !!c && [0, 1, 2, 3, 4, 5, 6, 7].some(p => respuesta(Mandala.clave(c.id, p)).trim());
 /** Avance (0–100, sin redondear) de un campamento, el mismo en Mi ruta y en la Brújula: con sub-metas escritas,
  *  el promedio de sus 8 pasos (cada uno con su % marcado o sus jornadas); sin sub-metas, lo marcado a mano o sus metas. */
+/** El % que la persona pone a mano a un campamento con sub-metas (null = no lo puso: manda el de las sub-metas). */
+const mdManoCamp = c => { const v = c ? String(respuesta(`vision:mano:${c.id}`) ?? "").trim() : ""; return v === "" ? null : Math.min(100, Math.max(0, Math.round(Number(v) || 0))); };
+/** Lo que dicen las 8 sub-metas de un campamento (0–100). */
+const mdPctPasos = (c, dif) => c ? [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, p) => s + MetodoCima.avance(MetodoCima.leer(c.id, p), dif), 0) / 8 * 100 : 0;
 function mdPctCamp(c, i, dif) {
   if (!c) return 0;
-  if (mdConPasos(c)) return [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, p) => s + MetodoCima.avance(MetodoCima.leer(c.id, p), dif), 0) / 8 * 100;
+  // Con sub-metas: si puso un % a mano, manda ese; si no, el promedio de las sub-metas. Igual en Mi ruta y en la Brújula.
+  if (mdConPasos(c)) return mdManoCamp(c) ?? mdPctPasos(c, dif);
   if (respuesta(`vision:estado:${c.id}`) === "LOGRADA") return 100;
   const v = i >= 0 ? metasPct(i) : null;
   return Math.max(v ?? 0, Number(respuesta(`vision:pct:${c.id}`)) || 0);
@@ -197,7 +202,7 @@ function mdPct(d, i) {
   if (d.camps.some(mdConPasos) || !d.cumbre) return Math.round(prom);
   return respuesta(`vision:estado:${d.cumbre.id}`) === "LOGRADA" ? 100 : Math.round(Math.max(prom, Number(respuesta(`vision:pct:${d.cumbre.id}`)) || 0));
 }
-window.mdPctCamp = mdPctCamp; window.mdDificultad = mdDificultad; window.mdConPasos = mdConPasos;
+window.mdPctCamp = mdPctCamp; window.mdManoCamp = mdManoCamp; window.mdPctPasos = mdPctPasos; window.mdDificultad = mdDificultad; window.mdConPasos = mdConPasos;
 /** Promedio de avance de las metas de este año de un campamento (null si no tiene). */
 function metasPct(i) {
   const h = hoyFecha(), a = h.getFullYear(), mes = h.getMonth() + 1, c = cascada();

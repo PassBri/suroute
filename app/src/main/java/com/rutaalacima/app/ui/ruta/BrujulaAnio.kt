@@ -58,10 +58,22 @@ import com.rutaalacima.app.ui.vision.nombreCodigo
  * El año es su Brújula (igual que la web): la cumbre de ese año y sus 8 campamentos, cada uno con su meta,
  * sus sub-metas (los pasos, con su casilla de ganado y su porcentaje de avance) y cuántas actividades lleva su plan de acción.
  */
+/** El % puesto a mano a un campamento con sub-metas (null = manda el de las sub-metas). Igual que la web (vision:mano). */
+internal fun manoCamp(id: Long, vision: Map<String, String>): Int? = vision["vision:mano:$id"]?.trim()?.takeIf { it.isNotEmpty() }?.toFloatOrNull()?.let { Math.round(it).coerceIn(0, 100) }
+
+/** Avance (0–1) de un campamento, el mismo en Mi ruta y en la Brújula: con sub-metas, lo puesto a mano o su promedio; sin ellas, lo marcado en la casilla. */
+internal fun avanceCamp(id: Long, mandala: Map<String, String>, vision: Map<String, String>, dif: Int): Float {
+    val pasos = (0 until Mandala.PASOS).map { MetodoCima.leer(id, it, mandala) }
+    if (pasos.any { it.escrito }) return manoCamp(id, vision)?.let { it / 100f } ?: (pasos.sumOf { MetodoCima.avance(it, dif).toDouble() }.toFloat() / Mandala.PASOS)
+    if (vision["vision:estado:$id"] == "LOGRADA") return 1f
+    return ((vision["vision:pct:$id"]?.toFloatOrNull() ?: 0f) / 100f).coerceIn(0f, 1f)
+}
+
 @Composable
 internal fun BrujulaAnioCard(
     anio: Int, casillas: List<VisionCasillaEntity>, anuales: List<MetaAnualEntity>, mandala: Map<String, String>,
-    onGanado: (Long, Int) -> Unit, onPct: (Long, Int, Int) -> Unit = { _, _, _ -> }, onAbrirBrujula: () -> Unit, onMeta: (MetaAnualEntity) -> Unit, onCopiar: () -> Unit = {},
+    onGanado: (Long, Int) -> Unit, onPct: (Long, Int, Int) -> Unit = { _, _, _ -> },
+    vision: Map<String, String> = emptyMap(), onMano: (Long, Int?) -> Unit = { _, _ -> }, onAbrirBrujula: () -> Unit, onMeta: (MetaAnualEntity) -> Unit, onCopiar: () -> Unit = {},
 ) {
     val delAnio = casillas.filter { Mandala.anioDeOrigen(it.origen) == anio }
     val hayGeneral = casillas.any { Mandala.anioDeOrigen(it.origen) == null }
@@ -83,9 +95,9 @@ internal fun BrujulaAnioCard(
                 style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center, fontWeight = FontWeight.SemiBold)
             if (delAnio.isNotEmpty()) {
-                var suma = 0f; var ganadasAnio = 0
-                campsCab.forEach { c -> if (c != null) for (p in 0 until Mandala.PASOS) { val x = MetodoCima.leer(c.id, p, mandala); suma += MetodoCima.avance(x, dif); if (x.cumplido) ganadasAnio++ } }
-                val totalAnio = suma / (Mandala.CAMPAMENTOS_FIJOS.size * Mandala.PASOS)
+                var ganadasAnio = 0
+                campsCab.forEach { c -> if (c != null) for (p in 0 until Mandala.PASOS) if (MetodoCima.leer(c.id, p, mandala).cumplido) ganadasAnio++ }
+                val totalAnio = campsCab.sumOf { c -> (c?.let { avanceCamp(it.id, mandala, vision, dif) } ?: 0f).toDouble() }.toFloat() / Mandala.CAMPAMENTOS_FIJOS.size
                 Surface(shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.secondary.copy(alpha = .08f),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = .3f)), modifier = Modifier.padding(top = 4.dp).widthIn(max = 420.dp).fillMaxWidth()) {
                     Column(Modifier.padding(horizontal = 14.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -118,16 +130,40 @@ internal fun BrujulaAnioCard(
                 val meta = anuales.filter { it.anio == anio && it.eje == eje }.minByOrNull { it.id }
                 val pasos = (0 until Mandala.PASOS).map { p -> p to mandala[Mandala.clave(c.id, p)].orEmpty().trim() }.filter { it.second.isNotEmpty() }
                 val ganados = (0 until Mandala.PASOS).count { !mandala[Mandala.claveHecho(c.id, it)].isNullOrBlank() }
-                val total = (0 until Mandala.PASOS).sumOf { MetodoCima.avance(MetodoCima.leer(c.id, it, mandala), dif).toDouble() }.toFloat() / Mandala.PASOS
+                val total = avanceCamp(c.id, mandala, vision, dif)
+                val mano = manoCamp(c.id, vision)
+                val porPasosPct = Math.round((0 until Mandala.PASOS).sumOf { MetodoCima.avance(MetodoCima.leer(c.id, it, mandala), dif).toDouble() }.toFloat() / Mandala.PASOS * 100)
+                val ajustando = abierto == (c.id to -1)
                 Surface(shape = RoundedCornerShape(16.dp), color = color.copy(alpha = .06f), border = BorderStroke(1.dp, color.copy(alpha = .25f))) {
                     Column(Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(nombreCodigo(cod), style = MaterialTheme.typography.labelMedium, color = color, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
-                            Text("$ganados/8 · ${Math.round(total * 100)} %", style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = "tnum"), color = color, fontWeight = FontWeight.Bold)
+                            // Tocar el avance del campamento abre su barra para ponerlo a mano (el mismo dato que la casilla de la Brújula)
+                            val descCamp = stringResource(R.string.bja_ajustar_camp, Math.round(total * 100))
+                            Text("$ganados/8 · ${Math.round(total * 100)} %", style = MaterialTheme.typography.labelMedium.copy(fontFeatureSettings = "tnum"), color = color, fontWeight = FontWeight.Bold,
+                                modifier = Modifier.clip(RoundedCornerShape(50)).clickable { abierto = if (ajustando) null else c.id to -1 }
+                                    .heightIn(min = 36.dp).padding(horizontal = 8.dp, vertical = 8.dp).semantics { contentDescription = descCamp })
                         }
                         Text(meta?.titulo ?: c.afirmacion.ifBlank { c.titulo }, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.clip(RoundedCornerShape(8.dp)).clickable(enabled = meta != null) { meta?.let(onMeta) })
                         LinearProgressIndicator(progress = { total }, modifier = Modifier.fillMaxWidth().height(4.dp), color = color, trackColor = color.copy(alpha = .14f))
+                        if (mano != null || ajustando) Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(if (mano != null) stringResource(R.string.bja_mano_info, porPasosPct) else stringResource(R.string.bja_por_submetas, porPasosPct),
+                                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
+                            if (mano != null) androidx.compose.material3.TextButton(onClick = { onMano(c.id, null) }) { Text(stringResource(R.string.bja_usar_submetas)) }
+                        }
+                        androidx.compose.animation.AnimatedVisibility(ajustando) {
+                            val v = Math.round(total * 100)
+                            var deslizando by androidx.compose.runtime.remember(v) { androidx.compose.runtime.mutableFloatStateOf(v.toFloat()) }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                androidx.compose.material3.IconButton(onClick = { onMano(c.id, (v - 1).coerceAtLeast(0)) }, enabled = v > 0) { Icon(Icons.Filled.Remove, stringResource(R.string.bja_menos_uno)) }
+                                androidx.compose.material3.Slider(value = deslizando, onValueChange = { deslizando = Math.round(it).toFloat() }, valueRange = 0f..100f,
+                                    onValueChangeFinished = { onMano(c.id, Math.round(deslizando)) }, modifier = Modifier.weight(1f),
+                                    colors = androidx.compose.material3.SliderDefaults.colors(thumbColor = color, activeTrackColor = color, inactiveTrackColor = color.copy(alpha = .18f)))
+                                androidx.compose.material3.IconButton(onClick = { onMano(c.id, (v + 1).coerceAtMost(100)) }, enabled = v < 100) { Icon(Icons.Filled.Add, stringResource(R.string.bja_mas_uno)) }
+                                Text("${Math.round(deslizando)} %", style = MaterialTheme.typography.labelLarge.copy(fontFeatureSettings = "tnum"), modifier = Modifier.widthIn(min = 44.dp))
+                            }
+                        }
                         pasos.forEach { (p, t) ->
                             val x = MetodoCima.leer(c.id, p, mandala)
                             val ganado = x.cumplido
