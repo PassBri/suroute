@@ -67,6 +67,13 @@ async function informeBrujula() {
         <table><thead><tr><th>Rol</th><th>Nombre</th><th>Firma</th><th class="fe">Fecha</th></tr></thead><tbody>
           ${fila("Elaboró", "El senderista, dueño de la Brújula")}${fila("Revisó y acompañó", "Coach de vida · Método Ruta a la Cima")}
         </tbody></table></div></section>`;
+  const cabTxt = `SuRoute · Brújula 1·9·81 · ${anio ? "Año " + anio : "General"}`.replace(/["\\]/g, "");
+  const pagina = `@page{size:A4;margin:18mm 16mm 18mm;
+      @top-left{content:"${cabTxt}";font:500 8pt Roboto,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#86683A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
+      @top-right{content:"Informe de mi Brújula";font:italic 500 8.5pt "Roboto Serif",Georgia,serif;color:#6B2A1A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
+      @bottom-left{content:"Método Ruta a la Cima";font:400 7.5pt Roboto,sans-serif;color:#5A666B;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}
+      @bottom-right{content:counter(page) " / " counter(pages);font:600 8pt Roboto,sans-serif;color:#6B2A1A;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}}
+    @page:first{margin-top:14mm;@top-left{content:none;border:0}@top-right{content:none;border:0}}`;
   const css = `@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500;8..144,600&family=Roboto:wght@400;500;700&display=swap");
     *{box-sizing:border-box}body{font:13.5px/1.55 Roboto,system-ui,sans-serif;color:#1D2427;margin:0;background:#E6EAEC;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .doc{max-width:900px;margin:24px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px -12px rgb(0 0 0/.25)}
@@ -125,13 +132,11 @@ async function informeBrujula() {
     .nota{margin-top:28px;padding-top:12px;border-top:1px solid #DCE2E4;font-size:11.5px;color:#5A666B;display:flex;gap:10px;align-items:center}.nota img{width:20px;height:20px;opacity:.7}
     .barra-acc{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;padding:12px;background:#E6EAEC}
     .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
-    table.hoja-imp{width:100%;border-collapse:collapse}table.hoja-imp>thead>tr>td,table.hoja-imp>tfoot>tr>td,table.hoja-imp>tbody>tr>td{padding:0;border:0}.esp-arr,.esp-aba{height:0}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}.esp-arr{height:12mm}.esp-aba{height:14mm}@page{size:A4;margin:0}
-      .banda{padding:16px 14mm}.portada,.cuerpo{padding-left:14mm;padding-right:14mm}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
+    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
+      .banda{padding:14px 22px;border-radius:12px}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
-    <table class="hoja-imp"><thead><tr><td><div class="esp-arr"></div></td></tr></thead><tfoot><tr><td><div class="esp-aba"></div></td></tr></tfoot><tbody><tr><td>
     <div class="doc"><div class="banda"><img src="${logo}" alt="SuRoute"><div class="meta">Brújula 1·9·81<br>${anio ? "Año " + anio : "General · toda la vida"}</div></div>
     <div class="portada"><h1>Informe de mi Brújula</h1><p class="sub">${nombre ? nombre + " · " : ""}${fecha}</p>
       <div class="cumbre"><small>Mi cumbre</small>${esc(d.titulo)}</div></div>
@@ -149,7 +154,7 @@ async function informeBrujula() {
       ${h2(`Mi carta de ${aCarta}`)}${cartaHtml}
       ${h2("Mi firma")}${firma}
       <div class="nota"><img src="${simbolo}" alt="">Generado por SuRoute · Brújula 1·9·81 del Método Ruta a la Cima, inspirada en la Mandala Chart de Yasuo Matsumura (1979).</div>
-    </div></div></td></tr></tbody></table></body></html>`;
+    </div></div></body></html>`;
 }
 ACC.informeBrujula = async el => {
   const w = window.open("", "_blank");
