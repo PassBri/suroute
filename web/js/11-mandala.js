@@ -254,6 +254,8 @@ const mdCeldaAcc = (c, nombre, foto, paso = null) => !c ? "" : `<span class="md-
   <label class="md-cbtn" title="${foto ? "Cambiar la foto" : "Agregar foto"}" aria-label="${foto ? "Cambiar la foto" : "Agregar foto"} de ${esc(nombre)}"><input type="file" accept="image/*" hidden ${paso === null ? `data-foto-vision="${c.id}"` : `data-acc-change="mdEvidencia" data-arg="${c.id}|${paso}"`}>${ic("foto")}</label>
   ${`<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${paso === null ? c.id : `${c.id}-${paso}`}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>`}</span>`;
 const mdGirada = (c, paso = null) => !!c && !!estado.mdCeldasGiradas?.has(paso === null ? String(c.id) : `${c.id}-${paso}`);
+/** La cumbre se lee completa: entre más larga la frase, más pequeña la letra (nunca se corta con «…»). */
+const mdLargo = t => { const n = String(t || "").length; return n > 110 ? "t-xl" : n > 70 ? "t-l" : n > 40 ? "t-m" : ""; };
 function mdCelda(d, cel, grande) {
   if (cel.tipo === "CUMBRE") {
     const foto = mdFoto(d.cumbre), g = mdGirada(d.cumbre);
@@ -490,11 +492,11 @@ function mandalaHtml(tableroHtml = "", rielArriba = "", rielAbajo = "", planear 
       return `<li class="${h ? "si" : ""}">${h ? "✓ " : ""}${t ? esc(t) : `<span class="suave">Paso ${q + 1}</span>`}</li>`; }).join("") : ""; };
     const vista = nivel === 0
       ? `<div class="md-giro md-giro-1">${girada("c") ? `<button class="md-nivel1 md-reverso${anim}${volteo("c")}" data-acc="mdNivel" data-arg="1" aria-label="Acercar: tus campamentos">
-          <small>TUS 8 CAMPAMENTOS</small><b>${esc(d.titulo)}</b><hr><ol class="md-rev-lista">${[0, 1, 2, 3, 4, 5, 6, 7].map(i => d.camps[i]
+          <small>TUS 8 CAMPAMENTOS</small><b class="${mdLargo(d.titulo)}">${esc(d.titulo)}</b><hr><ol class="md-rev-lista">${[0, 1, 2, 3, 4, 5, 6, 7].map(i => d.camps[i]
             ? `<li><span>${esc(mdNombre(d.camps[i]))}</span><i>${Math.round(mdPct(d, i))} %</i></li>` : `<li class="suave"><span>${esc(Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[i]))}</span><i>—</i></li>`).join("")}</ol></button>`
         : `<button class="md-nivel1${anim}${volteo("c")}" data-acc="mdNivel" data-arg="1" aria-label="Acercar: tus campamentos">
           ${fotoC ? `<span class="md-impresion"><img src="${esc(fotoC)}" alt=""></span>` : `<span class="md-pico" aria-hidden="true">▲</span>`}
-          <small>MI CUMBRE</small><b>${esc(d.titulo)}</b><hr><em>Tu montaña: ${d.ritmo.mm.toLocaleString("es")} de 8.848.000 mm</em>${mdAnillo(pctC, "centro")}</button>`}${botonGiro("c", "tu cumbre")}</div>`
+          <small>MI CUMBRE</small><b class="${mdLargo(d.titulo)}">${esc(d.titulo)}</b><hr><em>Tu montaña: ${d.ritmo.mm.toLocaleString("es")} de 8.848.000 mm</em>${mdAnillo(pctC, "centro")}</button>`}${botonGiro("c", "tu cumbre")}</div>`
       : nivel === 1
         ? `<div class="md-nivel9${anim}">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(k => {
             const cel = Mandala.celda(3 + Math.floor(k / 3), 3 + k % 3);

@@ -6141,3 +6141,9 @@ form:not(.pap-on) > .pap-editor { display: none; }
 /* Una sub-meta girada muestra su texto en lugar de la foto de evidencia */
 .md-grilla .md-paso.c-girada .t, html[data-modo-tarjetas] :is(#md-s81 ~ .md-grilla-caja, .rb-81 .md-grilla-caja, .md-visor) .md-grilla .md-paso.c-girada .t,
 .md-flip .cara-imagen .md-grilla .md-paso.c-girada .t { display: -webkit-box !important; -webkit-box-orient: vertical; -webkit-line-clamp: 4; overflow: hidden; color: var(--tinta) !important; text-shadow: none !important; font-size: 10px; line-height: 1.2; padding: 0 3px; }
+
+/* La cumbre del visor se lee completa (sin «…»): la letra se ajusta al largo de la frase */
+.md-nivel1 b { display: block; -webkit-line-clamp: unset; overflow: visible; text-wrap: balance; }
+.md-nivel1 b.t-m { font-size: clamp(20px, 2.8vw, 30px); }
+.md-nivel1 b.t-l { font-size: clamp(18px, 2.3vw, 25px); line-height: 1.25; }
+.md-nivel1 b.t-xl { font-size: clamp(16px, 1.6vw, 24px); line-height: 1.3; }
