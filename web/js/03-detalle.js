@@ -1412,7 +1412,8 @@ function casillaVisionHtml(c, md = window.Mandala ? Mandala.datos() : null, enBl
                ${compacta ? "" : `<span class="casilla-sug">${esc(c.sugerencia)}</span>`}<span class="casilla-btn">${ic("foto")}${compacta ? "" : " Agregar mi foto"}</span></label>`}
           ${pct}${opc.sobre || ""}
           <div class="cara-pie">${nombre ? `<span class="cara-apodo">${apodo ? "«" + esc(apodo) + "»" : esc(nombre)}</span>` : "<span></span>"}
-            <button class="casilla-girar" data-acc="girarCasilla" data-arg="${k}" aria-label="Girar la tarjeta para ver y editar la frase" title="Girar">${ic("girar")}</button></div>
+            <span class="cara-btns">${foto ? `<label class="casilla-girar cara-cambiar" title="Cambiar la foto" aria-label="Cambiar la foto de ${esc(nombre || "esta tarjeta")}"><input type="file" accept="image/*" hidden data-foto-vision="${k}">${ic("foto")}</label>` : ""}
+            <button class="casilla-girar" data-acc="girarCasilla" data-arg="${k}" aria-label="Girar la tarjeta para ver y editar la frase" title="Girar">${ic("girar")}</button></span></div>
         </div>
         <div class="dorso${compacta ? " compacta" : ""}"${girada ? "" : " inert"}>${dorso}</div>
       </div></div>`;
