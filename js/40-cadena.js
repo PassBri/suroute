@@ -1,0 +1,309 @@
+"use strict";
+/* La cadena completa, de lo más grande a lo más pequeño (igual que la app):
+ * 1. Propósitos (Brújula general) con su período: desde un año hasta otro.
+ * 2. El año ES la Brújula de ese año: la cumbre, los 8 campamentos, cada uno con su meta, sus sub-metas y su plan de acción.
+ * 3. El mes escoge qué metas trabaja, completas o solo algunas de sus sub-metas.
+ * 4. El día: cada actividad aporta a una meta o a una sub-meta; al hacerla cuenta como una jornada del Método Cima
+ *    y se ve cuánto aporta (una jornada = 1 / jornadas del paso; un paso = 1/8 de la meta). */
+
+/* ---------- 1. Período del propósito ---------- */
+const clavePeriodo = id => `periodo:p:${id}`;
+function desdeProposito(p) { const v = Number(respuesta(clavePeriodo(p.id))); return v || (p.creadoEn ? new Date(p.creadoEn).getFullYear() : hoyFecha().getFullYear()); }
+aniosDeCumbre = function (p) { const ini = desdeProposito(p); return { ini, fin: ini + (p.horizonte || 5) - 1 }; };
+const selectorHorizonteBase = selectorHorizonte;
+selectorHorizonte = function (tipo, clave, anios) {
+  const p = tipo === "proposito" ? Store.get("proposito", clave) : null; if (!p) return selectorHorizonteBase(tipo, clave, anios);
+  const desde = desdeProposito(p), hasta = desde + anios - 1, arg = `proposito|${esc(clave)}`;
+  return `<div class="campo periodo" role="group" aria-label="Período del propósito"><span>Período</span>
+    <div class="per-fila"><label>Desde <input type="number" inputmode="numeric" min="1900" max="2200" value="${desde}" data-acc-change="perDesde" data-arg="${esc(clave)}" aria-label="Año en que empieza"></label>
+      <span aria-hidden="true">–</span><label>Hasta <input type="number" inputmode="numeric" min="1900" max="2250" value="${hasta}" data-acc-change="perHasta" data-arg="${esc(clave)}" aria-label="Año en que termina"></label>
+      <b>${anios} años</b></div>
+    <div class="atajos">${HORIZONTES.map(h => `<button type="button" class="chip" aria-pressed="${h === anios}" data-acc="horizonte" data-arg="${arg}|=${h}">${h} años</button>`).join("")}</div></div>`;
+};
+ACC.perDesde = async (el, id) => { const v = Math.round(Number(el.value)); if (v >= 1900 && v <= 2200) await responder("metas", clavePeriodo(id), String(v)); pintarDetalle(); };
+ACC.perHasta = async (el, id) => {
+  const p = Store.get("proposito", id); if (!p) return;
+  const h = Math.min(HORIZONTE_MAX, Math.max(HORIZONTE_MIN, Math.round(Number(el.value)) - desdeProposito(p) + 1));
+  await Store.cambiar("proposito", id, { horizonte: h }); pintarDetalle();
+};
+
+/* ---------- Jornadas de un paso (de cualquier Brújula, no solo la abierta) ---------- */
+const reqPaso = (cid, p) => MetodoCima.leer(cid, p).req || MetodoCima.INICIAL;
+/** Cuánto aporta una jornada de ese paso a su meta, en %. */
+const aportePaso = (cid, p) => 100 / (reqPaso(cid, p) * 8);
+async function jornadaPaso(cid, p, fecha) {
+  const x = MetodoCima.leer(cid, p); if (x.cumplido) return;
+  const req = x.req || MetodoCima.INICIAL, js = [...new Set([...x.jornadas, fecha])].sort();
+  await responderBase("mandala", MetodoCima.claveJornadas(cid, p), js.join(","));
+  await responderBase("mandala", MetodoCima.claveReq(cid, p), String(req));
+  if (js.length >= req) { await responderBase("mandala", Mandala.claveHecho(cid, p), fecha); toast("¡Paso ganado! Tu meta subió un octavo."); }
+}
+/** La casilla (campamento) de una meta del mes, a través de su meta del año. */
+const casillaDeMes = mm => { const a = mm && Store.get("meta_anio", mm.metaAnualId); return a ? Sincro.casillaDe("meta_anio", a) : null; };
+
+/** La tarjeta de un campamento con sus sub-metas (check, % y su barra). La usan Mi ruta y la Brújula (modo Edición);
+ *  con [editable] el nombre y cada sub-meta se escriben ahí mismo, y salen las 8 filas para llenar las que falten. */
+function tarjetaCampamentoBA(c, i, a, dif, editable = false) {
+    const cod = Mandala.CAMPAMENTOS_FIJOS[i], color = Mandala.COLORES[cod] || COLOR_EJE[cod] || "#7A4A6B";
+    if (!c) return `<div class="ba-camp vacio" style="--c:${color}"><small>${esc(Mandala.nombre(cod))}</small><p class="suave">Sin campamento en la Brújula${a ? ` de ${a}` : ""}.</p>${editable ? `<button class="btn mini" data-acc="crearCampamento" data-arg="${cod}">${ic("mas")} Crear campamento</button>` : ""}</div>`;
+    const m = Sincro.objetivo(a, cod), pasos = [0, 1, 2, 3, 4, 5, 6, 7].map(p => ({ p, t: respuesta(Mandala.clave(c.id, p)).trim(), x: MetodoCima.leer(c.id, p) }));
+    const ganados = pasos.filter(x => x.x.cumplido).length, plan = m ? PlanMeta.leer(m.id) : [];
+    // La misma cuenta que la Brújula (mdPctCamp): mover un paso aquí o allá cambia lo mismo en los dos lados
+    const pct = x => Math.round(MetodoCima.avance(x, dif) * 100);
+    const total = Math.round(mdPctCamp(c, i, dif)), mano = mdManoCamp(c), porPasos = Math.round(mdPctPasos(c, dif)), ajustando = estado.baCamp === c.id;
+    return `<article class="ba-camp" style="--c:${color}">
+      <header><small>${esc(Mandala.nombre(cod))}</small><button class="ba-pct" data-acc="baCamp" data-arg="${c.id}" aria-expanded="${ajustando}" title="Toca para poner el avance a mano">${ganados}/8 · <b>${total} %</b></button></header>
+      ${editable ? `<input class="ba-titulo ba-titulo-edit" aria-label="Nombre del campamento" placeholder="Nombre del campamento" ${bind("vision", String(c.id), "afirmacion")} value="${esc(mdNombre(c))}">`
+        : m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
+      <div class="ba-barra"><i style="width:${total}%"></i></div>
+      ${mano != null || ajustando ? `<p class="ba-mano">${mano != null ? `Puesto a mano · sub-metas ${porPasos} %` : `Por sub-metas: ${porPasos} %`}${mano != null ? ` <button class="ba-mano-quitar" data-acc="baManoQuitar" data-arg="${c.id}">Usar el de las sub-metas</button>` : ""}</p>` : ""}
+      ${ajustando ? `<div class="ba-desliza ba-desliza-camp"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.max(0, total - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${total}" data-acc-change="baManoFin" data-acc-input="baManoVer" data-arg="${c.id}" aria-label="Avance del campamento a mano"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.min(100, total + 1)}" aria-label="Un punto más">+</button></div></div>` : ""}
+      <ol class="ba-pasos">${pasos.map(({ p, t, x }) => {
+        if (!t && !editable) return "";
+        if (!t) return `<li class="ba-nueva"><i class="ba-check vacio" aria-hidden="true"></i><input class="ba-texto" data-resp="mandala|${Mandala.clave(c.id, p)}" placeholder="Sub-meta ${p + 1}" aria-label="Sub-meta ${p + 1} de ${esc(mdNombre(c))}"></li>`;
+        const abierto = estado.baAvance === `${c.id}|${p}`, v = x.cumplido ? 100 : pct(x);
+        return `<li class="${x.cumplido ? "ganado" : ""}${abierto ? " abierto" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button>${editable ? `<input class="ba-texto" data-resp="mandala|${Mandala.clave(c.id, p)}" value="${esc(t)}" aria-label="Sub-meta ${p + 1}">` : `<span>${esc(t)}</span>`}
+          <button class="ba-avance${v > 0 && !x.cumplido ? " con" : ""}" data-acc="baAvance" data-arg="${c.id}|${p}" aria-expanded="${abierto}" aria-label="Avance de ${esc(t)}: ${v} %">${v} %</button>
+          ${!x.cumplido && v > 0 ? `<i class="ba-mini" aria-hidden="true"><b style="width:${v}%"></b></i>` : ""}
+          ${abierto ? `<div class="ba-desliza"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.max(0, v - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${v}" data-acc-change="baPctFin" data-acc-input="baPctVer" data-arg="${c.id}|${p}" aria-label="Porcentaje de avance de ${esc(t)}"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.min(100, v + 1)}" aria-label="Un punto más">+</button></div></div>` : ""}</li>`;
+      }).join("")
+        || `<li class="suave">Sin sub-metas todavía: escríbelas en la Brújula o en la meta.</li>`}</ol>
+      ${editable ? `<button class="btn mini ba-mas-op" data-acc="editarTarjeta" data-arg="${c.id}">${ic("foto")} Foto, apodo y frase</button>` : ""}
+    </article>`;
+  }
+window.tarjetaCampamentoBA = tarjetaCampamentoBA;
+
+/* ---------- 2. El año es su Brújula ---------- */
+function brujulaDelAnio(a) {
+  const cs = casillasDe(a);
+  if (!cs.length) return hoja(`<h3 style="margin:0 0 4px">Brújula de ${a}</h3><p class="suave" style="margin:0 0 10px">Las metas de ${a} nacen de su Brújula: la cumbre del año y sus 8 campamentos, cada uno con sus sub-metas.</p>
+    <div class="botones"><button class="btn lleno" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Crear la Brújula de ${a}</button>
+    ${casillasDe(null).length ? `<button class="btn" data-acc="copiarGeneral" data-arg="${a}">${ic("copiar")} Copiar de la Brújula general</button>` : ""}</div>`);
+  const { cumbre, camps } = Mandala.repartir(cs), hoyF = hoyFecha(), dif = mdDificultad(camps);
+  const tarjeta = (c, i) => tarjetaCampamentoBA(c, i, a, dif);
+  // Avance general del año: el promedio de los 64 pasos (8 campamentos × 8), igual que cada campamento promedia sus 8
+  let ganadasAnio = 0;
+  camps.forEach(c => { if (c) for (let p = 0; p < 8; p++) if (MetodoCima.leer(c.id, p).cumplido) ganadasAnio++; });
+  const totalAnio = Math.round(camps.reduce((s, c, i) => s + mdPctCamp(c, i, dif), 0) / 8);
+  return hoja(`<div class="ba-cab"><small>Brújula de ${a}</small><h3>${esc(cumbre?.afirmacion || cumbre?.titulo || `Mi cumbre de ${a}`)}</h3>
+      <div class="ba-general" role="group" aria-label="Avance general de ${a}: ${totalAnio} %">
+        <div class="ba-general-fila"><span>Avance del año</span><b>${totalAnio} %</b></div>
+        <div class="ba-barra"><i style="width:${totalAnio}%"></i></div>
+        <small>${ganadasAnio} de 64 sub-metas ganadas</small>
+      </div>
+      <span class="ba-acc">${casillasDe(null).length ? `<button class="btn mini" data-acc="copiarGeneral" data-arg="${a}" title="Trae la cumbre, los campamentos y sus sub-metas de tu Brújula general">${ic("copiar")} Copiar de la general</button>` : ""}
+      <button class="btn mini" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Abrir la Brújula</button></span></div>
+    <p class="suave ba-intro">La cumbre de ${a} y sus 8 campamentos: cada uno con su meta, sus sub-metas (los pasos) y su plan de acción.</p>
+    <div class="ba-grid">${Mandala.CAMPAMENTOS_FIJOS.map((_, i) => tarjeta(camps[i], i)).join("")}</div>`, "ba-hoja");
+}
+window.brujulaDelAnio = brujulaDelAnio;
+/** Abrir o cerrar el deslizador de avance de una sub-meta. */
+/* El % del campamento puesto a mano (vision:mano:<id>): el mismo dato que ajusta la casilla de la Brújula */
+ACC.baCamp = (_, id) => { estado.baCamp = estado.baCamp === Number(id) ? null : Number(id); pintarDetalle(); };
+const ponerMano = async (id, n) => { await responderBase("vision", `vision:mano:${id}`, String(Math.min(100, Math.max(0, Math.round(Number(n) || 0))))); pintarDetalle(); };
+ACC.baMano = (_, arg) => { const [id, n] = arg.split("|"); return ponerMano(id, n); };
+ACC.baManoFin = (el, id) => ponerMano(id, el.value);
+ACC.baManoVer = (el) => { const b = el.closest(".ba-camp")?.querySelector(".ba-pct b"); if (b) b.textContent = el.value + " %"; };
+ACC.baManoQuitar = async (_, id) => { await responderBase("vision", `vision:mano:${id}`, ""); toast("Ahora manda el avance de las sub-metas"); pintarDetalle(); };
+ACC.baAvance = (_, arg) => { estado.baAvance = estado.baAvance === arg ? null : arg; pintarDetalle(); };
+/** Poner el % de avance: 100 la marca ganada; menos de 100 la deja abierta con ese porcentaje. */
+async function ponerPct(cid, p, n) {
+  n = Math.min(100, Math.max(0, Math.round(Number(n) || 0)));
+  const x = MetodoCima.leer(cid, p);
+  if (n >= 100) {
+    await responderBase("mandala", MetodoCima.clavePct(cid, p), "");
+    if (!x.cumplido) { await responderBase("mandala", Mandala.claveHecho(cid, p), iso(new Date())); toast("¡Sub-meta ganada!"); }
+  } else {
+    if (x.cumplido) await responderBase("mandala", Mandala.claveHecho(cid, p), "");
+    await responderBase("mandala", MetodoCima.clavePct(cid, p), String(n));   // "0" también se guarda: así baja aunque tenga jornadas
+  }
+}
+ACC.baPct = async (_, arg) => { const [cid, p, n] = arg.split("|").map(Number); await ponerPct(cid, p, n); estado.baAvance = n >= 100 ? null : estado.baAvance; pintarDetalle(); };
+ACC.baPctFin = async (el, arg) => { const [cid, p] = arg.split("|").map(Number); await ponerPct(cid, p, el.value); pintarDetalle(); };
+ACC.baPctVer = (el) => { const b = el.closest("li")?.querySelector(".ba-avance"); if (b) b.textContent = el.value + " %"; };
+ACC.baPlan = (_, id) => { estado.baPlan = estado.baPlan === Number(id) ? null : Number(id); };
+ACC.baGanado = async (_, arg) => {
+  const [cid, n] = arg.split("|"), p = Number(n), x = MetodoCima.leer(Number(cid), p);
+  if (x.cumplido) { await responderBase("mandala", Mandala.claveHecho(Number(cid), p), ""); const req = x.req || MetodoCima.INICIAL;
+    if (x.jornadas.length >= req) await responderBase("mandala", MetodoCima.claveJornadas(Number(cid), p), [...x.jornadas].sort().slice(0, req - 1).join(",")); }
+  else { await responderBase("mandala", Mandala.claveHecho(Number(cid), p), iso(new Date())); toast("¡Sub-meta ganada!"); }
+  pintarDetalle();
+};
+
+/* ---------- 3. El mes: completas o solo algunas sub-metas ---------- */
+const claveMesPasos = id => `mes:pasos:${id}`;
+const pasosDelMes = mm => numeros(respuesta(claveMesPasos(mm.id)));
+function subMetasMes(mm) {
+  const c = casillaDeMes(mm); if (!c) return "";
+  const elegidos = new Set(pasosDelMes(mm)), todos = [0, 1, 2, 3, 4, 5, 6, 7].filter(p => respuesta(Mandala.clave(c.id, p)).trim());
+  if (!todos.length) return "";
+  return `<div class="fm-pasos"><small>${elegidos.size ? `${elegidos.size} de ${todos.length} sub-metas este mes` : "Completa: todas sus sub-metas"} · toca para escoger solo algunas</small>
+    <div class="fm-chips">${todos.map(p => { const t = respuesta(Mandala.clave(c.id, p)).trim(), g = MetodoCima.leer(c.id, p).cumplido;
+      return `<button class="chip${g ? " ganado" : ""}" data-acc="mesPaso" data-arg="${mm.id}|${p}" aria-pressed="${elegidos.has(p)}" title="${esc(t)}">${g ? ic("check") : ""}${p + 1}. ${esc(t.length > 34 ? t.slice(0, 32) + "…" : t)}</button>`; }).join("")}</div></div>`;
+}
+ACC.mesPaso = async (_, arg) => {
+  const [id, n] = arg.split("|"), mm = Store.get("meta_mes", id); if (!mm) return;
+  const s = new Set(pasosDelMes(mm)), p = Number(n); s.has(p) ? s.delete(p) : s.add(p);
+  await responder("metas", claveMesPasos(id), [...s].sort((x, y) => x - y).join(",")); pintarDetalle();
+};
+const focoMesBase = focoMes;
+focoMes = function (a, m) {
+  // Debajo de cada meta escogida, sus sub-metas para escoger solo algunas este mes
+  let h = focoMesBase(a, m);
+  for (const mm of metasDelMes(a, m)) {
+    const extra = subMetasMes(mm); if (!extra) continue;
+    h = h.replace(`data-ir="metas" data-arg="m:${mm.id}"`, `data-ir="metas" data-arg="m:${mm.id}" data-fm="${mm.id}"`);
+    const marca = `data-fm="${mm.id}"`, i = h.indexOf(marca); if (i < 0) continue;
+    const fin = h.indexOf("</div>", i) + 6;
+    h = h.slice(0, fin) + extra + h.slice(fin);
+  }
+  return h;
+};
+window.focoMes = focoMes;
+
+/* ---------- 4. El día: aporta a una meta o a una sub-meta, y cuánto ---------- */
+opcionesAporte = function (ms, actual) {
+  const act = String(actual ?? "");
+  // "Ninguna" siempre a la vista para quitar el aporte (antes solo existía el rótulo "Aporta a…")
+  return `<option value="" ${act ? "" : "selected"}>${act ? "Ninguna (quitar)" : "Aporta a…"}</option>${ms.map(mm => {
+    const a = Store.get("meta_anio", mm.metaAnualId), nombre = a?.titulo || mm.texto, c = casillaDeMes(mm);
+    const elegidos = pasosDelMes(mm), pasos = c ? [0, 1, 2, 3, 4, 5, 6, 7].filter(p => respuesta(Mandala.clave(c.id, p)).trim() && (!elegidos.length || elegidos.includes(p))) : [];
+    const op = (v, t) => `<option value="${v}" ${v === act ? "selected" : ""}>${esc(t)}</option>`;
+    if (!pasos.length) return op(String(mm.id), nombre);
+    return `<optgroup label="${esc(nombre)}">${op(String(mm.id), `${nombre} (toda la meta)`)}${pasos.map(p => {
+      const t = respuesta(Mandala.clave(c.id, p)).trim(), g = MetodoCima.leer(c.id, p).cumplido;
+      return op(`${mm.id}|${p}`, `${p + 1}. ${t.length > 40 ? t.slice(0, 38) + "…" : t}${g ? " ✓" : ` · +${Math.round(aportePaso(c.id, p) * 10) / 10} %`}`); }).join("")}</optgroup>`;
+  }).join("")}`;
+};
+window.opcionesAporte = opcionesAporte;
+const marcarDiaMetaBase = marcarDiaMeta;
+marcarDiaMeta = function (v, fecha) {
+  const [id, p] = String(v).split("|");
+  marcarDiaMetaBase(id, fecha);
+  if (p != null && p !== "") { const c = casillaDeMes(Store.get("meta_mes", id)); if (c) jornadaPaso(c.id, Number(p), fecha).then(() => pintarDetalle()); }
+};
+/** Lo que aportaron hoy las actividades y las cumbres hechas (por meta). */
+function aporteDelDia(fecha) {
+  const r = new Map(), sumar = v => {
+    const [id, p] = String(v || "").split("|"); if (p == null || p === "") return;
+    const mm = Store.get("meta_mes", id), c = casillaDeMes(mm); if (!c) return;
+    const a = Store.get("meta_anio", mm.metaAnualId), k = a?.titulo || mm.texto; r.set(k, (r.get(k) || 0) + aportePaso(c.id, Number(p)));
+  };
+  for (let h = 0; h < 24; h++) if (respuesta(`dia#${fecha}#${h}#hecho`) === "1") sumar(respuesta(`dia#${fecha}#${h}#meta`));
+  try { (topDe(fecha) || []).forEach(x => { if (x?.hecho) sumar(x.meta); }); } catch { /* sin cumbres */ }
+  return r;
+}
+const actividadesDiaBase = actividadesDia;
+actividadesDia = function (fecha, ag, ms) {
+  const h = actividadesDiaBase(fecha, ag, ms), r = aporteDelDia(fecha); if (!r.size) return h;
+  const total = [...r.values()].reduce((x, y) => x + y, 0);
+  const res = `<div class="aporte-dia"><b>Hoy aportaste ${Math.round(total * 10) / 10} %</b>${[...r].map(([k, v]) => `<span>+${Math.round(v * 10) / 10} % ${esc(k)}</span>`).join("")}</div>`;
+  return h.replace(`<div class="acts">`, res + `<div class="acts">`);
+};
+
+/** Metas del año que no son la meta de un campamento de su Brújula (por ejemplo, una segunda meta del mismo eje). */
+function otrasMetasAnio(a, metas) {
+  const ids = new Set(Mandala.CAMPAMENTOS_FIJOS.map(cod => Sincro.objetivo(a, cod)?.id).filter(Boolean)), otras = metas.filter(m => !ids.has(m.id));
+  return hoja(`<div class="cab-lista-btn"><div class="etiqueta">${otras.length ? `Otras metas de ${a}` : `¿Otra meta para ${a}?`}</div><button class="btn mini oro" data-acc="nuevaMetaAnio" data-arg="${a}">${ic("mas")} Nueva meta</button></div>
+    ${otras.map(m => `<div class="om-fila"><input class="om-texto" value="${esc(m.titulo)}" maxlength="120" ${bind("meta_anio", String(m.id), "titulo")} aria-label="Nombre de la meta">
+      <button class="om-ic" data-sel="ma:${m.id}" aria-label="Abrir" title="Abrir">${ic("der")}</button>
+      <button class="om-ic" data-acc="metaCopiar" data-arg="${m.id}" aria-label="Copiar" title="Copiar">${ic("copiar")}</button>
+      <button class="om-ic peligro" data-acc="metaBorrar" data-arg="${m.id}" aria-label="Borrar" title="Borrar">${ic("borrar")}</button></div>`).join("") || `<p class="suave" style="margin:6px 0 0">Las metas de ${a} son las de su Brújula. Aquí puedes sumar otras.</p>`}`);
+}
+window.otrasMetasAnio = otrasMetasAnio;
+
+/* Copiar la Brújula general a la de un año: la cumbre, los 8 campamentos (frase, eje y foto) y sus sub-metas.
+ * Lo ganado y las jornadas no se copian: el año empieza su propio camino. Si el año ya tiene algo escrito, se reemplaza. */
+ACC.copiarGeneral = async (el, arg) => {
+  const a = Number(arg), anio = casillasDe(a);
+  if (anio.length && !el.dataset.seguro) {
+    el.dataset.seguro = "1"; const antes = el.innerHTML; el.innerHTML = `¿Reemplazar la Brújula de ${a}? Toca otra vez`;
+    setTimeout(() => { if (el.isConnected) { delete el.dataset.seguro; el.innerHTML = antes; } }, 5000);
+    return;
+  }
+  const gen = Mandala.repartir(casillasDe(null)), dest = Mandala.repartir(anio);
+  const base = c => (c.origen || "").replace(/^anio:\d{4}:/, "");
+  const copiar = async (src, actual, origen) => {
+    if (!src) return null;
+    const datos = { titulo: src.titulo, afirmacion: src.afirmacion, eje: src.eje ?? null, sugerencia: src.sugerencia || "", busqueda: src.busqueda || "", publicacionId: src.publicacionId ?? null };
+    const raw = actual ? Store.get("vision", actual.id) : null;
+    const obj = raw ? { ...raw, ...datos } : { id: nuevoId(), orden: src.orden || 0, ...datos, origen: `anio:${a}:${origen || base(src) || "manual"}` };
+    await Store.guardar("vision", obj);
+    return obj;
+  };
+  await copiar(gen.cumbre, dest.cumbre, "cumbre");
+  let n = 0;
+  for (let i = 0; i < 8; i++) {
+    const src = gen.camps[i]; if (!src) continue;
+    const obj = await copiar(src, dest.camps[i], "campamento:" + Mandala.CAMPAMENTOS_FIJOS[i]); n++;
+    for (let p = 0; p < 8; p++) await responderBase("mandala", Mandala.clave(obj.id, p), respuesta(Mandala.clave(src.id, p)).trim());
+  }
+  await Sincro.reconciliar(a);
+  // Cada meta del año toma el nombre de su campamento copiado
+  for (let i = 0; i < 8; i++) { const cod = Mandala.CAMPAMENTOS_FIJOS[i], src = gen.camps[i], m = src && Sincro.objetivo(a, cod);
+    if (m && mdNombre(src) && m.titulo !== mdNombre(src)) await Store.guardar("meta_anio", { ...m, titulo: mdNombre(src).slice(0, 120) }); }
+  toast(`Listo: la Brújula de ${a} tiene la cumbre y ${n} campamentos de tu Brújula general, con sus sub-metas.`);
+  pintarDetalle(); pintarLista();
+};
+
+/* Otras metas del año: copiar y borrar (con confirmación) ahí mismo */
+ACC.metaCopiar = async (_, id) => { const m = Store.get("meta_anio", id); if (!m) return;
+  await Store.guardar("meta_anio", { ...m, id: nuevoId(), titulo: (m.titulo + " (copia)").slice(0, 120), estado: "NO_INICIADA", avance: 0 }); toast("Meta copiada"); pintarDetalle(); };
+ACC.metaBorrar = async (el, id) => {
+  if (!el.dataset.seguro) { el.dataset.seguro = "1"; el.classList.add("seguro"); el.title = "¿Borrar? Toca otra vez"; toast("Toca otra vez para borrar la meta");
+    setTimeout(() => { if (el.isConnected) { delete el.dataset.seguro; el.classList.remove("seguro"); } }, 4000); return; }
+  await Store.borrar("meta_anio", id); toast("Meta borrada"); pintarDetalle(); pintarLista();
+};
+
+/* Álbum del año: borrar una foto (es la publicación) y ordenarlas arrastrando desde la esquina */
+const claveOrdenAlbum = a => `album:orden:${a}`;
+function ordenAlbum(a, ps) {
+  const orden = respuesta(claveOrdenAlbum(a)).split(",").filter(Boolean);
+  if (!orden.length) return ps;
+  const pos = id => { const i = orden.indexOf(String(id)); return i < 0 ? 1e9 : i; };
+  return [...ps].sort((x, y) => pos(x.id) - pos(y.id));
+}
+window.ordenAlbum = ordenAlbum;
+ACC.albumBorrar = async (el, id) => {
+  if (!el.dataset.seguro) { el.dataset.seguro = "1"; el.classList.add("seguro"); toast("Toca otra vez para borrar la foto (se borra la publicación)");
+    setTimeout(() => { if (el.isConnected) { delete el.dataset.seguro; el.classList.remove("seguro"); } }, 4000); return; }
+  if (Store.nube) { const r = await Store.nube.sb.from("posts").delete().eq("id", id); if (r.error) return errorNube(r.error); }
+  else { const i = misPostsDemo.findIndex(p => String(p.id) === String(id)); if (i >= 0) misPostsDemo.splice(i, 1); }
+  if (estado.misRecientes) estado.misRecientes = estado.misRecientes.filter(p => String(p.id) !== String(id));
+  estado.feed = null; estado.misPosts = null; toast("Foto borrada"); pintarDetalle();
+};
+/* Arrastrar desde la esquina (mouse o dedo): la foto se suelta antes de la que está debajo */
+document.addEventListener("pointerdown", e => {
+  const h = e.target.closest?.("[data-alb-mover]"); if (!h) return;
+  e.preventDefault();
+  const w = h.closest(".recuerdo-w"), caja = w.parentElement, a = Number(h.dataset.albMover);
+  w.classList.add("arrastrando"); h.setPointerCapture?.(e.pointerId);
+  let destino = null;
+  const mover = ev => {
+    const bajo = document.elementFromPoint(ev.clientX, ev.clientY)?.closest(".recuerdo-w");
+    caja.querySelectorAll(".destino").forEach(x => x.classList.remove("destino"));
+    destino = bajo && bajo !== w && bajo.parentElement === caja ? bajo : null; destino?.classList.add("destino");
+  };
+  const soltar = async () => {
+    removeEventListener("pointermove", mover); removeEventListener("pointerup", soltar); removeEventListener("pointercancel", soltar);
+    w.classList.remove("arrastrando"); caja.querySelectorAll(".destino").forEach(x => x.classList.remove("destino"));
+    if (!destino) return;
+    const todos = ordenAlbum(a, (estado.misPosts || []).filter(p => (p.anio ?? new Date(p.creadoEn).getFullYear()) === a)).map(p => String(p.id));
+    const de = w.dataset.post, a2 = destino.dataset.post, sin = todos.filter(x => x !== de);
+    sin.splice(sin.indexOf(a2), 0, de);
+    await responder("vida", claveOrdenAlbum(a), sin.join(",")); pintarDetalle();
+  };
+  addEventListener("pointermove", mover); addEventListener("pointerup", soltar); addEventListener("pointercancel", soltar);
+});
+/* Con teclado: en el botón de mover, ← → (o ↑ ↓) cambian la foto de lugar */
+document.addEventListener("keydown", async e => {
+  const h = e.target.closest?.("[data-alb-mover]"); if (!h) return;
+  const paso = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[e.key]; if (!paso) return;
+  e.preventDefault();
+  const a = Number(h.dataset.albMover), de = h.closest(".recuerdo-w").dataset.post;
+  const todos = ordenAlbum(a, (estado.misPosts || []).filter(p => (p.anio ?? new Date(p.creadoEn).getFullYear()) === a)).map(p => String(p.id));
+  const i = todos.indexOf(de), j = i + paso; if (i < 0 || j < 0 || j >= todos.length) return;
+  [todos[i], todos[j]] = [todos[j], todos[i]];
+  await responder("vida", claveOrdenAlbum(a), todos.join(",")); pintarDetalle();
+  document.querySelector(`.recuerdo-w[data-post="${CSS.escape(de)}"] [data-alb-mover]`)?.focus();
+});
