@@ -27,7 +27,7 @@ async function informeBrujula() {
       <div class="t9-pie"><b>${esc(nombre)}</b>${cum ? "" : `<small>${esc(Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp]))}</small>`}<span class="t9-bar"><i style="width:${pc}%"></i></span></div></div>`;
   };
   const vista9 = `<div class="v9">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(tarjeta9).join("")}</div>`;
-  const logo = new URL("iconos/logo-horizontal-tinta.svg", location.href).href, simbolo = new URL("iconos/simbolo.svg", location.href).href;
+  const logo = new URL("iconos/logo-horizontal-crema.svg", location.href).href, simbolo = new URL("iconos/simbolo.svg", location.href).href;
   let sec = 0; const h2 = t => `<h2><span>${String(++sec).padStart(2, "0")}</span>${t}</h2>`;
   const EST = { VACIO: ["Por escribir", "#5A666B", "#EEF1F2"], INICIO: ["Por empezar", "#5A666B", "#EEF1F2"], ESCRITO: ["En camino", "#8A5A00", "#FBEFD8"], HECHO: ["Ganado", "#1E7B4A", "#E3F2E9"] };
   const pill = e => `<span class="pill" style="color:${EST[e][1]};background:${EST[e][2]}">${EST[e][0]}</span>`;
@@ -73,7 +73,7 @@ async function informeBrujula() {
       @top-right{content:"Informe de mi Brújula";font:italic 500 8.5pt "Roboto Serif",Georgia,serif;color:#6B2A1A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
       @bottom-left{content:"Método Ruta a la Cima";font:400 7.5pt Roboto,sans-serif;color:#5A666B;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}
       @bottom-right{content:counter(page) " / " counter(pages);font:600 8pt Roboto,sans-serif;color:#6B2A1A;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}}
-    @page:first{margin-top:14mm;@top-left{content:"";border:0}@top-center{content:""}@top-right{content:"";border:0}}`;
+    @page tapa{margin:0;@top-left{content:none;border:0}@top-right{content:none;border:0}@bottom-left{content:none;border:0}@bottom-right{content:none;border:0}}`;
   const css = `@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500;8..144,600&family=Roboto:wght@400;500;700&display=swap");
     *{box-sizing:border-box}body{font:13.5px/1.55 Roboto,system-ui,sans-serif;color:#1D2427;margin:0;background:#E6EAEC;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .doc{max-width:900px;margin:24px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px -12px rgb(0 0 0/.25)}
@@ -148,16 +148,42 @@ async function informeBrujula() {
     .barra{height:4px;margin:12px 0 6px}.ritmo{border-left:0;border:.5px solid #E8DCC4;border-radius:8px;background:#FDFBF7;padding:10px 14px}
     .camp{border-color:#E8DCC4;border-radius:10px}.pill{font-weight:600}
     .control{border-width:1px}.control-cab{background:#FBF8F2;color:#6B2A1A;border-bottom:1px solid #6B2A1A;border-radius:11px 11px 0 0}
+    .tapa{position:relative;overflow:hidden;background:#6B2A1A;color:#F3EDE0;min-height:1120px;display:flex}
+    .tapa-mapa{position:absolute;inset:0}.tapa-mapa svg{width:100%;height:100%;display:block}
+    .tapa-mapa::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 48%,rgb(107 42 26/.88) 0,rgb(107 42 26/.55) 55%,rgb(107 42 26/.15) 100%)}
+    .tapa .om-fondo{fill:#6B2A1A}.tapa .om-abierto{fill:#7C3725;opacity:.9}.tapa .om-veg{fill:#5C2215;opacity:.9}.tapa .om-agua{fill:#5A2620;stroke:#C9973B;stroke-width:1.6;stroke-opacity:.5}
+    .tapa .om-curva{fill:none;stroke:#C9973B;stroke-width:1.3;opacity:.42;stroke-linecap:round}.tapa .om-indice{stroke-width:2.4;opacity:.6}
+    .tapa .om-ruta{fill:none;stroke:#F0D9A6;stroke-width:3;opacity:.55}.tapa .om-ruta text{fill:#F0D9A6;stroke:none;font:600 26px/1 Roboto,sans-serif}
+    .tapa-in{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:56px 64px 52px}
+    .tapa header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:.75px solid rgb(201 151 59/.6)}
+    .tapa header img{height:42px}.tapa header span{font:500 10.5px Roboto,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#E8C98A}
+    .tapa-centro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 0}
+    .tapa-sobre{margin:0 0 14px;font:600 11px Roboto,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#E8C98A}
+    .tapa h1{margin:0;font:600 64px/1.02 "Roboto Serif",Georgia,serif;color:#FBF4E6;letter-spacing:-.015em}
+    .tapa-anio{margin:16px 0 0;font:500 22px "Roboto Serif",Georgia,serif;color:#E8C98A;letter-spacing:.12em}
+    .tapa-regla{display:block;width:72px;height:2px;background:#C9973B;margin:30px auto}
+    .tapa blockquote{margin:0;max-width:520px;font:italic 500 19px/1.5 "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    .tapa blockquote small{display:block;margin-bottom:10px;font:600 10px Roboto,sans-serif;font-style:normal;letter-spacing:.24em;text-transform:uppercase;color:#E8C98A}
+    .tapa-ficha{display:grid;grid-template-columns:repeat(4,1fr);margin:0;border-top:.75px solid rgb(201 151 59/.6)}
+    .tapa-ficha div{padding:14px 14px 0;border-left:.75px solid rgb(201 151 59/.35)}.tapa-ficha div:first-child{border-left:0;padding-left:0}
+    .tapa-ficha dt{font:500 9.5px Roboto,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E8C98A}.tapa-ficha dd{margin:4px 0 0;font:600 14px "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    .cuerpo{padding-top:20px}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.control{overflow:visible}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:116mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
+    @media print{${pagina}.tapa{page:tapa;width:210mm;height:297mm;min-height:0;break-after:page}.tapa-in{padding:22mm 20mm 20mm}.cuerpo{padding-top:0}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.control{overflow:visible}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:150mm}.tapa h1{font-size:60px!important;line-height:1.02}.tapa blockquote{font-size:17px}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
       .banda{padding:0 0 10px;border-radius:0}.banda img{height:34px}.portada{padding-top:12px!important;padding-bottom:0!important}h1{font-size:26px!important}.sobre{margin-bottom:2px}.ficha{margin-top:10px}.ficha div{padding:5px 10px}.cumbre{margin-top:10px!important;padding:2px 0 2px 14px!important;font-size:14.5px!important}.kpi{padding:6px 10px!important}.kpi b{font-size:18px!important}.barra{margin:8px 0 4px}.ritmo{padding:6px 12px!important;font-size:11.5px!important}.mis9 h2{margin-top:12px}.banda::after{left:0;right:0}.ficha div:first-child,.kpi:first-child{padding-left:0}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
-    <div class="doc"><div class="banda"><img src="${logo}" alt="SuRoute"><div class="meta">Método Ruta a la Cima<br><b>Brújula 1·9·81</b></div></div>
-    <div class="portada"><p class="sobre">Informe de avance</p><h1>Informe de mi Brújula</h1>
-      <dl class="ficha"><div><dt>Titular</dt><dd>${nombre || "—"}</dd></div><div><dt>Periodo</dt><dd>${anio ? "Año " + anio : "General · toda la vida"}</dd></div>
-        <div><dt>Emitido</dt><dd>${fecha}</dd></div><div><dt>Avance general</dt><dd>${pctC} %</dd></div></dl>
-      <blockquote class="cumbre"><small>Mi cumbre</small>${esc(d.titulo)}</blockquote></div>
+    <div class="doc">
+    <!-- Portada: el color de acento con el mapa de orientación (como el PIN de Ascenso financiero) -->
+    <section class="tapa"><div class="tapa-mapa">${window.mapaOrientacion ? mapaOrientacion() : ""}</div>
+      <div class="tapa-in">
+        <header><img src="${logo}" alt="SuRoute"><span>Método Ruta a la Cima</span></header>
+        <div class="tapa-centro"><p class="tapa-sobre">Informe de avance</p><h1>Mi Brújula<br>1·9·81</h1>
+          <p class="tapa-anio">${anio ? anio : "General · toda la vida"}</p><i class="tapa-regla"></i>
+          <blockquote><small>Mi cumbre</small>${esc(d.titulo)}</blockquote></div>
+        <dl class="tapa-ficha"><div><dt>Titular</dt><dd>${nombre || "—"}</dd></div><div><dt>Periodo</dt><dd>${anio ? "Año " + anio : "General"}</dd></div>
+          <div><dt>Emitido</dt><dd>${fecha}</dd></div><div><dt>Avance general</dt><dd>${pctC} %</dd></div></dl>
+      </div></section>
     <div class="cuerpo">
       ${h2("Cómo voy")}<div class="kpis"><div class="kpi"><span>Avance de la cumbre</span><b>${pctC} %</b></div><div class="kpi"><span>Pasos escritos</span><b>${d.escritos} de 64</b></div>
         <div class="kpi"><span>Pasos ganados</span><b>${d.hechos} de 64</b></div><div class="kpi"><span>Fotos de evidencia</span><b>${d.evidencias}</b></div></div>
