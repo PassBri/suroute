@@ -16,6 +16,17 @@ async function informeBrujula() {
   const grilla = `<div class="g9">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(bq => `<div class="g9b">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(k => {
     const f = Math.floor(bq / 3) * 3 + Math.floor(k / 3), c = (bq % 3) * 3 + k % 3, cel = Mandala.celda(f, c);
     return `<div class="g9c${cel.tipo === "CUMBRE" ? " cum" : cel.tipo !== "PASO" ? " cab" : ""}"><span>${celdaTxt(cel)}</span></div>`; }).join("")}</div>`).join("")}</div>`;
+  // La vista de 9 (como en la Brújula): la cumbre al centro y los 8 campamentos, cada uno con su foto, su nombre y su avance
+  const tarjeta9 = k => {
+    const cel = Mandala.celda(3 + Math.floor(k / 3), 3 + k % 3), cum = cel.tipo === "CUMBRE";
+    const c = cum ? d.cumbre : d.camps[cel.camp], foto = c ? mdFoto(c) : null, col = cum ? "#6B2A1A" : d.color(cel.camp);
+    const nombre = cum ? d.titulo : c ? mdNombre(c) : Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp]);
+    const pc = cum ? pctC : c ? Math.round(mdPct(d, cel.camp)) : 0;
+    return `<div class="t9${cum ? " cum" : ""}${foto ? " foto" : ""}" style="--c:${col}">${foto ? `<img src="${esc(foto)}" alt="">` : ""}
+      ${cum ? `<span class="t9-chip">Mi cumbre</span>` : `<span class="t9-rumbo">${Mandala.RUMBOS[cel.camp]}</span>`}<span class="t9-pct">${pc} %</span>
+      <div class="t9-pie"><b>${esc(nombre)}</b>${cum ? "" : `<small>${esc(Mandala.nombre(Mandala.CAMPAMENTOS_FIJOS[cel.camp]))}</small>`}<span class="t9-bar"><i style="width:${pc}%"></i></span></div></div>`;
+  };
+  const vista9 = `<div class="v9">${[0, 1, 2, 3, 4, 5, 6, 7, 8].map(tarjeta9).join("")}</div>`;
   const logo = new URL("iconos/logo-horizontal-crema.svg", location.href).href, simbolo = new URL("iconos/simbolo.svg", location.href).href;
   let sec = 0; const h2 = t => `<h2><span>${String(++sec).padStart(2, "0")}</span>${t}</h2>`;
   const EST = { VACIO: ["Por escribir", "#5A666B", "#EEF1F2"], INICIO: ["Por empezar", "#5A666B", "#EEF1F2"], ESCRITO: ["En camino", "#8A5A00", "#FBEFD8"], HECHO: ["Ganado", "#1E7B4A", "#E3F2E9"] };
@@ -80,6 +91,20 @@ async function informeBrujula() {
     table{width:100%;border-collapse:collapse}th,td{padding:6px 8px;border-bottom:1px solid #EEF1F2;text-align:left;vertical-align:top}thead th{font:500 11px Roboto,sans-serif;color:#5A666B;text-transform:uppercase;letter-spacing:.05em}
     td small{display:block;font-size:10.5px;color:#86683A;font-weight:700;letter-spacing:.04em;text-transform:uppercase}.num{width:26px;color:#5A666B;font-variant-numeric:tabular-nums}
     .n{text-align:right;white-space:nowrap}.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11.5px;font-weight:700}.suave,.vacio{color:#5A666B}.metas{margin:8px 0 0;font-size:12.5px}
+    .v9{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;break-inside:avoid}
+    .t9{position:relative;aspect-ratio:1;border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--c) 12%,#fff);border:1px solid color-mix(in srgb,var(--c) 30%,#DCE2E4)}
+    .t9 img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    .t9.cum{box-shadow:0 0 0 3px #C9973B;border-color:#C9973B}
+    .t9-rumbo,.t9-chip{position:absolute;top:8px;left:8px;z-index:1;min-width:26px;height:22px;padding:0 7px;border-radius:11px;background:var(--c);color:#fff;font:700 10.5px/22px Roboto,sans-serif;text-align:center}
+    .t9-chip{background:#6B2A1A;letter-spacing:.06em;text-transform:uppercase}
+    .t9-pct{position:absolute;top:8px;right:8px;z-index:1;height:22px;padding:0 8px;border-radius:11px;background:#fff;color:#1D2427;font:700 11px/22px Roboto,sans-serif;font-variant-numeric:tabular-nums;box-shadow:0 1px 3px rgb(0 0 0/.2)}
+    .t9-pie{position:absolute;left:0;right:0;bottom:0;z-index:1;padding:26px 10px 9px;display:grid;gap:2px}
+    .t9.foto .t9-pie{background:linear-gradient(transparent,rgb(0 0 0/.72));color:#fff}
+    .t9-pie b{font:600 13px/1.25 "Roboto Serif",Georgia,serif;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+    .t9.cum .t9-pie b{font-size:11.5px;-webkit-line-clamp:5}
+    .t9:not(.foto) .t9-pie b{color:var(--c)}.t9-pie small{font-size:10.5px;opacity:.85;text-transform:none;letter-spacing:0;font-weight:400;color:inherit;display:block}
+    .t9-bar{display:block;height:4px;border-radius:2px;background:rgb(255 255 255/.35);overflow:hidden;margin-top:4px}.t9:not(.foto) .t9-bar{background:color-mix(in srgb,var(--c) 18%,#fff)}
+    .t9-bar i{display:block;height:100%;background:var(--c)}.t9.foto .t9-bar i{background:#fff}
     .bar{display:inline-block;width:100%;height:6px;border-radius:3px;background:#EEF1F2;overflow:hidden;vertical-align:middle}.bar i{display:block;height:100%;border-radius:3px}
     .camp-bar{margin:-2px 0 10px}.camp header small,.camp-bar small{display:block;text-transform:none;letter-spacing:0;font-weight:400;font-size:11.5px;color:#5A666B}.camp-bar small{margin-top:4px}
     td.av{width:150px;white-space:nowrap}td.av .bar{width:96px;margin-right:8px}td.av b{font-size:12px;font-variant-numeric:tabular-nums;display:inline-block;min-width:36px;text-align:right}th.av{text-align:left;width:150px}
@@ -118,6 +143,7 @@ async function informeBrujula() {
         <p>Tramo ${r.tramo + 1} de 52 · un paso nuevo pide ${r.dificultad} ${r.dificultad === 1 ? "jornada" : "jornadas"} · ${r.adelanto >= 0 ? `vas ${r.adelanto.toLocaleString("es", { maximumFractionDigits: 1 })} pasos adelante del ritmo` : `te faltan ${(-r.adelanto).toLocaleString("es", { maximumFractionDigits: 1 })} pasos para ir al ritmo`}</p>
         ${d.confluencias ? `<p>${d.confluencias} ${d.confluencias === 1 ? "paso de confluencia" : "pasos de confluencia"}: acciones que movieron varios ejes.</p>` : ""}
         ${d.enNiebla ? `<p>${d.enNiebla} ${d.enNiebla === 1 ? "paso" : "pasos"} en la niebla (más de ${Travesia.NIEBLA_DIAS} días sin avanzar).</p>` : ""}</div>
+      <div class="salto"></div>${h2("Mis 9: la cumbre y sus campamentos")}${vista9}
       <div class="salto"></div>${h2("Mi Brújula 9×9")}${grilla}
       <div class="salto"></div>${h2("Campamentos y sub-metas")}${camps}
       ${h2(`Mi carta de ${aCarta}`)}${cartaHtml}
