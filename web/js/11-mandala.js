@@ -252,7 +252,7 @@ function mdBarraAvance(d, camp) {
 /* La cumbre y los campamentos guardan su foto en su casilla; cada sub-meta, como foto de evidencia del paso (mdEvidencia). */
 const mdCeldaAcc = (c, nombre, foto, paso = null) => !c ? "" : `<span class="md-cacc">
   <label class="md-cbtn" title="${foto ? "Cambiar la foto" : "Agregar foto"}" aria-label="${foto ? "Cambiar la foto" : "Agregar foto"} de ${esc(nombre)}"><input type="file" accept="image/*" hidden ${paso === null ? `data-foto-vision="${c.id}"` : `data-acc-change="mdEvidencia" data-arg="${c.id}|${paso}"`}>${ic("foto")}</label>
-  ${foto ? `<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${paso === null ? c.id : `${c.id}-${paso}`}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>` : ""}</span>`;
+  ${`<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${paso === null ? c.id : `${c.id}-${paso}`}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>`}</span>`;
 const mdGirada = (c, paso = null) => !!c && !!estado.mdCeldasGiradas?.has(paso === null ? String(c.id) : `${c.id}-${paso}`);
 function mdCelda(d, cel, grande) {
   if (cel.tipo === "CUMBRE") {
