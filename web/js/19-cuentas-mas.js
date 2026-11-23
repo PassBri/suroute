@@ -1100,9 +1100,11 @@ function informeFinanciero() {
       .nota{margin-top:30px;padding-top:12px;border-top:1px solid #DCE2E4;font-size:11.5px;color:#5A666B;display:flex;gap:10px;align-items:center}.nota img{width:20px;height:20px;opacity:.7}
       .barra-acc{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;padding:12px;background:#E6EAEC}
       .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
+      ${window.cssTapas ? cssTapas("verde") : ""}.tapa h1{font-size:58px}.cuerpo{padding-top:24px}
       @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.resumen{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.dos{grid-template-columns:1fr}.deuda .mini{grid-template-columns:1fr 1fr}}
-      @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}@page{size:A4;margin:12mm 0 14mm}
-        .banda{padding:16px 14mm}.portada,.cuerpo{padding-left:14mm;padding-right:14mm}h2{break-after:avoid}table,.claves{break-inside:auto}tr{break-inside:avoid}
+      @media print{${window.paginaInforme ? paginaInforme("SuRoute · Ascenso financiero · " + fecha, "Análisis financiero", "#1D4535") : "@page{size:A4;margin:12mm 0 14mm}"}
+        body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.barra-acc{display:none}
+        .cuerpo{padding:0}h2{break-after:avoid}table,.claves{break-inside:auto}tr{break-inside:avoid}
         .resumen{grid-template-columns:150px 1fr}.anillo{width:140px;height:140px}.kpis{grid-template-columns:1fr 1fr}.kpi b{font-size:15px}.deuda .mini b{font-size:13px}}`;
     const grupos = GRUPOS_SALUD.map(([t, , nombres]) => { const xs = nombres.map(n => porNombre[n]).filter(Boolean); return !xs.length ? "" :
       `<div class="grupo">${t}</div>` + tabla(["Indicador", "Valor", "Meta", "Estado"], xs.map(x => tr([`${x.nombre}<br><small>${x.ayuda}</small>`, x.valor, x.metaTxt || "—", pill(x.estado)])), "ind"); }).join("");
@@ -1110,8 +1112,10 @@ function informeFinanciero() {
       <title>Análisis financiero · SuRoute · ${iso(hoyD)}</title><style>${css}</style></head><body>
       <div class="barra-acc"><button onclick="print()">Guardar como PDF o imprimir</button><button class="sec" onclick="close()">Cerrar</button></div>
       <div class="doc">
-      <div class="banda"><img src="${logo}" alt="SuRoute · Summit Route"><div class="meta">Análisis financiero<br>${fecha}</div></div>
-      <div class="portada"><div><h1>Análisis financiero completo</h1><div class="sub">${nombre ? `<b>${nombre}</b> · ` : ""}${periodo}</div></div></div>
+      ${window.htmlTapa ? htmlTapa({ logo, lado: "Ascenso financiero", sobre: "Informe de Ascenso financiero", titulo: "Análisis<br>financiero", anio: periodo,
+        citaTit: r.nivel ? "Tu nivel: " + r.nivel[0] : "Tu punto de partida", cita: r.nivel ? r.nivel[1] : "Anota tus ingresos y gastos para calcular tu índice de salud financiera.",
+        ficha: [["Titular", nombre || "—"], ["Emitido", fecha], ["Índice ISF", r.isf == null ? "—" : r.isf + " %"], ["Patrimonio neto", plata(r.neto)]] })
+        : `<div class="banda"><img src="${logo}" alt="SuRoute · Summit Route"><div class="meta">Análisis financiero<br>${fecha}</div></div>`}
       <div class="cuerpo">
         <div class="resumen">${anillo}<div>${r.nivel ? `<span class="nivel" style="background:${nivelColor}">${r.nivel[0]}</span><p style="margin:8px 0 0">${r.nivel[1]}</p>` : `<p class="sub">Anota tus ingresos para calcular el índice.</p>`}
           <div class="kpis"><div class="kpi"><span>Ingresos</span><b>${plata(r.s.ing)}</b></div><div class="kpi"><span>Egresos</span><b>${plata(egresos)}</b></div>
@@ -1136,7 +1140,11 @@ function informeFinanciero() {
                 <div><span>Cuotas</span><b>${a ? `${a.k} de ${a.n}` : "—"}</b></div><div><span>${x.actual > 0 ? "Libre en" : "Estado"}</span><b>${x.actual > 0 ? (fin ? mesesDespues(fin) : "Sin fecha") : "Pagada"}</b></div></div>
               ${a ? `<div class="barra"><i style="width:${a.k / a.n * 100}%;background:#1E7B4A"></i></div>${x.minimo ? `<p>Has pagado <b>${plata(Math.round(a.pagadoTotal))}</b>: ${plata(Math.round(a.capital))} a capital y ${plata(Math.round(a.intereses))} a intereses${a.faltan ? `. Faltan ${a.faltan} cuotas (terminas en ${a.fin})` : ""}.${a.estimado ? ` <small>Prestado estimado: ${plata(Math.round(a.prestado))}.</small>` : ""}</p>` : ""}` : ""}</div>`; }).join("") : ""}
         <div class="nota"><img src="${simbolo}" alt="">Generado por SuRoute con los datos de tu libro de cuentas · método Ruta a la Cima. Este análisis es una guía para decidir; no reemplaza la asesoría de un profesional financiero.</div>
-      </div></div></body></html>`;
+      </div>
+      ${window.htmlContra ? htmlContra({ logo, sobre: "Sigue subiendo", lema: "Cada peso es un paso.<br>Tu libertad financiera<br>es una cumbre.",
+        msj: "Estos números no te definen: te orientan. Revísalos cada mes, paga primero a tu futuro, sal de las deudas que solo cuestan y deja que tu dinero trabaje para tus sueños. La libertad financiera no llega de un salto; se construye con decisiones pequeñas, repetidas con constancia.",
+        firma: "Nos vemos en la cumbre." }) : ""}
+      </div></body></html>`;
     return html;
   } finally { estado.ascOculto = oculto; }
 }

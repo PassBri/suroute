@@ -4,6 +4,71 @@
  * Método Cima 9×52, la imagen del 9×9, cada campamento con sus 8 pasos (estado y jornadas) y las metas
  * que lo sostienen. Se arma como página aparte con «Guardar como PDF».
  * ====================================================================== */
+/* ---------- Portada y contraportada de los informes (Brújula y Análisis financiero) ----------
+ * Hoja completa en el color del informe con el mapa de orientación del PIN de Ascenso financiero:
+ * curvas de nivel doradas y el recorrido hasta la cumbre. */
+const TEMAS_TAPA = {
+  burdeos: { tf: "#6B2A1A", ta: "#7C3725", tv: "#5C2215", tg: "#5A2620", trgb: "107 42 26", acento: "#6B2A1A" },
+  verde: { tf: "#1D4535", ta: "#275843", tv: "#163728", tg: "#173F3B", trgb: "29 69 53", acento: "#1D4535" },
+};
+function cssTapas(tema) {
+  const t = TEMAS_TAPA[tema] || TEMAS_TAPA.burdeos;
+  return `.tapa{--tf:${t.tf};--ta:${t.ta};--tv:${t.tv};--tg:${t.tg};--trgb:${t.trgb}}
+    .tapa{position:relative;overflow:hidden;background:var(--tf);color:#F3EDE0;min-height:1120px;display:flex}
+    .tapa-mapa{position:absolute;inset:0}.tapa-mapa svg{width:100%;height:100%;display:block}
+    .tapa-mapa::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 48%,rgb(var(--trgb)/.88) 0,rgb(var(--trgb)/.55) 55%,rgb(var(--trgb)/.15) 100%)}
+    .tapa .om-fondo{fill:var(--tf)}.tapa .om-abierto{fill:var(--ta);opacity:.9}.tapa .om-veg{fill:var(--tv);opacity:.9}.tapa .om-agua{fill:var(--tg);stroke:#C9973B;stroke-width:1.6;stroke-opacity:.5}
+    .tapa .om-curva{fill:none;stroke:#C9973B;stroke-width:1.3;opacity:.42;stroke-linecap:round}.tapa .om-indice{stroke-width:2.4;opacity:.6}
+    .tapa .om-ruta{fill:none;stroke:#F0D9A6;stroke-width:3;opacity:.55}.tapa .om-ruta text{fill:#F0D9A6;stroke:none;font:600 26px/1 Roboto,sans-serif}
+    .tapa-in{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:56px 64px 52px}
+    .tapa header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:.75px solid rgb(201 151 59/.6)}
+    .tapa header img{height:42px}.tapa header span{font:500 10.5px Roboto,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#E8C98A}
+    .tapa-centro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 0}
+    .tapa-sobre{margin:0 0 14px;font:600 11px Roboto,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#E8C98A}
+    .tapa h1{margin:0;font:600 64px/1.02 "Roboto Serif",Georgia,serif;color:#FBF4E6;letter-spacing:-.015em}
+    .tapa-anio{margin:16px 0 0;font:500 22px "Roboto Serif",Georgia,serif;color:#E8C98A;letter-spacing:.12em}
+    .tapa-regla{display:block;width:72px;height:2px;background:#C9973B;margin:30px auto}
+    .tapa blockquote{margin:0;max-width:520px;font:italic 500 19px/1.5 "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    .tapa blockquote small{display:block;margin-bottom:10px;font:600 10px Roboto,sans-serif;font-style:normal;letter-spacing:.24em;text-transform:uppercase;color:#E8C98A}
+    .tapa-ficha{display:grid;grid-template-columns:repeat(4,1fr);margin:0;border-top:.75px solid rgb(201 151 59/.6)}
+    .tapa-ficha div{padding:14px 14px 0;border-left:.75px solid rgb(201 151 59/.35)}.tapa-ficha div:first-child{border-left:0;padding-left:0}
+    .tapa-ficha dt{font:500 9.5px Roboto,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E8C98A}.tapa-ficha dd{margin:4px 0 0;font:600 14px "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    .contra .tapa-centro{gap:0}.contra-sello{width:64px;height:64px;margin-bottom:22px;opacity:.95}
+    .contra-lema{margin:0;font:600 34px/1.3 "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    .contra-msj{margin:0;max-width:500px;font:400 15.5px/1.7 "Roboto Serif",Georgia,serif;color:#F3EDE0}
+    .contra-firma{margin:26px 0 0;font:italic 600 19px "Roboto Serif",Georgia,serif;color:#E8C98A}
+    .contra-pie{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:16px;border-top:.75px solid rgb(201 151 59/.6)}
+    .contra-pie img{height:30px}.contra-pie span{font:500 10px Roboto,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#E8C98A}`;
+}
+/** Encabezado y pie de cada hoja (recuadros de margen de la página) y la hoja sin márgenes de las tapas. */
+function paginaInforme(izq, der, acento = "#6B2A1A") {
+  const q = x => String(x).replace(/["\\]/g, "");
+  return `@page{size:A4;margin:18mm 16mm 18mm;
+      @top-left{content:"${q(izq)}";font:500 8pt Roboto,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#86683A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
+      @top-right{content:"${q(der)}";font:italic 500 8.5pt "Roboto Serif",Georgia,serif;color:${acento};vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
+      @bottom-left{content:"Método Ruta a la Cima";font:400 7.5pt Roboto,sans-serif;color:#5A666B;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}
+      @bottom-right{content:counter(page) " / " counter(pages);font:600 8pt Roboto,sans-serif;color:${acento};vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}}
+    @page tapa{margin:0;@top-left{content:none;border:0}@top-right{content:none;border:0}@bottom-left{content:none;border:0}@bottom-right{content:none;border:0}}
+    .tapa{page:tapa;width:210mm;height:297mm;min-height:0;break-after:page}.tapa.contra{break-after:auto;break-before:page}.tapa-in{padding:22mm 20mm 20mm}`;
+}
+const MAPA_TAPA = () => window.mapaOrientacion ? mapaOrientacion() : "";
+/** La portada: logo, título, una línea de apoyo, una cita y la ficha del documento. */
+function htmlTapa({ logo, lado, sobre, titulo, anio, citaTit, cita, ficha }) {
+  return `<section class="tapa"><div class="tapa-mapa">${MAPA_TAPA()}</div><div class="tapa-in">
+      <header><img src="${logo}" alt="SuRoute"><span>${lado}</span></header>
+      <div class="tapa-centro"><p class="tapa-sobre">${sobre}</p><h1>${titulo}</h1>${anio ? `<p class="tapa-anio">${anio}</p>` : ""}<i class="tapa-regla"></i>
+        ${cita ? `<blockquote><small>${citaTit}</small>${cita}</blockquote>` : ""}</div>
+      <dl class="tapa-ficha">${ficha.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join("")}</dl></div></section>`;
+}
+/** La contraportada: el símbolo, un lema, un mensaje y el cierre. */
+function htmlContra({ logo, sobre, lema, msj, firma }) {
+  return `<section class="tapa contra"><div class="tapa-mapa">${MAPA_TAPA()}</div><div class="tapa-in"><div class="tapa-centro">
+      <svg class="contra-sello" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="30" r="24" fill="none" stroke="#F0D9A6" stroke-width="2.4" stroke-dasharray="140 12" transform="rotate(100 32 30)"/><circle cx="32" cy="57" r="3.2" fill="#C9973B"/></svg>
+      <p class="tapa-sobre">${sobre}</p><p class="contra-lema">${lema}</p><i class="tapa-regla"></i><p class="contra-msj">${msj}</p><p class="contra-firma">${firma}</p></div>
+      <footer class="contra-pie"><img src="${logo}" alt="SuRoute"><span>suroute.com · Método Ruta a la Cima</span></footer></div></section>`;
+}
+window.cssTapas = cssTapas; window.paginaInforme = paginaInforme; window.htmlTapa = htmlTapa; window.htmlContra = htmlContra;
+
 async function informeBrujula() {
   const d = Mandala.datos(), anio = estado.brujulaAnio || null, hoyD = new Date();
   const fecha = hoyD.toLocaleDateString("es", { day: "numeric", month: "long", year: "numeric" });
@@ -67,13 +132,7 @@ async function informeBrujula() {
         <table><thead><tr><th>Rol</th><th>Nombre</th><th>Firma</th><th class="fe">Fecha</th></tr></thead><tbody>
           ${fila("Elaboró", "El senderista, dueño de la Brújula")}${fila("Revisó y acompañó", "Coach de vida · Método Ruta a la Cima")}
         </tbody></table></div></section>`;
-  const cabTxt = `SuRoute · Brújula 1·9·81 · ${anio ? "Año " + anio : "General"}`.replace(/["\\]/g, "");
-  const pagina = `@page{size:A4;margin:18mm 16mm 18mm;
-      @top-left{content:"${cabTxt}";font:500 8pt Roboto,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#86683A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
-      @top-right{content:"Informe de mi Brújula";font:italic 500 8.5pt "Roboto Serif",Georgia,serif;color:#6B2A1A;vertical-align:bottom;padding-bottom:3mm;border-bottom:.5pt solid #E8DCC4}
-      @bottom-left{content:"Método Ruta a la Cima";font:400 7.5pt Roboto,sans-serif;color:#5A666B;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}
-      @bottom-right{content:counter(page) " / " counter(pages);font:600 8pt Roboto,sans-serif;color:#6B2A1A;vertical-align:top;padding-top:3mm;border-top:.5pt solid #E8DCC4}}
-    @page tapa{margin:0;@top-left{content:none;border:0}@top-right{content:none;border:0}@bottom-left{content:none;border:0}@bottom-right{content:none;border:0}}`;
+  const pagina = paginaInforme(`SuRoute · Brújula 1·9·81 · ${anio ? "Año " + anio : "General"}`, "Informe de mi Brújula");
   const css = `@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:opsz,wght@8..144,500;8..144,600&family=Roboto:wght@400;500;700&display=swap");
     *{box-sizing:border-box}body{font:13.5px/1.55 Roboto,system-ui,sans-serif;color:#1D2427;margin:0;background:#E6EAEC;-webkit-print-color-adjust:exact;print-color-adjust:exact}
     .doc{max-width:900px;margin:24px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px -12px rgb(0 0 0/.25)}
@@ -148,48 +207,17 @@ async function informeBrujula() {
     .barra{height:4px;margin:12px 0 6px}.ritmo{border-left:0;border:.5px solid #E8DCC4;border-radius:8px;background:#FDFBF7;padding:10px 14px}
     .camp{border-color:#E8DCC4;border-radius:10px}.pill{font-weight:600}
     .control{border-width:1px}.control-cab{background:#FBF8F2;color:#6B2A1A;border-bottom:1px solid #6B2A1A;border-radius:11px 11px 0 0}
-    .tapa{position:relative;overflow:hidden;background:#6B2A1A;color:#F3EDE0;min-height:1120px;display:flex}
-    .tapa-mapa{position:absolute;inset:0}.tapa-mapa svg{width:100%;height:100%;display:block}
-    .tapa-mapa::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 48%,rgb(107 42 26/.88) 0,rgb(107 42 26/.55) 55%,rgb(107 42 26/.15) 100%)}
-    .tapa .om-fondo{fill:#6B2A1A}.tapa .om-abierto{fill:#7C3725;opacity:.9}.tapa .om-veg{fill:#5C2215;opacity:.9}.tapa .om-agua{fill:#5A2620;stroke:#C9973B;stroke-width:1.6;stroke-opacity:.5}
-    .tapa .om-curva{fill:none;stroke:#C9973B;stroke-width:1.3;opacity:.42;stroke-linecap:round}.tapa .om-indice{stroke-width:2.4;opacity:.6}
-    .tapa .om-ruta{fill:none;stroke:#F0D9A6;stroke-width:3;opacity:.55}.tapa .om-ruta text{fill:#F0D9A6;stroke:none;font:600 26px/1 Roboto,sans-serif}
-    .tapa-in{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:56px 64px 52px}
-    .tapa header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:16px;border-bottom:.75px solid rgb(201 151 59/.6)}
-    .tapa header img{height:42px}.tapa header span{font:500 10.5px Roboto,sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#E8C98A}
-    .tapa-centro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 0}
-    .tapa-sobre{margin:0 0 14px;font:600 11px Roboto,sans-serif;letter-spacing:.32em;text-transform:uppercase;color:#E8C98A}
-    .tapa h1{margin:0;font:600 64px/1.02 "Roboto Serif",Georgia,serif;color:#FBF4E6;letter-spacing:-.015em}
-    .tapa-anio{margin:16px 0 0;font:500 22px "Roboto Serif",Georgia,serif;color:#E8C98A;letter-spacing:.12em}
-    .tapa-regla{display:block;width:72px;height:2px;background:#C9973B;margin:30px auto}
-    .tapa blockquote{margin:0;max-width:520px;font:italic 500 19px/1.5 "Roboto Serif",Georgia,serif;color:#FBF4E6}
-    .tapa blockquote small{display:block;margin-bottom:10px;font:600 10px Roboto,sans-serif;font-style:normal;letter-spacing:.24em;text-transform:uppercase;color:#E8C98A}
-    .tapa-ficha{display:grid;grid-template-columns:repeat(4,1fr);margin:0;border-top:.75px solid rgb(201 151 59/.6)}
-    .tapa-ficha div{padding:14px 14px 0;border-left:.75px solid rgb(201 151 59/.35)}.tapa-ficha div:first-child{border-left:0;padding-left:0}
-    .tapa-ficha dt{font:500 9.5px Roboto,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#E8C98A}.tapa-ficha dd{margin:4px 0 0;font:600 14px "Roboto Serif",Georgia,serif;color:#FBF4E6}
+    ${cssTapas("burdeos")}
     .cuerpo{padding-top:20px}
-    .contra .tapa-centro{gap:0}.contra-sello{width:64px;height:64px;margin-bottom:22px;opacity:.95}
-    .contra-lema{margin:0;font:600 34px/1.3 "Roboto Serif",Georgia,serif;color:#FBF4E6}
-    .contra-msj{margin:0;max-width:500px;font:400 15.5px/1.7 "Roboto Serif",Georgia,serif;color:#F3EDE0}
-    .contra-firma{margin:26px 0 0;font:italic 600 19px "Roboto Serif",Georgia,serif;color:#E8C98A}
-    .contra-pie{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:16px;border-top:.75px solid rgb(201 151 59/.6)}
-    .contra-pie img{height:30px}.contra-pie span{font:500 10px Roboto,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#E8C98A}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{${pagina}.tapa{page:tapa;width:210mm;height:297mm;min-height:0;break-after:page}.tapa.contra{break-after:auto;break-before:page}.tapa-in{padding:22mm 20mm 20mm}.cuerpo{padding-top:0}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.control{overflow:visible}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:150mm}.tapa h1{font-size:60px!important;line-height:1.02}.tapa blockquote{font-size:17px}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
+    @media print{${pagina}.cuerpo{padding-top:0}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none;overflow:visible}.control{overflow:visible}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:150mm}.tapa h1{font-size:60px!important;line-height:1.02}.tapa blockquote{font-size:17px}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
       .banda{padding:0 0 10px;border-radius:0}.banda img{height:34px}.portada{padding-top:12px!important;padding-bottom:0!important}h1{font-size:26px!important}.sobre{margin-bottom:2px}.ficha{margin-top:10px}.ficha div{padding:5px 10px}.cumbre{margin-top:10px!important;padding:2px 0 2px 14px!important;font-size:14.5px!important}.kpi{padding:6px 10px!important}.kpi b{font-size:18px!important}.barra{margin:8px 0 4px}.ritmo{padding:6px 12px!important;font-size:11.5px!important}.mis9 h2{margin-top:12px}.banda::after{left:0;right:0}.ficha div:first-child,.kpi:first-child{padding-left:0}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
     <div class="doc">
     <!-- Portada: el color de acento con el mapa de orientación (como el PIN de Ascenso financiero) -->
-    <section class="tapa"><div class="tapa-mapa">${window.mapaOrientacion ? mapaOrientacion() : ""}</div>
-      <div class="tapa-in">
-        <header><img src="${logo}" alt="SuRoute"><span>Método Ruta a la Cima</span></header>
-        <div class="tapa-centro"><p class="tapa-sobre">Informe de avance</p><h1>Mi Brújula<br>1·9·81</h1>
-          <p class="tapa-anio">${anio ? anio : "General · toda la vida"}</p><i class="tapa-regla"></i>
-          <blockquote><small>Mi cumbre</small>${esc(d.titulo)}</blockquote></div>
-        <dl class="tapa-ficha"><div><dt>Titular</dt><dd>${nombre || "—"}</dd></div><div><dt>Periodo</dt><dd>${anio ? "Año " + anio : "General"}</dd></div>
-          <div><dt>Emitido</dt><dd>${fecha}</dd></div><div><dt>Avance general</dt><dd>${pctC} %</dd></div></dl>
-      </div></section>
+    ${htmlTapa({ logo, lado: "Método Ruta a la Cima", sobre: "Informe de avance", titulo: "Mi Brújula<br>1·9·81", anio: anio ? anio : "General · toda la vida",
+      citaTit: "Mi cumbre", cita: esc(d.titulo), ficha: [["Titular", nombre || "—"], ["Periodo", anio ? "Año " + anio : "General"], ["Emitido", fecha], ["Avance general", pctC + " %"]] })}
     <div class="cuerpo">
       ${h2("Cómo voy")}<div class="kpis"><div class="kpi"><span>Avance de la cumbre</span><b>${pctC} %</b></div><div class="kpi"><span>Pasos escritos</span><b>${d.escritos} de 64</b></div>
         <div class="kpi"><span>Pasos ganados</span><b>${d.hechos} de 64</b></div><div class="kpi"><span>Fotos de evidencia</span><b>${d.evidencias}</b></div></div>
@@ -206,17 +234,9 @@ async function informeBrujula() {
       <div class="nota"><img src="${simbolo}" alt="">Generado por SuRoute · Brújula 1·9·81 del Método Ruta a la Cima, inspirada en la Mandala Chart de Yasuo Matsumura (1979).</div></div></div>
     </div>
     <!-- Contraportada: el mismo mapa en burdeos y un mensaje para seguir subiendo -->
-    <section class="tapa contra"><div class="tapa-mapa">${window.mapaOrientacion ? mapaOrientacion() : ""}</div>
-      <div class="tapa-in"><div class="tapa-centro">
-        <svg class="contra-sello" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="30" r="24" fill="none" stroke="#F0D9A6" stroke-width="2.4" stroke-dasharray="140 12" transform="rotate(100 32 30)"/><circle cx="32" cy="57" r="3.2" fill="#C9973B"/></svg>
-        <p class="tapa-sobre">Sigue subiendo</p>
-        <p class="contra-lema">Tu vida es la montaña.<br>Cada día es un paso.<br>La cumbre es tu propósito.</p>
-        <i class="tapa-regla"></i>
-        <p class="contra-msj">Lo que escribiste en esta Brújula no es una lista: es el mapa de quien estás decidiendo ser.
-          Vuelve a ella cada semana, celebra cada paso ganado y, si un tramo se cubre de niebla, da solo el siguiente paso.
-          Ninguna cumbre se alcanza de un salto; se alcanza sin dejar de caminar.</p>
-        <p class="contra-firma">Nos vemos en la cumbre.</p></div>
-        <footer class="contra-pie"><img src="${logo}" alt="SuRoute"><span>suroute.com · Método Ruta a la Cima</span></footer></div></section>
+    ${htmlContra({ logo, sobre: "Sigue subiendo", lema: "Tu vida es la montaña.<br>Cada día es un paso.<br>La cumbre es tu propósito.",
+      msj: "Lo que escribiste en esta Brújula no es una lista: es el mapa de quien estás decidiendo ser. Vuelve a ella cada semana, celebra cada paso ganado y, si un tramo se cubre de niebla, da solo el siguiente paso. Ninguna cumbre se alcanza de un salto; se alcanza sin dejar de caminar.",
+      firma: "Nos vemos en la cumbre." })}
     </div></body></html>`;
 }
 ACC.informeBrujula = async el => {
