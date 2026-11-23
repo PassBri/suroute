@@ -175,17 +175,29 @@ const mdFotoPaso = (c, p) => { const id = c && respuesta(Mandala.claveFoto(c.id,
 /** Lo que se lee en un campamento: la frase de la casilla (el rótulo suele ser genérico, como "Meta 2026"). */
 const mdNombre = c => (c.afirmacion || c.titulo || "").trim();
 
-/** Avance de la cumbre (i = -1) o de un campamento: promedio de sus 8 pasos, contando las jornadas de cada uno. */
-function mdPct(d, i) {
-  const pasos = k => d.camps[k] ? [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, p) => s + d.avance(k, p), 0) / 8 * 100 : 0;
-  // Lo que la persona marcó a mano (estado Lograda o su %) manda si es mayor que lo que dicen los pasos
-  const conManual = (c, base) => !c ? base : respuesta(`vision:estado:${c.id}`) === "LOGRADA" ? 100 : Math.max(base, Number(respuesta(`vision:pct:${c.id}`)) || 0);
-  // Las metas de este año que sostienen el campamento (mismo eje) también lo hacen subir: Mi ruta, Metas y el vision board cuentan lo mismo
-  const conMetas = (k, base) => { const v = metasPct(k); return v === null ? base : Math.max(base, v); };
-  if (i >= 0) return Math.round(conManual(d.camps[i], conMetas(i, pasos(i))));
-  const prom = [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, k) => s + conManual(d.camps[k], conMetas(k, pasos(k))), 0) / 8;
-  return Math.round(conManual(d.cumbre, prom));
+/** ¿El campamento tiene sub-metas escritas? Entonces su avance sale solo de ellas (en Mi ruta y en la Brújula). */
+const mdConPasos = c => !!c && [0, 1, 2, 3, 4, 5, 6, 7].some(p => respuesta(Mandala.clave(c.id, p)).trim());
+/** Avance (0–100, sin redondear) de un campamento, el mismo en Mi ruta y en la Brújula: con sub-metas escritas,
+ *  el promedio de sus 8 pasos (cada uno con su % marcado o sus jornadas); sin sub-metas, lo marcado a mano o sus metas. */
+function mdPctCamp(c, i, dif) {
+  if (!c) return 0;
+  if (mdConPasos(c)) return [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, p) => s + MetodoCima.avance(MetodoCima.leer(c.id, p), dif), 0) / 8 * 100;
+  if (respuesta(`vision:estado:${c.id}`) === "LOGRADA") return 100;
+  const v = i >= 0 ? metasPct(i) : null;
+  return Math.max(v ?? 0, Number(respuesta(`vision:pct:${c.id}`)) || 0);
 }
+/** La dificultad (jornadas por paso) con la que se cuentan los pasos de unos campamentos. */
+const mdDificultad = camps => MetodoCima.calcular(MetodoCima.pasosDe(camps.map(c => c?.id)), new Date()).dificultad;
+/** Avance de la cumbre (i = -1, promedio de los 8 campamentos) o de un campamento. */
+function mdPct(d, i) {
+  const dif = d.ritmo.dificultad;
+  if (i >= 0) return Math.round(mdPctCamp(d.camps[i], i, dif));
+  const prom = [0, 1, 2, 3, 4, 5, 6, 7].reduce((s, k) => s + mdPctCamp(d.camps[k], k, dif), 0) / 8;
+  // La cumbre solo usa lo marcado a mano si ningún campamento tiene sub-metas
+  if (d.camps.some(mdConPasos) || !d.cumbre) return Math.round(prom);
+  return respuesta(`vision:estado:${d.cumbre.id}`) === "LOGRADA" ? 100 : Math.round(Math.max(prom, Number(respuesta(`vision:pct:${d.cumbre.id}`)) || 0));
+}
+window.mdPctCamp = mdPctCamp; window.mdDificultad = mdDificultad; window.mdConPasos = mdConPasos;
 /** Promedio de avance de las metas de este año de un campamento (null si no tiene). */
 function metasPct(i) {
   const h = hoyFecha(), a = h.getFullYear(), mes = h.getMonth() + 1, c = cascada();

@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">Ein Punkt mehr</string>
     <string name="bja_avance_anio">Fortschritt im Jahr</string>
     <string name="bja_ganadas_anio">%1$d von 64 Teilzielen erreicht</string>
+    <string name="vision_avance_por_pasos">Dieser Fortschritt ist der Durchschnitt seiner 8 Teilziele. Ändern Sie ihn bei jedem Schritt, hier oder in Mein Weg: Beide zeigen dasselbe.</string>
 </resources>

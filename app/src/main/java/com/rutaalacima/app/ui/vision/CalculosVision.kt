@@ -44,21 +44,29 @@ internal fun calcularMetasVision(cumbre: CasillaVista?, campamentos: List<Casill
     return MetasVision(avancePorCodigo, porId)
 }
 
+/** Las casillas cuyo avance sale de sus sub-metas (no se ajustan a mano). */
+internal fun casillasPorPasos(datos: DatosMandala): Set<Long> = buildSet {
+    datos.campamentos.forEachIndexed { i, cv -> if (cv != null && (0 until Mandala.PASOS).any { datos.pasoCima(i, it).escrito }) add(cv.casilla.id) }
+    if (isNotEmpty()) datos.cumbre?.let { add(it.casilla.id) }
+}
+
 /** Los 64 pasos y el ritmo ya están calculados en DatosMandala; se reutilizan en toda la pantalla. */
 internal fun porcentajesVision(datos: DatosMandala, estados: Map<String, String>, metas: Map<String, Float>): Map<Long, Int> {
     fun manual(id: Long, base: Float): Float = if (estados["vision:estado:$id"] == "LOGRADA") 100f else {
         maxOf(base, estados["vision:pct:$id"]?.toFloatOrNull()?.takeIf { it.isFinite() } ?: 0f).coerceIn(0f, 100f)
     }
+    // Igual que Mi ruta y la web: un campamento con sub-metas escritas avanza solo con ellas (su % marcado o sus jornadas);
+    // lo marcado a mano en la casilla y las metas del año cuentan solo si no tiene sub-metas.
+    val conPasos = datos.campamentos.mapIndexed { i, cv -> cv != null && (0 until Mandala.PASOS).any { datos.pasoCima(i, it).escrito } }
     val avances = datos.campamentos.mapIndexed { i, cv ->
         if (cv == null) 0f else {
             val pasos = (0 until Mandala.PASOS).sumOf { MetodoCima.avance(datos.pasoCima(i, it), datos.ritmo.dificultad).toDouble() }
                 .toFloat() * 100f / Mandala.PASOS
-            val meta = metas[datos.codigo(i)] ?: 0f
-            manual(cv.casilla.id, maxOf(pasos, meta))
+            if (conPasos[i]) pasos else manual(cv.casilla.id, maxOf(pasos, metas[datos.codigo(i)] ?: 0f))
         }
     }
     return buildMap {
         datos.campamentos.forEachIndexed { i, cv -> cv?.let { put(it.casilla.id, avances[i].roundToInt()) } }
-        datos.cumbre?.let { put(it.casilla.id, manual(it.casilla.id, avances.average().toFloat()).roundToInt()) }
+        datos.cumbre?.let { put(it.casilla.id, (if (conPasos.any { it }) avances.average().toFloat() else manual(it.casilla.id, avances.average().toFloat())).roundToInt()) }
     }
 }

@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">增加 1%</string>
     <string name="bja_avance_anio">全年进度</string>
     <string name="bja_ganadas_anio">已达成 %1$d / 64 个子目标</string>
+    <string name="vision_avance_por_pasos">此进度是其 8 个子目标的平均值。可在每一步中调整，在这里或“我的路”中均可：两边显示相同。</string>
 </resources>

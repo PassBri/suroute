@@ -47,14 +47,15 @@ function brujulaDelAnio(a) {
   if (!cs.length) return hoja(`<h3 style="margin:0 0 4px">Brújula de ${a}</h3><p class="suave" style="margin:0 0 10px">Las metas de ${a} nacen de su Brújula: la cumbre del año y sus 8 campamentos, cada uno con sus sub-metas.</p>
     <div class="botones"><button class="btn lleno" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Crear la Brújula de ${a}</button>
     ${casillasDe(null).length ? `<button class="btn" data-acc="copiarGeneral" data-arg="${a}">${ic("copiar")} Copiar de la Brújula general</button>` : ""}</div>`);
-  const { cumbre, camps } = Mandala.repartir(cs), hoyF = hoyFecha();
+  const { cumbre, camps } = Mandala.repartir(cs), hoyF = hoyFecha(), dif = mdDificultad(camps);
   const tarjeta = (c, i) => {
     const cod = Mandala.CAMPAMENTOS_FIJOS[i], color = Mandala.COLORES[cod] || COLOR_EJE[cod] || "#7A4A6B";
     if (!c) return `<div class="ba-camp vacio" style="--c:${color}"><small>${esc(Mandala.nombre(cod))}</small><p class="suave">Sin campamento en la Brújula de ${a}.</p></div>`;
     const m = Sincro.objetivo(a, cod), pasos = [0, 1, 2, 3, 4, 5, 6, 7].map(p => ({ p, t: respuesta(Mandala.clave(c.id, p)).trim(), x: MetodoCima.leer(c.id, p) }));
     const ganados = pasos.filter(x => x.x.cumplido).length, plan = m ? PlanMeta.leer(m.id) : [];
-    const pct = x => Math.round(MetodoCima.avance(x, MetodoCima.INICIAL) * 100);
-    const total = Math.round(pasos.reduce((s, { x }) => s + MetodoCima.avance(x, MetodoCima.INICIAL), 0) / 8 * 100);
+    // La misma cuenta que la Brújula (mdPctCamp): mover un paso aquí o allá cambia lo mismo en los dos lados
+    const pct = x => Math.round(MetodoCima.avance(x, dif) * 100);
+    const total = Math.round(mdPctCamp(c, i, dif));
     return `<article class="ba-camp" style="--c:${color}">
       <header><small>${esc(Mandala.nombre(cod))}</small><span class="ba-pct" title="Sub-metas ganadas · avance del campamento">${ganados}/8 · ${total} %</span></header>
       ${m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
@@ -71,9 +72,9 @@ function brujulaDelAnio(a) {
     </article>`;
   };
   // Avance general del año: el promedio de los 64 pasos (8 campamentos × 8), igual que cada campamento promedia sus 8
-  let sumaAnio = 0, ganadasAnio = 0;
-  camps.forEach(c => { if (!c) return; for (let p = 0; p < 8; p++) { const x = MetodoCima.leer(c.id, p); sumaAnio += MetodoCima.avance(x, MetodoCima.INICIAL); if (x.cumplido) ganadasAnio++; } });
-  const totalAnio = Math.round(sumaAnio / 64 * 100);
+  let ganadasAnio = 0;
+  camps.forEach(c => { if (c) for (let p = 0; p < 8; p++) if (MetodoCima.leer(c.id, p).cumplido) ganadasAnio++; });
+  const totalAnio = Math.round(camps.reduce((s, c, i) => s + mdPctCamp(c, i, dif), 0) / 8);
   return hoja(`<div class="ba-cab"><small>Brújula de ${a}</small><h3>${esc(cumbre?.afirmacion || cumbre?.titulo || `Mi cumbre de ${a}`)}</h3>
       <div class="ba-general" role="group" aria-label="Avance general de ${a}: ${totalAnio} %">
         <div class="ba-general-fila"><span>Avance del año</span><b>${totalAnio} %</b></div>

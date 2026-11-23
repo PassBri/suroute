@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">एक अंक ज़्यादा</string>
     <string name="bja_avance_anio">साल की प्रगति</string>
     <string name="bja_ganadas_anio">64 में से %1$d उप-लक्ष्य पूरे</string>
+    <string name="vision_avance_por_pasos">यह प्रगति इसके 8 उप-लक्ष्यों का औसत है। इसे हर कदम पर बदलें, यहाँ या मेरा सफ़र में: दोनों जगह एक जैसा दिखेगा।</string>
 </resources>

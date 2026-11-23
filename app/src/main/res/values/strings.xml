@@ -3432,4 +3432,5 @@
     <string name="bja_mas_uno">Un punto más</string>
     <string name="bja_avance_anio">Avance del año</string>
     <string name="bja_ganadas_anio">%1$d de 64 sub-metas ganadas</string>
+    <string name="vision_avance_por_pasos">Este avance es el promedio de sus 8 sub-metas. Muévalo en cada paso, aquí o en Mi ruta: los dos lados muestran lo mismo.</string>
 </resources>

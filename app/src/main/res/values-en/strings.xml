@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">One point more</string>
     <string name="bja_avance_anio">Progress this year</string>
     <string name="bja_ganadas_anio">%1$d of 64 sub-goals won</string>
+    <string name="vision_avance_por_pasos">This progress is the average of its 8 sub-goals. Move it on each step, here or in My road: both show the same.</string>
 </resources>

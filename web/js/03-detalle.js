@@ -1320,7 +1320,8 @@ const ESTADOS_CASILLA = [["ABIERTA", "Abierta"], ["CAMINO", "En camino"], ["LOGR
 /** % de una casilla: si es la cumbre o un campamento del 9×9, sale de sus pasos ganados; si no, de su estado. */
 function avanceCasilla(c, d = window.Mandala ? Mandala.datos() : null) {
   const manual = respuesta(`vision:estado:${c.id}`), pctMano = Number(respuesta(`vision:pct:${c.id}`)) || 0;
-  if (manual === "LOGRADA") return { pct: 100, estado: "LOGRADA" };
+  const porPasos = !!d && d.camps.some(x => x && x.id === c.id) && !!window.mdConPasos?.(c);
+  if (manual === "LOGRADA" && !porPasos) return { pct: 100, estado: "LOGRADA" };
   let pct = null;
   if (d) {
     const i = d.camps.findIndex(x => x && x.id === c.id);
@@ -1328,7 +1329,7 @@ function avanceCasilla(c, d = window.Mandala ? Mandala.datos() : null) {
     else if (d.cumbre && d.cumbre.id === c.id) pct = mdPct(d, -1);
   }
   if (pct === null) pct = pctMano;
-  const estado = pct >= 100 ? "LOGRADA" : manual === "ABIERTA" && pct === 0 ? "ABIERTA" : pct > 0 || manual === "CAMINO" ? "CAMINO" : "ABIERTA";
+  const estado = pct >= 100 ? "LOGRADA" : porPasos ? (pct > 0 ? "CAMINO" : "ABIERTA") : manual === "ABIERTA" && pct === 0 ? "ABIERTA" : pct > 0 || manual === "CAMINO" ? "CAMINO" : "ABIERTA";
   return { pct: estado === "LOGRADA" ? 100 : pct, estado };
 }
 
@@ -1336,17 +1337,20 @@ function avanceCasilla(c, d = window.Mandala ? Mandala.datos() : null) {
 function edicionCasillaHtml(c, md = window.Mandala ? Mandala.datos() : null) {
   const foto = fotoDePublicacion(c.publicacionId), k = String(c.id);
   const av = avanceCasilla(c, md), est = ESTADOS_CASILLA.find(x => x[0] === av.estado)[1];
+  // Un campamento con sub-metas se mueve desde sus pasos (aquí o en Mi ruta), no a mano: así los dos lados dicen lo mismo
+  const porPasos = !!md && md.camps.some(x => x && x.id === c.id) && window.mdConPasos?.(c);
   return `<div class="casilla-edicion">
         <textarea class="casilla-frase" rows="2" aria-label="Frase de la casilla" placeholder="Escribe la frase de esta casilla" ${bind("vision", k, "afirmacion")}>${esc(c.afirmacion)}</textarea>
         <input class="casilla-rotulo" aria-label="Rótulo" placeholder="Rótulo" ${bind("vision", k, "titulo")} value="${esc(c.titulo)}">
         <div class="casilla-fila">
-          <button class="casilla-estado" data-acc="estadoCasilla" data-arg="${k}" title="Toca para cambiar el estado">${est}</button><span style="flex:1"></span>
+          ${porPasos ? `<span class="casilla-estado" title="Sale de sus sub-metas">${est}</span>` : `<button class="casilla-estado" data-acc="estadoCasilla" data-arg="${k}" title="Toca para cambiar el estado">${est}</button>`}<span style="flex:1"></span>
           ${foto ? `<button class="btn mini" data-acc="quitarFotoVision" data-arg="${k}" title="Quitar la foto">${ic("borrar")}</button>`
             : `<a href="${urlIdeas(c.busqueda)}" target="_blank" rel="noopener" class="btn mini">${ic("buscar")} Ideas</a>`}
         </div>
-        ${estado.pctCasilla === k ? `<div class="casilla-ajuste"><label for="pct-${k}">Avance</label>
+        ${estado.pctCasilla === k && porPasos ? `<div class="casilla-ajuste"><b>${av.pct}%</b><small>Este avance es el promedio de sus 8 sub-metas. Muévalo en cada paso, aquí en la Brújula o en Mi ruta: los dos lados muestran lo mismo.</small></div>` : ""}
+        ${estado.pctCasilla === k && !porPasos ? `<div class="casilla-ajuste"><label for="pct-${k}">Avance</label>
           <input id="pct-${k}" type="range" min="0" max="100" step="5" value="${av.pct}" data-acc-input="pctCasillaVer" data-acc-change="pctCasillaGuardar" data-arg="${k}"><b>${av.pct}%</b>
-          <small>${md && (md.camps.some(x => x && String(x.id) === k) || String(md.cumbre?.id) === k) ? "Nunca baja de lo que llevas en el 9×9." : ""}</small></div>` : ""}
+          <small>${md && String(md.cumbre?.id) === k && md.camps.some(x => window.mdConPasos?.(x)) ? "La cumbre es el promedio de sus 8 campamentos." : ""}</small></div>` : ""}
         ${(() => { const i = md ? md.camps.findIndex(x => x && x.id === c.id) : -1; if (i < 0 || Mandala.CAMPAMENTOS_FIJOS[i] === "CAM") return "";
           const h0 = hoyFecha(), hoy = h0.getFullYear(), mes = h0.getMonth() + 1, c0 = cascada();
           const ps = propositosDeCampamento(i), ms = metasDeCampamento(i), mm = mensualesDeCampamento(i);

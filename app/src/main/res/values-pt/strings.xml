@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">Um ponto a mais</string>
     <string name="bja_avance_anio">Avanço do ano</string>
     <string name="bja_ganadas_anio">%1$d de 64 submetas conquistadas</string>
+    <string name="vision_avance_por_pasos">Este avanço é a média das suas 8 submetas. Ajuste-o em cada passo, aqui ou em Minha rota: os dois mostram o mesmo.</string>
 </resources>

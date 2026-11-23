@@ -113,6 +113,8 @@ internal data class AccionesTarjeta(
     val onBorrar: (VisionCasillaEntity) -> Unit,
     val onIdeas: (VisionCasillaEntity) -> Unit,
     val onMeta: (String) -> Unit,
+    /** Casillas cuyo avance sale de sus sub-metas: no llevan deslizador ni cambio de estado a mano. */
+    val porPasos: Set<Long> = emptySet(),
 )
 
 /**
@@ -338,7 +340,7 @@ private fun DorsoCompacto(cv: CasillaVista, apodo: String, porcentaje: Int, acci
         CampoTarjetaTexto(cv.casilla.afirmacion, stringResource(R.string.vision_frase), { acciones.onCampo(id, CampoTarjeta.FRASE, it) },
             Modifier.fillMaxWidth().weight(1f), compacto = true, centrado = true)
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            EstadoTarjeta(porcentaje, { acciones.onPorcentaje(id, siguienteEstado(porcentaje)) }, Modifier.weight(1f), compacto = true)
+            EstadoTarjeta(porcentaje, { if (id !in acciones.porPasos) acciones.onPorcentaje(id, siguienteEstado(porcentaje)) }, Modifier.weight(1f), compacto = true)
             IconButton(onClick = onAmpliar, modifier = Modifier.size(26.dp)) {
                 Icon(Icons.Filled.OpenInFull, stringResource(R.string.vision_ver_grande), Modifier.size(15.dp))
             }
@@ -369,9 +371,11 @@ private fun DorsoCompleto(cv: CasillaVista, apodo: String, porcentaje: Int, acci
         CampoTarjetaTexto(apodo, stringResource(R.string.apodo_opcional), { acciones.onApodo(c.id, it.trim()) }, Modifier.fillMaxWidth(), unaLinea = true, maximo = 32)
         CampoTarjetaTexto(c.afirmacion, stringResource(R.string.vision_frase), { acciones.onCampo(c.id, CampoTarjeta.FRASE, it) }, Modifier.fillMaxWidth())
         CampoTarjetaTexto(c.titulo, stringResource(R.string.vision_rotulo), { acciones.onCampo(c.id, CampoTarjeta.ROTULO, it) }, Modifier.fillMaxWidth(), unaLinea = true)
-        EstadoTarjeta(porcentaje, { acciones.onPorcentaje(c.id, siguienteEstado(porcentaje)) })
+        val porPasos = c.id in acciones.porPasos
+        EstadoTarjeta(porcentaje, { if (!porPasos) acciones.onPorcentaje(c.id, siguienteEstado(porcentaje)) })
         Text(stringResource(R.string.progreso_pct, porcentaje), style = MaterialTheme.typography.labelLarge)
-        Slider(porcentaje.toFloat(), { acciones.onPorcentaje(c.id, (it / 5).toInt() * 5) }, valueRange = 0f..100f)
+        if (porPasos) Text(stringResource(R.string.vision_avance_por_pasos), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        else Slider(porcentaje.toFloat(), { acciones.onPorcentaje(c.id, (it / 5).toInt() * 5) }, valueRange = 0f..100f)
         if (metas.isNotEmpty()) {
             Text(stringResource(R.string.vision_metas_sostienen), style = MaterialTheme.typography.titleSmall)
             metas.forEach { meta ->

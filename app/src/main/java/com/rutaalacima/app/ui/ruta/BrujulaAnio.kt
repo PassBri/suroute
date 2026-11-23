@@ -74,6 +74,9 @@ internal fun BrujulaAnioCard(
     RutaCard {
         // Cabecera centrada: la cumbre del año, su avance general y las acciones (igual que la web)
         val (cumbre, campsCab) = Mandala.repartir(delAnio, { it.origen }, { it.eje })
+        // La misma dificultad con la que la Brújula cuenta las jornadas: así los porcentajes coinciden en los dos lados
+        val dif = androidx.compose.runtime.remember(campsCab, mandala) {
+            MetodoCima.calcular(MetodoCima.pasosDe(campsCab.map { it?.id }, mandala), java.time.LocalDate.now()).dificultad }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(stringResource(R.string.bja_titulo, anio), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.secondary, fontWeight = FontWeight.Bold)
             Text(cumbre?.afirmacion?.ifBlank { cumbre.titulo } ?: stringResource(R.string.bja_sin_brujula, anio),
@@ -81,7 +84,7 @@ internal fun BrujulaAnioCard(
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center, fontWeight = FontWeight.SemiBold)
             if (delAnio.isNotEmpty()) {
                 var suma = 0f; var ganadasAnio = 0
-                campsCab.forEach { c -> if (c != null) for (p in 0 until Mandala.PASOS) { val x = MetodoCima.leer(c.id, p, mandala); suma += MetodoCima.avance(x, MetodoCima.DIFICULTAD_INICIAL); if (x.cumplido) ganadasAnio++ } }
+                campsCab.forEach { c -> if (c != null) for (p in 0 until Mandala.PASOS) { val x = MetodoCima.leer(c.id, p, mandala); suma += MetodoCima.avance(x, dif); if (x.cumplido) ganadasAnio++ } }
                 val totalAnio = suma / (Mandala.CAMPAMENTOS_FIJOS.size * Mandala.PASOS)
                 Surface(shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.secondary.copy(alpha = .08f),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary.copy(alpha = .3f)), modifier = Modifier.padding(top = 4.dp).widthIn(max = 420.dp).fillMaxWidth()) {
@@ -115,7 +118,7 @@ internal fun BrujulaAnioCard(
                 val meta = anuales.filter { it.anio == anio && it.eje == eje }.minByOrNull { it.id }
                 val pasos = (0 until Mandala.PASOS).map { p -> p to mandala[Mandala.clave(c.id, p)].orEmpty().trim() }.filter { it.second.isNotEmpty() }
                 val ganados = (0 until Mandala.PASOS).count { !mandala[Mandala.claveHecho(c.id, it)].isNullOrBlank() }
-                val total = (0 until Mandala.PASOS).sumOf { MetodoCima.avance(MetodoCima.leer(c.id, it, mandala), MetodoCima.DIFICULTAD_INICIAL).toDouble() }.toFloat() / Mandala.PASOS
+                val total = (0 until Mandala.PASOS).sumOf { MetodoCima.avance(MetodoCima.leer(c.id, it, mandala), dif).toDouble() }.toFloat() / Mandala.PASOS
                 Surface(shape = RoundedCornerShape(16.dp), color = color.copy(alpha = .06f), border = BorderStroke(1.dp, color.copy(alpha = .25f))) {
                     Column(Modifier.fillMaxWidth().padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -128,7 +131,7 @@ internal fun BrujulaAnioCard(
                         pasos.forEach { (p, t) ->
                             val x = MetodoCima.leer(c.id, p, mandala)
                             val ganado = x.cumplido
-                            val v = if (ganado) 100 else Math.round(MetodoCima.avance(x, MetodoCima.DIFICULTAD_INICIAL) * 100)
+                            val v = if (ganado) 100 else Math.round(MetodoCima.avance(x, dif) * 100)
                             val abiertoAqui = abierto == (c.id to p)
                             Row(Modifier.fillMaxWidth().heightIn(min = 44.dp), verticalAlignment = Alignment.CenterVertically) {
                                 Row(Modifier.weight(1f).heightIn(min = 44.dp).clip(RoundedCornerShape(10.dp)).clickable { onGanado(c.id, p) },

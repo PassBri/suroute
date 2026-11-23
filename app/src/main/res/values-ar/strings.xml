@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">نقطة أكثر</string>
     <string name="bja_avance_anio">تقدّم العام</string>
     <string name="bja_ganadas_anio">تحقّق %1$d من 64 هدفًا فرعيًا</string>
+    <string name="vision_avance_por_pasos">هذا التقدّم هو متوسط أهدافه الفرعية الثمانية. عدّله في كل خطوة، هنا أو في طريقي: يظهر الشيء نفسه في المكانين.</string>
 </resources>

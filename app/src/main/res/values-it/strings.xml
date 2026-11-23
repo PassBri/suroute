@@ -3423,4 +3423,5 @@
     <string name="bja_mas_uno">Un punto in più</string>
     <string name="bja_avance_anio">Avanzamento dell’anno</string>
     <string name="bja_ganadas_anio">%1$d su 64 sotto-obiettivi raggiunti</string>
+    <string name="vision_avance_por_pasos">Questo avanzamento è la media dei suoi 8 sotto-obiettivi. Modificalo in ogni passo, qui o in Il mio cammino: entrambi mostrano lo stesso.</string>
 </resources>

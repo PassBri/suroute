@@ -453,10 +453,11 @@ fun VisionScreen(onBack: () -> Unit, onGuia: (String) -> Unit = {}, compartir: B
     val guardarPaso: (VisionCasillaEntity, Int, String) -> Unit = remember(vm) {
         { casilla, paso, texto -> vm.guardarPaso(casilla, paso, texto) }
     }
-    val acciones = remember(vm, elegirFoto, ctx, onIrA) { AccionesTarjeta(
+    val porPasos = remember(datos) { casillasPorPasos(datos) }
+    val acciones = remember(vm, elegirFoto, ctx, onIrA, porPasos) { AccionesTarjeta(
         onFoto = ::pedirFoto, onCampo = vm::editarCampo, onApodo = vm::guardarApodo,
         onPorcentaje = vm::guardarPorcentaje, onBorrar = { cv -> vm.borrar(cv); if (visor == cv.id) visor = null }, onIdeas = ::ideas,
-        onMeta = { visor = null; onIrA(it) },
+        onMeta = { visor = null; onIrA(it) }, porPasos = porPasos,
     ) }
     val pintarTarjeta: @Composable (CasillaVista, Boolean, Boolean, Modifier, Int, String?, (() -> Unit)?) -> Unit = { cv, compacta, grande, modificador, indice, rumbo, onPasos ->
         val id = cv.casilla.id
