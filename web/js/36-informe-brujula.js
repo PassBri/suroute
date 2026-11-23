@@ -133,7 +133,7 @@ async function informeBrujula() {
     .barra-acc{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;padding:12px;background:#E6EAEC}
     .barra-acc button{font:500 14px Roboto,sans-serif;padding:10px 20px;border-radius:999px;border:0;background:#6B2A1A;color:#fff;cursor:pointer}.barra-acc button.sec{background:#fff;color:#6B2A1A}
     @media (max-width:700px){.banda,.portada,.cuerpo{padding-left:18px;padding-right:18px}.kpis{grid-template-columns:1fr 1fr}}
-    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
+    @media print{${pagina}body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.barra-acc{display:none}.salto{break-before:page}.final{break-before:page;display:flex;flex-direction:column;min-height:246mm}.final .al-pie{margin-top:auto;padding-top:18px;break-inside:avoid}.final .al-pie .nota{margin-top:16px}.portada{padding-top:16px;padding-bottom:12px}h1{font-size:25px}.cumbre{margin-top:10px;padding:10px 16px;font-size:15.5px}h2{margin:16px 0 8px;font-size:17px}.kpi{padding:7px 10px}.ritmo{margin-top:8px;padding:8px 14px;font-size:12px}.ritmo p{margin:1px 0}.v9{max-width:124mm}.t9-pie b{font-size:11px}.t9.cum .t9-pie b{font-size:9.5px}
       .banda{padding:14px 22px;border-radius:12px}.portada,.cuerpo{padding-left:0;padding-right:0}.portada{border-bottom:0}tr{break-inside:avoid}.kpis{grid-template-columns:repeat(4,1fr)}}`;
   return `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brújula 1·9·81 · ${anio || "General"}</title><style>${css}</style></head><body>
     <div class="barra-acc"><button onclick="print()">Guardar como PDF</button><button class="sec" onclick="close()">Cerrar</button></div>
@@ -151,9 +151,9 @@ async function informeBrujula() {
       <section class="mis9">${h2("Mis 9: la cumbre y sus campamentos")}${vista9}</section>
       <div class="salto"></div>${h2("Mi Brújula 9×9")}${grilla}
       <div class="salto"></div>${h2("Campamentos y sub-metas")}${camps}
-      ${h2(`Mi carta de ${aCarta}`)}${cartaHtml}
-      ${h2("Mi firma")}${firma}
-      <div class="nota"><img src="${simbolo}" alt="">Generado por SuRoute · Brújula 1·9·81 del Método Ruta a la Cima, inspirada en la Mandala Chart de Yasuo Matsumura (1979).</div>
+      <div class="final">${h2(`Mi carta de ${aCarta}`)}${cartaHtml}
+      <div class="al-pie">${h2("Mi firma")}${firma}
+      <div class="nota"><img src="${simbolo}" alt="">Generado por SuRoute · Brújula 1·9·81 del Método Ruta a la Cima, inspirada en la Mandala Chart de Yasuo Matsumura (1979).</div></div></div>
     </div></div></body></html>`;
 }
 ACC.informeBrujula = async el => {
