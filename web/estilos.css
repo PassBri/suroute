@@ -4074,6 +4074,23 @@ button.ba-pct b { font-weight: 700; }
 .ba-mano { margin: 4px 0 0; font-size: 12.5px; color: var(--tinta-suave); display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; }
 .ba-mano-quitar { border: 0; background: none; padding: 4px 0; color: var(--burdeos); text-decoration: underline; text-underline-offset: 3px; font: inherit; cursor: pointer; }
 .ba-desliza-camp { margin: 6px 0 4px; }
+/* Brújula · 9 en modo Edición: el formato de Mi ruta reemplaza las tarjetas pequeñas (y nunca se ve el estado dos veces) */
+.md-edita-camps { display: none; }
+html[data-modo-tarjetas="edicion"] .md-edita-camps { display: block; margin-top: 4px; }
+html[data-modo-tarjetas="edicion"] #md-s9 ~ .rosa-brujula, html[data-modo-tarjetas="edicion"] .rb-9 { display: none; }
+html[data-modo-tarjetas="edicion"] .tablero-9 .dorso.compacta .dorso-lectura { display: none; }
+.md-edita-cumbre { display: grid; gap: 4px; justify-items: center; text-align: center; margin: 0 auto 14px; max-width: 640px; }
+.md-edita-cumbre small { font-size: 12px; font-weight: 700; color: var(--oro); }
+.ba-cumbre-edit { width: 100%; text-align: center; font: 600 clamp(18px, 3vw, 22px)/1.3 var(--font-titulo); color: var(--burdeos); border: 1px dashed transparent; border-radius: 10px; background: transparent; padding: 6px 10px; }
+.ba-titulo-edit, .ba-texto { width: 100%; min-width: 0; border: 1px solid transparent; border-radius: 8px; background: transparent; font: inherit; color: var(--tinta); padding: 4px 6px; margin: -4px -6px; }
+.ba-titulo-edit { font: 700 16px/1.3 var(--font-titulo); color: var(--tinta); margin: 2px -6px; }
+.ba-texto { flex: 1; font-size: 16px; }
+.ba-cumbre-edit:hover, .ba-titulo-edit:hover, .ba-texto:hover { border-color: var(--linea); }
+.ba-cumbre-edit:focus, .ba-titulo-edit:focus, .ba-texto:focus { outline: none; border-color: var(--c, var(--burdeos)); background: var(--hoja); }
+.ba-pasos li.ganado .ba-texto { text-decoration: line-through; color: var(--tinta-suave); }
+.ba-check.vacio { border-style: dashed; opacity: .5; pointer-events: none; }
+.ba-nueva .ba-texto::placeholder { color: var(--tinta-suave); opacity: .7; }
+.ba-mas-op { margin-top: 8px; width: auto; justify-self: start; }
 .ba-fila { display: flex; align-items: center; gap: 8px; }
 .ba-fila input[type="range"] { flex: 1; }
 .ba-uno { flex: none; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea); background: var(--hoja); color: var(--tinta); font-size: 1.2rem; line-height: 1; cursor: pointer; touch-action: manipulation; user-select: none; }

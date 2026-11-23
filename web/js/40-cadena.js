@@ -41,16 +41,11 @@ async function jornadaPaso(cid, p, fecha) {
 /** La casilla (campamento) de una meta del mes, a través de su meta del año. */
 const casillaDeMes = mm => { const a = mm && Store.get("meta_anio", mm.metaAnualId); return a ? Sincro.casillaDe("meta_anio", a) : null; };
 
-/* ---------- 2. El año es su Brújula ---------- */
-function brujulaDelAnio(a) {
-  const cs = casillasDe(a);
-  if (!cs.length) return hoja(`<h3 style="margin:0 0 4px">Brújula de ${a}</h3><p class="suave" style="margin:0 0 10px">Las metas de ${a} nacen de su Brújula: la cumbre del año y sus 8 campamentos, cada uno con sus sub-metas.</p>
-    <div class="botones"><button class="btn lleno" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Crear la Brújula de ${a}</button>
-    ${casillasDe(null).length ? `<button class="btn" data-acc="copiarGeneral" data-arg="${a}">${ic("copiar")} Copiar de la Brújula general</button>` : ""}</div>`);
-  const { cumbre, camps } = Mandala.repartir(cs), hoyF = hoyFecha(), dif = mdDificultad(camps);
-  const tarjeta = (c, i) => {
+/** La tarjeta de un campamento con sus sub-metas (check, % y su barra). La usan Mi ruta y la Brújula (modo Edición);
+ *  con [editable] el nombre y cada sub-meta se escriben ahí mismo, y salen las 8 filas para llenar las que falten. */
+function tarjetaCampamentoBA(c, i, a, dif, editable = false) {
     const cod = Mandala.CAMPAMENTOS_FIJOS[i], color = Mandala.COLORES[cod] || COLOR_EJE[cod] || "#7A4A6B";
-    if (!c) return `<div class="ba-camp vacio" style="--c:${color}"><small>${esc(Mandala.nombre(cod))}</small><p class="suave">Sin campamento en la Brújula de ${a}.</p></div>`;
+    if (!c) return `<div class="ba-camp vacio" style="--c:${color}"><small>${esc(Mandala.nombre(cod))}</small><p class="suave">Sin campamento en la Brújula${a ? ` de ${a}` : ""}.</p>${editable ? `<button class="btn mini" data-acc="crearCampamento" data-arg="${cod}">${ic("mas")} Crear campamento</button>` : ""}</div>`;
     const m = Sincro.objetivo(a, cod), pasos = [0, 1, 2, 3, 4, 5, 6, 7].map(p => ({ p, t: respuesta(Mandala.clave(c.id, p)).trim(), x: MetodoCima.leer(c.id, p) }));
     const ganados = pasos.filter(x => x.x.cumplido).length, plan = m ? PlanMeta.leer(m.id) : [];
     // La misma cuenta que la Brújula (mdPctCamp): mover un paso aquí o allá cambia lo mismo en los dos lados
@@ -58,21 +53,34 @@ function brujulaDelAnio(a) {
     const total = Math.round(mdPctCamp(c, i, dif)), mano = mdManoCamp(c), porPasos = Math.round(mdPctPasos(c, dif)), ajustando = estado.baCamp === c.id;
     return `<article class="ba-camp" style="--c:${color}">
       <header><small>${esc(Mandala.nombre(cod))}</small><button class="ba-pct" data-acc="baCamp" data-arg="${c.id}" aria-expanded="${ajustando}" title="Toca para poner el avance a mano">${ganados}/8 · <b>${total} %</b></button></header>
-      ${m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
+      ${editable ? `<input class="ba-titulo ba-titulo-edit" aria-label="Nombre del campamento" placeholder="Nombre del campamento" ${bind("vision", String(c.id), "afirmacion")} value="${esc(mdNombre(c))}">`
+        : m ? `<button class="ba-titulo" data-sel="ma:${m.id}" title="Abrir la meta">${esc(m.titulo)}</button>` : `<b class="ba-titulo">${esc(mdNombre(c))}</b>`}
       <div class="ba-barra"><i style="width:${total}%"></i></div>
       ${mano != null || ajustando ? `<p class="ba-mano">${mano != null ? `Puesto a mano · sub-metas ${porPasos} %` : `Por sub-metas: ${porPasos} %`}${mano != null ? ` <button class="ba-mano-quitar" data-acc="baManoQuitar" data-arg="${c.id}">Usar el de las sub-metas</button>` : ""}</p>` : ""}
       ${ajustando ? `<div class="ba-desliza ba-desliza-camp"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.max(0, total - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${total}" data-acc-change="baManoFin" data-acc-input="baManoVer" data-arg="${c.id}" aria-label="Avance del campamento a mano"><button type="button" class="ba-uno" data-acc="baMano" data-arg="${c.id}|${Math.min(100, total + 1)}" aria-label="Un punto más">+</button></div></div>` : ""}
       <ol class="ba-pasos">${pasos.map(({ p, t, x }) => {
-        if (!t) return "";
+        if (!t && !editable) return "";
+        if (!t) return `<li class="ba-nueva"><i class="ba-check vacio" aria-hidden="true"></i><input class="ba-texto" data-resp="mandala|${Mandala.clave(c.id, p)}" placeholder="Sub-meta ${p + 1}" aria-label="Sub-meta ${p + 1} de ${esc(mdNombre(c))}"></li>`;
         const abierto = estado.baAvance === `${c.id}|${p}`, v = x.cumplido ? 100 : pct(x);
-        return `<li class="${x.cumplido ? "ganado" : ""}${abierto ? " abierto" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button><span>${esc(t)}</span>
+        return `<li class="${x.cumplido ? "ganado" : ""}${abierto ? " abierto" : ""}"><button class="ba-check" data-acc="baGanado" data-arg="${c.id}|${p}" aria-pressed="${x.cumplido}" aria-label="${x.cumplido ? "Quitar ganado" : "Marcar ganado"}: ${esc(t)}">${ic("check")}</button>${editable ? `<input class="ba-texto" data-resp="mandala|${Mandala.clave(c.id, p)}" value="${esc(t)}" aria-label="Sub-meta ${p + 1}">` : `<span>${esc(t)}</span>`}
           <button class="ba-avance${v > 0 && !x.cumplido ? " con" : ""}" data-acc="baAvance" data-arg="${c.id}|${p}" aria-expanded="${abierto}" aria-label="Avance de ${esc(t)}: ${v} %">${v} %</button>
           ${!x.cumplido && v > 0 ? `<i class="ba-mini" aria-hidden="true"><b style="width:${v}%"></b></i>` : ""}
           ${abierto ? `<div class="ba-desliza"><div class="ba-fila"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.max(0, v - 1)}" aria-label="Un punto menos">−</button><input type="range" min="0" max="100" step="1" value="${v}" data-acc-change="baPctFin" data-acc-input="baPctVer" data-arg="${c.id}|${p}" aria-label="Porcentaje de avance de ${esc(t)}"><button type="button" class="ba-uno" data-acc="baPct" data-arg="${c.id}|${p}|${Math.min(100, v + 1)}" aria-label="Un punto más">+</button></div></div>` : ""}</li>`;
       }).join("")
         || `<li class="suave">Sin sub-metas todavía: escríbelas en la Brújula o en la meta.</li>`}</ol>
+      ${editable ? `<button class="btn mini ba-mas-op" data-acc="editarTarjeta" data-arg="${c.id}">${ic("foto")} Foto, apodo y frase</button>` : ""}
     </article>`;
-  };
+  }
+window.tarjetaCampamentoBA = tarjetaCampamentoBA;
+
+/* ---------- 2. El año es su Brújula ---------- */
+function brujulaDelAnio(a) {
+  const cs = casillasDe(a);
+  if (!cs.length) return hoja(`<h3 style="margin:0 0 4px">Brújula de ${a}</h3><p class="suave" style="margin:0 0 10px">Las metas de ${a} nacen de su Brújula: la cumbre del año y sus 8 campamentos, cada uno con sus sub-metas.</p>
+    <div class="botones"><button class="btn lleno" data-acc="abrirBrujulaAnio" data-arg="${a}">${ic("brujula")} Crear la Brújula de ${a}</button>
+    ${casillasDe(null).length ? `<button class="btn" data-acc="copiarGeneral" data-arg="${a}">${ic("copiar")} Copiar de la Brújula general</button>` : ""}</div>`);
+  const { cumbre, camps } = Mandala.repartir(cs), hoyF = hoyFecha(), dif = mdDificultad(camps);
+  const tarjeta = (c, i) => tarjetaCampamentoBA(c, i, a, dif);
   // Avance general del año: el promedio de los 64 pasos (8 campamentos × 8), igual que cada campamento promedia sus 8
   let ganadasAnio = 0;
   camps.forEach(c => { if (c) for (let p = 0; p < 8; p++) if (MetodoCima.leer(c.id, p).cumplido) ganadasAnio++; });

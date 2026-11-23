@@ -444,6 +444,10 @@ function mandalaHtml(tableroHtml = "", rielArriba = "", rielAbajo = "", planear 
   const s9 = hoja(cabSec("md-s9", "9", "Campamentos", "Tu cumbre al centro y 8 campamentos alrededor. Imagen muestra tus fotos, Texto tus frases y Edición te deja escribir en cada tarjeta. La letra del rumbo abre sus 8 pasos.",
     `<button class="md-visor-ic md-girar-todas" data-acc="girarTodasVision" aria-label="Girar todas las tarjetas" title="Girar todas las tarjetas">${ic("girar")}</button>`) +
     rosaBrujula(`<div class="tablero-9">${rosa}</div>`, "rb-9") + (tableroHtml || "") +
+    /* En modo Edición, los campamentos se editan con el formato de Mi ruta: nombre, sus 8 sub-metas, el check y el % de cada una */
+    (window.tarjetaCampamentoBA ? `<div class="md-edita-camps">
+      <label class="md-edita-cumbre"><small>${estado.brujulaAnio ? `Cumbre de ${estado.brujulaAnio}` : "Mi cumbre"}</small>${mdTituloEditable(d, -1, null, d.titulo).replace('class="md-titulo-edit"', 'class="md-titulo-edit ba-cumbre-edit"')}</label>
+      <div class="ba-grid">${Mandala.CAMPAMENTOS_FIJOS.map((_, i) => tarjetaCampamentoBA(d.camps[i], i, estado.brujulaAnio || null, d.ritmo.dificultad, true)).join("")}</div></div>` : "") +
     `<div class="md-pie-capa">${mdBarraAvance(d, -1)}<p class="md-mm">${d.camps.filter(Boolean).length} de 8 campamentos · tu montaña: <b>${d.ritmo.mm.toLocaleString("es")}</b> de 8.848.000 mm</p></div>`);
   const camposBloque = camp >= 0 ? (cs ? `<div class="md-bloque-cab" style="--c:${d.color(camp)}">${mdAnillo(mdPct(d, camp), "")}<div><small>${esc(Mandala.nombre(cod))} · rumbo ${Mandala.RUMBOS[camp]}</small><h4>${esc(mdNombre(cs))}</h4></div>
       <button class="btn mini" data-acc="editarTarjeta" data-arg="${cs.id}">${ic("foto")} Foto, frase y estado</button>${cod === "CAM" ? `<button class="btn mini" data-acc="abrirCompanero">${ic("companero")} Compañero de Ascenso</button>` : ""}</div>` : `<h4>Campamento libre · ${esc(Mandala.nombre(cod))}</h4>`)
