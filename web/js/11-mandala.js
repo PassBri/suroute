@@ -249,10 +249,11 @@ function mdBarraAvance(d, camp) {
 
 /** Una celda: la cumbre, un campamento (con su foto) o un paso. */
 /* En el 9×9, la cumbre y cada campamento llevan dos botones pequeños: cambiar su foto y girar esa casilla (foto ⇄ texto). */
-const mdCeldaAcc = (c, nombre, foto) => !c ? "" : `<span class="md-cacc">
-  <label class="md-cbtn" title="${foto ? "Cambiar la foto" : "Agregar foto"}" aria-label="${foto ? "Cambiar la foto" : "Agregar foto"} de ${esc(nombre)}"><input type="file" accept="image/*" hidden data-foto-vision="${c.id}">${ic("foto")}</label>
-  ${foto ? `<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${c.id}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>` : ""}</span>`;
-const mdGirada = c => !!c && !!estado.mdCeldasGiradas?.has(String(c.id));
+/* La cumbre y los campamentos guardan su foto en su casilla; cada sub-meta, como foto de evidencia del paso (mdEvidencia). */
+const mdCeldaAcc = (c, nombre, foto, paso = null) => !c ? "" : `<span class="md-cacc">
+  <label class="md-cbtn" title="${foto ? "Cambiar la foto" : "Agregar foto"}" aria-label="${foto ? "Cambiar la foto" : "Agregar foto"} de ${esc(nombre)}"><input type="file" accept="image/*" hidden ${paso === null ? `data-foto-vision="${c.id}"` : `data-acc-change="mdEvidencia" data-arg="${c.id}|${paso}"`}>${ic("foto")}</label>
+  ${foto ? `<button class="md-cbtn" data-acc="mdGirarCelda" data-arg="${paso === null ? c.id : `${c.id}-${paso}`}" aria-label="Girar ${esc(nombre)}" title="Girar">${ic("girar")}</button>` : ""}</span>`;
+const mdGirada = (c, paso = null) => !!c && !!estado.mdCeldasGiradas?.has(paso === null ? String(c.id) : `${c.id}-${paso}`);
 function mdCelda(d, cel, grande) {
   if (cel.tipo === "CUMBRE") {
     const foto = mdFoto(d.cumbre), g = mdGirada(d.cumbre);
@@ -277,7 +278,8 @@ function mdCelda(d, cel, grande) {
   const extra = (d.niebla(cel.camp, cel.paso) ? `<span class="md-niebla" title="Niebla: más de ${Travesia.NIEBLA_DIAS} días sin avanzar">☁</span>` : "") +
     (d.enlaces(cel.camp, cel.paso).length ? `<span class="md-enlace" title="Paso de confluencia">⇄</span>` : "");
   const t81 = camp ? `<textarea class="md-t81" data-resp="mandala|${Mandala.clave(camp.id, cel.paso)}" placeholder="${cel.paso + 1}" aria-label="Paso ${cel.paso + 1} de ${esc(mdNombre(camp))}">${esc(texto)}</textarea>` : "";
-  return `<span class="md-c md-paso md-${est.toLowerCase()}${evid ? " con-evid" : ""}" style="--c:${color}"${texto ? ` title="${esc(texto)}"` : ""}>${evid ? `<img src="${esc(evid)}" alt="">` : ""}<span class="t" data-corto="${texto ? cel.paso + 1 : ""}">${esc(texto)}</span>${t81}${est === "HECHO" ? "<i>✓</i>" : ""}${extra}</span>`;
+  const accP = camp ? mdCeldaAcc(camp, texto || `paso ${cel.paso + 1}`, evid, cel.paso) : "";
+  return `<span class="md-c md-paso md-${est.toLowerCase()}${evid ? " con-evid" : ""}${mdGirada(camp, cel.paso) ? " c-girada" : ""}" style="--c:${color}"${camp ? ` data-cid="${camp.id}-${cel.paso}"` : ""}${texto ? ` title="${esc(texto)}"` : ""}>${accP}${evid ? `<img src="${esc(evid)}" alt="">` : ""}<span class="t" data-corto="${texto ? cel.paso + 1 : ""}">${esc(texto)}</span>${t81}${est === "HECHO" ? "<i>✓</i>" : ""}${extra}</span>`;
 }
 
 /** Jornadas de un paso y el botón para registrar la de hoy. */
